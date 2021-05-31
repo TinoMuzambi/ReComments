@@ -5,9 +5,6 @@ import { useRouter } from "next/router";
 import { authenticate, loadClient, execute } from "../utils/gapi";
 
 export default function Home() {
-	const [videoID, setVideoID] = useState({
-		videoId: "https://www.youtube.com/watch?v=R3tbVHlsKhs",
-	});
 	const router = useRouter();
 
 	useEffect(() => {
