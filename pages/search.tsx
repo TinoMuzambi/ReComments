@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Head from "next/head";
 
+import Meta from "../components/Meta";
 import { AppContext } from "../context/AppContext";
 import { execute } from "../utils/gapi";
 
@@ -18,6 +18,11 @@ const Videos = () => {
 
 	return (
 		<>
+			<Meta
+				title=" Search | ReComments"
+				description="Search for a YouTube video and get to chatting in the comments!"
+				url="https://re-comments.vercel.app/search"
+			/>
 			<header>
 				<nav className="nav">
 					<ul className="links">
