@@ -67,13 +67,17 @@ const Videos = () => {
 									/>
 									<div className="details">
 										<h2 className="name">{result.snippet.title}</h2>
-										<h3 className="uploader">{result.snippet.channelTitle}</h3>
-										<h5>
-											Uploaded on{" "}
-											{new Date(
-												result.snippet.publishedAt
-											).toLocaleDateString()}
-										</h5>
+										<div className="bottom">
+											<h3 className="uploader">
+												{result.snippet.channelTitle}
+											</h3>
+											<h5 className="date">
+												Uploaded on{" "}
+												{new Date(
+													result.snippet.publishedAt
+												).toLocaleDateString()}
+											</h5>
+										</div>
 									</div>
 								</div>
 							</div>

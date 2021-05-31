@@ -60,4 +60,49 @@
 			}
 		}
 	}
+
+	.results {
+		.title {
+			font-size: 2rem;
+		}
+
+		.result {
+			display: flex;
+			justify-content: flex-start;
+			align-items: flex-start;
+			gap: 7rem;
+			margin-top: 1rem;
+			background: white;
+			padding: 0.5rem;
+			border-radius: 1rem;
+			cursor: pointer;
+			position: relative;
+
+			.thumbnail {
+				height: 15rem;
+			}
+
+			.details {
+				display: flex;
+				flex-direction: column;
+
+				.name {
+					font-weight: normal;
+				}
+
+				.bottom {
+					position: absolute;
+					bottom: 0;
+
+					.uploader {
+						font-weight: normal;
+					}
+
+					.date {
+						font-weight: normal;
+					}
+				}
+			}
+		}
+	}
 }
