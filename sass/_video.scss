@@ -2,19 +2,31 @@
 	padding: 1rem;
 
 	.title {
-		margin-top: 1rem;
+		margin: 1rem 0;
+
+		@include mq(500px) {
+			font-size: 1rem;
+		}
 	}
 
 	.player {
 		iframe {
 			width: 100%;
 			height: 70vh;
+
+			@include mq(500px) {
+				height: 40vh;
+			}
 		}
 	}
 
 	.stats {
 		display: flex;
 		gap: 1rem;
+
+		@include mq(500px) {
+			font-size: 0.7rem;
+		}
 
 		.stat {
 			display: flex;
@@ -26,6 +38,10 @@
 
 	.uploader {
 		font-size: 1.5rem;
+
+		@include mq(500px) {
+			font-size: 1rem;
+		}
 	}
 
 	.desc {
@@ -35,6 +51,10 @@
 		color: white;
 		padding: 1rem;
 		border-radius: 1rem;
+
+		@include mq(500px) {
+			font-size: 0.7rem;
+		}
 
 		.embed-link {
 			color: skyblue;
