@@ -1,6 +1,15 @@
 import Head from "next/head";
 
-const Wrapper = ({ children, title, description, keywords, url, image }) => {
+import { WrapperProps } from "../interfaces";
+
+const Wrapper = ({
+	children,
+	title,
+	description,
+	keywords,
+	url,
+	image,
+}: WrapperProps) => {
 	return (
 		<>
 			<Head>
