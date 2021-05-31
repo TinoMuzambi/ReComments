@@ -7,13 +7,17 @@ import { authenticate, loadClient } from "../utils/gapi";
 
 export default function Home() {
 	const router = useRouter();
-	const { setSignedIn } = useContext(AppContext);
+	const { setSignedIn, signedIn } = useContext(AppContext);
 
 	useEffect(() => {
 		gapi.load("client:auth2", function () {
 			gapi.auth2.init({ client_id: process.env.GAPP_CLIENT_ID });
 		});
 	}, []);
+
+	useEffect(() => {
+		if (signedIn) router.push("/search");
+	}, [signedIn]);
 
 	const signIn = () => {
 		authenticate(() => {
