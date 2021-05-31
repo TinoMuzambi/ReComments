@@ -12,9 +12,25 @@ const Videos = () => {
 	}, [signedIn]);
 
 	return (
-		<div>
-			<h1 className="title">Videos</h1>
-		</div>
+		<>
+			<header>
+				<nav className="nav">
+					<ul className="links">
+						<li className="link">Home</li>
+						<li className="link">Sign Out</li>
+						<li className="link">GitHub</li>
+					</ul>
+				</nav>
+			</header>
+			<main className="container">
+				<section className="form-holder">
+					<form className="form">
+						<input type="url" placeholder="Enter YouTube video url" required />
+						<button type="submit">Search</button>
+					</form>
+				</section>
+			</main>
+		</>
 	);
 };
 

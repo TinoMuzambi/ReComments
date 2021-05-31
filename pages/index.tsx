@@ -23,7 +23,7 @@ export default function Home() {
 	};
 
 	return (
-		<main>
+		<main className="main">
 			<h1 className="title">ReComments</h1>
 			<button className="sign-in" onClick={signIn}>
 				<span>
