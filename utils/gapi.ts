@@ -30,7 +30,8 @@ export function loadClient() {
 export function execute(
 	videoId: string,
 	setResults: Function,
-	setFetching: Function
+	setFetching: Function,
+	setNoResults: Function
 ) {
 	return gapi.client.youtube.videos
 		.list({
@@ -43,6 +44,7 @@ export function execute(
 				console.log("Response", response);
 				setResults(response.result.items);
 				setFetching(false);
+				if (response.result.pageInfo.totalResults === 0) setNoResults(true);
 			},
 			function (err: string) {
 				console.error("Execute error", err);

@@ -11,6 +11,7 @@ const Search = () => {
 	const [results, setResults] = useState([]);
 	const [url, setUrl] = useState("");
 	const [fetching, setFetching] = useState(false);
+	const [noResults, setNoResults] = useState(false);
 
 	const { signedIn } = useContext(AppContext);
 	const router = useRouter();
@@ -34,7 +35,7 @@ const Search = () => {
 						onSubmit={(e) => {
 							e.preventDefault();
 							setFetching(true);
-							execute(url, setResults, setFetching);
+							execute(url, setResults, setFetching, setNoResults);
 						}}
 					>
 						<input
@@ -51,6 +52,11 @@ const Search = () => {
 					</form>
 				</section>
 				{fetching && <Loader />}
+				{noResults && (
+					<div className="error-holder">
+						<h1 className="error">No results found!</h1>
+					</div>
+				)}
 				{results.length > 0 && (
 					<section className="results">
 						<h1 className="title">Search Results</h1>
