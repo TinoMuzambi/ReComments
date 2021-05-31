@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 import { WrapperProps } from "../interfaces";
+import { AppProvider } from "../context/AppContext";
 
 const Wrapper = ({
 	children,
@@ -11,7 +12,7 @@ const Wrapper = ({
 	image,
 }: WrapperProps) => {
 	return (
-		<>
+		<AppProvider>
 			<Head>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<meta name="theme-color" content="#000000" />
@@ -48,7 +49,7 @@ const Wrapper = ({
 				<link rel="preconnect" href="https://www.google-analytics.com" />
 			</Head>
 			{children}
-		</>
+		</AppProvider>
 	);
 };
 
