@@ -1,7 +1,11 @@
 .main {
 	@include flexAllCol;
 	gap: 1rem;
-	min-height: 100vh;
+	min-height: calc(100vh - 4.2rem);
+
+	.title {
+		font-size: 3rem;
+	}
 
 	.sign-in {
 		font-family: inherit;
