@@ -13,9 +13,11 @@ export default function Home() {
 	}, []);
 
 	return (
-		<>
-			<button onClick={() => authenticate().then(loadClient)}>Load</button>
-			<button onClick={() => execute(videoID)}>execute</button>
-		</>
+		<main>
+			<h1 className="title">ReComments</h1>
+			<button className="sign-in">
+				<span>G</span>&nbsp;Sign In with Google
+			</button>
+		</main>
 	);
 }
