@@ -6,7 +6,7 @@ import { AppContext } from "../context/AppContext";
 import { execute } from "../utils/gapi";
 
 const Videos = () => {
-	const [results, setResults] = useState([{}]);
+	const [results, setResults] = useState([]);
 	const [url, setUrl] = useState("");
 
 	const { signedIn } = useContext(AppContext);
@@ -51,13 +51,16 @@ const Videos = () => {
 						<button type="submit">Search</button>
 					</form>
 				</section>
-				{results && (
+				{results.length > 0 && (
 					<section className="results">
+						<h1 className="title">Search Results</h1>
 						{results.map((result) => (
-							<div className="result">
-								<h1 className="title">Search Results</h1>
+							<div className="result" key={result.id}>
 								<div className="result">
-									<img src="/logo19.png" alt="title" />
+									<img
+										src={result.snippet.thumbnails.default.url}
+										alt="title"
+									/>
 									<div className="details">
 										<h2 className="name">
 											Build an Expense Tracker | React Hooks Context API
