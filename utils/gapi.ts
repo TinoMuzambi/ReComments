@@ -1,26 +1,26 @@
 import { ExecuteProps } from "../interfaces";
 
-export function authenticate() {
+export function authenticate(callback: Function) {
 	return gapi.auth2
 		.getAuthInstance()
 		.signIn({ scope: "https://www.googleapis.com/auth/youtube.readonly" })
 		.then(
 			function () {
 				console.log("Sign-in successful");
+				callback();
 			},
 			function (err: string) {
 				console.error("Error signing in", err);
 			}
 		);
 }
-export function loadClient(callback: Function) {
+export function loadClient() {
 	gapi.client.setApiKey(process.env.GAPP_API_KEY || "");
 	return gapi.client
 		.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
 		.then(
 			function () {
 				console.log("GAPI client loaded for API");
-				callback();
 			},
 			function (err) {
 				console.error("Error loading GAPI client for API", err);

@@ -17,7 +17,7 @@ export default function Home() {
 	}, []);
 
 	const signIn = () => {
-		authenticate().then(loadClient(() => router.push("/videos")));
+		authenticate(() => router.push("/videos")).then(loadClient());
 	};
 
 	return (
