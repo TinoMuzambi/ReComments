@@ -9,6 +9,7 @@
 		"type-check": "tsc"
 	},
 	"dependencies": {
+		"autolinker": "^3.14.3",
 		"html-react-parser": "^1.2.6",
 		"next": "10.x",
 		"react": "17.x",

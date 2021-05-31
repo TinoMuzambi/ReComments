@@ -1,5 +1,6 @@
 import { /*GetStaticProps, GetStaticPaths,*/ GetServerSideProps } from "next";
 import parse from "html-react-parser";
+import Autolinker from "autolinker";
 
 import { VideoProps } from "../../interfaces";
 import Meta from "../../components/Meta";
@@ -40,7 +41,7 @@ const Video = ({
 					<p className="stat">{new Date(date).toLocaleDateString()}</p>
 				</div>
 				<h3 className="uploader">{channel}</h3>
-				<p className="desc">{description}</p>
+				<p className="desc">{parse(description)}</p>
 			</main>
 		</>
 	);
@@ -52,7 +53,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			title: context.query.title,
 			id: context.query.id,
 			date: context.query.date,
-			description: context.query.description,
+			description: Autolinker.link(context.query.description, {
+				className: "embedd-link",
+			}),
 			channel: context.query.channel,
 			thumbnail: context.query.thumbnail,
 			embeddable: context.query.embeddable,

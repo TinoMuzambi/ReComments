@@ -26,5 +26,5 @@ export type VideoProps = {
 	views: number;
 	likes: number;
 	dislikes: number;
-	html: string;
+	html: string | string[] | undefined;
 };
