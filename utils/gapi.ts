@@ -32,15 +32,12 @@ export function execute(
 		})
 		.then(
 			function (response: any) {
-				// Handle the results here (response.result has the parsed body).
-				console.log("Response", response);
 				setResults(response.result.items);
 				setFetching(false);
 				if (response.result.pageInfo.totalResults === 0) setNoResults(true);
 				else setNoResults(false);
 			},
 			function (err: string) {
-				console.error("Execute error", err);
 				setResults(err);
 			}
 		);
