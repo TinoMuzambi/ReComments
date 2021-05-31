@@ -25,10 +25,11 @@ export function execute(
 	setFetching: Function,
 	setNoResults: Function
 ) {
+	const start = videoId.indexOf("v=") + 2;
 	return gapi.client.youtube.videos
 		.list({
 			part: ["snippet,statistics,player,status"],
-			id: [videoId.substring(32)],
+			id: [videoId.substring(start, start + 11)],
 		})
 		.then(
 			function (response: any) {
