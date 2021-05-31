@@ -9,7 +9,7 @@ export default function Home() {
 				function () {
 					console.log("Sign-in successful");
 				},
-				function (err) {
+				function (err: any) {
 					console.error("Error signing in", err);
 				}
 			);
@@ -35,11 +35,11 @@ export default function Home() {
 				id: ["hRI0ymx_6aw"],
 			})
 			.then(
-				function (response) {
+				function (response: any) {
 					// Handle the results here (response.result has the parsed body).
 					console.log("Response", response);
 				},
-				function (err) {
+				function (err: any) {
 					console.error("Execute error", err);
 				}
 			);
