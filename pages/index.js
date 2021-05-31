@@ -17,7 +17,7 @@ export default function Home() {
 			);
 	}
 	function loadClient() {
-		gapi.client.setApiKey(process.env.GAPP_CLIENT_ID);
+		gapi.client.setApiKey(process.env.GAPP_CLIENT_SECRET);
 		return gapi.client
 			.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
 			.then(
@@ -52,5 +52,10 @@ export default function Home() {
 		});
 	}, []);
 
-	return <button onClick={() => authenticate().then(loadClient)}>Play</button>;
+	return (
+		<>
+			<button onClick={() => authenticate().then(loadClient)}>Load</button>
+			<button onClick={() => execute()}>execute</button>
+		</>
+	);
 }
