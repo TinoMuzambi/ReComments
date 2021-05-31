@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import Meta from "../components/Meta";
 import { AppContext } from "../context/AppContext";
@@ -58,29 +59,33 @@ const Videos = () => {
 					<section className="results">
 						<h1 className="title">Search Results</h1>
 						{results.map((result) => (
-							<div className="result" key={result.id}>
-								<div className="result">
-									<img
-										src={result.snippet.thumbnails.high.url}
-										alt="title"
-										className="thumbnail"
-									/>
-									<div className="details">
-										<h2 className="name">{result.snippet.title}</h2>
-										<div className="bottom">
-											<h3 className="uploader">
-												{result.snippet.channelTitle}
-											</h3>
-											<h5 className="date">
-												Uploaded on{" "}
-												{new Date(
-													result.snippet.publishedAt
-												).toLocaleDateString()}
-											</h5>
+							<Link key={result.id} href={`/video/${result.id}`}>
+								<a>
+									<div className="result">
+										<div className="result">
+											<img
+												src={result.snippet.thumbnails.high.url}
+												alt="title"
+												className="thumbnail"
+											/>
+											<div className="details">
+												<h2 className="name">{result.snippet.title}</h2>
+												<div className="bottom">
+													<h3 className="uploader">
+														{result.snippet.channelTitle}
+													</h3>
+													<h5 className="date">
+														Uploaded on{" "}
+														{new Date(
+															result.snippet.publishedAt
+														).toLocaleDateString()}
+													</h5>
+												</div>
+											</div>
 										</div>
 									</div>
-								</div>
-							</div>
+								</a>
+							</Link>
 						))}
 					</section>
 				)}
