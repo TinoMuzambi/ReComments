@@ -9,12 +9,13 @@ export default function Home() {
 				function () {
 					console.log("Sign-in successful");
 				},
-				function (err: any) {
+				function (err: string) {
 					console.error("Error signing in", err);
 				}
 			);
 	}
 	function loadClient() {
+		console.log(process.env.GAPP_CLIENT_SECRET);
 		gapi.client.setApiKey(process.env.GAPP_CLIENT_SECRET || "");
 		return gapi.client
 			.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
@@ -39,7 +40,7 @@ export default function Home() {
 					// Handle the results here (response.result has the parsed body).
 					console.log("Response", response);
 				},
-				function (err: any) {
+				function (err: string) {
 					console.error("Execute error", err);
 				}
 			);
