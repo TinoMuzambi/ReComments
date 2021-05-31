@@ -4,13 +4,9 @@ export function authenticate(callback: Function) {
 		.signIn({ scope: "https://www.googleapis.com/auth/youtube.readonly" })
 		.then(
 			function () {
-				console.log("Sign-in successful");
-
 				callback();
 			},
-			function (err: string) {
-				console.error("Error signing in", err);
-			}
+			function () {}
 		);
 }
 export function loadClient() {
