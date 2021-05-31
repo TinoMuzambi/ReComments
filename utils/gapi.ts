@@ -37,10 +37,11 @@ export function execute(videoId: string, setResults: Function) {
 			function (response: any) {
 				// Handle the results here (response.result has the parsed body).
 				console.log("Response", response);
-				setResults(response);
+				setResults(response.result.items);
 			},
 			function (err: string) {
 				console.error("Execute error", err);
+				setResults(err);
 			}
 		);
 }

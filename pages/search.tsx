@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import { AppContext } from "../context/AppContext";
 import { execute } from "../utils/gapi";
@@ -45,6 +46,21 @@ const Videos = () => {
 						<button type="submit">Search</button>
 					</form>
 				</section>
+				{results && (
+					<section className="results">
+						<h1 className="title">Search Results</h1>
+						<div className="result">
+							<img src="/logo19.png" alt="title" />
+							<div className="details">
+								<h2 className="name">
+									Build an Expense Tracker | React Hooks Context API
+								</h2>
+								<h3 className="uploader">Traversy Media</h3>
+								<h5>Date</h5>
+							</div>
+						</div>
+					</section>
+				)}
 			</main>
 		</>
 	);
