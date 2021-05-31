@@ -52,7 +52,7 @@ const Search = () => {
 					</form>
 				</section>
 				{fetching && <Loader />}
-				{noResults && (
+				{noResults && !fetching && (
 					<div className="error-holder">
 						<img
 							src="https://a.storyblok.com/f/114267/1222x923/8898eb61f4/error.png"

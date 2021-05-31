@@ -45,6 +45,7 @@ export function execute(
 				setResults(response.result.items);
 				setFetching(false);
 				if (response.result.pageInfo.totalResults === 0) setNoResults(true);
+				else setNoResults(false);
 			},
 			function (err: string) {
 				console.error("Execute error", err);
