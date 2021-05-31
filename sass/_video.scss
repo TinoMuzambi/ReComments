@@ -24,9 +24,13 @@
 	.desc {
 		margin-top: 1rem;
 		white-space: pre-wrap;
-		background: rgb(69, 69, 69);
+		background: rgb(36, 36, 36);
 		color: white;
 		padding: 1rem;
 		border-radius: 1rem;
+
+		.embed-link {
+			color: skyblue;
+		}
 	}
 }

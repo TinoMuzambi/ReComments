@@ -41,7 +41,13 @@ const Video = ({
 					<p className="stat">{new Date(date).toLocaleDateString()}</p>
 				</div>
 				<h3 className="uploader">{channel}</h3>
-				<p className="desc">{parse(description)}</p>
+				<p className="desc">
+					{parse(
+						Autolinker.link(description as string, {
+							className: "embed-link",
+						})
+					)}
+				</p>
 			</main>
 		</>
 	);
@@ -53,9 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			title: context.query.title,
 			id: context.query.id,
 			date: context.query.date,
-			description: Autolinker.link(context.query.description as string, {
-				className: "embedd-link",
-			}),
+			description: context.query.description,
 			channel: context.query.channel,
 			thumbnail: context.query.thumbnail,
 			embeddable: context.query.embeddable,
