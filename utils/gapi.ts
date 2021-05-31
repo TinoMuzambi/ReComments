@@ -1,3 +1,5 @@
+import { ExecuteProps } from "../interfaces";
+
 export function authenticate() {
 	return gapi.auth2
 		.getAuthInstance()
@@ -25,11 +27,11 @@ export function loadClient() {
 		);
 }
 // Make sure the client is loaded and sign-in is complete before calling this method.
-export function execute() {
+export function execute({ videoId }: ExecuteProps) {
 	return gapi.client.youtube.videos
 		.list({
 			part: ["snippet,statistics,player,status"],
-			id: ["hRI0ymx_6aw"],
+			id: [videoId.substring(32)],
 		})
 		.then(
 			function (response: any) {

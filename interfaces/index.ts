@@ -6,3 +6,7 @@ export type WrapperProps = {
 	url: string;
 	image: string;
 };
+
+export type ExecuteProps = {
+	videoId: string;
+};
