@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const Wrapper = ({ children }) => {
+const Wrapper = ({ children, title, description, keywords, url, image }) => {
 	return (
 		<>
 			<Head>
@@ -41,6 +41,15 @@ const Wrapper = ({ children }) => {
 			{children}
 		</>
 	);
+};
+
+Wrapper.defaultProps = {
+	title: "ReComments",
+	keywords: "youtube, comments, google, entertainment",
+	description:
+		"Ever wanted to comment on a video but the uploader has comments turned off? ReComments is your go to for commenting on YouTube videos with comments turned off.",
+	image: "https://a.storyblok.com/f/105639/512x512/03489159d5/logo512.png",
+	url: "https://re-comments.vercel.app/",
 };
 
 export default Wrapper;
