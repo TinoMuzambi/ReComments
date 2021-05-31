@@ -58,15 +58,19 @@ const Videos = () => {
 							<div className="result" key={result.id}>
 								<div className="result">
 									<img
-										src={result.snippet.thumbnails.default.url}
+										src={result.snippet.thumbnails.high.url}
 										alt="title"
+										className="thumbnail"
 									/>
 									<div className="details">
-										<h2 className="name">
-											Build an Expense Tracker | React Hooks Context API
-										</h2>
-										<h3 className="uploader">Traversy Media</h3>
-										<h5>Date</h5>
+										<h2 className="name">{result.snippet.title}</h2>
+										<h3 className="uploader">{result.snippet.channelTitle}</h3>
+										<h5>
+											Uploaded on{" "}
+											{new Date(
+												result.snippet.publishedAt
+											).toLocaleDateString()}
+										</h5>
 									</div>
 								</div>
 							</div>
