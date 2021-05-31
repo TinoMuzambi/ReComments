@@ -15,6 +15,13 @@
 	.stats {
 		display: flex;
 		gap: 1rem;
+
+		.stat {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+		}
 	}
 
 	.uploader {

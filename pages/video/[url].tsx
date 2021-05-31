@@ -1,6 +1,9 @@
 import { /*GetStaticProps, GetStaticPaths,*/ GetServerSideProps } from "next";
 import parse from "html-react-parser";
 import Autolinker from "autolinker";
+import { BiLike, BiDislike } from "react-icons/bi";
+import { VscEye } from "react-icons/vsc";
+import { MdDateRange } from "react-icons/md";
 
 import { VideoProps } from "../../interfaces";
 import Meta from "../../components/Meta";
@@ -35,10 +38,30 @@ const Video = ({
 					</div>
 				)}
 				<div className="stats">
-					<p className="stat">{views}</p>
-					<p className="stat">{likes}</p>
-					<p className="stat">{dislikes}</p>
-					<p className="stat">{new Date(date).toLocaleDateString()}</p>
+					<div className="stat">
+						<span className="icon">
+							<VscEye />
+						</span>
+						<p className="text">{views}</p>
+					</div>
+					<div className="stat">
+						<span className="icon">
+							<BiLike />
+						</span>
+						<p className="text">{likes}</p>
+					</div>
+					<div className="stat">
+						<span className="icon">
+							<BiDislike />
+						</span>{" "}
+						<p className="text">{dislikes}</p>
+					</div>
+					<div className="stat">
+						<span className="icon">
+							<MdDateRange />
+						</span>{" "}
+						<p className="text">{new Date(date).toLocaleDateString()}</p>
+					</div>
 				</div>
 				<h3 className="uploader">{channel}</h3>
 				<p className="desc">
