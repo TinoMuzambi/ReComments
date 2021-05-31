@@ -5,6 +5,10 @@
 
 	.title {
 		font-size: 3rem;
+
+		@include mq(500px) {
+			font-size: 2rem;
+		}
 	}
 
 	.sign-in {
