@@ -1,9 +1,13 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
+import { execute } from "../utils/gapi";
 
 const Videos = () => {
+	const [results, setResults] = useState({});
+	const [url, setUrl] = useState("");
+
 	const { signedIn } = useContext(AppContext);
 	const router = useRouter();
 
@@ -25,7 +29,13 @@ const Videos = () => {
 			<main className="container">
 				<section className="form-holder">
 					<form className="form">
-						<input type="url" placeholder="Enter YouTube video url" required />
+						<input
+							type="url"
+							placeholder="Enter YouTube video url"
+							required
+							value={url}
+							onChange={(e) => setUrl(e.target.value)}
+						/>
 						<button type="submit">Search</button>
 					</form>
 				</section>
