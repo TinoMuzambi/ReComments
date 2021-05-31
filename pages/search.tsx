@@ -54,6 +54,11 @@ const Search = () => {
 				{fetching && <Loader />}
 				{noResults && (
 					<div className="error-holder">
+						<img
+							src="https://a.storyblok.com/f/114267/1222x923/8898eb61f4/error.png"
+							alt="error"
+							className="error-image"
+						/>
 						<h1 className="error">No results found!</h1>
 					</div>
 				)}
