@@ -13,10 +13,14 @@ export default function Home() {
 		});
 	}, []);
 
+	const signIn = () => {
+		authenticate().then(loadClient());
+	};
+
 	return (
 		<main>
 			<h1 className="title">ReComments</h1>
-			<button className="sign-in">
+			<button className="sign-in" onClick={signIn}>
 				<span>
 					<FcGoogle />
 				</span>
