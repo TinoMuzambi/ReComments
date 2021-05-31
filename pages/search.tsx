@@ -51,7 +51,7 @@ const Search = () => {
 						<h1 className="error">No results found!</h1>
 					</div>
 				)}
-				{results.length > 0 && (
+				{results.length > 0 && !fetching && (
 					<section className="results">
 						<h1 className="title">Search Results</h1>
 						{results.map((result) => (
