@@ -3,12 +3,14 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 import Meta from "../components/Meta";
+import Loader from "../components/Loader";
 import { AppContext } from "../context/AppContext";
 import { execute } from "../utils/gapi";
 
 const Search = () => {
 	const [results, setResults] = useState([]);
 	const [url, setUrl] = useState("");
+	const [fetching, setFetching] = useState(false);
 
 	const { signedIn } = useContext(AppContext);
 	const router = useRouter();
@@ -31,7 +33,8 @@ const Search = () => {
 						className="form"
 						onSubmit={(e) => {
 							e.preventDefault();
-							execute(url, setResults);
+							setFetching(true);
+							execute(url, setResults, setFetching);
 						}}
 					>
 						<input
@@ -47,6 +50,7 @@ const Search = () => {
 						</button>
 					</form>
 				</section>
+				{fetching && <Loader />}
 				{results.length > 0 && (
 					<section className="results">
 						<h1 className="title">Search Results</h1>
