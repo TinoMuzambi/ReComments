@@ -53,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			title: context.query.title,
 			id: context.query.id,
 			date: context.query.date,
-			description: Autolinker.link(context.query.description, {
+			description: Autolinker.link(context.query.description as string, {
 				className: "embedd-link",
 			}),
 			channel: context.query.channel,
