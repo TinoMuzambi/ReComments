@@ -10,6 +10,7 @@ const Nav = () => {
 		<header className="search-header">
 			<nav className="nav">
 				<ul className="links">
+					<h1 className="logo">R</h1>
 					<Link href="/">
 						<a className="link">Home</a>
 					</Link>
@@ -23,9 +24,9 @@ const Nav = () => {
 					>
 						Sign Out
 					</li>
-					<Link href="/">
+					{/* <Link href="/">
 						<a className="link">GitHub</a>
-					</Link>
+					</Link> */}
 				</ul>
 			</nav>
 		</header>
