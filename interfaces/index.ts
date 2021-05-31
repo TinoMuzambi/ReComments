@@ -9,4 +9,5 @@ export type WrapperProps = {
 
 export type ContextProps = {
 	signedIn: boolean;
+	setSignedIn?: Function;
 };

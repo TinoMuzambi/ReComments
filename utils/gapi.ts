@@ -1,4 +1,10 @@
+import { useContext } from "react";
+
+import { AppContext } from "../context/AppContext";
+
 export function authenticate(callback: Function) {
+	const { setSignedIn } = useContext(AppContext);
+
 	return gapi.auth2
 		.getAuthInstance()
 		.signIn({ scope: "https://www.googleapis.com/auth/youtube.readonly" })
