@@ -87,6 +87,14 @@
 			cursor: pointer;
 			position: relative;
 
+			@include mq(768px) {
+				margin: 2rem auto 0;
+				flex-direction: column;
+				gap: 2rem;
+				width: fit-content;
+				padding: 2rem;
+			}
+
 			.thumbnail {
 				height: 15rem;
 			}
@@ -97,14 +105,26 @@
 
 				.name {
 					font-weight: normal;
+
+					@include mq(768px) {
+						font-size: 1rem;
+					}
 				}
 
 				.bottom {
 					position: absolute;
 					bottom: 0;
 
+					@include mq(768px) {
+						position: static;
+					}
+
 					.uploader {
 						font-weight: normal;
+
+						@include mq(768px) {
+							font-size: 1rem;
+						}
 					}
 
 					.date {
