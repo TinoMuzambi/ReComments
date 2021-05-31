@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -20,6 +20,12 @@ const Search = () => {
 		if (!signedIn) router.push("/");
 	}, [signedIn]);
 
+	const handleSubmit = (e: FormEvent) => {
+		e.preventDefault();
+		setFetching(true);
+		execute(url, setResults, setFetching, setNoResults);
+	};
+
 	return (
 		<>
 			<Meta
@@ -30,14 +36,7 @@ const Search = () => {
 
 			<main className="container">
 				<section className="form-holder">
-					<form
-						className="form"
-						onSubmit={(e) => {
-							e.preventDefault();
-							setFetching(true);
-							execute(url, setResults, setFetching, setNoResults);
-						}}
-					>
+					<form className="form" onSubmit={handleSubmit}>
 						<input
 							type="url"
 							placeholder="Enter YouTube video url"
