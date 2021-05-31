@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 
 import { authenticate, loadClient, execute } from "../utils/gapi";
 
@@ -16,7 +17,10 @@ export default function Home() {
 		<main>
 			<h1 className="title">ReComments</h1>
 			<button className="sign-in">
-				<span>G</span>&nbsp;Sign In with Google
+				<span>
+					<FcGoogle />
+				</span>
+				&nbsp;Sign In with Google
 			</button>
 		</main>
 	);
