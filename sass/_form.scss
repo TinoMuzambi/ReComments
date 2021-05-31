@@ -16,6 +16,11 @@
 			border: none;
 			outline: none;
 
+			@include mq(500px) {
+				width: 100%;
+				font-size: 0.7rem;
+			}
+
 			&:hover,
 			&:focus {
 				box-shadow: 0 0 5px 1px rgba($color: orange, $alpha: 0.5);
