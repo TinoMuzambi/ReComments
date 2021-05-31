@@ -6,7 +6,7 @@ import Meta from "../components/Meta";
 import { AppContext } from "../context/AppContext";
 import { execute } from "../utils/gapi";
 
-const Videos = () => {
+const Search = () => {
 	const [results, setResults] = useState([]);
 	const [url, setUrl] = useState("");
 
@@ -59,7 +59,25 @@ const Videos = () => {
 					<section className="results">
 						<h1 className="title">Search Results</h1>
 						{results.map((result) => (
-							<Link key={result.id} href={`/video/${result.id}`}>
+							<Link
+								key={result.id}
+								href={{
+									pathname: `/video/${result.id}`,
+									query: {
+										id: result.id,
+										title: result.snippet.title,
+										date: result.snippet.publishedAt,
+										description: result.snippet.description,
+										channel: result.snippet.channelTitle,
+										thumbnail: result.snippet.thumbnails.maxres.url,
+										embeddable: result.status.embeddable,
+										views: result.statistics.viewCount,
+										likes: result.statistics.likeCount,
+										dislikes: result.statistics.dislikeCount,
+										html: result.player.embedHtml,
+									},
+								}}
+							>
 								<a>
 									<div className="result">
 										<div className="result">
@@ -94,4 +112,4 @@ const Videos = () => {
 	);
 };
 
-export default Videos;
+export default Search;
