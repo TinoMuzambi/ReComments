@@ -1,3 +1,5 @@
+import { FormEventHandler } from "react";
+
 export type WrapperProps = {
 	children: any;
 };
@@ -27,4 +29,10 @@ export type VideoProps = {
 	likes: number;
 	dislikes: number;
 	html: string;
+};
+
+export type FormProps = {
+	handleSubmit: FormEventHandler<HTMLFormElement>;
+	url: string;
+	setUrl: Function;
 };

@@ -7,6 +7,7 @@ import Loader from "../components/Loader";
 import { AppContext } from "../context/AppContext";
 import { execute } from "../utils/gapi";
 import Result from "../components/Result";
+import Form from "../components/Form";
 
 const Search = () => {
 	const [results, setResults] = useState([]);
@@ -37,19 +38,7 @@ const Search = () => {
 
 			<main className="container">
 				<section className="form-holder">
-					<form className="form" onSubmit={handleSubmit}>
-						<input
-							type="url"
-							placeholder="Enter YouTube video url"
-							required
-							value={url}
-							onChange={(e) => setUrl(e.target.value)}
-							className="url"
-						/>
-						<button type="submit" className="submit">
-							Search
-						</button>
-					</form>
+					<Form handleSubmit={handleSubmit} url={url} setUrl={setUrl} />
 				</section>
 				{fetching && <Loader />}
 				{noResults && !fetching && (
