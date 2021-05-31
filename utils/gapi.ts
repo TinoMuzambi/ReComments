@@ -12,7 +12,7 @@ export function authenticate(callback: Function) {
 export function loadClient() {
 	gapi.client.setApiKey(process.env.GAPP_API_KEY || "");
 	return gapi.client
-		.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+		.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest", "")
 		.then(
 			function () {},
 			function () {}
