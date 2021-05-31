@@ -33,7 +33,7 @@ export default function Home() {
 	function execute() {
 		return gapi.client.youtube.videos
 			.list({
-				part: ["snippet,contentDetails,statistics"],
+				part: ["snippet,statistics,player,status"],
 				id: ["hRI0ymx_6aw"],
 			})
 			.then(
