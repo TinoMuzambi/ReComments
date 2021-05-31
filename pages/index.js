@@ -31,10 +31,10 @@ export default function Home() {
 	}
 	// Make sure the client is loaded and sign-in is complete before calling this method.
 	function execute() {
-		return gapi.client.youtube.channels
+		return gapi.client.youtube.videos
 			.list({
 				part: ["snippet,contentDetails,statistics"],
-				forUsername: "mkbhd",
+				id: ["hRI0ymx_6aw"],
 			})
 			.then(
 				function (response) {
