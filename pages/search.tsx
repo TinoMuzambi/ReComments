@@ -47,8 +47,11 @@ const Videos = () => {
 							required
 							value={url}
 							onChange={(e) => setUrl(e.target.value)}
+							className="url"
 						/>
-						<button type="submit">Search</button>
+						<button type="submit" className="submit">
+							Search
+						</button>
 					</form>
 				</section>
 				{results.length > 0 && (
