@@ -1,5 +1,3 @@
-import { ExecuteProps } from "../interfaces";
-
 export function authenticate(callback: Function) {
 	return gapi.auth2
 		.getAuthInstance()
