@@ -13,13 +13,14 @@ export function authenticate() {
 			}
 		);
 }
-export function loadClient() {
+export function loadClient(callback: Function) {
 	gapi.client.setApiKey(process.env.GAPP_API_KEY || "");
 	return gapi.client
 		.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
 		.then(
 			function () {
 				console.log("GAPI client loaded for API");
+				callback();
 			},
 			function (err) {
 				console.error("Error loading GAPI client for API", err);
