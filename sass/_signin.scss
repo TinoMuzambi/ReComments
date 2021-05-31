@@ -1,8 +1,18 @@
 main {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	@include flexAllCol;
 	gap: 1rem;
 	min-height: 100vh;
+
+	.sign-in {
+		font-family: inherit;
+		background: orange;
+		border: none;
+		padding: 1rem 3rem;
+		color: white;
+		cursor: pointer;
+
+		&:hover {
+			background: rgba($color: orangered, $alpha: 0.8);
+		}
+	}
 }

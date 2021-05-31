@@ -1,5 +1,43 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
 
+%flex {
+	display: flex;
+}
+
+%point {
+	cursor: pointer;
+}
+
+@mixin flexColCenter {
+	@extend %flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+@mixin flexRowCenter {
+	@extend %flex;
+	justify-content: center;
+}
+
+@mixin flexAllRow {
+	@extend %flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin flexAllCol {
+	@extend %flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+@mixin mq($size) {
+	@media only screen and (max-width: $size) {
+		@content;
+	}
+}
+
 *,
 *::before,
 *::after {
