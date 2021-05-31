@@ -9,7 +9,7 @@ const Videos = () => {
 
 	useEffect(() => {
 		if (!signedIn) router.push("/");
-	}, []);
+	}, [signedIn]);
 
 	return (
 		<div>
