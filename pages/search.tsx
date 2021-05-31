@@ -24,15 +24,7 @@ const Search = () => {
 				description="Search for a YouTube video and get to chatting in the comments!"
 				url="https://re-comments.vercel.app/search"
 			/>
-			<header className="search-header">
-				<nav className="nav">
-					<ul className="links">
-						<li className="link">Home</li>
-						<li className="link">Sign Out</li>
-						<li className="link">GitHub</li>
-					</ul>
-				</nav>
-			</header>
+
 			<main className="container">
 				<section className="form-holder">
 					<form
