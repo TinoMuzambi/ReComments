@@ -11,6 +11,7 @@ export function authenticate(callback: Function) {
 		.then(
 			function () {
 				console.log("Sign-in successful");
+				if (setSignedIn) setSignedIn(true);
 				callback();
 			},
 			function (err: string) {
