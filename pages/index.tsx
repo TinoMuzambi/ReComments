@@ -18,7 +18,7 @@ export default function Home() {
 	const signIn = () => {
 		authenticate(() => {
 			if (setSignedIn) setSignedIn(true);
-			router.push("/videos");
+			router.push("/search");
 		}).then(loadClient());
 	};
 
