@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
 
-import { authenticate, loadClient, execute } from "../utils/gapi";
+import { AppContext } from "../context/AppContext";
+import { authenticate, loadClient } from "../utils/gapi";
 
 export default function Home() {
 	const router = useRouter();
+	const { setSignedIn } = useContext(AppContext);
 
 	useEffect(() => {
 		gapi.load("client:auth2", function () {
@@ -14,7 +16,10 @@ export default function Home() {
 	}, []);
 
 	const signIn = () => {
-		authenticate(() => router.push("/videos")).then(loadClient());
+		authenticate(() => {
+			if (setSignedIn) setSignedIn(true);
+			router.push("/videos");
+		}).then(loadClient());
 	};
 
 	return (
