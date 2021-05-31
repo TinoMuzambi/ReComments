@@ -32,7 +32,7 @@ const Videos = () => {
 						className="form"
 						onSubmit={(e) => {
 							e.preventDefault();
-							execute(url);
+							execute(url, setResults);
 						}}
 					>
 						<input

@@ -27,7 +27,7 @@ export function loadClient() {
 		);
 }
 // Make sure the client is loaded and sign-in is complete before calling this method.
-export function execute(videoId: string) {
+export function execute(videoId: string, setResults: Function) {
 	return gapi.client.youtube.videos
 		.list({
 			part: ["snippet,statistics,player,status"],
@@ -37,6 +37,7 @@ export function execute(videoId: string) {
 			function (response: any) {
 				// Handle the results here (response.result has the parsed body).
 				console.log("Response", response);
+				setResults(response);
 			},
 			function (err: string) {
 				console.error("Execute error", err);
