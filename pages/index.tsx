@@ -23,7 +23,7 @@ export default function Home() {
 		authenticate(() => {
 			if (setSignedIn) setSignedIn(true);
 			router.push("/search");
-		}).then(loadClient());
+		}).then(loadClient);
 	};
 
 	return (
