@@ -28,7 +28,13 @@ const Videos = () => {
 			</header>
 			<main className="container">
 				<section className="form-holder">
-					<form className="form">
+					<form
+						className="form"
+						onSubmit={(e) => {
+							e.preventDefault();
+							execute(url);
+						}}
+					>
 						<input
 							type="url"
 							placeholder="Enter YouTube video url"
