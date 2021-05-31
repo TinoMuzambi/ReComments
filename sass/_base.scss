@@ -5,4 +5,10 @@
 *::after {
 	font-family: "Poppins", sans-serif;
 	transition: 0.3s ease;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
 }
