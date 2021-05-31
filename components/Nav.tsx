@@ -7,7 +7,7 @@ const Nav = () => {
 	const { setSignedIn, signedIn } = useContext(AppContext);
 
 	return (
-		<header className="search-header">
+		<header className="nav-header">
 			<nav className="nav">
 				<ul className="links">
 					<h1 className="logo">R</h1>

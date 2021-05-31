@@ -1,0 +1,24 @@
+.nav-header {
+	.nav {
+		background: orange;
+		padding: 1rem;
+
+		.links {
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			list-style: none;
+			color: white;
+
+			.link {
+				cursor: pointer;
+				position: relative;
+
+				&:hover,
+				&:focus {
+					transform: scale(0.9);
+				}
+			}
+		}
+	}
+}

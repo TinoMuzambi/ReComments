@@ -1,28 +1,3 @@
-.search-header {
-	.nav {
-		background: orange;
-		padding: 1rem;
-
-		.links {
-			display: flex;
-			align-items: center;
-			justify-content: space-around;
-			list-style: none;
-			color: white;
-
-			.link {
-				cursor: pointer;
-				position: relative;
-
-				&:hover,
-				&:focus {
-					transform: scale(0.9);
-				}
-			}
-		}
-	}
-}
-
 .error-holder {
 	@include flexAllCol;
 	margin-top: 2rem;
@@ -34,41 +9,6 @@
 
 .container {
 	padding: 1rem;
-
-	.form-holder {
-		.form {
-			display: flex;
-			justify-content: center;
-			gap: 2rem;
-
-			.url {
-				text-align: center;
-				padding: 1rem 2rem;
-				width: 30rem;
-				border: none;
-				outline: none;
-
-				&:hover,
-				&:focus {
-					box-shadow: 0 0 5px 1px rgba($color: orange, $alpha: 0.5);
-				}
-			}
-
-			.submit {
-				background: orange;
-				color: white;
-				padding: 1rem 2rem;
-				border: none;
-				outline: none;
-				cursor: pointer;
-
-				&:hover,
-				&:focus {
-					box-shadow: inset 0 0 5px 1px rgba($color: white, $alpha: 0.5);
-				}
-			}
-		}
-	}
 
 	.results {
 		.title {
