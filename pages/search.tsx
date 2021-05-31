@@ -6,7 +6,7 @@ import { AppContext } from "../context/AppContext";
 import { execute } from "../utils/gapi";
 
 const Videos = () => {
-	const [results, setResults] = useState({});
+	const [results, setResults] = useState([{}]);
 	const [url, setUrl] = useState("");
 
 	const { signedIn } = useContext(AppContext);
@@ -53,17 +53,21 @@ const Videos = () => {
 				</section>
 				{results && (
 					<section className="results">
-						<h1 className="title">Search Results</h1>
-						<div className="result">
-							<img src="/logo19.png" alt="title" />
-							<div className="details">
-								<h2 className="name">
-									Build an Expense Tracker | React Hooks Context API
-								</h2>
-								<h3 className="uploader">Traversy Media</h3>
-								<h5>Date</h5>
+						{results.map((result) => (
+							<div className="result">
+								<h1 className="title">Search Results</h1>
+								<div className="result">
+									<img src="/logo19.png" alt="title" />
+									<div className="details">
+										<h2 className="name">
+											Build an Expense Tracker | React Hooks Context API
+										</h2>
+										<h3 className="uploader">Traversy Media</h3>
+										<h5>Date</h5>
+									</div>
+								</div>
 							</div>
-						</div>
+						))}
 					</section>
 				)}
 			</main>
