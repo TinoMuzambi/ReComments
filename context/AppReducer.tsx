@@ -1,4 +1,4 @@
-export default (state: any, action: any) => {
+const Reducer = (state: any, action: any) => {
 	switch (action.type) {
 		case "UPDATE_SIGNED_IN":
 			return {
@@ -9,3 +9,5 @@ export default (state: any, action: any) => {
 			return state;
 	}
 };
+
+export default Reducer;
