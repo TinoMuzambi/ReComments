@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import ObjectId = Schema.Types.ObjectId;
+const ObjectId = Schema.Types.ObjectId;
 
 interface IResource extends Document {
 	title: string;
