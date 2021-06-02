@@ -38,5 +38,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				return res.status(400).json({ success: false });
 			}
 			break;
+		case "DELETE":
+			try {
+				const deletedComment = await Comment.deleteOne({ _id: id });
+
+				if (!deletedComment) {
+					return res.status(400).json({ success: false });
+				}
+				res.status(200).json({ success: true, data: {} });
+			} catch (error) {
+				return res.status(400).json({ success: false });
+			}
+			break;
 	}
 };
