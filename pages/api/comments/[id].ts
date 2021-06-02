@@ -22,5 +22,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			} catch (error) {
 				return res.status(400).json({ success: false });
 			}
+			break;
+		case "PUT":
+			try {
+				const comment = await Comment.findByIdAndUpdate(id, req.body, {
+					new: true,
+					runValidators: true,
+				});
+
+				if (!comment) {
+					return res.status(400).json({ success: false });
+				}
+				res.status(200).json({ success: true, data: comment });
+			} catch (error) {
+				return res.status(400).json({ success: false });
+			}
+			break;
 	}
 };
