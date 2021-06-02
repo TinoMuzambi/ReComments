@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-const ObjectId = Schema.Types.ObjectId;
 
 interface IResource extends Document {
 	title: string;
@@ -21,7 +20,7 @@ const CommentSchema: Schema = new mongoose.Schema(
 			required: [true, "Comment needs comment text."],
 		},
 		videoId: {
-			type: ObjectId,
+			type: String,
 			ref: "Video",
 		},
 	},
