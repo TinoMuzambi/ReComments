@@ -4,7 +4,7 @@ const connection: {
 	isConnected: boolean | number;
 } = { isConnected: 0 };
 
-async function dbConnect() {
+const dbConnect = async () => {
 	if (connection.isConnected) {
 		return;
 	}
@@ -15,4 +15,6 @@ async function dbConnect() {
 	});
 
 	connection.isConnected = db.connections[0].readyState;
-}
+};
+
+export default dbConnect;
