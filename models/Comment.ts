@@ -4,17 +4,9 @@ import ObjectId = Schema.Types.ObjectId;
 interface IResource extends Document {
 	title: string;
 	url: string;
-	type: ResourceTypes;
-	data: any;
 	date: Date;
 	description: String;
 	datePublished: String | Date;
-	ratings: IRatings;
-	lecturerRating?: [IRating];
-	studentRating?: [IRating];
-	comments?: [IComment];
-	tags?: [String];
-	userRatings?: object;
 }
 
 const CommentSchema: Schema = new mongoose.Schema(
