@@ -11,6 +11,7 @@
 	"dependencies": {
 		"autolinker": "^3.14.3",
 		"html-react-parser": "^1.2.6",
+		"mongoose": "^5.12.12",
 		"next": "10.x",
 		"react": "17.x",
 		"react-dom": "17.x",
