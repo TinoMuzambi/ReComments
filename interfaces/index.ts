@@ -36,3 +36,11 @@ export type FormProps = {
 	url: string;
 	setUrl: Function;
 };
+
+export interface IResource extends Document {
+	title: string;
+	url: string;
+	date: Date;
+	description: String;
+	datePublished: String | Date;
+}

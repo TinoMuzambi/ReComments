@@ -1,12 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-interface IResource extends Document {
-	title: string;
-	url: string;
-	date: Date;
-	description: String;
-	datePublished: String | Date;
-}
+import { IResource } from "../interfaces";
 
 const CommentSchema: Schema = new mongoose.Schema(
 	{
