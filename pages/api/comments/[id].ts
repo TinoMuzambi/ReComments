@@ -50,5 +50,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				return res.status(400).json({ success: false });
 			}
 			break;
+		default:
+			return res.status(400).json({ success: false });
+			break;
 	}
 };
