@@ -4,6 +4,7 @@ import Comment from "../../../models/Comment";
 import dbConnect from "../../../utils/dbConnect";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+	dbConnect();
 	const {
 		query: { id },
 		method,
