@@ -8,7 +8,7 @@ import { MdDateRange } from "react-icons/md";
 import { VideoProps } from "../../interfaces";
 import Meta from "../../components/Meta";
 
-const Video = ({
+const Video: React.FC<VideoProps> = ({
 	title,
 	id,
 	date,
@@ -20,7 +20,7 @@ const Video = ({
 	likes,
 	dislikes,
 	html,
-}: VideoProps) => {
+}) => {
 	return (
 		<>
 			<Meta

@@ -3,7 +3,7 @@ import { AppProvider } from "../context/AppContext";
 import Meta from "./Meta";
 import Nav from "./Nav";
 
-const Wrapper = ({ children }: WrapperProps) => {
+const Wrapper: React.FC<WrapperProps> = ({ children }) => {
 	return (
 		<AppProvider>
 			<Meta />

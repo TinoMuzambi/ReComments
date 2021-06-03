@@ -1,23 +1,23 @@
 import { FormEventHandler } from "react";
 
-export type WrapperProps = {
+export interface WrapperProps {
 	children: any;
-};
+}
 
-export type MetaProps = {
+export interface MetaProps {
 	title: string;
 	description: string;
 	keywords: string;
 	url: string;
 	image: string;
-};
+}
 
-export type ContextProps = {
+export interface ContextProps {
 	signedIn: boolean;
 	setSignedIn?: Function;
-};
+}
 
-export type VideoProps = {
+export interface VideoProps {
 	title: string;
 	id: string;
 	date: string;
@@ -29,13 +29,13 @@ export type VideoProps = {
 	likes: number;
 	dislikes: number;
 	html: string;
-};
+}
 
-export type FormProps = {
+export interface FormProps {
 	handleSubmit: FormEventHandler<HTMLFormElement>;
 	url: string;
 	setUrl: Function;
-};
+}
 
 export interface IResource extends Document {
 	title: string;

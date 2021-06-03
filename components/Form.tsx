@@ -1,6 +1,6 @@
 import { FormProps } from "../interfaces";
 
-const Form = ({ handleSubmit, url, setUrl }: FormProps) => {
+const Form: React.FC<FormProps> = ({ handleSubmit, url, setUrl }) => {
 	return (
 		<form className="form" onSubmit={handleSubmit}>
 			<input

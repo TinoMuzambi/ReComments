@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { AppContext } from "../context/AppContext";
 
-const Nav = () => {
+const Nav: React.FC = () => {
 	const { setSignedIn, signedIn } = useContext(AppContext);
 
 	return (

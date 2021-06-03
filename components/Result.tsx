@@ -1,4 +1,4 @@
-const Result = ({ result }: any) => {
+const Result: React.FC<any> = ({ result }) => {
 	return (
 		<div className="result">
 			<img

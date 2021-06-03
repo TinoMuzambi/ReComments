@@ -9,7 +9,7 @@ import { execute } from "../utils/gapi";
 import Result from "../components/Result";
 import Form from "../components/Form";
 
-const Search = () => {
+const Search: React.FC = () => {
 	const [results, setResults] = useState([]);
 	const [url, setUrl] = useState("");
 	const [fetching, setFetching] = useState(false);
