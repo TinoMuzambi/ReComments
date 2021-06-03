@@ -1,8 +1,7 @@
 import { FormEventHandler } from "react";
-import { NextComponentType, NextPageContext } from "next";
 
 export interface WrapperProps {
-	children: NextComponentType<NextPageContext, any, {}>;
+	children: any;
 }
 
 export interface MetaProps {
