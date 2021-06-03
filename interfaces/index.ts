@@ -1,15 +1,16 @@
 import { FormEventHandler } from "react";
+import { NextComponentType, NextPageContext } from "next";
 
 export interface WrapperProps {
-	children: any;
+	children: NextComponentType<NextPageContext, any, {}>;
 }
 
 export interface MetaProps {
-	title: string;
-	description: string;
-	keywords: string;
-	url: string;
-	image: string;
+	title?: string;
+	description?: string;
+	keywords?: string;
+	url?: string;
+	image?: string;
 }
 
 export interface ContextProps {
