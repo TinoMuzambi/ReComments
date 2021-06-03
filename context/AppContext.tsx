@@ -12,10 +12,10 @@ export const AppContext = createContext<ContextProps>(initialState);
 export const AppProvider = ({ children }: any) => {
 	const [state, dispatch] = useReducer(AppReducer, initialState);
 
-	const setSignedIn = (value: any) => {
+	const setSignedIn = (value: boolean) => {
 		dispatch({
 			type: "UPDATE_SIGNED_IN",
-			payload: value,
+			auth: value,
 		});
 	};
 

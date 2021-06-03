@@ -44,3 +44,14 @@ export interface IResource extends Document {
 	description: String;
 	datePublished: String | Date;
 }
+
+export interface Auth {
+	signedIn: boolean;
+}
+
+export type Actions = {
+	type: "UPDATE_SIGNED_IN";
+	auth: boolean;
+};
+
+export type State = Auth;
