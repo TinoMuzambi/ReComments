@@ -9,6 +9,7 @@
 		"type-check": "tsc"
 	},
 	"dependencies": {
+		"@types/gapi.client.people": "^1.0.3",
 		"autolinker": "^3.14.3",
 		"html-react-parser": "^1.2.6",
 		"mongoose": "^5.12.12",
