@@ -5,7 +5,7 @@ import Link from "next/link";
 import Meta from "../components/Meta";
 import Loader from "../components/Loader";
 import { AppContext } from "../context/AppContext";
-import { execute } from "../utils/gapi";
+import { loadClient, execute } from "../utils/gapi";
 import Result from "../components/Result";
 import Form from "../components/Form";
 
@@ -25,6 +25,7 @@ const Search: React.FC = () => {
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		setFetching(true);
+		loadClient();
 		execute(url, true, setResults, setFetching, setNoResults);
 	};
 

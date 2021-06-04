@@ -1,5 +1,3 @@
-import React from "react";
-
 // export function authenticate(callback?: Function) {
 // 	return gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignIn);
 // }
@@ -7,8 +5,8 @@ import React from "react";
 // 	updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
 // };
 
-export const updateSignInStatus = (isSignedIn: boolean) => {
-	if (isSignedIn) makeApiCall();
+export const updateSignInStatus = (isSignedIn: boolean, cb: Function) => {
+	if (isSignedIn) makeApiCall(cb);
 };
 
 export function handleAuthClick() {
@@ -20,7 +18,7 @@ export function handleSignoutClick() {
 }
 
 // Load the API and make an API call.  Display the results on the screen.
-function makeApiCall() {
+function makeApiCall(cb: Function) {
 	gapi.client.people.people
 		.get({
 			resourceName: "people/me",
@@ -28,6 +26,7 @@ function makeApiCall() {
 		})
 		.then(function (resp) {
 			console.log(resp);
+			cb();
 		});
 }
 

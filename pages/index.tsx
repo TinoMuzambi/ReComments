@@ -25,9 +25,23 @@ export default function Home() {
 					scope: "profile",
 				})
 				.then(() => {
-					gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
+					gapi.auth2.getAuthInstance().isSignedIn.listen(() =>
+						updateSignInStatus(
+							gapi.auth2.getAuthInstance().isSignedIn.get(),
+							() => {
+								if (setSignedIn) setSignedIn(true);
+								router.push("/search");
+							}
+						)
+					);
 
-					updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+					updateSignInStatus(
+						gapi.auth2.getAuthInstance().isSignedIn.get(),
+						() => {
+							if (setSignedIn) setSignedIn(true);
+							router.push("/search");
+						}
+					);
 				});
 		});
 	}, []);
