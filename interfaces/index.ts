@@ -44,9 +44,16 @@ export interface IResource extends Document {
 	datePublished: String | Date;
 }
 
+type User = {
+	emailAddresses?: [{}];
+	etag?: string;
+	names?: [{ givenName: string }];
+	photos?: [{ url: string }];
+} | null;
+
 export interface ContextProps {
 	signedIn: boolean;
-	user: {} | null;
+	user: User;
 	setSignedIn?: Function;
 	setUser?: Function;
 }
@@ -54,7 +61,7 @@ export interface ContextProps {
 export type Actions = {
 	type: "UPDATE_SIGNED_IN" | "SET_USER";
 	auth: boolean;
-	user: {} | null;
+	user: User;
 };
 
 export type State = { signedIn: boolean; user: {} | null };
