@@ -29,7 +29,7 @@ function makeApiCall(cb: Function) {
 			resourceName: "people/me",
 			personFields: "names,emailAddresses,photos",
 		})
-		.then(function (resp) {
+		.then(function (resp: gapi.client.Response<gapi.client.people.Person>) {
 			console.log(resp);
 			cb();
 		});
