@@ -25,8 +25,11 @@ const Search: React.FC = () => {
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		setFetching(true);
-		loadClient();
-		execute(url, true, setResults, setFetching, setNoResults);
+		const makeCall = async () => {
+			await loadClient();
+			execute(url, true, setResults, setFetching, setNoResults);
+		};
+		makeCall();
 	};
 
 	return (
