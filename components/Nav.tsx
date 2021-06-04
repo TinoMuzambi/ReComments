@@ -5,7 +5,7 @@ import { AppContext } from "../context/AppContext";
 import { handleSignoutClick } from "../utils/gapi";
 
 const Nav: React.FC = () => {
-	const { setSignedIn, setUser, user } = useContext(AppContext);
+	const { setSignedIn, setUser, user, signedIn } = useContext(AppContext);
 
 	const handleSignOut = () => {
 		if (setSignedIn) {
@@ -23,9 +23,11 @@ const Nav: React.FC = () => {
 					<Link href="/">
 						<a className="link">Home</a>
 					</Link>
-					<li className="link" onClick={handleSignOut}>
-						Sign Out
-					</li>
+					{signedIn && (
+						<li className="link" onClick={handleSignOut}>
+							Sign Out
+						</li>
+					)}
 					{user && user.photos && user.names && (
 						<div className="profile">
 							<img className="photo" src={user.photos[0].url} alt="Profile" />
