@@ -28,7 +28,7 @@ function makeApiCall(cb: Function) {
 		})
 		.then(function (resp: gapi.client.Response<gapi.client.people.Person>) {
 			console.log(resp.result);
-			cb(resp);
+			cb(resp.result);
 		});
 }
 
