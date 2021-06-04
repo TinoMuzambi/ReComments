@@ -19,6 +19,18 @@
 					transform: scale(0.9);
 				}
 			}
+
+			.profile {
+				@include flexAllRow;
+				gap: 1rem;
+
+				.photo {
+					border-radius: 50%;
+					height: 2em;
+					width: 2em;
+					object-fit: cover;
+				}
+			}
 		}
 	}
 }
