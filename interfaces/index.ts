@@ -44,12 +44,7 @@ export interface IResource extends Document {
 	datePublished: String | Date;
 }
 
-type User = {
-	emailAddresses?: [{}];
-	etag?: string;
-	names?: [{ givenName: string }];
-	photos?: [{ url: string }];
-} | null;
+type User = gapi.client.people.Person | null;
 
 export interface ContextProps {
 	signedIn: boolean;

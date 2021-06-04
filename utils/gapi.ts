@@ -27,7 +27,7 @@ function makeApiCall(cb: Function) {
 			personFields: "names,emailAddresses,photos",
 		})
 		.then(function (resp: gapi.client.Response<gapi.client.people.Person>) {
-			console.log(resp);
+			console.log(resp.result);
 			cb(resp);
 		});
 }

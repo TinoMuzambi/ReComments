@@ -19,7 +19,7 @@ export default function Home() {
 	) => {
 		if (setSignedIn) {
 			setSignedIn(true);
-			if (setUser) setUser(res.result);
+			if (setUser) setUser(res);
 		}
 		router.push("/search");
 		setLoading(false);
