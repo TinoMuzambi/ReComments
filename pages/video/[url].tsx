@@ -1,4 +1,3 @@
-import { /*GetStaticProps, GetStaticPaths,*/ GetServerSideProps } from "next";
 import parse from "html-react-parser";
 import Autolinker from "autolinker";
 import { BiLike, BiDislike } from "react-icons/bi";
@@ -12,7 +11,7 @@ import Meta from "../../components/Meta";
 import { execute } from "../../utils/gapi";
 
 const Video: React.FC = () => {
-	const [result, setResult] = useState<any>();
+	const [result, setResult] = useState<VideoProps[]>();
 	const router = useRouter();
 
 	useEffect(() => {
@@ -96,27 +95,5 @@ const Video: React.FC = () => {
 		</>
 	);
 };
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-// 	const url = context.query.url as string;
-// 	let result: any;
-// 	execute(url, (res: any) => (result = res));
-// 	console.log(result);
-// 	return {
-// 		props: {
-// 			id: result.id,
-// 			title: result.snippet.title,
-// 			date: result.snippet.publishedAt,
-// 			description: result.snippet.description,
-// 			channel: result.snippet.channelTitle,
-// 			thumbnail: result.snippet.thumbnails.maxres.url,
-// 			embeddable: result.status.embeddable === "true",
-// 			views: Number.parseInt(result.statistics.viewCount),
-// 			likes: Number.parseInt(result.statistics.likeCount),
-// 			dislikes: Number.parseInt(result.statistics.dislikeCount),
-// 			html: result.player.embedHtml,
-// 		},
-// 	};
-// };
 
 export default Video;

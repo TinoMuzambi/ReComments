@@ -18,17 +18,21 @@ export interface ContextProps {
 }
 
 export interface VideoProps {
-	title: string;
-	id: string;
-	date: string;
-	description: string;
-	channel: string;
-	thumbnail: string;
-	embeddable: boolean;
-	views: number;
-	likes: number;
-	dislikes: number;
-	html: string;
+	snippet: {
+		title: string;
+		id: string;
+		publishedAt: string;
+		description: string;
+		thumbnails: {
+			maxres: {
+				url: string;
+			};
+		};
+		channelTitle: string;
+	};
+	status: { embeddable: boolean };
+	statistics: { viewCount: number; likeCount: number; dislikeCount: number };
+	player: { embedHtml: string };
 }
 
 export interface FormProps {
