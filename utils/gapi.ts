@@ -21,25 +21,29 @@ export function loadClient() {
 // Make sure the client is loaded and sign-in is complete before calling this method.
 export function execute(
 	videoId: string,
-	setResults: Function,
-	setFetching: Function,
-	setNoResults: Function
+	fullPath: boolean,
+	setResults?: Function,
+	setFetching?: Function,
+	setNoResults?: Function
 ) {
 	const start = videoId.indexOf("v=") + 2;
 	return gapi.client.youtube.videos
 		.list({
 			part: ["snippet,statistics,player,status"],
-			id: [videoId.substring(start, start + 11)],
+			id: [fullPath ? videoId.substring(start, start + 11) : videoId],
 		})
 		.then(
 			function (response: any) {
-				setResults(response.result.items);
-				setFetching(false);
-				if (response.result.pageInfo.totalResults === 0) setNoResults(true);
-				else setNoResults(false);
+				if (setResults) setResults(response.result.items);
+				if (setFetching) setFetching(false);
+				if (response.result.pageInfo.totalResults === 0) {
+					if (setNoResults) setNoResults(true);
+				} else {
+					if (setNoResults) setNoResults(false);
+				}
 			},
 			function (err: string) {
-				setResults(err);
+				if (setResults) setResults(err);
 			}
 		);
 }

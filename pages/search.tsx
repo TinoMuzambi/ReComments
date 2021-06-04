@@ -25,7 +25,7 @@ const Search: React.FC = () => {
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		setFetching(true);
-		execute(url, setResults, setFetching, setNoResults);
+		execute(url, true, setResults, setFetching, setNoResults);
 	};
 
 	return (
@@ -59,19 +59,6 @@ const Search: React.FC = () => {
 								key={result.id}
 								href={{
 									pathname: `/video/${result.id}`,
-									query: {
-										id: result.id,
-										title: result.snippet.title,
-										date: result.snippet.publishedAt,
-										description: result.snippet.description,
-										channel: result.snippet.channelTitle,
-										thumbnail: result.snippet.thumbnails.maxres.url,
-										embeddable: result.status.embeddable === "true",
-										views: Number.parseInt(result.statistics.viewCount),
-										likes: Number.parseInt(result.statistics.likeCount),
-										dislikes: Number.parseInt(result.statistics.dislikeCount),
-										html: result.player.embedHtml,
-									},
 								}}
 							>
 								<a>

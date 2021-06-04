@@ -4,37 +4,56 @@ import Autolinker from "autolinker";
 import { BiLike, BiDislike } from "react-icons/bi";
 import { VscEye } from "react-icons/vsc";
 import { MdDateRange } from "react-icons/md";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { VideoProps } from "../../interfaces";
 import Meta from "../../components/Meta";
+import { execute } from "../../utils/gapi";
 
-const Video: React.FC<VideoProps> = ({
-	title,
-	id,
-	date,
-	description,
-	channel,
-	thumbnail,
-	embeddable,
-	views,
-	likes,
-	dislikes,
-	html,
-}) => {
+const Video: React.FC = () => {
+	const [result, setResult] = useState<any>();
+	const router = useRouter();
+
+	useEffect(() => {
+		const getRes: Function = async () => {
+			const url = router.query.url as string;
+			await execute(url, false, (res: any) => {
+				setResult(res);
+			});
+		};
+		getRes();
+	}, []);
+
+	if (!result)
+		return (
+			<div className="error-holder">
+				<img
+					src="https://a.storyblok.com/f/114267/1222x923/8898eb61f4/error.png"
+					alt="error"
+					className="error-image"
+				/>
+				<h1 className="error">Loading...</h1>
+			</div>
+		);
 	return (
 		<>
 			<Meta
-				title={`${title} | ReComments`}
-				description={`Comment on '${title}' from ${channel} on ReComments!`}
-				url={`https://re-comments.vercel.app/video/${id}`}
+				title={`${result[0].snippet.title} | ReComments`}
+				description={`Comment on '${result[0].snippet.title}' from ${result[0].snippet.channelTitle} on ReComments!`}
+				url={`https://re-comments.vercel.app/video/${result[0].id}`}
 			/>
 			<main className="video-holder">
-				<h1 className="title">{title}</h1>
-				{embeddable ? (
-					<div className="player">{parse(html)}</div>
+				<h1 className="title">{result[0].snippet.title}</h1>
+				{result[0].status.embeddable ? (
+					<div className="player">{parse(result[0].player.embedHtml)}</div>
 				) : (
 					<div className="player">
-						<img src={thumbnail} alt={title} className="thumbnail" />
+						<img
+							src={result[0].snippet.thumbnails.maxres.url}
+							alt={result[0].snippet.title}
+							className="thumbnail"
+						/>
 					</div>
 				)}
 				<div className="stats">
@@ -42,31 +61,33 @@ const Video: React.FC<VideoProps> = ({
 						<span className="icon">
 							<VscEye />
 						</span>
-						<p className="text">{views}</p>
+						<p className="text">{result[0].statistics.viewCount}</p>
 					</div>
 					<div className="stat">
 						<span className="icon">
 							<BiLike />
 						</span>
-						<p className="text">{likes}</p>
+						<p className="text">{result[0].statistics.likeCount}</p>
 					</div>
 					<div className="stat">
 						<span className="icon">
 							<BiDislike />
 						</span>{" "}
-						<p className="text">{dislikes}</p>
+						<p className="text">{result[0].statistics.dislikeCount}</p>
 					</div>
 					<div className="stat">
 						<span className="icon">
 							<MdDateRange />
 						</span>{" "}
-						<p className="text">{new Date(date).toLocaleDateString()}</p>
+						<p className="text">
+							{new Date(result[0].snippet.publishedAt).toLocaleDateString()}
+						</p>
 					</div>
 				</div>
-				<h3 className="uploader">{channel}</h3>
+				<h3 className="uploader">{result[0].snippet.channelTitle}</h3>
 				<p className="desc">
 					{parse(
-						Autolinker.link(description as string, {
+						Autolinker.link(result[0].snippet.description as string, {
 							className: "embed-link",
 						})
 					)}
@@ -76,22 +97,26 @@ const Video: React.FC<VideoProps> = ({
 	);
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-	return {
-		props: {
-			title: context.query.title,
-			id: context.query.id,
-			date: context.query.date,
-			description: context.query.description,
-			channel: context.query.channel,
-			thumbnail: context.query.thumbnail,
-			embeddable: context.query.embeddable,
-			views: context.query.views,
-			likes: context.query.likes,
-			dislikes: context.query.dislikes,
-			html: context.query.html,
-		},
-	};
-};
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+// 	const url = context.query.url as string;
+// 	let result: any;
+// 	execute(url, (res: any) => (result = res));
+// 	console.log(result);
+// 	return {
+// 		props: {
+// 			id: result.id,
+// 			title: result.snippet.title,
+// 			date: result.snippet.publishedAt,
+// 			description: result.snippet.description,
+// 			channel: result.snippet.channelTitle,
+// 			thumbnail: result.snippet.thumbnails.maxres.url,
+// 			embeddable: result.status.embeddable === "true",
+// 			views: Number.parseInt(result.statistics.viewCount),
+// 			likes: Number.parseInt(result.statistics.likeCount),
+// 			dislikes: Number.parseInt(result.statistics.dislikeCount),
+// 			html: result.player.embedHtml,
+// 		},
+// 	};
+// };
 
 export default Video;
