@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 import { VideoProps } from "../../interfaces";
 import Meta from "../../components/Meta";
-import { execute } from "../../utils/gapi";
+import { loadClient, execute } from "../../utils/gapi";
 
 const Video: React.FC = () => {
 	const [result, setResult] = useState<VideoProps[]>();
@@ -17,9 +17,15 @@ const Video: React.FC = () => {
 	useEffect(() => {
 		const getRes: Function = async () => {
 			const url = router.query.url as string;
-			await execute(url, false, (res: any) => {
-				setResult(res);
-			});
+
+			try {
+				await loadClient();
+				await execute(url, false, (res: any) => {
+					setResult(res);
+				});
+			} catch (error) {
+				router.push("/search");
+			}
 		};
 		getRes();
 	}, []);
