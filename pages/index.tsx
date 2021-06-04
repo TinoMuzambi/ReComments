@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
 import {
-	/*authenticate,*/ updateSignInStatus,
+	getSignedIn updateSignInStatus,
 	handleAuthClick,
 } from "../utils/gapi";
 
@@ -13,10 +13,19 @@ export default function Home() {
 	const [loading, setLoading] = useState(false);
 	const { setSignedIn, signedIn } = useContext(AppContext);
 
+	const updateContext: Function = () => {
+		if (setSignedIn) setSignedIn(true);
+		router.push("/search");
+		setLoading(false);
+	};
+
+	const cancelLoading: Function = () => {
+		setLoading(false);
+	};
+
 	useEffect(() => {
 		setLoading(true);
 		gapi.load("client:auth2", function () {
-			// gapi.auth2.init({ client_id: process.env.GAPP_CLIENT_ID });
 			gapi.client
 				.init({
 					apiKey: process.env.GAPI_API_KEY,
@@ -27,25 +36,19 @@ export default function Home() {
 					scope: "profile",
 				})
 				.then(() => {
-					gapi.auth2.getAuthInstance().isSignedIn.listen(() =>
-						updateSignInStatus(
-							gapi.auth2.getAuthInstance().isSignedIn.get(),
-							() => {
-								if (setSignedIn) setSignedIn(true);
-								router.push("/search");
-								setLoading(false);
-							}
-						)
-					);
+					gapi.auth2
+						.getAuthInstance()
+						.isSignedIn.listen(() =>
+							updateSignInStatus(
+								getSignedIn(),
+								updateContext
+							)
+						);
 
 					updateSignInStatus(
-						gapi.auth2.getAuthInstance().isSignedIn.get(),
-						() => {
-							if (setSignedIn) setSignedIn(true);
-							router.push("/search");
-							setLoading(false);
-						},
-						() => setLoading(false)
+						getSignedIn(),
+						updateContext,
+						cancelLoading
 					);
 				});
 		});

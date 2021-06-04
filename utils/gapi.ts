@@ -1,9 +1,6 @@
-// export function authenticate(callback?: Function) {
-// 	return gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignIn);
-// }
-// export const updateSignIn = () => {
-// 	updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-// };
+export const getSignedIn: Function = (): boolean => {
+	return gapi.auth2.getAuthInstance().isSignedIn.get();
+};
 
 export const updateSignInStatus = (
 	isSignedIn: boolean,
