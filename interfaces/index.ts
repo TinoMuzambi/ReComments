@@ -12,11 +12,6 @@ export interface MetaProps {
 	image?: string;
 }
 
-export interface ContextProps {
-	signedIn: boolean;
-	setSignedIn?: Function;
-}
-
 export interface VideoProps {
 	id: string;
 	snippet: {
@@ -49,14 +44,17 @@ export interface IResource extends Document {
 	datePublished: String | Date;
 }
 
-export interface Auth {
+export interface ContextProps {
 	signedIn: boolean;
+	user: {} | null;
+	setSignedIn?: Function;
+	setUser?: Function;
 }
 
 export type Actions = {
 	type: "UPDATE_SIGNED_IN" | "SET_USER";
 	auth: boolean;
-	user?: {} | null;
+	user: {} | null;
 };
 
-export type State = Auth;
+export type State = { signedIn: boolean; user: {} | null };
