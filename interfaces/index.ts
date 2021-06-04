@@ -64,4 +64,4 @@ export type Actions = {
 	user: User;
 };
 
-export type State = { signedIn: boolean; user: {} | null };
+export type State = { signedIn: boolean; user: User };
