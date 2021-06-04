@@ -2,6 +2,7 @@ import { useContext } from "react";
 import Link from "next/link";
 
 import { AppContext } from "../context/AppContext";
+import { handleSignoutClick } from "../utils/gapi";
 
 const Nav: React.FC = () => {
 	const { setSignedIn, signedIn } = useContext(AppContext);
@@ -14,14 +15,7 @@ const Nav: React.FC = () => {
 					<Link href="/">
 						<a className="link">Home</a>
 					</Link>
-					<li
-						className="link"
-						onClick={() => {
-							if (signedIn) {
-								if (setSignedIn) setSignedIn(false);
-							}
-						}}
-					>
+					<li className="link" onClick={handleSignoutClick}>
 						Sign Out
 					</li>
 					{/* <Link href="/">

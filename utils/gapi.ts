@@ -1,14 +1,36 @@
-export function authenticate(callback: Function) {
-	return gapi.auth2
-		.getAuthInstance()
-		.signIn({ scope: "https://www.googleapis.com/auth/youtube.readonly" })
-		.then(
-			function () {
-				callback();
-			},
-			function () {}
-		);
+import React from "react";
+
+// export function authenticate(callback?: Function) {
+// 	return gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignIn);
+// }
+// export const updateSignIn = () => {
+// 	updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+// };
+
+export const updateSignInStatus = (isSignedIn: boolean) => {
+	if (isSignedIn) makeApiCall();
+};
+
+export function handleAuthClick() {
+	gapi.auth2.getAuthInstance().signIn();
 }
+
+export function handleSignoutClick() {
+	gapi.auth2.getAuthInstance().signOut();
+}
+
+// Load the API and make an API call.  Display the results on the screen.
+function makeApiCall() {
+	gapi.client.people.people
+		.get({
+			resourceName: "people/me",
+			personFields: "names,emailAddresses,photos",
+		})
+		.then(function (resp) {
+			console.log(resp);
+		});
+}
+
 export function loadClient() {
 	gapi.client.setApiKey(process.env.GAPP_API_KEY || "");
 	return gapi.client

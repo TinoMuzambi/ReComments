@@ -3,7 +3,10 @@ import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
-import { authenticate, loadClient } from "../utils/gapi";
+import {
+	/*authenticate,*/ updateSignInStatus,
+	handleAuthClick,
+} from "../utils/gapi";
 
 export default function Home() {
 	const router = useRouter();
@@ -11,7 +14,21 @@ export default function Home() {
 
 	useEffect(() => {
 		gapi.load("client:auth2", function () {
-			gapi.auth2.init({ client_id: process.env.GAPP_CLIENT_ID });
+			// gapi.auth2.init({ client_id: process.env.GAPP_CLIENT_ID });
+			gapi.client
+				.init({
+					apiKey: process.env.GAPI_API_KEY,
+					discoveryDocs: [
+						"https://people.googleapis.com/$discovery/rest?version=v1",
+					],
+					clientId: process.env.GAPP_CLIENT_ID,
+					scope: "profile",
+				})
+				.then(() => {
+					gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
+
+					updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+				});
 		});
 	}, []);
 
@@ -19,17 +36,14 @@ export default function Home() {
 		if (signedIn) router.push("/search");
 	}, [signedIn]);
 
-	const signIn = () => {
-		authenticate(() => {
-			if (setSignedIn) setSignedIn(true);
-			router.push("/search");
-		}).then(loadClient);
-	};
+	// const signIn = () => {
+	// 	authenticate();
+	// };
 
 	return (
 		<main className="main">
 			<h1 className="title">ReComments</h1>
-			<button className="sign-in" onClick={signIn}>
+			<button className="sign-in" onClick={handleAuthClick}>
 				<span>
 					<FcGoogle />
 				</span>
