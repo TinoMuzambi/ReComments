@@ -59,13 +59,17 @@ export function execute(
 			id: [fullPath ? videoId.substring(start, start + 11) : videoId],
 		})
 		.then(
-			function (response: any) {
+			function (
+				response: gapi.client.Response<gapi.client.youtube.VideoListResponse>
+			) {
 				if (setResults) setResults(response.result.items);
 				if (setFetching) setFetching(false);
-				if (response.result.pageInfo.totalResults === 0) {
-					if (setNoResults) setNoResults(true);
-				} else {
-					if (setNoResults) setNoResults(false);
+				if (response.result.pageInfo) {
+					if (response.result.pageInfo.totalResults === 0) {
+						if (setNoResults) setNoResults(true);
+					} else {
+						if (setNoResults) setNoResults(false);
+					}
 				}
 			},
 			function (err: string) {
