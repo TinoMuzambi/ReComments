@@ -12,10 +12,15 @@ import {
 export default function Home() {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const { setSignedIn, signedIn } = useContext(AppContext);
+	const { setSignedIn, signedIn, setUser } = useContext(AppContext);
 
-	const updateContext: Function = () => {
-		if (setSignedIn) setSignedIn(true);
+	const updateContext: Function = (
+		res: gapi.client.Response<gapi.client.people.Person>
+	) => {
+		if (setSignedIn) {
+			setSignedIn(true);
+			if (setUser) setUser(res.result);
+		}
 		router.push("/search");
 		setLoading(false);
 	};
