@@ -5,8 +5,13 @@
 // 	updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
 // };
 
-export const updateSignInStatus = (isSignedIn: boolean, cb: Function) => {
+export const updateSignInStatus = (
+	isSignedIn: boolean,
+	cb: Function,
+	cancelLoading?: Function
+) => {
 	if (isSignedIn) makeApiCall(cb);
+	else if (cancelLoading) cancelLoading();
 };
 
 export function handleAuthClick() {

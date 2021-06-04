@@ -44,7 +44,8 @@ export default function Home() {
 							if (setSignedIn) setSignedIn(true);
 							router.push("/search");
 							setLoading(false);
-						}
+						},
+						() => setLoading(false)
 					);
 				});
 		});
