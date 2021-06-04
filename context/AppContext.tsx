@@ -5,6 +5,7 @@ import { ContextProps } from "../interfaces";
 
 const initialState = {
 	signedIn: false,
+	user: null,
 };
 
 export const AppContext = createContext<ContextProps>(initialState);

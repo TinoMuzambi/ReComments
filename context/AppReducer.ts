@@ -7,6 +7,12 @@ const Reducer = (state: State, action: Actions) => {
 				...state,
 				signedIn: action.auth,
 			};
+		case "SET_USER": {
+			return {
+				...state,
+				user: action.user,
+			};
+		}
 		default:
 			return state;
 	}

@@ -54,8 +54,9 @@ export interface Auth {
 }
 
 export type Actions = {
-	type: "UPDATE_SIGNED_IN";
+	type: "UPDATE_SIGNED_IN" | "SET_USER";
 	auth: boolean;
+	user?: {} | null;
 };
 
 export type State = Auth;
