@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
 
@@ -10,9 +10,11 @@ import {
 
 export default function Home() {
 	const router = useRouter();
+	const [loading, setLoading] = useState(false);
 	const { setSignedIn, signedIn } = useContext(AppContext);
 
 	useEffect(() => {
+		setLoading(true);
 		gapi.load("client:auth2", function () {
 			// gapi.auth2.init({ client_id: process.env.GAPP_CLIENT_ID });
 			gapi.client
@@ -31,6 +33,7 @@ export default function Home() {
 							() => {
 								if (setSignedIn) setSignedIn(true);
 								router.push("/search");
+								setLoading(false);
 							}
 						)
 					);
@@ -40,6 +43,7 @@ export default function Home() {
 						() => {
 							if (setSignedIn) setSignedIn(true);
 							router.push("/search");
+							setLoading(false);
 						}
 					);
 				});
@@ -53,6 +57,18 @@ export default function Home() {
 	// const signIn = () => {
 	// 	authenticate();
 	// };
+
+	if (loading)
+		return (
+			<div className="error-holder">
+				<img
+					src="https://a.storyblok.com/f/114267/1222x923/8898eb61f4/error.png"
+					alt="error"
+					className="error-image"
+				/>
+				<h1 className="error">Loading...</h1>
+			</div>
+		);
 
 	return (
 		<main className="main">
