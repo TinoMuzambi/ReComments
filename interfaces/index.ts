@@ -18,9 +18,9 @@ export interface ContextProps {
 }
 
 export interface VideoProps {
+	id: string;
 	snippet: {
 		title: string;
-		id: string;
 		publishedAt: string;
 		description: string;
 		thumbnails: {
