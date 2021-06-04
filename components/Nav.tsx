@@ -5,7 +5,7 @@ import { AppContext } from "../context/AppContext";
 import { handleSignoutClick } from "../utils/gapi";
 
 const Nav: React.FC = () => {
-	const { setSignedIn, signedIn } = useContext(AppContext);
+	const { setSignedIn } = useContext(AppContext);
 
 	const handleSignOut = () => {
 		if (setSignedIn) setSignedIn(false);
