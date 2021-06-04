@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
 import {
-	getSignedIn updateSignInStatus,
+	getSignedIn,
+	updateSignInStatus,
 	handleAuthClick,
 } from "../utils/gapi";
 
@@ -39,17 +40,10 @@ export default function Home() {
 					gapi.auth2
 						.getAuthInstance()
 						.isSignedIn.listen(() =>
-							updateSignInStatus(
-								getSignedIn(),
-								updateContext
-							)
+							updateSignInStatus(getSignedIn(), updateContext)
 						);
 
-					updateSignInStatus(
-						getSignedIn(),
-						updateContext,
-						cancelLoading
-					);
+					updateSignInStatus(getSignedIn(), updateContext, cancelLoading);
 				});
 		});
 	}, []);
@@ -57,10 +51,6 @@ export default function Home() {
 	useEffect(() => {
 		if (signedIn) router.push("/search");
 	}, [signedIn]);
-
-	// const signIn = () => {
-	// 	authenticate();
-	// };
 
 	if (loading)
 		return (
