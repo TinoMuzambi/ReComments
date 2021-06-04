@@ -7,6 +7,11 @@ import { handleSignoutClick } from "../utils/gapi";
 const Nav: React.FC = () => {
 	const { setSignedIn, signedIn } = useContext(AppContext);
 
+	const handleSignOut = () => {
+		if (setSignedIn) setSignedIn(false);
+		handleSignoutClick();
+	};
+
 	return (
 		<header className="nav-header">
 			<nav className="nav">
@@ -15,7 +20,7 @@ const Nav: React.FC = () => {
 					<Link href="/">
 						<a className="link">Home</a>
 					</Link>
-					<li className="link" onClick={handleSignoutClick}>
+					<li className="link" onClick={handleSignOut}>
 						Sign Out
 					</li>
 					{/* <Link href="/">
