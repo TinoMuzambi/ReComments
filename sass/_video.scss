@@ -33,11 +33,15 @@
 			align-items: center;
 			justify-content: center;
 			text-align: center;
+
+			.icon {
+				color: $primary-color;
+			}
 		}
 	}
 
 	.uploader {
-		font-size: 1.5rem;
+		font-size: 1.8rem;
 
 		@include mq(500px) {
 			font-size: 1rem;

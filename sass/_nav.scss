@@ -1,4 +1,7 @@
 .nav-header {
+	position: sticky;
+	top: 0;
+
 	.nav {
 		background: $primary-color;
 		padding: 1rem;
