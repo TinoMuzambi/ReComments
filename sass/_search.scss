@@ -23,7 +23,7 @@
 			gap: 7rem;
 			margin-top: 1rem;
 			background: white;
-			padding: 0.5rem;
+			padding: 1rem;
 			border-radius: 1rem;
 			cursor: pointer;
 			position: relative;
@@ -59,7 +59,7 @@
 
 				.bottom {
 					position: absolute;
-					bottom: 0;
+					bottom: 1rem;
 
 					@include mq(768px) {
 						position: static;
