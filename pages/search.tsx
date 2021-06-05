@@ -57,7 +57,6 @@ const Search: React.FC = () => {
 				)}
 				{results.length > 0 && !fetching && (
 					<section className="results">
-						<h1 className="title">Search Results</h1>
 						{results.map((result: any) => (
 							<Link
 								key={result.id}

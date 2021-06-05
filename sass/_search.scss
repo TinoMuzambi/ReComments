@@ -13,15 +13,15 @@
 	.results {
 		.title {
 			font-size: 2rem;
-			margin: 2rem 0 0 1rem;
 		}
 
 		.result {
 			display: flex;
 			justify-content: flex-start;
 			align-items: flex-start;
-			gap: 7rem;
-			margin-top: 1rem;
+			gap: 2rem;
+			margin: 2rem auto 0;
+			width: fit-content;
 			background: white;
 			padding: 1rem;
 			border-radius: 1rem;
