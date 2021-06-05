@@ -22,11 +22,11 @@
 			gap: 2rem;
 			margin: 2rem auto 0;
 			width: fit-content;
-			background: white;
 			padding: 1rem;
-			border-radius: 1rem;
 			cursor: pointer;
 			position: relative;
+			border-top: 1px solid black;
+			border-bottom: 1px solid black;
 
 			@include mq(768px) {
 				margin: 2rem auto 0;
