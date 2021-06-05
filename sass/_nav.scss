@@ -4,19 +4,29 @@
 		padding: 1rem;
 
 		.links {
-			display: flex;
-			align-items: center;
-			justify-content: space-around;
+			@include flexAllRow;
+			justify-content: space-between;
 			list-style: none;
 			color: white;
 
-			.link {
-				cursor: pointer;
-				position: relative;
+			.logo-holder {
+				.logo {
+					font-weight: 900;
+				}
+			}
 
-				&:hover,
-				&:focus {
-					transform: scale(0.9);
+			.links-holder {
+				@include flexAllRow;
+				gap: 2rem;
+
+				.link {
+					cursor: pointer;
+					position: relative;
+
+					&:hover,
+					&:focus {
+						transform: scale(0.9);
+					}
 				}
 			}
 
