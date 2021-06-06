@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import Meta from "../../components/Meta";
+import Player from "../../components/Player";
 import { loadClient, execute } from "../../utils/gapi";
 
 const Video: React.FC = () => {
@@ -53,25 +54,9 @@ const Video: React.FC = () => {
 				/>
 				<main className="video-holder">
 					<h1 className="title">{result.snippet.title}</h1>
-					{result.status.embeddable ? (
-						<div className="player">
-							{parse(result.player.embedHtml as string)}
-						</div>
-					) : result.snippet.thumbnails && result.snippet.thumbnails.maxres ? (
-						<div className="player">
-							<img
-								src={result.snippet.thumbnails.maxres.url}
-								alt={result.snippet.title}
-								className="thumbnail"
-							/>
-						</div>
-					) : (
-						<img
-							src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
-							alt={result.snippet.title}
-							className="thumbnail"
-						/>
-					)}
+
+					<Player result={result} />
+
 					<div className="stats">
 						<div className="stat">
 							<span className="icon">
