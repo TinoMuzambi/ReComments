@@ -1,4 +1,4 @@
-const Result: React.FC<any> = ({ result }) => {
+const Result: React.FC<gapi.client.youtube.Video | any> = ({ result }) => {
 	return (
 		<div className="result">
 			<img
