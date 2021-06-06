@@ -36,7 +36,7 @@ export interface FormProps {
 	setUrl: Function;
 }
 
-export interface Comment {
+export interface CommentModel {
 	authorId: string;
 	text: string;
 	createdAt: Date;

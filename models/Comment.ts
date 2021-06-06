@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import { Comment } from "../interfaces";
+import { CommentModel } from "../interfaces";
 
 const CommentSchema: Schema = new mongoose.Schema(
 	{
@@ -24,4 +24,4 @@ const CommentSchema: Schema = new mongoose.Schema(
 );
 
 export default mongoose.models.Comment ||
-	mongoose.model<Comment>("Comment", CommentSchema);
+	mongoose.model<CommentModel>("Comment", CommentSchema);
