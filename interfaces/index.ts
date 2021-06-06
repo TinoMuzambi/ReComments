@@ -36,12 +36,11 @@ export interface FormProps {
 	setUrl: Function;
 }
 
-export interface IResource extends Document {
-	title: string;
-	url: string;
-	date: Date;
-	description: String;
-	datePublished: String | Date;
+export interface Comment {
+	authorId: string;
+	text: string;
+	createdAt: Date;
+	updatedAt: Date;
 }
 
 type User = gapi.client.people.Person | null;
