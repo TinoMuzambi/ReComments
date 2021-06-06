@@ -10,7 +10,7 @@ import Meta from "../../components/Meta";
 import { loadClient, execute } from "../../utils/gapi";
 
 const Video: React.FC = () => {
-	const [result, setResult] = useState<gapi.client.youtube.Video[]>();
+	const [result, setResult] = useState<gapi.client.youtube.Video>();
 	const router = useRouter();
 
 	useEffect(() => {
@@ -20,7 +20,7 @@ const Video: React.FC = () => {
 			try {
 				await loadClient();
 				await execute(url, false, (res: any) => {
-					setResult(res);
+					setResult(res[0]);
 				});
 			} catch (error) {
 				router.push("/search");
@@ -42,65 +42,90 @@ const Video: React.FC = () => {
 				</div>
 			</main>
 		);
-	return (
-		<>
-			<Meta
-				title={`${result[0].snippet.title} | ReComments`}
-				description={`Comment on '${result[0].snippet.title}' from ${result[0].snippet.channelTitle} on ReComments!`}
-				url={`https://re-comments.vercel.app/video/${result[0].id}`}
-			/>
-			<main className="video-holder">
-				<h1 className="title">{result[0].snippet.title}</h1>
-				{result[0].status.embeddable ? (
-					<div className="player">{parse(result[0].player.embedHtml)}</div>
-				) : (
-					<div className="player">
+
+	if (result.snippet && result.status && result.player && result.statistics)
+		return (
+			<>
+				<Meta
+					title={`${result.snippet.title} | ReComments`}
+					description={`Comment on '${result.snippet.title}' from ${result.snippet.channelTitle} on ReComments!`}
+					url={`https://re-comments.vercel.app/video/${result.id}`}
+				/>
+				<main className="video-holder">
+					<h1 className="title">{result.snippet.title}</h1>
+					{result.status.embeddable ? (
+						<div className="player">
+							{parse(result.player.embedHtml as string)}
+						</div>
+					) : result.snippet.thumbnails && result.snippet.thumbnails.maxres ? (
+						<div className="player">
+							<img
+								src={result.snippet.thumbnails.maxres.url}
+								alt={result.snippet.title}
+								className="thumbnail"
+							/>
+						</div>
+					) : (
 						<img
-							src={result[0].snippet.thumbnails.maxres.url}
-							alt={result[0].snippet.title}
+							src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
+							alt={result.snippet.title}
 							className="thumbnail"
 						/>
-					</div>
-				)}
-				<div className="stats">
-					<div className="stat">
-						<span className="icon">
-							<VscEye />
-						</span>
-						<p className="text">{result[0].statistics.viewCount}</p>
-					</div>
-					<div className="stat">
-						<span className="icon">
-							<BiLike />
-						</span>
-						<p className="text">{result[0].statistics.likeCount}</p>
-					</div>
-					<div className="stat">
-						<span className="icon">
-							<BiDislike />
-						</span>{" "}
-						<p className="text">{result[0].statistics.dislikeCount}</p>
-					</div>
-					<div className="stat">
-						<span className="icon">
-							<MdDateRange />
-						</span>{" "}
-						<p className="text">
-							{new Date(result[0].snippet.publishedAt).toLocaleDateString()}
-						</p>
-					</div>
-				</div>
-				<h3 className="uploader">{result[0].snippet.channelTitle}</h3>
-				<p className="desc">
-					{parse(
-						Autolinker.link(result[0].snippet.description as string, {
-							className: "embed-link",
-						})
 					)}
-				</p>
+					<div className="stats">
+						<div className="stat">
+							<span className="icon">
+								<VscEye />
+							</span>
+							<p className="text">{result.statistics.viewCount}</p>
+						</div>
+						<div className="stat">
+							<span className="icon">
+								<BiLike />
+							</span>
+							<p className="text">{result.statistics.likeCount}</p>
+						</div>
+						<div className="stat">
+							<span className="icon">
+								<BiDislike />
+							</span>{" "}
+							<p className="text">{result.statistics.dislikeCount}</p>
+						</div>
+						<div className="stat">
+							<span className="icon">
+								<MdDateRange />
+							</span>{" "}
+							<p className="text">
+								{new Date(
+									result.snippet.publishedAt as string | number
+								).toLocaleDateString()}
+							</p>
+						</div>
+					</div>
+					<h3 className="uploader">{result.snippet.channelTitle}</h3>
+					<p className="desc">
+						{parse(
+							Autolinker.link(result.snippet.description as string, {
+								className: "embed-link",
+							})
+						)}
+					</p>
+				</main>
+			</>
+		);
+	else
+		return (
+			<main className="main">
+				<div className="error-holder">
+					<img
+						src="https://a.storyblok.com/f/114267/1222x923/8898eb61f4/error.png"
+						alt="error"
+						className="error-image"
+					/>
+					<h1 className="error">Loading...</h1>
+				</div>
 			</main>
-		</>
-	);
+		);
 };
 
 export default Video;
