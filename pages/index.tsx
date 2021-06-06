@@ -12,7 +12,7 @@ import {
 export default function Home() {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const { setSignedIn, signedIn, setUser, user } = useContext(AppContext);
+	const { setSignedIn, signedIn, setUser /*user*/ } = useContext(AppContext);
 
 	const updateContext: Function = (
 		res: gapi.client.Response<gapi.client.people.Person>
