@@ -11,7 +11,7 @@ import Meta from "../../components/Meta";
 import { loadClient, execute } from "../../utils/gapi";
 
 const Video: React.FC = () => {
-	const [result, setResult] = useState<VideoProps[]>();
+	const [result, setResult] = useState<gapi.client.youtube.Video[]>();
 	const router = useRouter();
 
 	useEffect(() => {
