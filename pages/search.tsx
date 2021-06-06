@@ -2,12 +2,13 @@ import { FormEvent, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import Meta from "../components/Meta";
-import Loader from "../components/Loader";
 import { AppContext } from "../context/AppContext";
 import { loadClient, execute } from "../utils/gapi";
+import Meta from "../components/Meta";
+import Loader from "../components/Loader";
 import Result from "../components/Result";
 import Form from "../components/Form";
+import AppState from "../components/AppState";
 
 const Search: React.FC = () => {
 	const [results, setResults] = useState([]);
@@ -45,16 +46,7 @@ const Search: React.FC = () => {
 					<Form handleSubmit={handleSubmit} url={url} setUrl={setUrl} />
 				</section>
 				{fetching && <Loader />}
-				{noResults && !fetching && (
-					<div className="error-holder">
-						<img
-							src="https://a.storyblok.com/f/114267/1222x923/8898eb61f4/error.png"
-							alt="error"
-							className="error-image"
-						/>
-						<h1 className="error">No results found!</h1>
-					</div>
-				)}
+				{noResults && !fetching && <AppState message="No results found!" />}
 				{results.length > 0 && !fetching && (
 					<section className="results">
 						{results.map((result: any) => (

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 import Meta from "../../components/Meta";
 import Player from "../../components/Player";
-import AppState message="Loading..." from "../../components/AppState";
+import AppState from "../../components/AppState";
 import { loadClient, execute } from "../../utils/gapi";
 
 const Video: React.FC = () => {
