@@ -1,4 +1,4 @@
-const Loading: React.FC = () => {
+const Loading: React.FC<{ message: string }> = ({ message }) => {
 	return (
 		<main className="main">
 			<div className="error-holder">
@@ -7,7 +7,7 @@ const Loading: React.FC = () => {
 					alt="error"
 					className="error-image"
 				/>
-				<h1 className="error">Loading...</h1>
+				<h1 className="error">{message}</h1>
 			</div>
 		</main>
 	);

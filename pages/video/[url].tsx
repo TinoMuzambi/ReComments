@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 import Meta from "../../components/Meta";
 import Player from "../../components/Player";
-import Loading from "../../components/Loading";
+import AppState message="Loading..." from "../../components/AppState";
 import { loadClient, execute } from "../../utils/gapi";
 
 const Video: React.FC = () => {
@@ -31,7 +31,7 @@ const Video: React.FC = () => {
 		getRes();
 	}, []);
 
-	if (!result) return <Loading />;
+	if (!result) return <AppState message="Loading..." />;
 
 	if (result.snippet && result.status && result.player && result.statistics)
 		return (
@@ -87,7 +87,7 @@ const Video: React.FC = () => {
 				</main>
 			</>
 		);
-	else return <Loading />;
+	else return <AppState message="Loading..." />;
 };
 
 export default Video;
