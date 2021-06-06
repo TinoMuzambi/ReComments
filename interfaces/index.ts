@@ -43,6 +43,14 @@ export interface Comment {
 	updatedAt: Date;
 }
 
+export interface UserModel {
+	userId: string;
+	email: string;
+	shortName: string;
+	name: string;
+	photoUrl: string;
+}
+
 type User = gapi.client.people.Person | null;
 
 export interface ContextProps {
