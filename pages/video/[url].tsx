@@ -1,14 +1,10 @@
-import parse from "html-react-parser";
-import Autolinker from "autolinker";
-import { BiLike, BiDislike } from "react-icons/bi";
-import { VscEye } from "react-icons/vsc";
-import { MdDateRange } from "react-icons/md";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import Meta from "../../components/Meta";
 import Player from "../../components/Player";
 import AppState from "../../components/AppState";
+import Stats from "../../components/Stats";
 import { loadClient, execute } from "../../utils/gapi";
 
 const Video: React.FC = () => {
@@ -46,44 +42,7 @@ const Video: React.FC = () => {
 
 					<Player result={result} />
 
-					<div className="stats">
-						<div className="stat">
-							<span className="icon">
-								<VscEye />
-							</span>
-							<p className="text">{result.statistics.viewCount}</p>
-						</div>
-						<div className="stat">
-							<span className="icon">
-								<BiLike />
-							</span>
-							<p className="text">{result.statistics.likeCount}</p>
-						</div>
-						<div className="stat">
-							<span className="icon">
-								<BiDislike />
-							</span>{" "}
-							<p className="text">{result.statistics.dislikeCount}</p>
-						</div>
-						<div className="stat">
-							<span className="icon">
-								<MdDateRange />
-							</span>{" "}
-							<p className="text">
-								{new Date(
-									result.snippet.publishedAt as string | number
-								).toLocaleDateString()}
-							</p>
-						</div>
-					</div>
-					<h3 className="uploader">{result.snippet.channelTitle}</h3>
-					<p className="desc">
-						{parse(
-							Autolinker.link(result.snippet.description as string, {
-								className: "embed-link",
-							})
-						)}
-					</p>
+					<Stats result={result} />
 				</main>
 			</>
 		);
