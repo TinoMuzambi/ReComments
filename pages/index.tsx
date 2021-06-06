@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, MouseEventHandler } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
 
@@ -57,6 +57,13 @@ export default function Home() {
 		if (signedIn) router.push("/search");
 	}, [signedIn]);
 
+	const checkUserDb: Function = () => {};
+
+	const signIn: MouseEventHandler<HTMLButtonElement> = () => {
+		handleAuthClick();
+		checkUserDb();
+	};
+
 	if (loading)
 		return (
 			<main className="main">
@@ -74,7 +81,7 @@ export default function Home() {
 	return (
 		<main className="main">
 			<h1 className="title">ReComments</h1>
-			<button className="sign-in" onClick={handleAuthClick}>
+			<button className="sign-in" onClick={signIn}>
 				<span>
 					<FcGoogle />
 				</span>
