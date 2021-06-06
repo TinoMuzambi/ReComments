@@ -1,21 +1,29 @@
 import mongoose, { Schema } from "mongoose";
 
-import { Comment } from "../interfaces";
+import { UserModel } from "../interfaces";
 
-const CommentSchema: Schema = new mongoose.Schema(
+const UserSchema: Schema = new mongoose.Schema(
 	{
-		authorId: {
+		userId: {
 			type: String,
-			required: [true, "Comment needs an author."],
+			required: [true, "User needs an id."],
 			trim: true,
 		},
-		text: {
+		email: {
 			type: String,
-			required: [true, "Comment needs comment text."],
+			required: [true, "User needs an email."],
 		},
-		videoId: {
+		shortName: {
 			type: String,
-			ref: "Video",
+			required: [true, "User needs a shortname."],
+		},
+		name: {
+			type: String,
+			required: [true, "User needs a name."],
+		},
+		photoUrl: {
+			type: String,
+			required: [true, "User needs a photo url."],
 		},
 	},
 	{
@@ -23,5 +31,5 @@ const CommentSchema: Schema = new mongoose.Schema(
 	}
 );
 
-export default mongoose.models.Comment ||
-	mongoose.model<Comment>("Comment", CommentSchema);
+export default mongoose.models.User ||
+	mongoose.model<UserModel>("User", UserSchema);

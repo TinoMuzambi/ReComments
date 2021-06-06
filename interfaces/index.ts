@@ -49,6 +49,8 @@ export interface UserModel {
 	shortName: string;
 	name: string;
 	photoUrl: string;
+	createdAt: Date;
+	updatedAt: Date;
 }
 
 type User = gapi.client.people.Person | null;
