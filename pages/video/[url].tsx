@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 import Meta from "../../components/Meta";
 import Player from "../../components/Player";
+import Loading from "../../components/Loading";
 import { loadClient, execute } from "../../utils/gapi";
 
 const Video: React.FC = () => {
@@ -30,19 +31,7 @@ const Video: React.FC = () => {
 		getRes();
 	}, []);
 
-	if (!result)
-		return (
-			<main className="main">
-				<div className="error-holder">
-					<img
-						src="https://a.storyblok.com/f/114267/1222x923/8898eb61f4/error.png"
-						alt="error"
-						className="error-image"
-					/>
-					<h1 className="error">Loading...</h1>
-				</div>
-			</main>
-		);
+	if (!result) return <Loading />;
 
 	if (result.snippet && result.status && result.player && result.statistics)
 		return (
@@ -98,19 +87,7 @@ const Video: React.FC = () => {
 				</main>
 			</>
 		);
-	else
-		return (
-			<main className="main">
-				<div className="error-holder">
-					<img
-						src="https://a.storyblok.com/f/114267/1222x923/8898eb61f4/error.png"
-						alt="error"
-						className="error-image"
-					/>
-					<h1 className="error">Loading...</h1>
-				</div>
-			</main>
-		);
+	else return <Loading />;
 };
 
 export default Video;
