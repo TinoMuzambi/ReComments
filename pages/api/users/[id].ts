@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (method) {
 		case "GET":
 			try {
-				const user = await User.findById(id);
+				const user = await User.findOne({ userId: id });
 
 				if (!user) {
 					return res.status(404).json({ success: false });
