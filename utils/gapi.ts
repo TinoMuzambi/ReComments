@@ -49,7 +49,10 @@ export function execute(
 	setFetching?: Function,
 	setNoResults?: Function
 ) {
-	const start = videoId.indexOf("v=") + 2;
+	let start = videoId.indexOf("v=") + 2;
+	if (start === 1) {
+		start = videoId.length - 11;
+	}
 	return gapi.client.youtube.videos
 		.list({
 			part: ["snippet,statistics,player,status"],
