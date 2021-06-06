@@ -6,7 +6,6 @@ import { MdDateRange } from "react-icons/md";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { VideoProps } from "../../interfaces";
 import Meta from "../../components/Meta";
 import { loadClient, execute } from "../../utils/gapi";
 

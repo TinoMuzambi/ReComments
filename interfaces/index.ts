@@ -12,24 +12,6 @@ export interface MetaProps {
 	image?: string;
 }
 
-export interface VideoProps {
-	id: string;
-	snippet: {
-		title: string;
-		publishedAt: string;
-		description: string;
-		thumbnails: {
-			maxres: {
-				url: string;
-			};
-		};
-		channelTitle: string;
-	};
-	status: { embeddable: boolean };
-	statistics: { viewCount: number; likeCount: number; dislikeCount: number };
-	player: { embedHtml: string };
-}
-
 export interface FormProps {
 	handleSubmit: FormEventHandler<HTMLFormElement>;
 	url: string;
