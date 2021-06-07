@@ -53,10 +53,12 @@ export function execute(
 	if (start === 1) {
 		start = videoId.length - 11;
 	}
+	const path = fullPath ? videoId.substring(start, start + 11) : videoId;
+	console.log(path);
 	return gapi.client.youtube.videos
 		.list({
 			part: ["snippet,statistics,player,status"],
-			id: [fullPath ? videoId.substring(start, start + 11) : videoId],
+			id: [path],
 		})
 		.then(
 			function (
