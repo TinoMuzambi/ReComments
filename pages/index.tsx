@@ -47,7 +47,8 @@ export default function Home() {
 					});
 
 					updateSignInStatus(getSignedIn(), updateContext, cancelLoading);
-				});
+				})
+				.catch((error) => console.error(error));
 		});
 	}, []);
 
