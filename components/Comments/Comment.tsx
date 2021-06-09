@@ -7,7 +7,7 @@ const Comment: React.FC<CommentInterface | any> = ({ comment }) => {
 	const [opened, setOpened] = useState(false);
 	return (
 		<article className="comment">
-			<CommentContent comment={comment} reply={false} />
+			<CommentContent comment={comment} />
 			{comment.replies && (
 				<div className="expand">
 					<button className="view-more" onClick={() => setOpened(!opened)}>
@@ -16,7 +16,7 @@ const Comment: React.FC<CommentInterface | any> = ({ comment }) => {
 					</button>
 					{opened &&
 						comment.replies.map((reply: CommentInterface) => (
-							<CommentContent comment={reply} key={reply.id} reply={true} />
+							<CommentContent comment={reply} key={reply.id} />
 						))}
 				</div>
 			)}

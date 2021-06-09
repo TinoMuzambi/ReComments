@@ -5,7 +5,7 @@ const CommentContent: React.FC<CommentInterface | any> = ({
 	reply,
 }) => {
 	return (
-		<div className={`content ${reply && "reply"}`}>
+		<div className="content">
 			<img src={comment.image} alt={comment.name} className="profile" />
 			<div className="details">
 				<div className="top">
