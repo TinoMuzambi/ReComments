@@ -19,6 +19,7 @@
 				transform: scale(0.9);
 			}
 		}
+
 		.top {
 			@include flexAllRow;
 			justify-content: flex-start;
@@ -26,6 +27,12 @@
 
 			.datetime {
 				font-size: 0.7rem;
+			}
+		}
+
+		.text {
+			.mention {
+				color: rgb(61, 166, 255);
 			}
 		}
 

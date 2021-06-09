@@ -11,8 +11,8 @@ const CommentContent: React.FC<CommentInterface | any> = ({ comment }) => {
 				</div>
 				<p className="text">
 					{comment?.mention && (
-						<span className="mention">{comment.mention}</span>
-					)}{" "}
+						<span className="mention">{comment.mention} </span>
+					)}
 					{comment.comment}
 				</p>
 				<div className="actions">
