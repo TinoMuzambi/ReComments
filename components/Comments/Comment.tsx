@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { CommentInterface } from "../interfaces";
+import { CommentInterface } from "../../interfaces";
 import CommentContent from "./CommentContent";
 
 const Comment: React.FC<CommentInterface | any> = ({ comment }) => {
