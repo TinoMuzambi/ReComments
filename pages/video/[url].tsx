@@ -6,6 +6,7 @@ import Player from "../../components/Player";
 import AppState from "../../components/AppState";
 import Stats from "../../components/Stats";
 import { loadClient, execute } from "../../utils/gapi";
+import Comments from "../../components/Comments";
 
 const Video: React.FC = () => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
@@ -43,6 +44,8 @@ const Video: React.FC = () => {
 					<Player result={result} />
 
 					<Stats result={result} />
+
+					<Comments />
 				</main>
 			</>
 		);
