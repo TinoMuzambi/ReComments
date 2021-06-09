@@ -1,0 +1,16 @@
+.comment {
+	.expand {
+		.view-more {
+			background: none;
+			outline: none;
+			border: none;
+			color: blue;
+			font-size: 1.1rem;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+	}
+}
