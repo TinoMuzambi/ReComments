@@ -1,4 +1,4 @@
-const Comment = () => {
+const Comment: React.FC<any> = () => {
 	return <div>Comment</div>;
 };
 
