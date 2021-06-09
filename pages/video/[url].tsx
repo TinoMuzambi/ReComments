@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { GetStaticProps, GetStaticPaths } from "next";
 
 import Meta from "../../components/Meta";
 import Player from "../../components/Player";
@@ -8,9 +9,9 @@ import Stats from "../../components/Stats";
 import { loadClient, execute } from "../../utils/gapi";
 import Comments from "../../components/Comments/Comments";
 
-const Video: React.FC = () => {
+const Video: React.FC<any> = ({ dbComments }) => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
-	const [comments, setComments] = useState([]);
+	const [comments, setComments] = useState(dbComments);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -46,11 +47,34 @@ const Video: React.FC = () => {
 
 					<Stats result={result} />
 
-					<Comments />
+					<Comments comments={dbComments} />
 				</main>
 			</>
 		);
 	else return <AppState message="Loading..." />;
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+	let res: any;
+	if (context && context.params)
+		res = await fetch(
+			`http://localhost:3000/api/comments/${context.params.url}`
+		);
+	const comments = await res.json();
+	return {
+		props: { dbComments: comments.data },
+	};
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	const res = await fetch(`http://localhost:3000/api/comments`);
+	const comments = await res.json();
+
+	const paths = comments.data.map((comment: any) => ({
+		params: { url: comment.videoId },
+	}));
+
+	return { paths, fallback: "blocking" };
 };
 
 export default Video;
