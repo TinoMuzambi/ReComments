@@ -10,6 +10,7 @@ import Comments from "../../components/Comments/Comments";
 
 const Video: React.FC = () => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
+	const [comments, setComments] = useState([]);
 	const router = useRouter();
 
 	useEffect(() => {
