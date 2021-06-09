@@ -10,6 +10,12 @@ const CommentSchema: Schema = new mongoose.Schema(
 			unique: true,
 			trim: true,
 		},
+		authorId: {
+			type: String,
+			required: [true, "Comment needs an author ID"],
+			unique: true,
+			trim: true,
+		},
 		email: {
 			type: String,
 			required: [true, "Comment needs an email"],

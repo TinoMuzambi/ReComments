@@ -20,6 +20,7 @@ export interface FormProps {
 
 export interface CommentModel {
 	videoId: string;
+	authorId: string;
 	createdAt: Date;
 	updatedAt: Date;
 	name: string;
