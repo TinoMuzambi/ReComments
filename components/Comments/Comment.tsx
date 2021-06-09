@@ -1,9 +1,8 @@
 import { useState } from "react";
 
-import { CommentInterface } from "../../interfaces";
 import CommentContent from "./CommentContent";
 
-const Comment: React.FC<CommentInterface | any> = ({ comment }) => {
+const Comment: React.FC<any> = ({ comment }) => {
 	const [opened, setOpened] = useState(false);
 	return (
 		<article className="comment">
@@ -15,7 +14,7 @@ const Comment: React.FC<CommentInterface | any> = ({ comment }) => {
 						{comment.replies.length} replies
 					</button>
 					{opened &&
-						comment.replies.map((reply: CommentInterface) => (
+						comment.replies.map((reply: any) => (
 							<CommentContent comment={reply} key={reply.id} />
 						))}
 				</div>
