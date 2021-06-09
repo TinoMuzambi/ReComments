@@ -51,3 +51,16 @@ export type Actions = {
 };
 
 export type State = { signedIn: boolean; user: User };
+
+export interface Comment {
+	id: number;
+	name: string;
+	email: string;
+	image: string;
+	datetime: string;
+	comment: string;
+	upvotes: number;
+	downvotes: number;
+	mention: string | null;
+	replies: Comment[];
+}
