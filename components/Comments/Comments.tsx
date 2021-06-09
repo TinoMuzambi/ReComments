@@ -5,7 +5,11 @@ import Comment from "./Comment";
 const Comments = () => {
 	return (
 		<section className="comments">
-			{comments.map((comment: any) => (
+			<div className="stats">
+				<h5 className="total">{comments[0]} Comments</h5>
+				<button className="sort">Sort by</button>
+			</div>
+			{comments.slice(1).map((comment: any) => (
 				<Comment comment={comment} key={comment.id} />
 			))}
 		</section>
