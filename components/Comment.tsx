@@ -14,7 +14,7 @@ const Comment: React.FC<CommentInterface | any> = ({ comment }) => {
 						View {comment.replies.length} replies
 					</button>
 					{opened &&
-						comment.replies.map((reply) => (
+						comment.replies.map((reply: CommentInterface) => (
 							<CommentContent comment={reply} key={reply.id} />
 						))}
 				</div>
