@@ -1,8 +1,11 @@
 import { CommentInterface } from "../../interfaces";
 
-const CommentContent: React.FC<CommentInterface | any> = ({ comment }) => {
+const CommentContent: React.FC<CommentInterface | any> = ({
+	comment,
+	reply,
+}) => {
 	return (
-		<div className="content">
+		<div className={`content ${reply && "reply"}`}>
 			<img src={comment.image} alt={comment.name} className="profile" />
 			<div className="details">
 				<div className="top">
