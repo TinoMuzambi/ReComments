@@ -1,4 +1,4 @@
-import { CommentInterface } from "../interfaces";
+import { CommentInterface } from "../../interfaces";
 
 const CommentContent: React.FC<CommentInterface | any> = ({ comment }) => {
 	return (
