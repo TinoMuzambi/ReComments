@@ -1,0 +1,10 @@
+.content {
+	display: flex;
+
+	.profile {
+		height: 3rem;
+		width: 3rem;
+		border-radius: 50%;
+		pointer-events: none;
+	}
+}
