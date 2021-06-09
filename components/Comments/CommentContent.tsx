@@ -16,12 +16,16 @@ const CommentContent: React.FC<any> = ({ comment }) => {
 				<div className="actions">
 					<div className="upvotes">
 						<button className="upvote">
-							<span>👍🏾</span>
+							<span role="img" aria-label="thumbs up">
+								👍🏾
+							</span>
 						</button>
 						<p className="upvote-count">{comment.upvotes}</p>
 					</div>
 					<button className="downvote">
-						<span>👎🏾</span>
+						<span role="img" aria-label="thumbs down">
+							👎🏾
+						</span>
 					</button>
 					<button className="reply">REPLY</button>
 				</div>

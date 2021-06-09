@@ -10,7 +10,15 @@ const Comment: React.FC<any> = ({ comment }) => {
 			{comment.replies && (
 				<div className="expand">
 					<button className="view-more" onClick={() => setOpened(!opened)}>
-						{opened ? <span>🔺 Hide </span> : <span>🔻 View </span>}
+						{opened ? (
+							<span role="img" aria-label="up">
+								🔺 Hide{" "}
+							</span>
+						) : (
+							<span role="img" aria-label="down">
+								🔻 View{" "}
+							</span>
+						)}
 						{comment.replies.length} replies
 					</button>
 					{opened &&
