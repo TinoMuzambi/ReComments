@@ -1,4 +1,6 @@
-const Comment: React.FC<any> = ({ comment }) => {
+import { CommentInterface } from "../interfaces";
+
+const Comment: React.FC<CommentInterface | any> = ({ comment }) => {
 	return (
 		<article className="comment">
 			<img src="" alt="" className="profile" />

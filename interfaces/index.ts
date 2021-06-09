@@ -52,7 +52,7 @@ export type Actions = {
 
 export type State = { signedIn: boolean; user: User };
 
-export interface Comment {
+export interface CommentInterface {
 	id: number;
 	name: string;
 	email: string;
