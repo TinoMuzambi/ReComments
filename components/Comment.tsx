@@ -10,7 +10,7 @@ const Comment: React.FC<CommentInterface | any> = ({ comment }) => {
 			<CommentContent comment={comment} />
 			{comment.replies && (
 				<div className="expand">
-					<button className="view-more">
+					<button className="view-more" onClick={() => setOpened(!opened)}>
 						View {comment.replies.length} replies
 					</button>
 					{opened &&
