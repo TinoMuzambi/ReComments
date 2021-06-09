@@ -42,7 +42,7 @@ export function loadClient() {
 		);
 }
 // Make sure the client is loaded and sign-in is complete before calling this method.
-export function execute(
+export async function execute(
 	videoId: string,
 	fullPath: boolean,
 	setResults?: Function,
@@ -55,27 +55,26 @@ export function execute(
 	}
 	const path = fullPath ? videoId.substring(start, start + 11) : videoId;
 	console.log(path);
-	return gapi.client.youtube.videos
-		.list({
-			part: ["snippet,statistics,player,status"],
-			id: [path],
-		})
-		.then(
-			function (
-				response: gapi.client.Response<gapi.client.youtube.VideoListResponse>
-			) {
-				if (setResults) setResults(response.result.items);
-				if (setFetching) setFetching(false);
-				if (response.result.pageInfo) {
-					if (response.result.pageInfo.totalResults === 0) {
-						if (setNoResults) setNoResults(true);
-					} else {
-						if (setNoResults) setNoResults(false);
-					}
+	try {
+		try {
+			const response = await gapi.client.youtube.videos.list({
+				part: ["snippet,statistics,player,status"],
+				id: [path],
+			});
+			if (setResults) setResults(response.result.items);
+			if (setFetching) setFetching(false);
+			if (response.result.pageInfo) {
+				if (response.result.pageInfo.totalResults === 0) {
+					if (setNoResults) setNoResults(true);
+				} else {
+					if (setNoResults) setNoResults(false);
 				}
-			},
-			function (err: string) {
-				if (setResults) setResults(err);
 			}
-		);
+		} catch (err) {
+			console.error(err);
+			if (setResults) setResults(err);
+		}
+	} catch (error) {
+		return console.error(error);
+	}
 }
