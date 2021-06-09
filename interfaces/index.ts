@@ -22,7 +22,6 @@ export interface CommentModel {
 	videoId: string;
 	createdAt: Date;
 	updatedAt: Date;
-	id: number;
 	name: string;
 	email: string;
 	image: string;
