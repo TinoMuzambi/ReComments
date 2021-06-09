@@ -1,10 +1,46 @@
 .content {
 	display: flex;
+	gap: 1rem;
 
 	.profile {
 		height: 3rem;
 		width: 3rem;
 		border-radius: 50%;
 		pointer-events: none;
+	}
+
+	.details {
+		.upvote,
+		.downvote,
+		.reply {
+			background: none;
+			outline: none;
+			border: none;
+			cursor: pointer;
+
+			&:hover {
+				transform: scale(0.9);
+			}
+		}
+		.top {
+			@include flexAllRow;
+			justify-content: flex-start;
+			gap: 0.5rem;
+
+			.datetime {
+				font-size: 0.7rem;
+			}
+		}
+
+		.actions {
+			@include flexAllRow;
+			justify-content: flex-start;
+			gap: 0.5rem;
+
+			.upvotes {
+				@include flexAllRow;
+				gap: 0.2rem;
+			}
+		}
 	}
 }
