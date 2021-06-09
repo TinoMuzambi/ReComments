@@ -11,7 +11,6 @@ import Comments from "../../components/Comments/Comments";
 
 const Video: React.FC<any> = ({ dbComments }) => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
-	const [comments, setComments] = useState(dbComments);
 	const router = useRouter();
 
 	useEffect(() => {
