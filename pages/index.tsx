@@ -29,6 +29,10 @@ export default function Home() {
 		setLoading(false);
 	};
 
+	const signIn: MouseEventHandler<HTMLButtonElement> = async () => {
+		handleAuthClick();
+	};
+
 	useEffect(() => {
 		setLoading(true);
 		gapi.load("client:auth2", function () {
@@ -37,6 +41,7 @@ export default function Home() {
 					apiKey: process.env.GAPI_API_KEY,
 					discoveryDocs: [
 						"https://people.googleapis.com/$discovery/rest?version=v1",
+						"https://youtube.googleapis.com/$discovery/rest?version=v3",
 					],
 					clientId: process.env.GAPP_CLIENT_ID,
 					scope: "profile",
@@ -65,10 +70,6 @@ export default function Home() {
 	// 		console.log(userRes);
 	// 	}
 	// };
-
-	const signIn: MouseEventHandler<HTMLButtonElement> = async () => {
-		handleAuthClick();
-	};
 
 	if (loading)
 		return (

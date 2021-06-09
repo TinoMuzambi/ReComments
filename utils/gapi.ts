@@ -12,7 +12,9 @@ export const updateSignInStatus = (
 };
 
 export function handleAuthClick() {
-	gapi.auth2.getAuthInstance().signIn();
+	gapi.auth2
+		.getAuthInstance()
+		.signIn({ scope: "https://www.googleapis.com/auth/youtube.readonly" });
 }
 
 export function handleSignoutClick() {
@@ -54,27 +56,23 @@ export async function execute(
 		start = videoId.length - 11;
 	}
 	const path = fullPath ? videoId.substring(start, start + 11) : videoId;
-	console.log(path);
+
 	try {
-		try {
-			const response = await gapi.client.youtube.videos.list({
-				part: ["snippet,statistics,player,status"],
-				id: [path],
-			});
-			if (setResults) setResults(response.result.items);
-			if (setFetching) setFetching(false);
-			if (response.result.pageInfo) {
-				if (response.result.pageInfo.totalResults === 0) {
-					if (setNoResults) setNoResults(true);
-				} else {
-					if (setNoResults) setNoResults(false);
-				}
+		const response = await gapi.client.youtube.videos.list({
+			part: ["snippet,statistics,player,status"],
+			id: [path],
+		});
+		if (setResults) setResults(response.result.items);
+		if (setFetching) setFetching(false);
+		if (response.result.pageInfo) {
+			if (response.result.pageInfo.totalResults === 0) {
+				if (setNoResults) setNoResults(true);
+			} else {
+				if (setNoResults) setNoResults(false);
 			}
-		} catch (err) {
-			console.error(err);
-			if (setResults) setResults(err);
 		}
-	} catch (error) {
-		return console.error(error);
+	} catch (err) {
+		console.error(err);
+		if (setResults) setResults(err);
 	}
 }
