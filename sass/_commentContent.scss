@@ -13,10 +13,7 @@
 		.upvote,
 		.downvote,
 		.reply {
-			background: none;
-			outline: none;
-			border: none;
-			cursor: pointer;
+			@include buttonReset;
 
 			&:hover {
 				transform: scale(0.9);

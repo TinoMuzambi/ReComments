@@ -3,12 +3,9 @@
 		margin-left: 4rem;
 
 		.view-more {
-			background: none;
-			outline: none;
-			border: none;
+			@include buttonReset;
 			color: rgb(61, 166, 255);
 			font-size: 1rem;
-			cursor: pointer;
 
 			&:hover {
 				opacity: 0.8;

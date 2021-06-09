@@ -5,7 +5,7 @@ import Comment from "./Comment";
 const Comments = () => {
 	return (
 		<section className="comments">
-			<div className="stats">
+			<div className="totals">
 				<h5 className="total">{comments[0]} Comments</h5>
 				<button className="sort">Sort by</button>
 			</div>

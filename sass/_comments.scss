@@ -1,3 +1,20 @@
 .comments {
 	margin: 1rem 0;
+
+	.totals {
+		@include flexAllRow;
+		justify-content: flex-start;
+		gap: 2rem;
+
+		.sort {
+			@include buttonReset;
+			padding: 0.2rem 2rem;
+			margin: 1rem 0;
+			box-shadow: 0 0 3px 2px rgba($color: #000000, $alpha: 0.7);
+
+			&:hover {
+				transform: scale(0.9);
+			}
+		}
+	}
 }
