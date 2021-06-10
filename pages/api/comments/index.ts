@@ -10,7 +10,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (method) {
 		case "GET":
 			try {
-				const comments: Comment[] = await Comment.find({});
+				const comments: Comment[] = await Comment.find({}).sort({
+					updatedAt: -1,
+				});
 
 				res.status(200).json({ success: "true", data: comments });
 			} catch (error) {

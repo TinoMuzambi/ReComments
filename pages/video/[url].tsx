@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		);
 	const comments = await res.json();
 	return {
-		props: { dbComments: comments.data || null },
+		props: { dbComments: comments.data.reverse() || null },
 	};
 };
 
