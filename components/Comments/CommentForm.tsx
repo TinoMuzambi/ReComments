@@ -22,7 +22,6 @@ const CommentForm: React.FC<any> = () => {
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
-		console.log("Submit");
 		const submitComment: Function = async () => {
 			if (user && user.emailAddresses && user.names && user.photos) {
 				const body: CommentModel = {
@@ -42,6 +41,7 @@ const CommentForm: React.FC<any> = () => {
 						},
 						body: JSON.stringify(body),
 					});
+					router.replace(router.asPath);
 				} catch (error) {
 					console.error(error);
 				}
