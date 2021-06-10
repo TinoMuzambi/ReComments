@@ -35,15 +35,13 @@ const CommentForm: React.FC<any> = () => {
 				};
 
 				try {
-					const response = await fetch("/api/comments", {
+					await fetch("/api/comments", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json",
 						},
 						body: JSON.stringify(body),
 					});
-					const res = await response.json();
-					console.log(res);
 				} catch (error) {
 					console.error(error);
 				}

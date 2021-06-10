@@ -7,19 +7,16 @@ const CommentSchema: Schema = new mongoose.Schema(
 		videoId: {
 			type: String,
 			required: [true, "Comment needs a video ID."],
-			unique: true,
 			trim: true,
 		},
 		authorId: {
 			type: String,
 			required: [true, "Comment needs an author ID"],
-			unique: true,
 			trim: true,
 		},
 		email: {
 			type: String,
 			required: [true, "Comment needs an email"],
-			unique: true,
 			trim: true,
 		},
 		comment: {
