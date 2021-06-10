@@ -35,10 +35,11 @@ const CommentForm: React.FC<any> = () => {
 				};
 
 				try {
-					await fetch("/api/comments", {
-						method: "POST",
-						body: body,
-					});
+					// await fetch("/api/comments", {
+					// 	method: "POST",
+					// 	body: body,
+					// });
+					console.log(body);
 				} catch (error) {
 					console.error(error);
 				}
@@ -48,7 +49,7 @@ const CommentForm: React.FC<any> = () => {
 	};
 
 	return (
-		<article className="form-holder">
+		<article className="comment-form-holder">
 			{user && user.photos && user.names && (
 				<img
 					src={user?.photos[0].url}
