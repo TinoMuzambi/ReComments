@@ -4,6 +4,7 @@ import {
 	MouseEventHandler,
 	FormEventHandler,
 } from "react";
+import { useRouter } from "next/router";
 
 import { AppContext } from "../../context/AppContext";
 import { CommentModel } from "../../interfaces";
@@ -12,6 +13,7 @@ const CommentForm: React.FC<any> = () => {
 	const [opened, setOpened] = useState(false);
 	const [comment, setComment] = useState("");
 	const { user } = useContext(AppContext);
+	const router = useRouter();
 
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
@@ -21,7 +23,28 @@ const CommentForm: React.FC<any> = () => {
 	const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
 		console.log("Submit");
-		const body: CommentModel = {};
+		const submitComment: Function = async () => {
+			if (user && user.emailAddresses && user.names && user.photos) {
+				const body: CommentModel | any = {
+					videoId: router.query.url as string,
+					authorId: user?.emailAddresses[0].metadata?.source?.id as string,
+					email: user?.emailAddresses[0].value as string,
+					name: user.names[0].givenName as string,
+					comment: comment,
+					image: user.photos[0].url as string,
+				};
+
+				try {
+					await fetch("/api/comments", {
+						method: "POST",
+						body: body,
+					});
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		};
+		submitComment();
 	};
 
 	return (
