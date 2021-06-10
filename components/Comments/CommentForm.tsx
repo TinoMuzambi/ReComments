@@ -41,9 +41,10 @@ const CommentForm: React.FC<any> = () => {
 						},
 						body: JSON.stringify(body),
 					});
+					const height = window.scrollY;
 					await router.replace(router.asPath);
 					setComment("");
-					window.scrollTo({ top: document.body.scrollHeight });
+					window.scrollTo(0, height);
 				} catch (error) {
 					console.error(error);
 				}
