@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { AppContext } from "../../context/AppContext";
 import { CommentModel } from "../../interfaces";
 
-const CommentForm: React.FC<Boolean | any> = ({ sm }) => {
+const CommentForm: React.FC<Boolean | any> = ({ sm, setReplying }) => {
 	const [opened, setOpened] = useState(false);
 	const [comment, setComment] = useState("");
 	const { user } = useContext(AppContext);
@@ -18,6 +18,9 @@ const CommentForm: React.FC<Boolean | any> = ({ sm }) => {
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
 		setOpened(false);
+		if (sm) {
+			setReplying(false);
+		}
 	};
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
@@ -65,25 +68,28 @@ const CommentForm: React.FC<Boolean | any> = ({ sm }) => {
 			<form className="comment-form" onSubmit={submitHandler}>
 				<textarea
 					className={`text ${sm && "sm"}`}
-					onFocus={() => setOpened(true)}
+					onFocus={() => {
+						if (!sm) setOpened(true);
+					}}
 					placeholder="Enter a comment"
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
 				/>
-				{opened && (
-					<div className="buttons">
-						<button className="cancel" onClick={cancelHandler}>
-							Cancel
-						</button>
-						<button
-							type="submit"
-							className="submit"
-							disabled={comment.length <= 0}
-						>
-							Comment
-						</button>
-					</div>
-				)}
+				{opened ||
+					(sm && (
+						<div className="buttons">
+							<button className="cancel" onClick={cancelHandler}>
+								Cancel
+							</button>
+							<button
+								type="submit"
+								className="submit"
+								disabled={comment.length <= 0}
+							>
+								Comment
+							</button>
+						</div>
+					))}
 			</form>
 		</article>
 	);

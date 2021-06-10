@@ -1,7 +1,11 @@
 import moment from "moment";
+import { useState } from "react";
+
 import CommentForm from "./CommentForm";
 
 const CommentContent: React.FC<any> = ({ comment }) => {
+	const [replying, setReplying] = useState(false);
+
 	return (
 		<div className="content">
 			<img src={comment.image} alt={comment.name} className="profile" />
@@ -30,9 +34,11 @@ const CommentContent: React.FC<any> = ({ comment }) => {
 							👎🏾
 						</span>
 					</button>
-					<button className="reply">REPLY</button>
+					<button className="reply" onClick={() => setReplying(true)}>
+						REPLY
+					</button>
 				</div>
-				<CommentForm sm={true} />
+				{replying && <CommentForm sm={true} setReplying={setReplying} />}
 			</div>
 		</div>
 	);
