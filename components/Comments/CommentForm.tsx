@@ -25,7 +25,7 @@ const CommentForm: React.FC<any> = () => {
 		console.log("Submit");
 		const submitComment: Function = async () => {
 			if (user && user.emailAddresses && user.names && user.photos) {
-				const body: CommentModel | any = {
+				const body: CommentModel = {
 					videoId: router.query.url as string,
 					authorId: user?.emailAddresses[0].metadata?.source?.id as string,
 					email: user?.emailAddresses[0].value as string,
@@ -35,11 +35,15 @@ const CommentForm: React.FC<any> = () => {
 				};
 
 				try {
-					// await fetch("/api/comments", {
-					// 	method: "POST",
-					// 	body: body,
-					// });
-					console.log(body);
+					const response = await fetch("/api/comments", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(body),
+					});
+					const res = await response.json();
+					console.log(res);
 				} catch (error) {
 					console.error(error);
 				}

@@ -19,10 +19,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "POST":
 			try {
+				console.log(req.body);
 				const comment: Comment = await Comment.create(req.body);
 
 				res.status(201).json({ success: "true", data: comment });
 			} catch (error) {
+				console.log(error);
 				res.status(400).json({ success: "false" });
 			}
 			break;
