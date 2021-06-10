@@ -75,21 +75,20 @@ const CommentForm: React.FC<Boolean | any> = ({ sm, setReplying }) => {
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
 				/>
-				{opened ||
-					(sm && (
-						<div className="buttons">
-							<button className="cancel" onClick={cancelHandler}>
-								Cancel
-							</button>
-							<button
-								type="submit"
-								className="submit"
-								disabled={comment.length <= 0}
-							>
-								Comment
-							</button>
-						</div>
-					))}
+				{(opened || sm) && (
+					<div className="buttons">
+						<button className="cancel" onClick={cancelHandler}>
+							Cancel
+						</button>
+						<button
+							type="submit"
+							className="submit"
+							disabled={comment.length <= 0}
+						>
+							Comment
+						</button>
+					</div>
+				)}
 			</form>
 		</article>
 	);
