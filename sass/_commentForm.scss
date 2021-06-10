@@ -1,2 +1,11 @@
 .form-holder {
+	@include flexAllRow;
+	justify-content: flex-start;
+	gap: 1rem;
+
+	.profile {
+		height: 3rem;
+		width: 3rem;
+		border-radius: 50%;
+	}
 }

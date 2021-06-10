@@ -15,7 +15,12 @@ const CommentForm: React.FC<any> = () => {
 				/>
 			)}
 			<form className="form">
-				<input type="text" className="text" onFocus={() => setOpened(true)} />
+				<input
+					type="text"
+					className="text"
+					onFocus={() => setOpened(true)}
+					placeholder="Enter a comment"
+				/>
 				{opened && (
 					<div className="buttons">
 						<button className="cancel">Cancel</button>
