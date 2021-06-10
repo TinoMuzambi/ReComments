@@ -18,6 +18,7 @@ const CommentForm: React.FC<any> = () => {
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
+		console.log("Submit");
 	};
 
 	return (
@@ -35,7 +36,6 @@ const CommentForm: React.FC<any> = () => {
 					className="text"
 					onFocus={() => setOpened(true)}
 					placeholder="Enter a comment"
-					required
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
 				/>
@@ -44,7 +44,7 @@ const CommentForm: React.FC<any> = () => {
 						<button className="cancel" onClick={cancelHandler}>
 							Cancel
 						</button>
-						<button type="submit" disabled={comment.length > 0}>
+						<button type="submit" disabled={comment.length <= 0}>
 							Comment
 						</button>
 					</div>
