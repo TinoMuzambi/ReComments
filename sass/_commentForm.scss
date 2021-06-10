@@ -24,6 +24,10 @@
 			background: none;
 			outline: none;
 			border-bottom: 1px solid grey;
+
+			&:focus {
+				border-bottom-color: $primary-color;
+			}
 		}
 
 		.buttons {
