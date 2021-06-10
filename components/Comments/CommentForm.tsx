@@ -31,8 +31,7 @@ const CommentForm: React.FC<any> = () => {
 				/>
 			)}
 			<form className="comment-form" onSubmit={submitHandler}>
-				<input
-					type="text"
+				<textarea
 					className="text"
 					onFocus={() => setOpened(true)}
 					placeholder="Enter a comment"
