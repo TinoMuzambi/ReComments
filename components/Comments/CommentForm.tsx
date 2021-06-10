@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 
-const CommentForm = () => {
+const CommentForm: React.FC<any> = () => {
 	const [opened, setOpened] = useState(false);
+	const { user } = useContext(AppContext);
 
 	return (
 		<article className="form-holder">
-			<img src="" alt="" className="profile" />
+			{user && user.photos && user.names && (
+				<img
+					src={user?.photos[0].url}
+					alt={user?.names[0].givenName}
+					className="profile"
+				/>
+			)}
 			<form className="form">
 				<input type="text" className="text" onFocus={() => setOpened(true)} />
 				{opened && (
