@@ -1,9 +1,18 @@
-import { useState, useContext } from "react";
+import { useState, useContext, MouseEventHandler } from "react";
 import { AppContext } from "../../context/AppContext";
 
 const CommentForm: React.FC<any> = () => {
 	const [opened, setOpened] = useState(false);
 	const { user } = useContext(AppContext);
+
+	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
+		e.preventDefault();
+		setOpened(false);
+	};
+
+	const submitHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
+		e.preventDefault();
+	};
 
 	return (
 		<article className="form-holder">
@@ -23,8 +32,12 @@ const CommentForm: React.FC<any> = () => {
 				/>
 				{opened && (
 					<div className="buttons">
-						<button className="cancel">Cancel</button>
-						<button type="submit">Comment</button>
+						<button className="cancel" onClick={cancelHandler}>
+							Cancel
+						</button>
+						<button type="submit" onClick={submitHandler}>
+							Comment
+						</button>
 					</div>
 				)}
 			</form>
