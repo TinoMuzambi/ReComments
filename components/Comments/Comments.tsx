@@ -11,7 +11,9 @@ const Comments: React.FC<any> = ({ comments }) => {
 			</div>
 			<CommentForm />
 			{comments.map((comment: any) => (
-				<Comment comment={comment} key={comment.id} />
+				<div key={comment.id}>
+					<Comment comment={comment} />
+				</div>
 			))}
 		</section>
 	);
