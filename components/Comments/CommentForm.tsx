@@ -44,7 +44,11 @@ const CommentForm: React.FC<any> = () => {
 						<button className="cancel" onClick={cancelHandler}>
 							Cancel
 						</button>
-						<button type="submit" disabled={comment.length <= 0}>
+						<button
+							type="submit"
+							className="submit"
+							disabled={comment.length <= 0}
+						>
 							Comment
 						</button>
 					</div>
