@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const CommentContent: React.FC<any> = ({ comment }) => {
 	return (
 		<div className="content">
@@ -5,7 +7,7 @@ const CommentContent: React.FC<any> = ({ comment }) => {
 			<div className="details">
 				<div className="top">
 					<h5 className="name">{comment.name}</h5>
-					<p className="datetime">{comment.updatedAt}</p>
+					<p className="datetime">{moment(comment.updatedAt).fromNow()}</p>
 				</div>
 				<p className="text">
 					{comment?.mention && (
