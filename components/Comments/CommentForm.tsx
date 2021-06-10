@@ -1,8 +1,14 @@
-import { useState, useContext, MouseEventHandler } from "react";
+import {
+	useState,
+	useContext,
+	MouseEventHandler,
+	FormEventHandler,
+} from "react";
 import { AppContext } from "../../context/AppContext";
 
 const CommentForm: React.FC<any> = () => {
 	const [opened, setOpened] = useState(false);
+	const [comment, setComment] = useState("");
 	const { user } = useContext(AppContext);
 
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -10,7 +16,7 @@ const CommentForm: React.FC<any> = () => {
 		setOpened(false);
 	};
 
-	const submitHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
+	const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
 	};
 
@@ -23,21 +29,22 @@ const CommentForm: React.FC<any> = () => {
 					className="profile"
 				/>
 			)}
-			<form className="form">
+			<form className="form" onSubmit={submitHandler}>
 				<input
 					type="text"
 					className="text"
 					onFocus={() => setOpened(true)}
 					placeholder="Enter a comment"
+					required
+					value={comment}
+					onChange={(e) => setComment(e.target.value)}
 				/>
 				{opened && (
 					<div className="buttons">
 						<button className="cancel" onClick={cancelHandler}>
 							Cancel
 						</button>
-						<button type="submit" onClick={submitHandler}>
-							Comment
-						</button>
+						<button type="submit">Comment</button>
 					</div>
 				)}
 			</form>
