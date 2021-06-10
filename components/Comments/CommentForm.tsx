@@ -4,7 +4,9 @@ import {
 	MouseEventHandler,
 	FormEventHandler,
 } from "react";
+
 import { AppContext } from "../../context/AppContext";
+import { CommentModel } from "../../interfaces";
 
 const CommentForm: React.FC<any> = () => {
 	const [opened, setOpened] = useState(false);
@@ -19,6 +21,7 @@ const CommentForm: React.FC<any> = () => {
 	const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
 		console.log("Submit");
+		const body: CommentModel = {};
 	};
 
 	return (
