@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (method) {
 		case "GET":
 			try {
-				const comment = await Comment.find({ videoId: id });
+				const comment: Comment[] = await Comment.find({ videoId: id });
 
 				if (!comment) {
 					return res.status(404).json({ success: false });
@@ -26,10 +26,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "PUT":
 			try {
-				const comment = await Comment.findByIdAndUpdate(id, req.body, {
-					new: true,
-					runValidators: true,
-				});
+				const comment: Comment[] = await Comment.findByIdAndUpdate(
+					id,
+					req.body,
+					{
+						new: true,
+						runValidators: true,
+					}
+				);
 
 				if (!comment) {
 					return res.status(400).json({ success: false });
