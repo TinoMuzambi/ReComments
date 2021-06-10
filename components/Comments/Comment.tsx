@@ -8,7 +8,7 @@ const Comment: React.FC<any> = ({ comment }) => {
 	return (
 		<article className="comment">
 			<CommentContent comment={comment} />
-			{comment.replies && (
+			{comment.replies.length > 0 && (
 				<div className="expand">
 					<button className="view-more" onClick={() => setOpened(!opened)}>
 						{opened ? (
