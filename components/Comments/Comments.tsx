@@ -9,7 +9,7 @@ const Comments: React.FC<any> = ({ comments }) => {
 				<h5 className="total">{comments?.length || 0} Comments</h5>
 				<button className="sort">Sort by</button>
 			</div>
-			<CommentForm />
+			<CommentForm sm={false} />
 			{comments?.map((comment: any) => (
 				<div key={comment._id}>
 					<Comment comment={comment} />

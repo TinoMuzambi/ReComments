@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { AppContext } from "../../context/AppContext";
 import { CommentModel } from "../../interfaces";
 
-const CommentForm: React.FC<any> = () => {
+const CommentForm: React.FC<Boolean | any> = ({ sm }) => {
 	const [opened, setOpened] = useState(false);
 	const [comment, setComment] = useState("");
 	const { user } = useContext(AppContext);
@@ -54,17 +54,17 @@ const CommentForm: React.FC<any> = () => {
 	};
 
 	return (
-		<article className="comment-form-holder">
+		<article className={`comment-form-holder ${sm && "sm"}`}>
 			{user && user.photos && user.names && (
 				<img
 					src={user?.photos[0].url}
 					alt={user?.names[0].givenName}
-					className="profile"
+					className={`profile ${sm && "sm"}`}
 				/>
 			)}
 			<form className="comment-form" onSubmit={submitHandler}>
 				<textarea
-					className="text"
+					className={`text ${sm && "sm"}`}
 					onFocus={() => setOpened(true)}
 					placeholder="Enter a comment"
 					value={comment}

@@ -1,4 +1,5 @@
 import moment from "moment";
+import CommentForm from "./CommentForm";
 
 const CommentContent: React.FC<any> = ({ comment }) => {
 	return (
@@ -31,6 +32,7 @@ const CommentContent: React.FC<any> = ({ comment }) => {
 					</button>
 					<button className="reply">REPLY</button>
 				</div>
+				<CommentForm sm={true} />
 			</div>
 		</div>
 	);

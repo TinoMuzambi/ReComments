@@ -5,10 +5,19 @@
 	gap: 1rem;
 	margin-bottom: 1rem;
 
+	&.sm {
+		margin-top: 0.5rem;
+	}
+
 	.profile {
 		height: 3rem;
 		width: 3rem;
 		border-radius: 50%;
+
+		&.sm {
+			height: 2rem;
+			width: 2rem;
+		}
 	}
 
 	.comment-form {
@@ -25,6 +34,10 @@
 			outline: none;
 			border-bottom: 1px solid grey;
 			resize: none;
+
+			&.sm {
+				height: 2.5rem;
+			}
 
 			&:focus {
 				border-bottom-color: $primary-color;
