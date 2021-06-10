@@ -1,4 +1,3 @@
-// import comments from "../../data/comments.json";
 import Comment from "./Comment";
 // import { CommentInterface } from "../interfaces";
 

@@ -4,6 +4,7 @@ import CommentContent from "./CommentContent";
 
 const Comment: React.FC<any> = ({ comment }) => {
 	const [opened, setOpened] = useState(false);
+
 	return (
 		<article className="comment">
 			<CommentContent comment={comment} />
