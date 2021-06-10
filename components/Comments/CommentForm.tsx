@@ -29,7 +29,7 @@ const CommentForm: React.FC<any> = () => {
 					className="profile"
 				/>
 			)}
-			<form className="form" onSubmit={submitHandler}>
+			<form className="comment-form" onSubmit={submitHandler}>
 				<input
 					type="text"
 					className="text"
@@ -44,7 +44,9 @@ const CommentForm: React.FC<any> = () => {
 						<button className="cancel" onClick={cancelHandler}>
 							Cancel
 						</button>
-						<button type="submit">Comment</button>
+						<button type="submit" disabled={comment.length > 0}>
+							Comment
+						</button>
 					</div>
 				)}
 			</form>
