@@ -4,6 +4,10 @@ import { CommentModel } from "../interfaces";
 
 const CommentSchema: Schema = new mongoose.Schema(
 	{
+		_id: {
+			type: String,
+			unique: true,
+		},
 		videoId: {
 			type: String,
 			required: [true, "Comment needs a video ID."],
