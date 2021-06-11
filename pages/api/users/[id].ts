@@ -26,10 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "PUT":
 			try {
-				const user: typeof User[] = await User.findByIdAndUpdate(id, req.body, {
-					new: true,
-					runValidators: true,
-				});
+				const user: any = await User.updateOne({ _id: id }, { ...req.body });
 
 				if (!user) {
 					return res.status(400).json({ success: false });
@@ -53,6 +50,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		default:
 			return res.status(400).json({ success: false });
-			break;
 	}
 };

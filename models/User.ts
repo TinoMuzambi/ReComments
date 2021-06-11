@@ -30,11 +30,11 @@ const UserSchema: Schema = new mongoose.Schema(
 				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSisT6Nb6XIXyX7kQ9XmEMID6eSxl4mQ8E0vXbwc77pJqhZYUUdU13h7VRlt4rZqOgg5Yc&usqp=CAU",
 		},
 		upvotedIds: {
-			type: [Boolean],
+			type: [String],
 			default: [],
 		},
 		downvotedIds: {
-			type: [Boolean],
+			type: [String],
 			default: [],
 		},
 	},

@@ -22,17 +22,18 @@ const CommentContent: React.FC<any> = ({
 	const { dbUser, user, setDbUser } = useContext(AppContext);
 
 	useEffect(() => {
-		const getDbUser: Function = async () => {
-			if (user && user?.emailAddresses && user.names && user.photos) {
-				const res = await fetch(
-					`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
-				);
-				const data = await res.json();
-				if (setDbUser) setDbUser(data.data);
-			}
-		};
 		getDbUser();
 	}, []);
+
+	const getDbUser: Function = async () => {
+		if (user && user?.emailAddresses && user.names && user.photos) {
+			const res = await fetch(
+				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
+			);
+			const data = await res.json();
+			if (setDbUser) setDbUser(data.data);
+		}
+	};
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
 		await fetch(`/api/comments/${id}`, {
@@ -64,7 +65,10 @@ const CommentContent: React.FC<any> = ({
 						},
 						body: JSON.stringify(body),
 					});
-
+				} catch (error) {
+					return console.error(error);
+				}
+				try {
 					body = comment;
 
 					body = { ...body, upvotes: body.upvotes + 1 };
@@ -76,6 +80,7 @@ const CommentContent: React.FC<any> = ({
 						},
 						body: JSON.stringify(body),
 					});
+					getDbUser();
 				} catch (error) {
 					console.error(error);
 				}
