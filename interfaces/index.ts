@@ -55,7 +55,7 @@ export interface CommentModel {
 }
 
 export interface UserModel {
-	_id: string;
+	_id?: string;
 	userId: string;
 	email: string;
 	shortName: string;
