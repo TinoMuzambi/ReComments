@@ -58,17 +58,20 @@ const CommentContent: React.FC<any> = ({
 				)}
 			</div>
 			<div className="options">
-				<button className="select">
+				<button
+					className="select"
+					onClick={() => setOptionsVisible(!optionsVisible)}
+				>
 					<BsThreeDotsVertical className="icon" />
 				</button>
 
-				<div className="holder">
-					<div className="item">
-						<MdEdit /> <p className="label">Edit</p>
-					</div>
-					<div className="item">
-						<MdDelete /> <p className="label">Delete</p>
-					</div>
+				<div className={`holder ${optionsVisible && "visible"}`}>
+					<button className="item">
+						<MdEdit className="icon" /> <p className="label">Edit</p>
+					</button>
+					<button className="item">
+						<MdDelete className="icon" /> <p className="label">Delete</p>
+					</button>
 				</div>
 			</div>
 		</div>

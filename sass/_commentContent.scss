@@ -73,7 +73,7 @@
 	.options {
 		position: absolute;
 		right: 1rem;
-		top: 50%;
+		top: 100%;
 		transform: translateY(-50%);
 		opacity: 0;
 
@@ -87,6 +87,30 @@
 				&:hover {
 					color: black;
 				}
+			}
+		}
+
+		.holder {
+			padding: 0.5rem;
+			background: $primary-color;
+			color: white;
+			border-radius: 0.2rem;
+			position: relative;
+			right: 2rem;
+			z-index: 2;
+			opacity: 0;
+
+			&.visible {
+				opacity: 1;
+			}
+
+			.item {
+				@include buttonReset;
+				@include flexAllRow;
+				color: inherit;
+				justify-content: flex-start;
+				gap: 0.5rem;
+				font-size: 1rem;
 			}
 		}
 	}
