@@ -136,7 +136,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							commentToUpdate = commentToUpdate.data[0];
 
 							if (isSecondLevelComment) {
-								console.log(body);
 								// Add mention if second level comment.
 								body = {
 									...commentToUpdate,
@@ -152,7 +151,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 										},
 									],
 								};
-								console.log(body);
 							} else {
 								body = {
 									...commentToUpdate,
