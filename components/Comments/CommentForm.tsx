@@ -31,7 +31,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 		e.preventDefault();
 		const submitComment: Function = async () => {
 			if (user && user.emailAddresses && user.names && user.photos) {
-				const body: CommentModel = {
+				let body: CommentModel = {
 					videoId: router.query.url as string,
 					authorId: user?.emailAddresses[0].metadata?.source?.id as string,
 					email: user?.emailAddresses[0].value as string,
@@ -41,13 +41,30 @@ const CommentForm: React.FC<Boolean | any> = ({
 				};
 
 				try {
-					await fetch("/api/comments", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(body),
-					});
+					if (replying) {
+						console.log(id);
+						const response = await fetch(`/api/comments/${id}`);
+						const commentToUpdate = await response.json();
+						console.log(commentToUpdate);
+						// body = { ...body, replies: [
+
+						// ] };
+						// await fetch(`/api/comments/${id}`, {
+						// 	method: "PUT",
+						// 	headers: {
+						// 		"Content-Type": "application/json",
+						// 	},
+						// 	body: JSON.stringify(body),
+						// });
+					} else {
+						await fetch("/api/comments", {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(body),
+						});
+					}
 					const height = window.scrollY;
 					await router.replace(router.asPath);
 					setComment("");
