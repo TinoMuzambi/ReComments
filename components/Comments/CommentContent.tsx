@@ -1,6 +1,6 @@
 import { useState } from "react";
 import moment from "moment";
-import { MdThumbUp, MdThumbDown } from "react-icons/md";
+import { MdThumbUp, MdThumbDown, MdEdit, MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 import CommentForm from "./CommentForm";
@@ -13,6 +13,7 @@ const CommentContent: React.FC<any> = ({
 	setOpened,
 }) => {
 	const [replying, setReplying] = useState(false);
+	const [optionsVisible, setOptionsVisible] = useState(false);
 
 	return (
 		<div className="content">
@@ -60,6 +61,15 @@ const CommentContent: React.FC<any> = ({
 				<button className="select">
 					<BsThreeDotsVertical className="icon" />
 				</button>
+
+				<div className="holder">
+					<div className="item">
+						<MdEdit /> <p className="label">Edit</p>
+					</div>
+					<div className="item">
+						<MdDelete /> <p className="label">Delete</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
