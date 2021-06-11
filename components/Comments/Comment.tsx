@@ -26,7 +26,8 @@ const Comment: React.FC<any> = ({ comment }) => {
 								🔻 View{" "}
 							</span>
 						)}
-						{comment.replies.length} replies
+						{comment.replies.length}{" "}
+						{comment.replies.length === 1 ? "reply" : "replies"}
 					</button>
 					{opened &&
 						comment.replies.map((reply: any) => (
