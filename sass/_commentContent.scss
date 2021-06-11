@@ -3,6 +3,12 @@
 	gap: 1rem;
 	position: relative;
 
+	&:hover {
+		.options {
+			opacity: 1;
+		}
+	}
+
 	.profile {
 		height: 3rem;
 		width: 3rem;
@@ -56,6 +62,10 @@
 			.icon {
 				color: grey;
 				font-size: 1.3em;
+
+				&:hover {
+					color: black;
+				}
 			}
 		}
 	}
@@ -65,9 +75,19 @@
 		right: 1rem;
 		top: 50%;
 		transform: translateY(-50%);
+		opacity: 0;
 
 		.select {
 			@include buttonReset;
+
+			.icon {
+				color: grey;
+				font-size: 1.2rem;
+
+				&:hover {
+					color: black;
+				}
+			}
 		}
 	}
 }
