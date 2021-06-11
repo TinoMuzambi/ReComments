@@ -36,17 +36,20 @@ const CommentContent: React.FC<any> = ({
 	};
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		await fetch(`/api/comments/${id}`, {
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		if (confirm("Are you sure you want to delete this comment?")) {
+			await fetch(`/api/comments/${id}`, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 
-		const height = window.scrollY;
-		await router.replace(router.asPath);
-		setOpened(false);
-		window.scrollTo(0, height);
+			const height = window.scrollY;
+			await router.replace(router.asPath);
+			setOpened(false);
+			window.scrollTo(0, height);
+		}
+		setOptionsVisible(false);
 	};
 
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {

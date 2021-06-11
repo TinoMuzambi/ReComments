@@ -10,7 +10,7 @@ const Comment: React.FC<any> = ({ comment }) => {
 		<article className="comment">
 			<CommentContent
 				comment={comment}
-				replyingProp={true}
+				replyingProp={false}
 				replyReply={false}
 				id={comment._id}
 				setOpened={setOpened}
