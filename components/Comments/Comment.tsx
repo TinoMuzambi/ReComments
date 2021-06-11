@@ -7,7 +7,7 @@ const Comment: React.FC<any> = ({ comment }) => {
 
 	return (
 		<article className="comment">
-			<CommentContent comment={comment} />
+			<CommentContent comment={comment} replyReply={false} />
 			{comment.replies.length > 0 && (
 				<div className="expand">
 					<button className="view-more" onClick={() => setOpened(!opened)}>
@@ -25,7 +25,7 @@ const Comment: React.FC<any> = ({ comment }) => {
 					{opened &&
 						comment.replies.map((reply: any) => (
 							<div key={reply._id}>
-								<CommentContent comment={reply} />
+								<CommentContent comment={reply} replyReply={true} />
 							</div>
 						))}
 				</div>
