@@ -42,20 +42,21 @@ const CommentForm: React.FC<Boolean | any> = ({
 
 				try {
 					if (replying) {
-						console.log(id);
 						const response = await fetch(`/api/comments/${id}`);
-						const commentToUpdate = await response.json();
-						console.log(commentToUpdate);
-						// body = { ...body, replies: [
+						let commentToUpdate = await response.json();
+						commentToUpdate = commentToUpdate.data[0];
+						body = {
+							...commentToUpdate,
+							replies: [body, ...commentToUpdate.replies],
+						};
 
-						// ] };
-						// await fetch(`/api/comments/${id}`, {
-						// 	method: "PUT",
-						// 	headers: {
-						// 		"Content-Type": "application/json",
-						// 	},
-						// 	body: JSON.stringify(body),
-						// });
+						await fetch(`/api/comments/${id}`, {
+							method: "PUT",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(body),
+						});
 					} else {
 						await fetch("/api/comments", {
 							method: "POST",
