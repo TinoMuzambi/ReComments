@@ -1,6 +1,6 @@
-import { PlayerProps } from "../interfaces";
+import { ResultProps } from "../interfaces";
 
-const Result: React.FC<PlayerProps> = ({ result }) => {
+const Result: React.FC<ResultProps> = ({ result }) => {
 	return (
 		<div className="result">
 			<img

@@ -16,6 +16,10 @@ export interface PlayerProps {
 	result: gapi.client.youtube.Video;
 }
 
+export interface ResultProps {
+	result: gapi.client.youtube.Video;
+}
+
 export interface AppStateProps {
 	message: string;
 }
