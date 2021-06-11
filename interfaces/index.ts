@@ -1,7 +1,7 @@
 import { Dispatch, FormEventHandler, SetStateAction } from "react";
 
 export interface WrapperProps {
-	children: any;
+	children: JSX.Element;
 }
 
 export interface MetaProps {
