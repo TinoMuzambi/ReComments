@@ -89,13 +89,15 @@ export default function Home() {
 					updatedAt: new Date(),
 				};
 
-				await fetch("/api/users", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(body),
-				});
+				try {
+					await fetch("/api/users", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(body),
+					});
+				} catch (error) {}
 			}
 		}
 	};
