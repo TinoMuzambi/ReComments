@@ -20,6 +20,10 @@ export interface CommentsProps {
 	comments: CommentModel[];
 }
 
+export interface CommentProps {
+	comment: CommentModel;
+}
+
 export interface FormProps {
 	handleSubmit: FormEventHandler<HTMLFormElement>;
 	url: string;

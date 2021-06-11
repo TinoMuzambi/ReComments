@@ -2,8 +2,9 @@ import { useState } from "react";
 import { MdArrowDropUp, MdArrowDropDown } from "react-icons/md";
 
 import CommentContent from "./CommentContent";
+import { CommentProps } from "../../interfaces";
 
-const Comment: React.FC<any> = ({ comment }) => {
+const Comment: React.FC<CommentProps> = ({ comment }) => {
 	const [isViewMoreExpanded, setIsViewMoreExpanded] = useState(false);
 
 	return (
