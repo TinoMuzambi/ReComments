@@ -3,7 +3,11 @@ import { useState } from "react";
 
 import CommentForm from "./CommentForm";
 
-const CommentContent: React.FC<any> = ({ comment, replyReply }) => {
+const CommentContent: React.FC<any> = ({
+	comment,
+	replyingProp,
+	replyReply,
+}) => {
 	const [replying, setReplying] = useState(false);
 
 	return (
@@ -40,7 +44,7 @@ const CommentContent: React.FC<any> = ({ comment, replyReply }) => {
 				</div>
 				{replying && (
 					<CommentForm
-						replying={true}
+						replying={replyingProp}
 						replyReplying={replyReply}
 						setReplying={setReplying}
 						id={comment._id}
