@@ -63,6 +63,7 @@ const CommentContent: React.FC<any> = ({
 						setReplying={setReplying}
 						id={id}
 						setOpenedProp={setOpened}
+						commentProp={comment}
 					/>
 				)}
 			</div>

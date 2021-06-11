@@ -18,6 +18,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 	setReplying,
 	id,
 	setOpenedProp,
+	commentProp,
 }) => {
 	const [opened, setOpened] = useState(false);
 	const [comment, setComment] = useState("");
@@ -31,6 +32,12 @@ const CommentForm: React.FC<Boolean | any> = ({
 			}
 		}
 	}, [replyReplying]);
+
+	useEffect(() => {
+		if (editing) {
+			setComment(commentProp.comment);
+		}
+	}, [editing]);
 
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
@@ -142,7 +149,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 							className="submit"
 							disabled={comment.length <= 0}
 						>
-							Comment
+							{editing ? "Save" : "Comment"}
 						</button>
 					</div>
 				)}
