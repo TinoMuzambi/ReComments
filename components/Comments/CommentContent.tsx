@@ -1,5 +1,6 @@
-import moment from "moment";
 import { useState } from "react";
+import moment from "moment";
+import { MdThumbUp, MdThumbDown } from "react-icons/md";
 
 import CommentForm from "./CommentForm";
 
@@ -29,15 +30,15 @@ const CommentContent: React.FC<any> = ({
 				<div className="actions">
 					<div className="upvotes">
 						<button className="upvote">
-							<span role="img" aria-label="thumbs up">
-								👍🏾
+							<span>
+								<MdThumbUp className="icon" />
 							</span>
 						</button>
 						<p className="upvote-count">{comment.upvotes}</p>
 					</div>
 					<button className="downvote">
-						<span role="img" aria-label="thumbs down">
-							👎🏾
+						<span>
+							<MdThumbDown className="icon" />
 						</span>
 					</button>
 					<button className="reply" onClick={() => setReplying(true)}>
