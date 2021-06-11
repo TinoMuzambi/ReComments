@@ -8,6 +8,7 @@ const CommentContent: React.FC<any> = ({
 	replyingProp,
 	replyReply,
 	id,
+	setOpened,
 }) => {
 	const [replying, setReplying] = useState(false);
 
@@ -49,6 +50,7 @@ const CommentContent: React.FC<any> = ({
 						replyReplying={replyReply}
 						setReplying={setReplying}
 						id={id}
+						setOpenedProp={setOpened}
 					/>
 				)}
 			</div>

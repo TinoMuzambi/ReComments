@@ -12,6 +12,7 @@ const Comment: React.FC<any> = ({ comment }) => {
 				replyingProp={true}
 				replyReply={false}
 				id={comment._id}
+				setOpened={setOpened}
 			/>
 			{comment.replies.length > 0 && (
 				<div className="expand">
@@ -35,6 +36,7 @@ const Comment: React.FC<any> = ({ comment }) => {
 									replyingProp={false}
 									replyReply={true}
 									id={comment._id}
+									setOpened={setOpened}
 								/>
 							</div>
 						))}

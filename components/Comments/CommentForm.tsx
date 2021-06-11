@@ -15,6 +15,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 	replyReplying,
 	setReplying,
 	id,
+	setOpenedProp,
 }) => {
 	const [opened, setOpened] = useState(false);
 	const [comment, setComment] = useState("");
@@ -68,6 +69,8 @@ const CommentForm: React.FC<Boolean | any> = ({
 							},
 							body: JSON.stringify(body),
 						});
+						setOpenedProp(true);
+						setReplying(false);
 					} else {
 						await fetch("/api/comments", {
 							method: "POST",
@@ -80,7 +83,6 @@ const CommentForm: React.FC<Boolean | any> = ({
 					const height = window.scrollY;
 					await router.replace(router.asPath);
 					setComment("");
-					setReplying(false);
 					window.scrollTo(0, height);
 				} catch (error) {
 					console.error(error);
