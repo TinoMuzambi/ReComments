@@ -123,7 +123,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							if (setCommentFormToEditVisible)
 								setCommentFormToEditVisible(false);
 						}
-					} else if (isFirstLevelComment || isSecondLevelComment) {
+					} else if (
+						isFirstLevelComment ||
+						isSecondLevelComment ||
+						commentFormToReplyVisible
+					) {
 						if (currComment) {
 							// Reply to comment.
 							const response = await fetch(`/api/comments/${currComment._id}`);
