@@ -19,7 +19,7 @@ const CommentContent: React.FC<any> = ({
 	const [editing, setEditing] = useState(false);
 	const [optionsVisible, setOptionsVisible] = useState(false);
 	const router = useRouter();
-	const { user, setUser } = useContext(AppContext);
+	const { dbUser, user, setDbUser } = useContext(AppContext);
 
 	useEffect(() => {
 		const getDbUser: Function = async () => {
@@ -28,7 +28,7 @@ const CommentContent: React.FC<any> = ({
 					`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
 				);
 				const data = await res.json();
-				if (setUser) setUser(data.data);
+				if (setDbUser) setDbUser(data.data);
 			}
 		};
 		getDbUser();
@@ -49,8 +49,8 @@ const CommentContent: React.FC<any> = ({
 	};
 
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		if (user) {
-			let body: any = user;
+		if (dbUser) {
+			let body: any = dbUser;
 
 			if (!body.upvotedIds.includes(comment._id)) {
 				body = { ...body, upvotedIds: [...body.upvotedIds, comment._id] };

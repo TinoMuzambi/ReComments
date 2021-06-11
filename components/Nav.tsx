@@ -6,7 +6,8 @@ import { AppContext } from "../context/AppContext";
 import { handleSignoutClick } from "../utils/gapi";
 
 const Nav: React.FC = () => {
-	const { setSignedIn, setUser, user, signedIn } = useContext(AppContext);
+	const { setSignedIn, setUser, user, signedIn, setDbUser } =
+		useContext(AppContext);
 	const router = useRouter();
 
 	const handleSignOut = () => {
@@ -15,6 +16,7 @@ const Nav: React.FC = () => {
 			gapi.auth2.getAuthInstance().signOut();
 			setSignedIn(false);
 			if (setUser) setUser(null);
+			if (setDbUser) setDbUser(null);
 		}
 		handleSignoutClick();
 	};
