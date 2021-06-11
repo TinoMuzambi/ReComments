@@ -1,10 +1,12 @@
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useContext, useState } from "react";
 import moment from "moment";
 import { MdThumbUp, MdThumbDown, MdEdit, MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useRouter } from "next/router";
 
+import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
+import { CommentModel } from "../../interfaces";
 
 const CommentContent: React.FC<any> = ({
 	comment,
@@ -17,6 +19,7 @@ const CommentContent: React.FC<any> = ({
 	const [editing, setEditing] = useState(false);
 	const [optionsVisible, setOptionsVisible] = useState(false);
 	const router = useRouter();
+	const { user } = useContext(AppContext);
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
 		await fetch(`/api/comments/${id}`, {
@@ -30,6 +33,30 @@ const CommentContent: React.FC<any> = ({
 		await router.replace(router.asPath);
 		setOpened(false);
 		window.scrollTo(0, height);
+	};
+
+	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+		if (user && user.emailAddresses && user.names && user.photos) {
+			let body = comment;
+
+			body = { ...body, upvotes: body.upvotes + 1 };
+
+			await fetch(`/api/comments/${id}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(body),
+			});
+
+			setReplying(false);
+			setEditing(false);
+
+			const height = window.scrollY;
+			await router.replace(router.asPath);
+			setOpened(false);
+			window.scrollTo(0, height);
+		}
 	};
 
 	return (
@@ -51,7 +78,7 @@ const CommentContent: React.FC<any> = ({
 				</p>
 				<div className="actions">
 					<div className="upvotes">
-						<button className="upvote">
+						<button className="upvote" onClick={upvoteHandler}>
 							<span>
 								<MdThumbUp className="icon" />
 							</span>
