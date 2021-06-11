@@ -9,7 +9,7 @@ const Result: React.FC<PlayerProps> = ({ result }) => {
 					result.snippet.thumbnails &&
 					result.snippet.thumbnails.high
 						? result.snippet.thumbnails.high.url
-						: ""
+						: "https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
 				}
 				alt="title"
 				className="thumbnail"
