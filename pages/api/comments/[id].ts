@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import mongoose from "mongoose";
 
 import Comment from "../../../models/Comment";
 import dbConnect from "../../../utils/dbConnect";
@@ -26,7 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "PUT":
 			try {
-				const comment: any = await Comment.updateOne(
+				const comment: mongoose.UpdateQuery<any> = await Comment.updateOne(
 					{ _id: id },
 					{ ...req.body }
 				);
