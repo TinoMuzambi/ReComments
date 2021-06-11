@@ -12,7 +12,7 @@ import {
 export default function Home() {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const { setSignedIn, signedIn, setUser /*user*/ } = useContext(AppContext);
+	const { setSignedIn, signedIn, setUser, user } = useContext(AppContext);
 
 	const updateContext: Function = (
 		res: gapi.client.Response<gapi.client.people.Person>
@@ -58,18 +58,21 @@ export default function Home() {
 	}, []);
 
 	useEffect(() => {
-		if (signedIn) router.push("/search");
+		if (signedIn) {
+			router.push("/search");
+			checkUserDb();
+		}
 	}, [signedIn]);
 
-	// const checkUserDb: Function = async () => {
-	// 	if (user?.emailAddresses) {
-	// 		const res = await fetch(
-	// 			`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
-	// 		);
-	// 		const userRes = await res.json();
-	// 		console.log(userRes);
-	// 	}
-	// };
+	const checkUserDb: Function = async () => {
+		if (user?.emailAddresses) {
+			const res = await fetch(
+				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
+			);
+			const userRes = await res.json();
+			console.log(userRes);
+		}
+	};
 
 	if (loading)
 		return (
