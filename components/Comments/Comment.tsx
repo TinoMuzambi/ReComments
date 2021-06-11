@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { MdArrowDropUp, MdArrowDropDown } from "react-icons/md";
 
 import CommentContent from "./CommentContent";
 
@@ -18,16 +19,22 @@ const Comment: React.FC<any> = ({ comment }) => {
 				<div className="expand">
 					<button className="view-more" onClick={() => setOpened(!opened)}>
 						{opened ? (
-							<span role="img" aria-label="up">
-								🔺 Hide{" "}
+							<span>
+								<MdArrowDropUp className="icon" />
+								<p>
+									Hide {comment.replies.length}
+									{comment.replies.length === 1 ? " reply" : " replies"}
+								</p>
 							</span>
 						) : (
-							<span role="img" aria-label="down">
-								🔻 View{" "}
+							<span>
+								<MdArrowDropDown className="icon" />
+								<p>
+									View {comment.replies.length}
+									{comment.replies.length === 1 ? " reply" : " replies"}
+								</p>
 							</span>
 						)}
-						{comment.replies.length}{" "}
-						{comment.replies.length === 1 ? "reply" : "replies"}
 					</button>
 					{opened &&
 						comment.replies.map((reply: any) => (
