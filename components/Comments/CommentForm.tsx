@@ -36,7 +36,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 	useEffect(() => {
 		if (commentFormToEditVisible) {
-			setCommentInput(currComment.comment);
+			if (currComment) setCommentInput(currComment.comment);
 		}
 	}, [commentFormToEditVisible]);
 
@@ -44,11 +44,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		e.preventDefault();
 		setCancelCommentButtonsVisible(false);
 		if (isFirstLevelComment || isSecondLevelComment) {
-			setCommentFormToReplyVisible(false);
+			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
 		}
 		if (commentFormToEditVisible) {
-			setCommentFormToReplyVisible(false);
-			return setCommentFormToEditVisible(false);
+			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
+			if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
 		}
 	};
 
@@ -73,89 +73,97 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				};
 
 				try {
-					if (commentFormToEditVisible) {
-						const response = await fetch(`/api/comments/${currComment._id}`);
-						let commentToUpdate = await response.json();
-						commentToUpdate = commentToUpdate.data[0];
+					if (currComment) {
+						if (commentFormToEditVisible) {
+							const response = await fetch(`/api/comments/${currComment._id}`);
+							let commentToUpdate = await response.json();
+							commentToUpdate = commentToUpdate.data[0];
 
-						body = {
-							...commentToUpdate,
-						};
-						if (isSecondLevelComment || isFirstLevelComment) {
-							console.log(body);
-							if (body && body.replies) {
-								for (let i = 0; i < body.replies.length; i++) {
-									if (body.replies[i]._id === currComment._id) {
-										let newReplies = commentToUpdate.replies;
-										newReplies[i] = {
-											...newReplies[i],
-											comment: commentInput,
-											edited: true,
-											updatedAt: new Date(),
-										};
-										body = { ...commentToUpdate, replies: newReplies };
-										console.log(body);
-										break;
+							body = {
+								...commentToUpdate,
+							};
+							if (isSecondLevelComment || isFirstLevelComment) {
+								console.log(body);
+								if (body && body.replies) {
+									for (let i = 0; i < body.replies.length; i++) {
+										if (body.replies[i]._id === currComment._id) {
+											let newReplies = commentToUpdate.replies;
+											newReplies[i] = {
+												...newReplies[i],
+												comment: commentInput,
+												edited: true,
+												updatedAt: new Date(),
+											};
+											body = { ...commentToUpdate, replies: newReplies };
+											console.log(body);
+											break;
+										}
 									}
 								}
+							} else {
+								body = {
+									...commentToUpdate,
+									edited: true,
+									comment: commentInput,
+									updatedAt: new Date(),
+								};
 							}
+
+							await fetch(`/api/comments/${currComment._id}`, {
+								method: "PUT",
+								headers: {
+									"Content-Type": "application/json",
+								},
+								body: JSON.stringify(body),
+							});
+							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+							if (setCommentFormToReplyVisible)
+								setCommentFormToReplyVisible(false);
+							if (setCommentFormToEditVisible)
+								setCommentFormToEditVisible(false);
+						} else if (isFirstLevelComment || isSecondLevelComment) {
+							const response = await fetch(`/api/comments/${currComment._id}`);
+							let commentToUpdate = await response.json();
+							console.log(currComment._id);
+							commentToUpdate = commentToUpdate.data[0];
+
+							body = {
+								...commentToUpdate,
+								replies: [...commentToUpdate?.replies, body],
+							};
+
+							if (isSecondLevelComment)
+								body = {
+									...commentToUpdate,
+									replies: [
+										...commentToUpdate?.replies,
+										{
+											...body,
+											mention: `@${user.names[0].givenName as string}`,
+										},
+									],
+								};
+
+							await fetch(`/api/comments/${currComment._id}`, {
+								method: "PUT",
+								headers: {
+									"Content-Type": "application/json",
+								},
+								body: JSON.stringify(body),
+							});
+							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+							if (setCommentFormToReplyVisible)
+								setCommentFormToReplyVisible(false);
 						} else {
-							body = {
-								...commentToUpdate,
-								edited: true,
-								comment: commentInput,
-								updatedAt: new Date(),
-							};
+							console.log(body);
+							await fetch("/api/comments", {
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json",
+								},
+								body: JSON.stringify(body),
+							});
 						}
-
-						await fetch(`/api/comments/${currComment._id}`, {
-							method: "PUT",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
-						setIsViewMoreExpanded(true);
-						setCommentFormToReplyVisible(false);
-						setCommentFormToEditVisible(false);
-					} else if (isFirstLevelComment || isSecondLevelComment) {
-						const response = await fetch(`/api/comments/${currComment._id}`);
-						let commentToUpdate = await response.json();
-						console.log(currComment._id);
-						commentToUpdate = commentToUpdate.data[0];
-
-						body = {
-							...commentToUpdate,
-							replies: [...commentToUpdate?.replies, body],
-						};
-
-						if (isSecondLevelComment)
-							body = {
-								...commentToUpdate,
-								replies: [
-									...commentToUpdate?.replies,
-									{ ...body, mention: `@${user.names[0].givenName as string}` },
-								],
-							};
-
-						await fetch(`/api/comments/${currComment._id}`, {
-							method: "PUT",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
-						setIsViewMoreExpanded(true);
-						setCommentFormToReplyVisible(false);
-					} else {
-						console.log(body);
-						await fetch("/api/comments", {
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
 					}
 					const height = window.scrollY;
 					await router.replace(router.asPath);
