@@ -7,6 +7,7 @@ const CommentContent: React.FC<any> = ({
 	comment,
 	replyingProp,
 	replyReply,
+	id,
 }) => {
 	const [replying, setReplying] = useState(false);
 
@@ -47,7 +48,7 @@ const CommentContent: React.FC<any> = ({
 						replying={replyingProp}
 						replyReplying={replyReply}
 						setReplying={setReplying}
-						id={comment._id}
+						id={id}
 					/>
 				)}
 			</div>

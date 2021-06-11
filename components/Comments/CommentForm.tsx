@@ -51,10 +51,11 @@ const CommentForm: React.FC<Boolean | any> = ({
 				};
 
 				try {
-					if (replying) {
+					if (replying || replyReplying) {
 						const response = await fetch(`/api/comments/${id}`);
 						let commentToUpdate = await response.json();
 						commentToUpdate = commentToUpdate.data[0];
+
 						body = {
 							...commentToUpdate,
 							replies: [...commentToUpdate.replies, body],
