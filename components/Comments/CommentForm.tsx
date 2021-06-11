@@ -9,9 +9,9 @@ import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
-import { CommentModel } from "../../interfaces";
+import { CommentFormProps, CommentModel } from "../../interfaces";
 
-const CommentForm: React.FC<Boolean | any> = ({
+const CommentForm: React.FC<CommentFormProps> = ({
 	isFirstLevelComment,
 	commentFormToEditVisible,
 	setCommentFormToEditVisible,
