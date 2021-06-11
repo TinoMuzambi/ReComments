@@ -13,7 +13,7 @@ export interface MetaProps {
 }
 
 export interface AppProviderProps {
-	children: JSX.Element;
+	children: JSX.Element[];
 }
 
 export interface PlayerProps {
