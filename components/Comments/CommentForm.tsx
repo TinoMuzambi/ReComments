@@ -80,15 +80,32 @@ const CommentForm: React.FC<Boolean | any> = ({
 
 						body = {
 							...commentToUpdate,
-							edited: true,
-							comment: comment,
-							updatedAt: new Date(),
 						};
 						if (replyReplying || replying) {
 							console.log(body);
-							for (const reply in body.replies) {
-								console.log(reply._id);
+							if (body && body.replies) {
+								for (let i = 0; i < body.replies.length; i++) {
+									if (body.replies[i]._id === commentProp._id) {
+										let newReplies = commentToUpdate.replies;
+										newReplies[i] = {
+											...newReplies[i],
+											comment: comment,
+											edited: true,
+											updatedAt: new Date(),
+										};
+										body = { ...commentToUpdate, replies: newReplies };
+										console.log(body);
+										break;
+									}
+								}
 							}
+						} else {
+							body = {
+								...commentToUpdate,
+								edited: true,
+								comment: comment,
+								updatedAt: new Date(),
+							};
 						}
 
 						await fetch(`/api/comments/${id}`, {
