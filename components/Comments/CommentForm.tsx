@@ -75,6 +75,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				try {
 					if (currComment) {
 						if (commentFormToEditVisible) {
+							// Edit comment.
 							const response = await fetch(`/api/comments/${currComment._id}`);
 							let commentToUpdate = await response.json();
 							commentToUpdate = commentToUpdate.data[0];
@@ -83,6 +84,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								...commentToUpdate,
 							};
 							if (isSecondLevelComment || isFirstLevelComment) {
+								// Editing replies.
 								console.log(body);
 								if (body && body.replies) {
 									for (let i = 0; i < body.replies.length; i++) {
@@ -101,6 +103,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 									}
 								}
 							} else {
+								// Editing top level comment.
 								body = {
 									...commentToUpdate,
 									edited: true,
@@ -109,6 +112,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								};
 							}
 
+							// Post update to DB.
 							await fetch(`/api/comments/${currComment._id}`, {
 								method: "PUT",
 								headers: {
@@ -122,7 +126,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							if (setCommentFormToEditVisible)
 								setCommentFormToEditVisible(false);
 						} else if (isFirstLevelComment || isSecondLevelComment) {
+							// Reply to comment.
 							const response = await fetch(`/api/comments/${currComment._id}`);
+							// Get comment to update.
 							let commentToUpdate = await response.json();
 							console.log(currComment._id);
 							commentToUpdate = commentToUpdate.data[0];
@@ -133,6 +139,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							};
 
 							if (isSecondLevelComment)
+								// Add mention if second level comment.
 								body = {
 									...commentToUpdate,
 									replies: [
@@ -144,6 +151,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 									],
 								};
 
+							// Post updated comment to DB.
 							await fetch(`/api/comments/${currComment._id}`, {
 								method: "PUT",
 								headers: {
@@ -155,7 +163,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							if (setCommentFormToReplyVisible)
 								setCommentFormToReplyVisible(false);
 						} else {
-							console.log(body);
+							// Post new comment to DB.
 							await fetch("/api/comments", {
 								method: "POST",
 								headers: {
@@ -165,6 +173,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							});
 						}
 					}
+					// Refresh then scroll to same place on the page.
 					const height = window.scrollY;
 					await router.replace(router.asPath);
 					setCommentInput("");
