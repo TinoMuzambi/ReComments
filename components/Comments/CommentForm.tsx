@@ -22,21 +22,21 @@ const CommentForm: React.FC<Boolean | any> = ({
 }) => {
 	const [cancelCommentButtonsVisible, setCancelCommentButtonsVisible] =
 		useState(false);
-	const [comment, setComment] = useState("");
+	const [commentInput, setCommentInput] = useState("");
 	const { user } = useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
 		if (isSecondLevelComment) {
 			if (user && user.names) {
-				setComment(`@${user.names[0].givenName as string} `);
+				setCommentInput(`@${user.names[0].givenName as string} `);
 			}
 		}
 	}, [isSecondLevelComment]);
 
 	useEffect(() => {
 		if (commentFormToEditVisible) {
-			setComment(currComment.comment);
+			setCommentInput(currComment.comment);
 		}
 	}, [commentFormToEditVisible]);
 
@@ -62,7 +62,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 					authorId: user?.emailAddresses[0].metadata?.source?.id as string,
 					email: user?.emailAddresses[0].value as string,
 					name: user.names[0].givenName as string,
-					comment: comment,
+					comment: commentInput,
 					image: user.photos[0].url as string,
 					upvotes: 0,
 					downvotes: 0,
@@ -89,7 +89,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 										let newReplies = commentToUpdate.replies;
 										newReplies[i] = {
 											...newReplies[i],
-											comment: comment,
+											comment: commentInput,
 											edited: true,
 											updatedAt: new Date(),
 										};
@@ -103,7 +103,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 							body = {
 								...commentToUpdate,
 								edited: true,
-								comment: comment,
+								comment: commentInput,
 								updatedAt: new Date(),
 							};
 						}
@@ -159,7 +159,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 					}
 					const height = window.scrollY;
 					await router.replace(router.asPath);
-					setComment("");
+					setCommentInput("");
 					setCancelCommentButtonsVisible(false);
 					window.scrollTo(0, height);
 				} catch (error) {
@@ -187,8 +187,8 @@ const CommentForm: React.FC<Boolean | any> = ({
 							setCancelCommentButtonsVisible(true);
 					}}
 					placeholder="Enter a comment"
-					value={comment}
-					onChange={(e) => setComment(e.target.value)}
+					value={commentInput}
+					onChange={(e) => setCommentInput(e.target.value)}
 				/>
 				{(cancelCommentButtonsVisible ||
 					isFirstLevelComment ||
@@ -201,7 +201,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 						<button
 							type="submit"
 							className="submit"
-							disabled={comment.length <= 0}
+							disabled={commentInput.length <= 0}
 						>
 							{commentFormToEditVisible ? "Save" : "Comment"}
 						</button>
