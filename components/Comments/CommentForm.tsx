@@ -32,7 +32,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
 		setOpened(false);
-		if (replying) {
+		if (replying || replyReplying) {
 			setReplying(false);
 		}
 	};
@@ -101,13 +101,13 @@ const CommentForm: React.FC<Boolean | any> = ({
 				<textarea
 					className={`text ${replying && "sm"}`}
 					onFocus={() => {
-						if (!replying) setOpened(true);
+						if (!replying && !replyReplying) setOpened(true);
 					}}
 					placeholder="Enter a comment"
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
 				/>
-				{(opened || replying) && (
+				{(opened || replying || replyReplying) && (
 					<div className="buttons">
 						<button className="cancel" onClick={cancelHandler}>
 							Cancel
