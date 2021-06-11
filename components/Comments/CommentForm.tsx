@@ -12,10 +12,13 @@ import { CommentModel } from "../../interfaces";
 
 const CommentForm: React.FC<Boolean | any> = ({
 	replying,
+	editing,
+	setEditing,
 	replyReplying,
 	setReplying,
 	id,
 	setOpenedProp,
+	commentProp,
 }) => {
 	const [opened, setOpened] = useState(false);
 	const [comment, setComment] = useState("");
@@ -30,11 +33,21 @@ const CommentForm: React.FC<Boolean | any> = ({
 		}
 	}, [replyReplying]);
 
+	useEffect(() => {
+		if (editing) {
+			setComment(commentProp.comment);
+		}
+	}, [editing]);
+
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
 		setOpened(false);
 		if (replying || replyReplying) {
 			setReplying(false);
+		}
+		if (editing) {
+			setReplying(false);
+			return setEditing(false);
 		}
 	};
 
@@ -54,10 +67,33 @@ const CommentForm: React.FC<Boolean | any> = ({
 					createdAt: new Date(),
 					updatedAt: new Date(),
 					mention: null,
+					edited: false,
 				};
 
 				try {
-					if (replying || replyReplying) {
+					if (editing) {
+						const response = await fetch(`/api/comments/${id}`);
+						let commentToUpdate = await response.json();
+						commentToUpdate = commentToUpdate.data[0];
+
+						body = {
+							...commentToUpdate,
+							edited: true,
+							comment: comment,
+							updatedAt: new Date(),
+						};
+
+						await fetch(`/api/comments/${id}`, {
+							method: "PUT",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(body),
+						});
+						setOpenedProp(true);
+						setReplying(false);
+						setEditing(false);
+					} else if (replying || replyReplying) {
 						const response = await fetch(`/api/comments/${id}`);
 						let commentToUpdate = await response.json();
 						commentToUpdate = commentToUpdate.data[0];
@@ -126,7 +162,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
 				/>
-				{(opened || replying || replyReplying) && (
+				{(opened || replying || replyReplying || editing) && (
 					<div className="buttons">
 						<button className="cancel" onClick={cancelHandler}>
 							Cancel
@@ -136,7 +172,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 							className="submit"
 							disabled={comment.length <= 0}
 						>
-							Comment
+							{editing ? "Save" : "Comment"}
 						</button>
 					</div>
 				)}

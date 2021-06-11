@@ -49,6 +49,11 @@ const CommentSchema: Schema = new mongoose.Schema(
 		replies: {
 			type: [this],
 		},
+		edited: {
+			type: Boolean,
+			required: [true, "Comment needs edited value."],
+			default: false,
+		},
 	},
 	{
 		timestamps: true,

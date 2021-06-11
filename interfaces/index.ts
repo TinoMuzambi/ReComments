@@ -31,6 +31,7 @@ export interface CommentModel {
 	downvotes?: number;
 	mention?: string | null;
 	replies?: CommentModel[];
+	edited: boolean;
 }
 
 export interface UserModel {
@@ -38,9 +39,11 @@ export interface UserModel {
 	email: string;
 	shortName: string;
 	name: string;
-	photoUrl: string;
+	photoUrl?: string;
 	createdAt: Date;
 	updatedAt: Date;
+	upvotedIds?: boolean[];
+	downvotedIds?: boolean[];
 }
 
 type User = gapi.client.people.Person | null;
@@ -50,12 +53,15 @@ export interface ContextProps {
 	user: User;
 	setSignedIn?: Function;
 	setUser?: Function;
+	dbUser: UserModel | null;
+	setDbUser?: Function;
 }
 
 export type Actions = {
-	type: "UPDATE_SIGNED_IN" | "SET_USER";
+	type: "UPDATE_SIGNED_IN" | "SET_USER" | "SET_DB_USER";
 	auth: boolean;
 	user: User;
+	dbUser: UserModel | null;
 };
 
-export type State = { signedIn: boolean; user: User };
+export type State = { signedIn: boolean; user: User; dbUser: UserModel | null };
