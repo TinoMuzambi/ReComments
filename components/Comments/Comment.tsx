@@ -24,7 +24,9 @@ const Comment: React.FC<any> = ({ comment }) => {
 					</button>
 					{opened &&
 						comment.replies.map((reply: any) => (
-							<CommentContent comment={reply} key={reply.id} />
+							<div key={reply._id}>
+								<CommentContent comment={reply} />
+							</div>
 						))}
 				</div>
 			)}

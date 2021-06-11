@@ -47,7 +47,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 						commentToUpdate = commentToUpdate.data[0];
 						body = {
 							...commentToUpdate,
-							replies: [body, ...commentToUpdate.replies],
+							replies: [...commentToUpdate.replies, body],
 						};
 
 						await fetch(`/api/comments/${id}`, {
