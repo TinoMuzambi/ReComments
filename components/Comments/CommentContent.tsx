@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import moment from "moment";
 import { MdThumbUp, MdThumbDown, MdEdit, MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { useRouter } from "next/router";
 
 import CommentForm from "./CommentForm";
 
@@ -15,6 +16,21 @@ const CommentContent: React.FC<any> = ({
 	const [replying, setReplying] = useState(false);
 	const [editing, setEditing] = useState(false);
 	const [optionsVisible, setOptionsVisible] = useState(false);
+	const router = useRouter();
+
+	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+		await fetch(`/api/comments/${id}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+		const height = window.scrollY;
+		await router.replace(router.asPath);
+		setOpened(false);
+		window.scrollTo(0, height);
+	};
 
 	return (
 		<div className="content">
@@ -89,7 +105,7 @@ const CommentContent: React.FC<any> = ({
 					>
 						<MdEdit className="icon" /> <p className="label">Edit</p>
 					</button>
-					<button className="item">
+					<button className="item" onClick={deleteHandler}>
 						<MdDelete className="icon" /> <p className="label">Delete</p>
 					</button>
 				</div>
