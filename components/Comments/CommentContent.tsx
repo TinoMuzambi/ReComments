@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 
 import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
-// import { CommentModel } from "../../interfaces";
+import { CommentContentProps } from "../../interfaces";
 
-const CommentContent: React.FC<any> = ({
+const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
 	isFirstLevelComment,
 	isSecondLevelComment,

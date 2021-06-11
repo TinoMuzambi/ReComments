@@ -1,4 +1,4 @@
-import { FormEventHandler } from "react";
+import { Dispatch, FormEventHandler, SetStateAction } from "react";
 
 export interface WrapperProps {
 	children: any;
@@ -22,6 +22,13 @@ export interface CommentsProps {
 
 export interface CommentProps {
 	comment: CommentModel;
+}
+
+export interface CommentContentProps {
+	currComment: CommentModel;
+	isFirstLevelComment: boolean;
+	isSecondLevelComment: boolean;
+	setIsViewMoreExpanded: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface FormProps {
