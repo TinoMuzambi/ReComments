@@ -149,9 +149,9 @@ const CommentContent: React.FC<any> = ({
 				{(commentFormToReplyVisible || commentFormToEditVisible) && (
 					<CommentForm
 						isFirstLevelComment={isFirstLevelComment}
+						isSecondLevelComment={isSecondLevelComment}
 						commentFormToEditVisible={commentFormToEditVisible}
 						setCommentFormToEditVisible={setCommentFormToEditVisible}
-						isSecondLevelComment={isSecondLevelComment}
 						setCommentFormToReplyVisible={setCommentFormToReplyVisible}
 						setIsViewMoreExpanded={setIsViewMoreExpanded}
 						currComment={currComment}
