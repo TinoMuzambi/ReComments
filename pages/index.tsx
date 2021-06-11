@@ -8,6 +8,7 @@ import {
 	updateSignInStatus,
 	handleAuthClick,
 } from "../utils/gapi";
+import { UserModel } from "../interfaces";
 
 export default function Home() {
 	const router = useRouter();
@@ -60,17 +61,34 @@ export default function Home() {
 	useEffect(() => {
 		if (signedIn) {
 			router.push("/search");
-			checkUserDb();
 		}
 	}, [signedIn]);
 
+	useEffect(() => {
+		checkUserDb();
+	}, [user]);
+
 	const checkUserDb: Function = async () => {
-		if (user?.emailAddresses) {
+		console.log("here");
+		if (user && user?.emailAddresses && user.names && user.photos) {
 			const res = await fetch(
 				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
 			);
 			const userRes = await res.json();
-			console.log(userRes);
+			const data = userRes?.data;
+			if (!data) {
+				const body: UserModel = {
+					userId: user.emailAddresses[0].metadata?.source?.id as string,
+					email: user.emailAddresses[0].value as string,
+					shortName: user.names[0].givenName as string,
+					name: user.names[0].displayName as string,
+					photoUrl: user.photos[0].url,
+					upvotedIds: [],
+					downvotedIds: [],
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				};
+			}
 		}
 	};
 

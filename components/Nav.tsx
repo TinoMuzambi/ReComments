@@ -9,8 +9,8 @@ const Nav: React.FC = () => {
 
 	const handleSignOut = () => {
 		if (setSignedIn) {
+			gapi.auth2.getAuthInstance().signOut();
 			setSignedIn(false);
-			gapi.auth.signOut();
 			if (setUser) setUser(null);
 		}
 		handleSignoutClick();
