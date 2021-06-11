@@ -8,9 +8,7 @@ ReComments is a TypeScript Next.js app styled with Sass. It uses the YouTube API
 
 ### TODO
 
-- Update comment text.
-- Delete comment.
 - Upvote/Downvote functionality.
 - Save user details to db.
 - Potentially allow for open ended searching.
-- Implement proper types instead of any everywhere. 
+- Implement proper types instead of any everywhere.
