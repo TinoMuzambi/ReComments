@@ -18,18 +18,17 @@ const CommentContent: React.FC<any> = ({
 	const [replying, setReplying] = useState(false);
 	const [editing, setEditing] = useState(false);
 	const [optionsVisible, setOptionsVisible] = useState(false);
-	const [dbUser, setDbUser] = useState({});
 	const router = useRouter();
-	const { user } = useContext(AppContext);
+	const { user, setUser } = useContext(AppContext);
 
 	useEffect(() => {
 		const getDbUser: Function = async () => {
 			if (user && user?.emailAddresses && user.names && user.photos) {
 				const res = await fetch(
-					`api/users/${user?.emailAddresses[0].metadata?.source?.id}`
+					`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
 				);
 				const data = await res.json();
-				setDbUser(data.data);
+				setUser(data.data);
 			}
 		};
 		getDbUser();
