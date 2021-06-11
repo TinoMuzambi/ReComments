@@ -59,6 +59,7 @@ export interface CommentFormProps {
 	setCommentFormToEditVisible?: Dispatch<SetStateAction<boolean>>;
 	setCommentFormToReplyVisible?: Dispatch<SetStateAction<boolean>>;
 	commentFormToEditVisible?: boolean;
+	commentFormToReplyVisible?: boolean;
 }
 
 export interface FormProps {

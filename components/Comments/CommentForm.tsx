@@ -14,6 +14,7 @@ import { CommentFormProps, CommentModel } from "../../interfaces";
 const CommentForm: React.FC<CommentFormProps> = ({
 	isFirstLevelComment,
 	commentFormToEditVisible,
+	commentFormToReplyVisible,
 	setCommentFormToEditVisible,
 	isSecondLevelComment,
 	setCommentFormToReplyVisible,
@@ -213,7 +214,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				{(cancelCommentButtonsVisible ||
 					isFirstLevelComment ||
 					isSecondLevelComment ||
-					commentFormToEditVisible) && (
+					commentFormToEditVisible ||
+					commentFormToReplyVisible) && (
 					<div className="buttons">
 						<button className="cancel" onClick={cancelHandler}>
 							Cancel
