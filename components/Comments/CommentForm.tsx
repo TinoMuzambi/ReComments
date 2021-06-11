@@ -141,7 +141,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							};
 
 							if (isSecondLevelComment) {
-								console.log(commentToUpdate);
 								// Add mention if second level comment.
 								body = {
 									...commentToUpdate,
@@ -149,6 +148,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
 										...commentToUpdate?.replies,
 										{
 											...body,
+											comment: commentInput.replace(
+												("@" + user.names[0].givenName) as string,
+												""
+											),
 											mention: `@${user.names[0].givenName as string}`,
 										},
 									],
