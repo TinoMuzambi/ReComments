@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react";
 
 import AppReducer from "./AppReducer";
-import { ContextProps, UserModel } from "../interfaces";
+import { AppProviderProps, ContextProps, UserModel } from "../interfaces";
 
 const initialState: ContextProps = {
 	signedIn: false,
@@ -11,7 +11,7 @@ const initialState: ContextProps = {
 
 export const AppContext = createContext<ContextProps>(initialState);
 
-export const AppProvider = ({ children }: any) => {
+export const AppProvider = ({ children }: AppProviderProps) => {
 	const [state, dispatch] = useReducer(AppReducer, initialState);
 
 	const setSignedIn = (value: boolean) => {

@@ -12,6 +12,10 @@ export interface MetaProps {
 	image?: string;
 }
 
+export interface AppProviderProps {
+	children: JSX.Element;
+}
+
 export interface PlayerProps {
 	result: gapi.client.youtube.Video;
 }
