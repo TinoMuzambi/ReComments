@@ -57,7 +57,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	let res: any;
 	if (context && context.params)
 		res = await fetch(
-			`http://localhost:3000/api/comments/${context.params.url}`
+			`http://localhost:3000/api/comments/video/${context.params.url}`
 		);
 	const comments = await res.json();
 	return {
