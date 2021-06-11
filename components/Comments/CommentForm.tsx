@@ -73,8 +73,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				};
 
 				try {
-					if (currComment) {
-						if (commentFormToEditVisible) {
+					if (commentFormToEditVisible) {
+						if (currComment) {
 							// Edit comment.
 							const response = await fetch(`/api/comments/${currComment._id}`);
 							let commentToUpdate = await response.json();
@@ -125,7 +125,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								setCommentFormToReplyVisible(false);
 							if (setCommentFormToEditVisible)
 								setCommentFormToEditVisible(false);
-						} else if (isFirstLevelComment || isSecondLevelComment) {
+						}
+					} else if (isFirstLevelComment || isSecondLevelComment) {
+						if (currComment) {
 							// Reply to comment.
 							const response = await fetch(`/api/comments/${currComment._id}`);
 							// Get comment to update.
@@ -162,17 +164,18 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
 							if (setCommentFormToReplyVisible)
 								setCommentFormToReplyVisible(false);
-						} else {
-							// Post new comment to DB.
-							await fetch("/api/comments", {
-								method: "POST",
-								headers: {
-									"Content-Type": "application/json",
-								},
-								body: JSON.stringify(body),
-							});
 						}
+					} else {
+						// Post new comment to DB.
+						await fetch("/api/comments", {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(body),
+						});
 					}
+
 					// Refresh then scroll to same place on the page.
 					const height = window.scrollY;
 					await router.replace(router.asPath);
