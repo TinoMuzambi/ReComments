@@ -55,6 +55,7 @@ export interface CommentModel {
 }
 
 export interface UserModel {
+	_id: string;
 	userId: string;
 	email: string;
 	shortName: string;
@@ -62,8 +63,8 @@ export interface UserModel {
 	photoUrl?: string;
 	createdAt: Date;
 	updatedAt: Date;
-	upvotedIds?: boolean[];
-	downvotedIds?: boolean[];
+	upvotedIds?: string[];
+	downvotedIds?: string[];
 }
 
 type User = gapi.client.people.Person | null;

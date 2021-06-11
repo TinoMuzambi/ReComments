@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
-import { CommentContentProps } from "../../interfaces";
+import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
 
 const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
@@ -58,41 +58,43 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
 		if (dbUser) {
-			let body: any = dbUser;
+			let body: UserModel = dbUser;
 
-			if (!body.upvotedIds.includes(currComment._id)) {
-				body = { ...body, upvotedIds: [...body.upvotedIds, currComment._id] };
+			if (body && body.upvotedIds) {
+				if (!body.upvotedIds.includes(currComment._id)) {
+					body = { ...body, upvotedIds: [...body.upvotedIds, currComment._id] };
 
-				try {
-					console.log(body._id);
-					await fetch(`/api/users/${body._id}`, {
-						method: "PUT",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(body),
-					});
-				} catch (error) {
-					return console.error(error);
+					try {
+						console.log(body._id);
+						await fetch(`/api/users/${body._id}`, {
+							method: "PUT",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(body),
+						});
+					} catch (error) {
+						return console.error(error);
+					}
+					try {
+						let body: CommentModel = currComment;
+
+						body = { ...body, upvotes: body.upvotes ? body.upvotes + 1 : 0 };
+
+						await fetch(`/api/comments/${currComment._id}`, {
+							method: "PUT",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(body),
+						});
+						getDbUser();
+					} catch (error) {
+						console.error(error);
+					}
+				} else {
+					console.log("Already liked!");
 				}
-				try {
-					body = currComment;
-
-					body = { ...body, upvotes: body.upvotes + 1 };
-
-					await fetch(`/api/comments/${currComment._id}`, {
-						method: "PUT",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(body),
-					});
-					getDbUser();
-				} catch (error) {
-					console.error(error);
-				}
-			} else {
-				console.log("Already liked!");
 			}
 
 			setCommentFormToReplyVisible(false);
