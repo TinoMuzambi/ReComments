@@ -12,7 +12,7 @@ const Comments: React.FC<any> = ({ comments }) => {
 				</h5>
 				<button className="sort">Sort by</button>
 			</div>
-			<CommentForm sm={false} />
+			<CommentForm replying={false} replyReplying={false} />
 			{comments?.map((comment: any) => (
 				<div key={comment._id}>
 					<Comment comment={comment} />

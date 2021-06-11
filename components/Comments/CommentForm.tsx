@@ -11,6 +11,7 @@ import { CommentModel } from "../../interfaces";
 
 const CommentForm: React.FC<Boolean | any> = ({
 	replying,
+	replyReplying,
 	setReplying,
 	id,
 }) => {
