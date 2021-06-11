@@ -49,6 +49,10 @@ const CommentSchema: Schema = new mongoose.Schema(
 		replies: {
 			type: [this],
 		},
+		edited: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{
 		timestamps: true,

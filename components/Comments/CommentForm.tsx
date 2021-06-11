@@ -67,6 +67,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 					createdAt: new Date(),
 					updatedAt: new Date(),
 					mention: null,
+					edited: false,
 				};
 
 				try {

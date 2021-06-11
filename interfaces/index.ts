@@ -31,6 +31,7 @@ export interface CommentModel {
 	downvotes?: number;
 	mention?: string | null;
 	replies?: CommentModel[];
+	edited: boolean;
 }
 
 export interface UserModel {
