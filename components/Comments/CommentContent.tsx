@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
-import { CommentModel } from "../../interfaces";
+// import { CommentModel } from "../../interfaces";
 
 const CommentContent: React.FC<any> = ({
 	comment,
