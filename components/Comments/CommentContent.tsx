@@ -12,7 +12,7 @@ const CommentContent: React.FC<any> = ({ comment }) => {
 			<div className="details">
 				<div className="top">
 					<h5 className="name">{comment.name}</h5>
-					<p className="datetime">{moment(comment.updatedAt).fromNow()}</p>
+					<p className="datetime">{moment(comment.createdAt).fromNow()}</p>
 				</div>
 				<p className="text">
 					{comment?.mention && (
