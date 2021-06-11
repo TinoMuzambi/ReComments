@@ -39,9 +39,11 @@ export interface UserModel {
 	email: string;
 	shortName: string;
 	name: string;
-	photoUrl: string;
+	photoUrl?: string;
 	createdAt: Date;
 	updatedAt: Date;
+	upvotedIds?: boolean[];
+	downvotedIds?: boolean[];
 }
 
 type User = gapi.client.people.Person | null;
