@@ -1,6 +1,7 @@
 import { useState } from "react";
 import moment from "moment";
 import { MdThumbUp, MdThumbDown } from "react-icons/md";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 import CommentForm from "./CommentForm";
 
@@ -54,6 +55,11 @@ const CommentContent: React.FC<any> = ({
 						setOpenedProp={setOpened}
 					/>
 				)}
+			</div>
+			<div className="options">
+				<button className="select">
+					<BsThreeDotsVertical className="icon" />
+				</button>
 			</div>
 		</div>
 	);

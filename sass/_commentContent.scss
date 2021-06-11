@@ -1,6 +1,7 @@
 .content {
 	display: flex;
 	gap: 1rem;
+	position: relative;
 
 	.profile {
 		height: 3rem;
@@ -56,6 +57,17 @@
 				color: grey;
 				font-size: 1.3em;
 			}
+		}
+	}
+
+	.options {
+		position: absolute;
+		right: 1rem;
+		top: 50%;
+		transform: translateY(-50%);
+
+		.select {
+			@include buttonReset;
 		}
 	}
 }
