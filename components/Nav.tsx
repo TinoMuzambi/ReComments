@@ -1,14 +1,17 @@
 import { useContext } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
 import { handleSignoutClick } from "../utils/gapi";
 
 const Nav: React.FC = () => {
 	const { setSignedIn, setUser, user, signedIn } = useContext(AppContext);
+	const router = useRouter();
 
 	const handleSignOut = () => {
 		if (setSignedIn) {
+			router.push("/");
 			gapi.auth2.getAuthInstance().signOut();
 			setSignedIn(false);
 			if (setUser) setUser(null);

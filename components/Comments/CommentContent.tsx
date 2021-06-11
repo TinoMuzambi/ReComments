@@ -1,4 +1,4 @@
-import { MouseEventHandler, useContext, useState } from "react";
+import { MouseEventHandler, useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { MdThumbUp, MdThumbDown, MdEdit, MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -18,8 +18,22 @@ const CommentContent: React.FC<any> = ({
 	const [replying, setReplying] = useState(false);
 	const [editing, setEditing] = useState(false);
 	const [optionsVisible, setOptionsVisible] = useState(false);
+	const [dbUser, setDbUser] = useState({});
 	const router = useRouter();
 	const { user } = useContext(AppContext);
+
+	useEffect(() => {
+		const getDbUser: Function = async () => {
+			if (user && user?.emailAddresses && user.names && user.photos) {
+				const res = await fetch(
+					`api/users/${user?.emailAddresses[0].metadata?.source?.id}`
+				);
+				const data = await res.json();
+				setDbUser(data.data);
+			}
+		};
+		getDbUser();
+	}, []);
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
 		await fetch(`/api/comments/${id}`, {
