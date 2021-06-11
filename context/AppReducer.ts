@@ -13,6 +13,12 @@ const Reducer = (state: State, action: Actions) => {
 				user: action.user,
 			};
 		}
+		case "SET_DB_USER": {
+			return {
+				...state,
+				dbUser: action.dbUser,
+			};
+		}
 		default:
 			return state;
 	}

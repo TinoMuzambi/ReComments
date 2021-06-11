@@ -53,12 +53,15 @@ export interface ContextProps {
 	user: User;
 	setSignedIn?: Function;
 	setUser?: Function;
+	dbUser: UserModel | null;
+	setDbUser?: Function;
 }
 
 export type Actions = {
-	type: "UPDATE_SIGNED_IN" | "SET_USER";
+	type: "UPDATE_SIGNED_IN" | "SET_USER" | "SET_DB_USER";
 	auth: boolean;
 	user: User;
+	dbUser: UserModel | null;
 };
 
-export type State = { signedIn: boolean; user: User };
+export type State = { signedIn: boolean; user: User; dbUser: UserModel | null };

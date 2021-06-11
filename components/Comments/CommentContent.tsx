@@ -28,7 +28,7 @@ const CommentContent: React.FC<any> = ({
 					`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
 				);
 				const data = await res.json();
-				setUser(data.data);
+				if (setUser) setUser(data.data);
 			}
 		};
 		getDbUser();
@@ -49,18 +49,39 @@ const CommentContent: React.FC<any> = ({
 	};
 
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		if (user && user.emailAddresses && user.names && user.photos) {
-			let body = comment;
+		if (user) {
+			let body: any = user;
 
-			body = { ...body, upvotes: body.upvotes + 1 };
+			if (!body.upvotedIds.includes(comment._id)) {
+				body = { ...body, upvotedIds: [...body.upvotedIds, comment._id] };
 
-			await fetch(`/api/comments/${id}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(body),
-			});
+				try {
+					console.log(body._id);
+					await fetch(`/api/users/${body._id}`, {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(body),
+					});
+
+					body = comment;
+
+					body = { ...body, upvotes: body.upvotes + 1 };
+
+					await fetch(`/api/comments/${id}`, {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(body),
+					});
+				} catch (error) {
+					console.error(error);
+				}
+			} else {
+				console.log("Already liked!");
+			}
 
 			setReplying(false);
 			setEditing(false);

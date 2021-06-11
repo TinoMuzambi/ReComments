@@ -1,11 +1,12 @@
 import { createContext, useReducer } from "react";
 
 import AppReducer from "./AppReducer";
-import { ContextProps } from "../interfaces";
+import { ContextProps, UserModel } from "../interfaces";
 
 const initialState: ContextProps = {
 	signedIn: false,
 	user: null,
+	dbUser: null,
 };
 
 export const AppContext = createContext<ContextProps>(initialState);
@@ -18,6 +19,7 @@ export const AppProvider = ({ children }: any) => {
 			type: "UPDATE_SIGNED_IN",
 			auth: value,
 			user: state.user,
+			dbUser: state.dbUser,
 		});
 	};
 
@@ -26,6 +28,16 @@ export const AppProvider = ({ children }: any) => {
 			type: "SET_USER",
 			auth: state.signedIn,
 			user: value,
+			dbUser: state.dbUser,
+		});
+	};
+
+	const setDbUser = (value: UserModel | null) => {
+		dispatch({
+			type: "SET_DB_USER",
+			auth: state.signedIn,
+			user: state.user,
+			dbUser: value,
 		});
 	};
 
@@ -36,6 +48,8 @@ export const AppProvider = ({ children }: any) => {
 				user: state.user,
 				setSignedIn,
 				setUser,
+				dbUser: state.dbUser,
+				setDbUser,
 			}}
 		>
 			{children}
