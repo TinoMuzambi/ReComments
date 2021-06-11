@@ -26,13 +26,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "PUT":
 			try {
-				const comment: Comment[] = await Comment.findByIdAndUpdate(
-					id,
-					req.body,
-					{
-						new: true,
-						runValidators: true,
-					}
+				const comment: any = await Comment.updateOne(
+					{ _id: id },
+					{ ...req.body }
 				);
 
 				if (!comment) {

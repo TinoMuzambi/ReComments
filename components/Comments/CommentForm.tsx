@@ -49,6 +49,11 @@ const CommentForm: React.FC<Boolean | any> = ({
 					name: user.names[0].givenName as string,
 					comment: comment,
 					image: user.photos[0].url as string,
+					upvotes: 0,
+					downvotes: 0,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+					mention: null,
 				};
 
 				try {
