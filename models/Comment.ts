@@ -51,6 +51,7 @@ const CommentSchema: Schema = new mongoose.Schema(
 		},
 		edited: {
 			type: Boolean,
+			required: [true, "Comment needs edited value."],
 			default: false,
 		},
 	},

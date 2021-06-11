@@ -78,6 +78,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 
 						body = {
 							...commentToUpdate,
+							edited: true,
 							comment: comment,
 							updatedAt: new Date(),
 						};
