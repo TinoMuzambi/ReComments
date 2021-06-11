@@ -1,8 +1,8 @@
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
-// import { CommentInterface } from "../interfaces";
+import { CommentsProps } from "../../interfaces";
 
-const Comments: React.FC<any> = ({ comments }) => {
+const Comments: React.FC<CommentsProps> = ({ comments }) => {
 	return (
 		<section className="comments">
 			<div className="totals">

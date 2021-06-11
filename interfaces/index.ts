@@ -12,6 +12,14 @@ export interface MetaProps {
 	image?: string;
 }
 
+export interface VideoProps {
+	dbComments: CommentModel[];
+}
+
+export interface CommentsProps {
+	comments: CommentModel[];
+}
+
 export interface FormProps {
 	handleSubmit: FormEventHandler<HTMLFormElement>;
 	url: string;
