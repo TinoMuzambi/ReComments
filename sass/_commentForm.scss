@@ -1,0 +1,67 @@
+.comment-form-holder {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	gap: 1rem;
+	margin-bottom: 1rem;
+
+	&.sm {
+		margin-top: 0.5rem;
+	}
+
+	.profile {
+		height: 3rem;
+		width: 3rem;
+		border-radius: 50%;
+
+		&.sm {
+			height: 2rem;
+			width: 2rem;
+		}
+	}
+
+	.comment-form {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		gap: 0.5rem;
+
+		.text {
+			width: 100%;
+			padding: 0.5rem;
+			border: none;
+			background: none;
+			outline: none;
+			border-bottom: 1px solid grey;
+			resize: none;
+
+			&.sm {
+				height: 2.5rem;
+			}
+
+			&:focus {
+				border-bottom-color: $primary-color;
+			}
+		}
+
+		.buttons {
+			margin-left: auto;
+			@include flexAllRow;
+			gap: 1rem;
+
+			.cancel,
+			.submit {
+				@include buttonReset;
+				padding: 0.5rem 1rem;
+				background: rgba($color: grey, $alpha: 0.7);
+				color: white;
+				border-radius: 0.1rem;
+
+				&:disabled {
+					opacity: 0.4;
+					cursor: auto;
+				}
+			}
+		}
+	}
+}

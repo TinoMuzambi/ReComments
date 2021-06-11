@@ -19,10 +19,18 @@ export interface FormProps {
 }
 
 export interface CommentModel {
+	videoId: string;
 	authorId: string;
-	text: string;
-	createdAt: Date;
-	updatedAt: Date;
+	createdAt?: Date;
+	updatedAt?: Date;
+	name: string;
+	email: string;
+	image: string;
+	comment: string;
+	upvotes?: number;
+	downvotes?: number;
+	mention?: string | null;
+	replies?: CommentModel[];
 }
 
 export interface UserModel {

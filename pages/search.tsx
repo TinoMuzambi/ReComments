@@ -3,12 +3,12 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 import { AppContext } from "../context/AppContext";
-import { loadClient, execute } from "../utils/gapi";
 import Meta from "../components/Meta";
 import Loader from "../components/Loader";
 import Result from "../components/Result";
 import Form from "../components/Form";
 import AppState from "../components/AppState";
+import { loadClient, execute } from "../utils/gapi";
 
 const Search: React.FC = () => {
 	const [results, setResults] = useState([]);

@@ -1,14 +1,15 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { GetServerSideProps } from "next";
 
 import Meta from "../../components/Meta";
 import Player from "../../components/Player";
 import AppState from "../../components/AppState";
 import Stats from "../../components/Stats";
+import Comments from "../../components/Comments/Comments";
 import { loadClient, execute } from "../../utils/gapi";
-import Comments from "../../components/Comments";
 
-const Video: React.FC = () => {
+const Video: React.FC<any> = ({ dbComments }) => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
 	const router = useRouter();
 
@@ -45,11 +46,23 @@ const Video: React.FC = () => {
 
 					<Stats result={result} />
 
-					<Comments />
+					<Comments comments={dbComments} />
 				</main>
 			</>
 		);
 	else return <AppState message="Loading..." />;
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	let res: any;
+	if (context && context.params)
+		res = await fetch(
+			`http://localhost:3000/api/comments/video/${context.params.url}`
+		);
+	const comments = await res.json();
+	return {
+		props: { dbComments: comments.data.reverse() || null },
+	};
 };
 
 export default Video;

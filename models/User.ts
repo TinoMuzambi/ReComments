@@ -12,6 +12,8 @@ const UserSchema: Schema = new mongoose.Schema(
 		email: {
 			type: String,
 			required: [true, "User needs an email."],
+			unique: true,
+			trim: true,
 		},
 		shortName: {
 			type: String,
@@ -23,7 +25,9 @@ const UserSchema: Schema = new mongoose.Schema(
 		},
 		photoUrl: {
 			type: String,
-			required: [true, "User needs a photo url."],
+			trim: true,
+			default:
+				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSisT6Nb6XIXyX7kQ9XmEMID6eSxl4mQ8E0vXbwc77pJqhZYUUdU13h7VRlt4rZqOgg5Yc&usqp=CAU",
 		},
 	},
 	{

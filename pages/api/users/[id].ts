@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (method) {
 		case "GET":
 			try {
-				const user = await User.findOne({ userId: id });
+				const user: typeof User = await User.findOne({ userId: id });
 
 				if (!user) {
 					return res.status(404).json({ success: false });
@@ -26,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "PUT":
 			try {
-				const user = await User.findByIdAndUpdate(id, req.body, {
+				const user: typeof User[] = await User.findByIdAndUpdate(id, req.body, {
 					new: true,
 					runValidators: true,
 				});

@@ -1,0 +1,61 @@
+.content {
+	display: flex;
+	gap: 1rem;
+
+	.profile {
+		height: 3rem;
+		width: 3rem;
+		border-radius: 50%;
+		pointer-events: none;
+	}
+
+	.details {
+		width: 100%;
+
+		.upvote,
+		.downvote,
+		.reply {
+			@include buttonReset;
+			color: inherit;
+
+			&:hover {
+				transform: scale(0.9);
+			}
+		}
+
+		.top {
+			@include flexAllRow;
+			justify-content: flex-start;
+			gap: 0.5rem;
+
+			.datetime {
+				font-size: 0.7rem;
+			}
+		}
+
+		.text {
+			white-space: pre-wrap;
+
+			.mention {
+				color: rgb(61, 166, 255);
+			}
+		}
+
+		.actions {
+			@include flexAllRow;
+			justify-content: flex-start;
+			gap: 0.5rem;
+			color: grey;
+
+			.upvotes {
+				@include flexAllRow;
+				gap: 0.2rem;
+			}
+
+			.icon {
+				color: grey;
+				font-size: 1.3em;
+			}
+		}
+	}
+}

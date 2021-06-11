@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (method) {
 		case "GET":
 			try {
-				const comment = await Comment.findById(id);
+				const comment: Comment[] = await Comment.find({ _id: id });
 
 				if (!comment) {
 					return res.status(404).json({ success: false });
@@ -26,10 +26,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "PUT":
 			try {
-				const comment = await Comment.findByIdAndUpdate(id, req.body, {
-					new: true,
-					runValidators: true,
-				});
+				const comment: any = await Comment.updateOne(
+					{ _id: id },
+					{ ...req.body }
+				);
 
 				if (!comment) {
 					return res.status(400).json({ success: false });
@@ -53,6 +53,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		default:
 			return res.status(400).json({ success: false });
-			break;
 	}
 };
