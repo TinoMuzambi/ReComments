@@ -84,6 +84,12 @@ const CommentForm: React.FC<Boolean | any> = ({
 							comment: comment,
 							updatedAt: new Date(),
 						};
+						if (replyReplying || replying) {
+							console.log(body);
+							for (const reply in body.replies) {
+								console.log(reply._id);
+							}
+						}
 
 						await fetch(`/api/comments/${id}`, {
 							method: "PUT",
