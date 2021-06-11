@@ -6,6 +6,7 @@ import {
 	useEffect,
 } from "react";
 import { useRouter } from "next/router";
+import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
 import { CommentModel } from "../../interfaces";
@@ -100,6 +101,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 
 						body = {
 							...commentToUpdate,
+							_id: uuidv4(),
 							replies: [...commentToUpdate.replies, body],
 						};
 
