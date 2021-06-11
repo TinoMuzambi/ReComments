@@ -15,7 +15,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
 				isSecondLevelComment={false}
 				setIsViewMoreExpanded={setIsViewMoreExpanded}
 			/>
-			{comment.replies.length > 0 && (
+			{comment.replies && comment.replies.length > 0 && (
 				<div className="expand">
 					<button
 						className="view-more"
