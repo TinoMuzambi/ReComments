@@ -11,7 +11,7 @@ import AppState from "../components/AppState";
 import { loadClient, execute } from "../utils/gapi";
 
 const Search: React.FC = () => {
-	const [results, setResults] = useState([]);
+	const [results, setResults] = useState<gapi.client.youtube.Video[]>([]);
 	const [url, setUrl] = useState("");
 	const [fetching, setFetching] = useState(false);
 	const [noResults, setNoResults] = useState(false);
@@ -49,7 +49,7 @@ const Search: React.FC = () => {
 				{noResults && !fetching && <AppState message="No results found!" />}
 				{results.length > 0 && !fetching && (
 					<section className="results">
-						{results.map((result: any) => (
+						{results.map((result) => (
 							<Link
 								key={result.id}
 								href={{

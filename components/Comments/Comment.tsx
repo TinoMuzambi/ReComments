@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MdArrowDropUp, MdArrowDropDown } from "react-icons/md";
 
 import CommentContent from "./CommentContent";
-import { CommentProps } from "../../interfaces";
+import { CommentProps, CommentModel } from "../../interfaces";
 
 const Comment: React.FC<CommentProps> = ({ comment }) => {
 	const [isViewMoreExpanded, setIsViewMoreExpanded] = useState(false);
@@ -40,7 +40,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
 						)}
 					</button>
 					{isViewMoreExpanded &&
-						comment.replies.map((reply: any) => (
+						comment.replies.map((reply: CommentModel) => (
 							<div key={reply._id}>
 								<CommentContent
 									currComment={reply}

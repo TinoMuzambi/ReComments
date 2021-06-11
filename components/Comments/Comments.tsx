@@ -1,6 +1,6 @@
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
-import { CommentsProps } from "../../interfaces";
+import { CommentsProps, CommentModel } from "../../interfaces";
 
 const Comments: React.FC<CommentsProps> = ({ comments }) => {
 	return (
@@ -13,7 +13,7 @@ const Comments: React.FC<CommentsProps> = ({ comments }) => {
 				<button className="sort">Sort by</button>
 			</div>
 			<CommentForm isFirstLevelComment={false} isSecondLevelComment={false} />
-			{comments?.map((comment: any) => (
+			{comments?.map((comment: CommentModel) => (
 				<div key={comment._id}>
 					<Comment comment={comment} />
 				</div>
