@@ -80,6 +80,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 					const height = window.scrollY;
 					await router.replace(router.asPath);
 					setComment("");
+					setReplying(false);
 					window.scrollTo(0, height);
 				} catch (error) {
 					console.error(error);
