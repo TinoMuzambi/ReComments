@@ -4,7 +4,9 @@ import { BiLike, BiDislike } from "react-icons/bi";
 import { VscEye } from "react-icons/vsc";
 import { MdDateRange } from "react-icons/md";
 
-const Stats: React.FC<gapi.client.youtube.Video | any> = ({ result }) => {
+import { StatsProps } from "../interfaces";
+
+const Stats: React.FC<StatsProps> = ({ result }) => {
 	return (
 		<>
 			<div className="stats">
@@ -12,37 +14,49 @@ const Stats: React.FC<gapi.client.youtube.Video | any> = ({ result }) => {
 					<span className="icon">
 						<VscEye />
 					</span>
-					<p className="text">{result.statistics.viewCount}</p>
+					<p className="text">
+						{result.statistics ? result.statistics.viewCount : 0}
+					</p>
 				</div>
 				<div className="stat">
 					<span className="icon">
 						<BiLike />
 					</span>
-					<p className="text">{result.statistics.likeCount}</p>
+					<p className="text">
+						{result.statistics ? result.statistics.likeCount : 0}
+					</p>
 				</div>
 				<div className="stat">
 					<span className="icon">
 						<BiDislike />
 					</span>{" "}
-					<p className="text">{result.statistics.dislikeCount}</p>
+					<p className="text">
+						{result.statistics ? result.statistics.dislikeCount : 0}
+					</p>
 				</div>
 				<div className="stat">
 					<span className="icon">
 						<MdDateRange />
 					</span>{" "}
 					<p className="text">
-						{new Date(
-							result.snippet.publishedAt as string | number
-						).toLocaleDateString()}
+						{result.snippet?.publishedAt &&
+							new Date(result.snippet.publishedAt).toLocaleDateString()}
 					</p>
 				</div>
 			</div>
-			<h3 className="uploader">{result.snippet.channelTitle}</h3>
+			<h3 className="uploader">
+				{result.snippet ? result.snippet.channelTitle : "Title"}
+			</h3>
 			<p className="desc">
 				{parse(
-					Autolinker.link(result.snippet.description as string, {
-						className: "embed-link",
-					})
+					Autolinker.link(
+						result.snippet
+							? (result.snippet.description as string)
+							: "Description",
+						{
+							className: "embed-link",
+						}
+					)
 				)}
 			</p>
 		</>

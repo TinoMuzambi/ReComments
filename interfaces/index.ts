@@ -1,7 +1,7 @@
-import { FormEventHandler } from "react";
+import { Dispatch, FormEventHandler, SetStateAction } from "react";
 
 export interface WrapperProps {
-	children: any;
+	children: JSX.Element;
 }
 
 export interface MetaProps {
@@ -12,6 +12,55 @@ export interface MetaProps {
 	image?: string;
 }
 
+export interface AppProviderProps {
+	children: JSX.Element[];
+}
+
+export interface PlayerProps {
+	result: gapi.client.youtube.Video;
+}
+
+export interface ResultProps {
+	result: gapi.client.youtube.Video;
+}
+
+export interface StatsProps {
+	result: gapi.client.youtube.Video;
+}
+
+export interface AppStateProps {
+	message: string;
+}
+
+export interface VideoProps {
+	dbComments: CommentModel[];
+}
+
+export interface CommentsProps {
+	comments: CommentModel[];
+}
+
+export interface CommentProps {
+	comment: CommentModel;
+}
+
+export interface CommentContentProps {
+	currComment: CommentModel;
+	isFirstLevelComment: boolean;
+	isSecondLevelComment: boolean;
+	setIsViewMoreExpanded: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface CommentFormProps {
+	isFirstLevelComment: boolean;
+	isSecondLevelComment: boolean;
+	currComment?: CommentModel;
+	setIsViewMoreExpanded?: Dispatch<SetStateAction<boolean>>;
+	setCommentFormToEditVisible?: Dispatch<SetStateAction<boolean>>;
+	setCommentFormToReplyVisible?: Dispatch<SetStateAction<boolean>>;
+	commentFormToEditVisible?: boolean;
+}
+
 export interface FormProps {
 	handleSubmit: FormEventHandler<HTMLFormElement>;
 	url: string;
@@ -19,6 +68,7 @@ export interface FormProps {
 }
 
 export interface CommentModel {
+	_id: string;
 	videoId: string;
 	authorId: string;
 	createdAt?: Date;
@@ -35,6 +85,7 @@ export interface CommentModel {
 }
 
 export interface UserModel {
+	_id?: string;
 	userId: string;
 	email: string;
 	shortName: string;
@@ -42,8 +93,8 @@ export interface UserModel {
 	photoUrl?: string;
 	createdAt: Date;
 	updatedAt: Date;
-	upvotedIds?: boolean[];
-	downvotedIds?: boolean[];
+	upvotedIds?: string[];
+	downvotedIds?: string[];
 }
 
 type User = gapi.client.people.Person | null;

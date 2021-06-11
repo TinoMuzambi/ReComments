@@ -6,17 +6,21 @@ import { useRouter } from "next/router";
 
 import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
-// import { CommentModel } from "../../interfaces";
+import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
 
-const CommentContent: React.FC<any> = ({
-	comment,
-	replyingProp,
-	replyReply,
-	id,
-	setOpened,
+const CommentContent: React.FC<CommentContentProps> = ({
+	currComment,
+	isFirstLevelComment,
+	isSecondLevelComment,
+	setIsViewMoreExpanded,
 }) => {
-	const [replying, setReplying] = useState(false);
-	const [editing, setEditing] = useState(false);
+	// Is the comment for visible with the intent to reply to the comment?
+	const [commentFormToReplyVisible, setCommentFormToReplyVisible] =
+		useState(false);
+	// Is the comment for visible with the intent to edit to the comment?
+	const [commentFormToEditVisible, setCommentFormToEditVisible] =
+		useState(false);
+	// Is the orange options box with the edit and delete buttons visible?
 	const [optionsVisible, setOptionsVisible] = useState(false);
 	const router = useRouter();
 	const { dbUser, user, setDbUser } = useContext(AppContext);
@@ -36,84 +40,89 @@ const CommentContent: React.FC<any> = ({
 	};
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		await fetch(`/api/comments/${id}`, {
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		if (confirm("Are you sure you want to delete this comment?")) {
+			await fetch(`/api/comments/${currComment._id}`, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 
-		const height = window.scrollY;
-		await router.replace(router.asPath);
-		setOpened(false);
-		window.scrollTo(0, height);
+			const height = window.scrollY;
+			await router.replace(router.asPath);
+			setIsViewMoreExpanded(false);
+			window.scrollTo(0, height);
+		}
+		setOptionsVisible(false);
 	};
 
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
 		if (dbUser) {
-			let body: any = dbUser;
+			let body: UserModel = dbUser;
 
-			if (!body.upvotedIds.includes(comment._id)) {
-				body = { ...body, upvotedIds: [...body.upvotedIds, comment._id] };
+			if (body && body.upvotedIds) {
+				if (!body.upvotedIds.includes(currComment._id)) {
+					body = { ...body, upvotedIds: [...body.upvotedIds, currComment._id] };
 
-				try {
-					console.log(body._id);
-					await fetch(`/api/users/${body._id}`, {
-						method: "PUT",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(body),
-					});
-				} catch (error) {
-					return console.error(error);
+					try {
+						console.log(body._id);
+						await fetch(`/api/users/${body._id}`, {
+							method: "PUT",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(body),
+						});
+					} catch (error) {
+						return console.error(error);
+					}
+					try {
+						let body: CommentModel = currComment;
+
+						body = { ...body, upvotes: body.upvotes ? body.upvotes + 1 : 0 };
+
+						await fetch(`/api/comments/${currComment._id}`, {
+							method: "PUT",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(body),
+						});
+						getDbUser();
+					} catch (error) {
+						console.error(error);
+					}
+				} else {
+					console.log("Already liked!");
 				}
-				try {
-					body = comment;
-
-					body = { ...body, upvotes: body.upvotes + 1 };
-
-					await fetch(`/api/comments/${id}`, {
-						method: "PUT",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(body),
-					});
-					getDbUser();
-				} catch (error) {
-					console.error(error);
-				}
-			} else {
-				console.log("Already liked!");
 			}
 
-			setReplying(false);
-			setEditing(false);
+			setCommentFormToReplyVisible(false);
+			setCommentFormToEditVisible(false);
 
 			const height = window.scrollY;
 			await router.replace(router.asPath);
-			setOpened(false);
+			setIsViewMoreExpanded(false);
 			window.scrollTo(0, height);
 		}
 	};
 
 	return (
 		<div className="content">
-			<img src={comment.image} alt={comment.name} className="profile" />
+			<img src={currComment.image} alt={currComment.name} className="profile" />
 			<div className="details">
 				<div className="top">
-					<h5 className="name">{comment.name}</h5>
+					<h5 className="name">{currComment.name}</h5>
 					<p className="datetime">
-						{moment(comment.createdAt).fromNow()}{" "}
-						{comment?.edited && "(edited)"}
+						{moment(currComment.createdAt).fromNow()}{" "}
+						{currComment?.edited && "(edited)"}
 					</p>
 				</div>
 				<p className="text">
-					{comment?.mention && (
-						<span className="mention">{comment.mention} </span>
+					{currComment?.mention && (
+						<span className="mention">{currComment.mention} </span>
 					)}
-					{comment.comment}
+					{currComment.comment}
 				</p>
 				<div className="actions">
 					<div className="upvotes">
@@ -122,7 +131,7 @@ const CommentContent: React.FC<any> = ({
 								<MdThumbUp className="icon" />
 							</span>
 						</button>
-						<p className="upvote-count">{comment.upvotes}</p>
+						<p className="upvote-count">{currComment.upvotes}</p>
 					</div>
 					<button className="downvote">
 						<span>
@@ -132,23 +141,22 @@ const CommentContent: React.FC<any> = ({
 					<button
 						className="reply"
 						onClick={() => {
-							setReplying(true);
-							setEditing(false);
+							setCommentFormToReplyVisible(true);
+							setCommentFormToEditVisible(false);
 						}}
 					>
 						REPLY
 					</button>
 				</div>
-				{(replying || editing) && (
+				{(commentFormToReplyVisible || commentFormToEditVisible) && (
 					<CommentForm
-						replying={replyingProp}
-						editing={editing}
-						setEditing={setEditing}
-						replyReplying={replyReply}
-						setReplying={setReplying}
-						id={id}
-						setOpenedProp={setOpened}
-						commentProp={comment}
+						isFirstLevelComment={isFirstLevelComment}
+						isSecondLevelComment={isSecondLevelComment}
+						commentFormToEditVisible={commentFormToEditVisible}
+						setCommentFormToEditVisible={setCommentFormToEditVisible}
+						setCommentFormToReplyVisible={setCommentFormToReplyVisible}
+						setIsViewMoreExpanded={setIsViewMoreExpanded}
+						currComment={currComment}
 					/>
 				)}
 			</div>
@@ -164,8 +172,8 @@ const CommentContent: React.FC<any> = ({
 					<button
 						className="item"
 						onClick={() => {
-							setEditing(true);
-							setReplying(false);
+							setCommentFormToEditVisible(true);
+							setCommentFormToReplyVisible(false);
 							setOptionsVisible(false);
 						}}
 					>

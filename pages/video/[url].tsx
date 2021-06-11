@@ -8,8 +8,9 @@ import AppState from "../../components/AppState";
 import Stats from "../../components/Stats";
 import Comments from "../../components/Comments/Comments";
 import { loadClient, execute } from "../../utils/gapi";
+import { VideoProps } from "../../interfaces";
 
-const Video: React.FC<any> = ({ dbComments }) => {
+const Video: React.FC<VideoProps> = ({ dbComments }) => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
 	const router = useRouter();
 

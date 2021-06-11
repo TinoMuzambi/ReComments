@@ -2,23 +2,26 @@ import { useState } from "react";
 import { MdArrowDropUp, MdArrowDropDown } from "react-icons/md";
 
 import CommentContent from "./CommentContent";
+import { CommentProps, CommentModel } from "../../interfaces";
 
-const Comment: React.FC<any> = ({ comment }) => {
-	const [opened, setOpened] = useState(false);
+const Comment: React.FC<CommentProps> = ({ comment }) => {
+	const [isViewMoreExpanded, setIsViewMoreExpanded] = useState(false);
 
 	return (
 		<article className="comment">
 			<CommentContent
-				comment={comment}
-				replyingProp={true}
-				replyReply={false}
-				id={comment._id}
-				setOpened={setOpened}
+				currComment={comment}
+				isFirstLevelComment={false}
+				isSecondLevelComment={false}
+				setIsViewMoreExpanded={setIsViewMoreExpanded}
 			/>
-			{comment.replies.length > 0 && (
+			{comment.replies && comment.replies.length > 0 && (
 				<div className="expand">
-					<button className="view-more" onClick={() => setOpened(!opened)}>
-						{opened ? (
+					<button
+						className="view-more"
+						onClick={() => setIsViewMoreExpanded(!isViewMoreExpanded)}
+					>
+						{isViewMoreExpanded ? (
 							<span>
 								<MdArrowDropUp className="icon" />
 								<p>
@@ -36,15 +39,14 @@ const Comment: React.FC<any> = ({ comment }) => {
 							</span>
 						)}
 					</button>
-					{opened &&
-						comment.replies.map((reply: any) => (
+					{isViewMoreExpanded &&
+						comment.replies.map((reply: CommentModel) => (
 							<div key={reply._id}>
 								<CommentContent
-									comment={reply}
-									replyingProp={false}
-									replyReply={true}
-									id={comment._id}
-									setOpened={setOpened}
+									currComment={reply}
+									isFirstLevelComment={false}
+									isSecondLevelComment={true}
+									setIsViewMoreExpanded={setIsViewMoreExpanded}
 								/>
 							</div>
 						))}

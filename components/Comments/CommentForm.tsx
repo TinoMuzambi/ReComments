@@ -6,48 +6,49 @@ import {
 	useEffect,
 } from "react";
 import { useRouter } from "next/router";
+import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
-import { CommentModel } from "../../interfaces";
+import { CommentFormProps, CommentModel } from "../../interfaces";
 
-const CommentForm: React.FC<Boolean | any> = ({
-	replying,
-	editing,
-	setEditing,
-	replyReplying,
-	setReplying,
-	id,
-	setOpenedProp,
-	commentProp,
+const CommentForm: React.FC<CommentFormProps> = ({
+	isFirstLevelComment,
+	commentFormToEditVisible,
+	setCommentFormToEditVisible,
+	isSecondLevelComment,
+	setCommentFormToReplyVisible,
+	setIsViewMoreExpanded,
+	currComment,
 }) => {
-	const [opened, setOpened] = useState(false);
-	const [comment, setComment] = useState("");
+	const [cancelCommentButtonsVisible, setCancelCommentButtonsVisible] =
+		useState(false);
+	const [commentInput, setCommentInput] = useState("");
 	const { user } = useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
-		if (replyReplying) {
+		if (isSecondLevelComment) {
 			if (user && user.names) {
-				setComment(`@${user.names[0].givenName as string} `);
+				setCommentInput(`@${user.names[0].givenName as string} `);
 			}
 		}
-	}, [replyReplying]);
+	}, [isSecondLevelComment]);
 
 	useEffect(() => {
-		if (editing) {
-			setComment(commentProp.comment);
+		if (commentFormToEditVisible) {
+			if (currComment) setCommentInput(currComment.comment);
 		}
-	}, [editing]);
+	}, [commentFormToEditVisible]);
 
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
-		setOpened(false);
-		if (replying || replyReplying) {
-			setReplying(false);
+		setCancelCommentButtonsVisible(false);
+		if (isFirstLevelComment || isSecondLevelComment) {
+			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
 		}
-		if (editing) {
-			setReplying(false);
-			return setEditing(false);
+		if (commentFormToEditVisible) {
+			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
+			if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
 		}
 	};
 
@@ -56,11 +57,12 @@ const CommentForm: React.FC<Boolean | any> = ({
 		const submitComment: Function = async () => {
 			if (user && user.emailAddresses && user.names && user.photos) {
 				let body: CommentModel = {
+					_id: uuidv4(),
 					videoId: router.query.url as string,
 					authorId: user?.emailAddresses[0].metadata?.source?.id as string,
 					email: user?.emailAddresses[0].value as string,
 					name: user.names[0].givenName as string,
-					comment: comment,
+					comment: commentInput,
 					image: user.photos[0].url as string,
 					upvotes: 0,
 					downvotes: 0,
@@ -71,69 +73,102 @@ const CommentForm: React.FC<Boolean | any> = ({
 				};
 
 				try {
-					if (editing) {
-						const response = await fetch(`/api/comments/${id}`);
-						let commentToUpdate = await response.json();
-						commentToUpdate = commentToUpdate.data[0];
+					if (currComment) {
+						if (commentFormToEditVisible) {
+							const response = await fetch(`/api/comments/${currComment._id}`);
+							let commentToUpdate = await response.json();
+							commentToUpdate = commentToUpdate.data[0];
 
-						body = {
-							...commentToUpdate,
-							edited: true,
-							comment: comment,
-							updatedAt: new Date(),
-						};
-
-						await fetch(`/api/comments/${id}`, {
-							method: "PUT",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
-						setOpenedProp(true);
-						setReplying(false);
-						setEditing(false);
-					} else if (replying || replyReplying) {
-						const response = await fetch(`/api/comments/${id}`);
-						let commentToUpdate = await response.json();
-						commentToUpdate = commentToUpdate.data[0];
-
-						body = {
-							...commentToUpdate,
-							replies: [...commentToUpdate.replies, body],
-						};
-
-						if (replyReplying)
 							body = {
 								...commentToUpdate,
-								replies: [
-									...commentToUpdate.replies,
-									{ ...body, mention: `@${user.names[0].givenName as string}` },
-								],
+							};
+							if (isSecondLevelComment || isFirstLevelComment) {
+								console.log(body);
+								if (body && body.replies) {
+									for (let i = 0; i < body.replies.length; i++) {
+										if (body.replies[i]._id === currComment._id) {
+											let newReplies = commentToUpdate.replies;
+											newReplies[i] = {
+												...newReplies[i],
+												comment: commentInput,
+												edited: true,
+												updatedAt: new Date(),
+											};
+											body = { ...commentToUpdate, replies: newReplies };
+											console.log(body);
+											break;
+										}
+									}
+								}
+							} else {
+								body = {
+									...commentToUpdate,
+									edited: true,
+									comment: commentInput,
+									updatedAt: new Date(),
+								};
+							}
+
+							await fetch(`/api/comments/${currComment._id}`, {
+								method: "PUT",
+								headers: {
+									"Content-Type": "application/json",
+								},
+								body: JSON.stringify(body),
+							});
+							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+							if (setCommentFormToReplyVisible)
+								setCommentFormToReplyVisible(false);
+							if (setCommentFormToEditVisible)
+								setCommentFormToEditVisible(false);
+						} else if (isFirstLevelComment || isSecondLevelComment) {
+							const response = await fetch(`/api/comments/${currComment._id}`);
+							let commentToUpdate = await response.json();
+							console.log(currComment._id);
+							commentToUpdate = commentToUpdate.data[0];
+
+							body = {
+								...commentToUpdate,
+								replies: [...commentToUpdate?.replies, body],
 							};
 
-						await fetch(`/api/comments/${id}`, {
-							method: "PUT",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
-						setOpenedProp(true);
-						setReplying(false);
-					} else {
-						await fetch("/api/comments", {
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
+							if (isSecondLevelComment)
+								body = {
+									...commentToUpdate,
+									replies: [
+										...commentToUpdate?.replies,
+										{
+											...body,
+											mention: `@${user.names[0].givenName as string}`,
+										},
+									],
+								};
+
+							await fetch(`/api/comments/${currComment._id}`, {
+								method: "PUT",
+								headers: {
+									"Content-Type": "application/json",
+								},
+								body: JSON.stringify(body),
+							});
+							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+							if (setCommentFormToReplyVisible)
+								setCommentFormToReplyVisible(false);
+						} else {
+							console.log(body);
+							await fetch("/api/comments", {
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json",
+								},
+								body: JSON.stringify(body),
+							});
+						}
 					}
 					const height = window.scrollY;
 					await router.replace(router.asPath);
-					setComment("");
-					setOpened(false);
+					setCommentInput("");
+					setCancelCommentButtonsVisible(false);
 					window.scrollTo(0, height);
 				} catch (error) {
 					console.error(error);
@@ -144,25 +179,29 @@ const CommentForm: React.FC<Boolean | any> = ({
 	};
 
 	return (
-		<article className={`comment-form-holder ${replying && "sm"}`}>
+		<article className={`comment-form-holder ${isFirstLevelComment && "sm"}`}>
 			{user && user.photos && user.names && (
 				<img
 					src={user?.photos[0].url}
 					alt={user?.names[0].givenName}
-					className={`profile ${replying && "sm"}`}
+					className={`profile ${isFirstLevelComment && "sm"}`}
 				/>
 			)}
 			<form className="comment-form" onSubmit={submitHandler}>
 				<textarea
-					className={`text ${replying && "sm"}`}
+					className={`text ${isFirstLevelComment && "sm"}`}
 					onFocus={() => {
-						if (!replying && !replyReplying) setOpened(true);
+						if (!isFirstLevelComment && !isSecondLevelComment)
+							setCancelCommentButtonsVisible(true);
 					}}
 					placeholder="Enter a comment"
-					value={comment}
-					onChange={(e) => setComment(e.target.value)}
+					value={commentInput}
+					onChange={(e) => setCommentInput(e.target.value)}
 				/>
-				{(opened || replying || replyReplying || editing) && (
+				{(cancelCommentButtonsVisible ||
+					isFirstLevelComment ||
+					isSecondLevelComment ||
+					commentFormToEditVisible) && (
 					<div className="buttons">
 						<button className="cancel" onClick={cancelHandler}>
 							Cancel
@@ -170,9 +209,9 @@ const CommentForm: React.FC<Boolean | any> = ({
 						<button
 							type="submit"
 							className="submit"
-							disabled={comment.length <= 0}
+							disabled={commentInput.length <= 0}
 						>
-							{editing ? "Save" : "Comment"}
+							{commentFormToEditVisible ? "Save" : "Comment"}
 						</button>
 					</div>
 				)}

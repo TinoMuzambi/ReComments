@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import mongoose from "mongoose";
 
 import User from "../../../models/User";
 import dbConnect from "../../../utils/dbConnect";
@@ -26,7 +27,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "PUT":
 			try {
-				const user: any = await User.updateOne({ _id: id }, { ...req.body });
+				const user: mongoose.UpdateQuery<any> = await User.updateOne(
+					{ _id: id },
+					{ ...req.body }
+				);
 
 				if (!user) {
 					return res.status(400).json({ success: false });

@@ -1,11 +1,20 @@
 import parse from "html-react-parser";
 
-const Player: React.FC<gapi.client.youtube.Video | any> = ({ result }) => {
+import { PlayerProps } from "../interfaces";
+
+const Player: React.FC<PlayerProps> = ({ result }) => {
+	console.log(result);
 	return (
 		<>
-			{result.status.embeddable ? (
+			{result &&
+			result.status &&
+			result.player &&
+			result.snippet &&
+			result.status.embeddable ? (
 				<div className="player">{parse(result.player.embedHtml as string)}</div>
-			) : result.snippet.thumbnails && result.snippet.thumbnails.maxres ? (
+			) : result.snippet &&
+			  result.snippet.thumbnails &&
+			  result.snippet.thumbnails.maxres ? (
 				<div className="player">
 					<img
 						src={result.snippet.thumbnails.maxres.url}
@@ -16,7 +25,7 @@ const Player: React.FC<gapi.client.youtube.Video | any> = ({ result }) => {
 			) : (
 				<img
 					src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
-					alt={result.snippet.title}
+					alt={result.snippet ? result.snippet.title : "profile"}
 					className="thumbnail"
 				/>
 			)}
