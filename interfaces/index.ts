@@ -12,6 +12,10 @@ export interface MetaProps {
 	image?: string;
 }
 
+export interface PlayerProps {
+	result: gapi.client.youtube.Video;
+}
+
 export interface VideoProps {
 	dbComments: CommentModel[];
 }
