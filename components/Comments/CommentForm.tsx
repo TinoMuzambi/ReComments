@@ -3,6 +3,7 @@ import {
 	useContext,
 	MouseEventHandler,
 	FormEventHandler,
+	useEffect,
 } from "react";
 import { useRouter } from "next/router";
 
@@ -19,6 +20,14 @@ const CommentForm: React.FC<Boolean | any> = ({
 	const [comment, setComment] = useState("");
 	const { user } = useContext(AppContext);
 	const router = useRouter();
+
+	useEffect(() => {
+		if (replyReplying) {
+			if (user && user.names) {
+				setComment(`@${user.names[0].givenName as string} `);
+			}
+		}
+	}, [replyReplying]);
 
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
