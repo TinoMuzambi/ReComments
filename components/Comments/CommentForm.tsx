@@ -9,7 +9,11 @@ import { useRouter } from "next/router";
 import { AppContext } from "../../context/AppContext";
 import { CommentModel } from "../../interfaces";
 
-const CommentForm: React.FC<Boolean | any> = ({ sm, setReplying }) => {
+const CommentForm: React.FC<Boolean | any> = ({
+	replying,
+	setReplying,
+	id,
+}) => {
 	const [opened, setOpened] = useState(false);
 	const [comment, setComment] = useState("");
 	const { user } = useContext(AppContext);
@@ -18,7 +22,7 @@ const CommentForm: React.FC<Boolean | any> = ({ sm, setReplying }) => {
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
 		setOpened(false);
-		if (sm) {
+		if (replying) {
 			setReplying(false);
 		}
 	};
@@ -57,25 +61,25 @@ const CommentForm: React.FC<Boolean | any> = ({ sm, setReplying }) => {
 	};
 
 	return (
-		<article className={`comment-form-holder ${sm && "sm"}`}>
+		<article className={`comment-form-holder ${replying && "sm"}`}>
 			{user && user.photos && user.names && (
 				<img
 					src={user?.photos[0].url}
 					alt={user?.names[0].givenName}
-					className={`profile ${sm && "sm"}`}
+					className={`profile ${replying && "sm"}`}
 				/>
 			)}
 			<form className="comment-form" onSubmit={submitHandler}>
 				<textarea
-					className={`text ${sm && "sm"}`}
+					className={`text ${replying && "sm"}`}
 					onFocus={() => {
-						if (!sm) setOpened(true);
+						if (!replying) setOpened(true);
 					}}
 					placeholder="Enter a comment"
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
 				/>
-				{(opened || sm) && (
+				{(opened || replying) && (
 					<div className="buttons">
 						<button className="cancel" onClick={cancelHandler}>
 							Cancel

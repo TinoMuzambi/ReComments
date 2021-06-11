@@ -38,7 +38,13 @@ const CommentContent: React.FC<any> = ({ comment }) => {
 						REPLY
 					</button>
 				</div>
-				{replying && <CommentForm sm={true} setReplying={setReplying} />}
+				{replying && (
+					<CommentForm
+						replying={true}
+						setReplying={setReplying}
+						id={comment._id}
+					/>
+				)}
 			</div>
 		</div>
 	);
