@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				const user: typeof User = await User.findOne({ userId: id });
 
 				if (!user) {
-					return res.status(404).json({ success: false });
+					return res.status(200).json({ success: true, data: null });
 				}
 
 				res.status(200).json({ success: true, data: user });

@@ -69,7 +69,6 @@ export default function Home() {
 	}, [user]);
 
 	const checkUserDb: Function = async () => {
-		console.log("here");
 		if (user && user?.emailAddresses && user.names && user.photos) {
 			const res = await fetch(
 				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
