@@ -57,6 +57,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 		const submitComment: Function = async () => {
 			if (user && user.emailAddresses && user.names && user.photos) {
 				let body: CommentModel = {
+					_id: uuidv4(),
 					videoId: router.query.url as string,
 					authorId: user?.emailAddresses[0].metadata?.source?.id as string,
 					email: user?.emailAddresses[0].value as string,
@@ -97,19 +98,19 @@ const CommentForm: React.FC<Boolean | any> = ({
 					} else if (replying || replyReplying) {
 						const response = await fetch(`/api/comments/${id}`);
 						let commentToUpdate = await response.json();
+						console.log(id);
 						commentToUpdate = commentToUpdate.data[0];
 
 						body = {
 							...commentToUpdate,
-							_id: uuidv4(),
-							replies: [...commentToUpdate.replies, body],
+							replies: [...commentToUpdate?.replies, body],
 						};
 
 						if (replyReplying)
 							body = {
 								...commentToUpdate,
 								replies: [
-									...commentToUpdate.replies,
+									...commentToUpdate?.replies,
 									{ ...body, mention: `@${user.names[0].givenName as string}` },
 								],
 							};
@@ -124,6 +125,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 						setOpenedProp(true);
 						setReplying(false);
 					} else {
+						console.log(body);
 						await fetch("/api/comments", {
 							method: "POST",
 							headers: {
