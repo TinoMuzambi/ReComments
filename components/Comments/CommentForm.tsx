@@ -71,8 +71,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 				try {
 					if (commentFormToEditVisible) {
+						// Edit comment.
 						if (currComment) {
-							// Edit comment.
 							const response = await fetch(`/api/comments/${currComment._id}`);
 							let commentToUpdate = await response.json();
 							commentToUpdate = commentToUpdate.data[0];
@@ -133,7 +133,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							const response = await fetch(`/api/comments/${currComment._id}`);
 							// Get comment to update.
 							let commentToUpdate = await response.json();
-							console.log(currComment._id);
 							commentToUpdate = commentToUpdate.data[0];
 
 							body = {
@@ -141,7 +140,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								replies: [...commentToUpdate?.replies, body],
 							};
 
-							if (isSecondLevelComment)
+							if (isSecondLevelComment) {
+								console.log(commentToUpdate);
 								// Add mention if second level comment.
 								body = {
 									...commentToUpdate,
@@ -153,6 +153,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 										},
 									],
 								};
+							}
 
 							// Post updated comment to DB.
 							await fetch(`/api/comments/${currComment._id}`, {

@@ -46,6 +46,7 @@ export interface CommentProps {
 
 export interface CommentContentProps {
 	currComment: CommentModel;
+	originalComment?: CommentModel;
 	isFirstLevelComment: boolean;
 	isSecondLevelComment: boolean;
 	setIsViewMoreExpanded: Dispatch<SetStateAction<boolean>>;

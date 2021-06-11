@@ -10,6 +10,7 @@ import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
 
 const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
+	originalComment,
 	isFirstLevelComment,
 	isSecondLevelComment,
 	setIsViewMoreExpanded,
@@ -148,7 +149,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						REPLY
 					</button>
 				</div>
-				{(commentFormToReplyVisible || commentFormToEditVisible) && (
+				{(commentFormToEditVisible || commentFormToReplyVisible) && (
 					<CommentForm
 						isFirstLevelComment={isFirstLevelComment}
 						isSecondLevelComment={isSecondLevelComment}
@@ -157,7 +158,11 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						setCommentFormToEditVisible={setCommentFormToEditVisible}
 						setCommentFormToReplyVisible={setCommentFormToReplyVisible}
 						setIsViewMoreExpanded={setIsViewMoreExpanded}
-						currComment={currComment}
+						currComment={
+							isFirstLevelComment || isSecondLevelComment
+								? originalComment
+								: currComment
+						}
 					/>
 				)}
 			</div>
