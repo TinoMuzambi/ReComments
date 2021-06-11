@@ -160,7 +160,9 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						setIsViewMoreExpanded={setIsViewMoreExpanded}
 						currComment={
 							isFirstLevelComment || isSecondLevelComment
-								? originalComment
+								? commentFormToEditVisible
+									? currComment
+									: originalComment
 								: currComment
 						}
 					/>
