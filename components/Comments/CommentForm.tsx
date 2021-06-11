@@ -67,6 +67,15 @@ const CommentForm: React.FC<Boolean | any> = ({
 							replies: [...commentToUpdate.replies, body],
 						};
 
+						if (replyReplying)
+							body = {
+								...commentToUpdate,
+								replies: [
+									...commentToUpdate.replies,
+									{ ...body, mention: `@${user.names[0].givenName as string}` },
+								],
+							};
+
 						await fetch(`/api/comments/${id}`, {
 							method: "PUT",
 							headers: {
