@@ -44,13 +44,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
 		setCancelCommentButtonsVisible(false);
-		if (isFirstLevelComment || isSecondLevelComment) {
-			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
-		}
-		if (commentFormToEditVisible) {
-			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
-			if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
-		}
+		if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
+		if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
+		if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
 	};
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
