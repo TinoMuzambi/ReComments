@@ -3,12 +3,6 @@
 	gap: 1rem;
 	position: relative;
 
-	&:hover {
-		.options {
-			opacity: 1;
-		}
-	}
-
 	.profile {
 		height: 3rem;
 		width: 3rem;
@@ -43,6 +37,12 @@
 		.text {
 			white-space: pre-wrap;
 
+			&:hover {
+				.options {
+					opacity: 1;
+				}
+			}
+
 			.mention {
 				color: rgb(61, 166, 255);
 			}
@@ -73,9 +73,9 @@
 	.options {
 		position: absolute;
 		right: 1rem;
-		top: 100%;
+		top: 5rem;
 		transform: translateY(-50%);
-		opacity: 0;
+		// opacity: 0;
 
 		.select {
 			@include buttonReset;

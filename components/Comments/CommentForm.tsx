@@ -12,6 +12,8 @@ import { CommentModel } from "../../interfaces";
 
 const CommentForm: React.FC<Boolean | any> = ({
 	replying,
+	editing,
+	setEditing,
 	replyReplying,
 	setReplying,
 	id,
@@ -35,6 +37,10 @@ const CommentForm: React.FC<Boolean | any> = ({
 		setOpened(false);
 		if (replying || replyReplying) {
 			setReplying(false);
+		}
+		if (editing) {
+			setReplying(false);
+			return setEditing(false);
 		}
 	};
 
@@ -126,7 +132,7 @@ const CommentForm: React.FC<Boolean | any> = ({
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
 				/>
-				{(opened || replying || replyReplying) && (
+				{(opened || replying || replyReplying || editing) && (
 					<div className="buttons">
 						<button className="cancel" onClick={cancelHandler}>
 							Cancel

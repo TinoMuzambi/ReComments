@@ -13,6 +13,7 @@ const CommentContent: React.FC<any> = ({
 	setOpened,
 }) => {
 	const [replying, setReplying] = useState(false);
+	const [editing, setEditing] = useState(false);
 	const [optionsVisible, setOptionsVisible] = useState(false);
 
 	return (
@@ -43,13 +44,21 @@ const CommentContent: React.FC<any> = ({
 							<MdThumbDown className="icon" />
 						</span>
 					</button>
-					<button className="reply" onClick={() => setReplying(true)}>
+					<button
+						className="reply"
+						onClick={() => {
+							setReplying(true);
+							setEditing(false);
+						}}
+					>
 						REPLY
 					</button>
 				</div>
-				{replying && (
+				{(replying || editing) && (
 					<CommentForm
 						replying={replyingProp}
+						editing={editing}
+						setEditing={setEditing}
 						replyReplying={replyReply}
 						setReplying={setReplying}
 						id={id}
@@ -66,7 +75,14 @@ const CommentContent: React.FC<any> = ({
 				</button>
 
 				<div className={`holder ${optionsVisible && "visible"}`}>
-					<button className="item">
+					<button
+						className="item"
+						onClick={() => {
+							setEditing(true);
+							setReplying(false);
+							setOptionsVisible(false);
+						}}
+					>
 						<MdEdit className="icon" /> <p className="label">Edit</p>
 					</button>
 					<button className="item">
