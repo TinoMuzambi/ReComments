@@ -88,6 +88,21 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		return value;
 	};
 
+	const getUpdatedVoteCommentBody: Function = (
+		voteType: string,
+		comment: CommentModel
+	): CommentModel => {
+		if (voteType === VOTING_TYPES.upvoting)
+			return { ...comment, upvotes: comment.upvotes + 1 };
+		if (voteType === VOTING_TYPES.downvoting)
+			return { ...comment, downvotes: comment.downvotes + 1 };
+		if (voteType === VOTING_TYPES.undoUpvoting)
+			return { ...comment, upvotes: comment.upvotes - 1 };
+		if (voteType === VOTING_TYPES.undoDownvoting)
+			return { ...comment, downvotes: comment.downvotes - 1 };
+		return comment;
+	};
+
 	const voteHandler: Function = async (voteType: string) => {
 		if (dbUser) {
 			getDbUser();
@@ -99,9 +114,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						// Post incremented upvotes to db.
 						let commentBody: CommentModel = { ...currComment };
 
-						commentBody = upvoting
-							? { ...commentBody, upvotes: commentBody.upvotes + 1 }
-							: { ...commentBody, downvotes: commentBody.downvotes + 1 };
+						commentBody = getUpdatedVoteCommentBody(voteType, commentBody);
 
 						if (isSecondLevelComment) {
 							if (originalComment) {
