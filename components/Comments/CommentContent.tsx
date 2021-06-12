@@ -58,10 +58,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					},
 				});
 
-				const height = window.scrollY;
-				await router.replace(router.asPath);
-				setIsViewMoreExpanded(false);
-				window.scrollTo(0, height);
+				await scrollToSamePosition();
 			} catch (error) {
 				console.error(error);
 			}
