@@ -110,6 +110,10 @@
 		position: relative;
 		margin-right: 5rem;
 
+		@include mq(500px) {
+			margin-right: 1rem;
+		}
+
 		.select {
 			@include buttonReset;
 

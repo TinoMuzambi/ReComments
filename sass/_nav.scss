@@ -3,6 +3,10 @@
 	top: 0;
 	z-index: 2;
 
+	@include mq(500px) {
+		position: static;
+	}
+
 	.nav {
 		background: $primary-color;
 		padding: 1rem;
