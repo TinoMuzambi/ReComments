@@ -28,7 +28,11 @@ const Nav: React.FC = () => {
 				<ul className={`links ${navOpen && "open"}`}>
 					<div className="row">
 						<div className="logo-holder">
-							<h1 className="logo">R</h1>
+							<Link href="/">
+								<a className="link">
+									<h1 className="logo">R</h1>
+								</a>
+							</Link>
 						</div>
 						<div
 							className={`burger ${navOpen && "open"}`}
