@@ -1,11 +1,23 @@
 import { CommentModel, UserModel } from "../interfaces";
 
+function instanceOfCommentModel(object: any): object is CommentModel {
+	return (
+		"_id" in object &&
+		"videoId" in object &&
+		"authorId" in object &&
+		"name" in object &&
+		"email" in object &&
+		"image" in object &&
+		"comment" in object &&
+		"edited" in object
+	);
+}
+
 export const postUpdatedResourceToDb = async (
 	body: CommentModel | UserModel,
-	resource: "comment" | "user",
 	comment?: CommentModel
 ): Promise<void> => {
-	if (resource === "comment") {
+	if (instanceOfCommentModel(body)) {
 		if (comment) {
 			await fetch(`/api/comments/${comment._id}`, {
 				method: "PUT",

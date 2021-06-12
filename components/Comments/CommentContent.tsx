@@ -72,7 +72,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 					try {
 						console.log(body._id);
-						await postUpdatedResourceToDb(body, "user");
+						await postUpdatedResourceToDb(body);
 					} catch (error) {
 						return console.error(error);
 					}
@@ -107,6 +107,10 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		}
 	};
 
+	const downVoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+		console.log("Downvote boo");
+	};
+
 	return (
 		<div className="content">
 			<img src={currComment.image} alt={currComment.name} className="profile" />
@@ -133,7 +137,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						</button>
 						<p className="upvote-count">{currComment.upvotes}</p>
 					</div>
-					<button className="downvote">
+					<button className="downvote" onClick={downVoteHandler}>
 						<span>
 							<MdThumbDown className="icon" />
 						</span>
