@@ -44,6 +44,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
 							<div key={reply._id}>
 								<CommentContent
 									currComment={reply}
+									originalComment={comment}
 									isFirstLevelComment={false}
 									isSecondLevelComment={true}
 									setIsViewMoreExpanded={setIsViewMoreExpanded}

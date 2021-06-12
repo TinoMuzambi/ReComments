@@ -7,9 +7,11 @@ import { useRouter } from "next/router";
 import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
 import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
+import { postUpdatedResourceToDb, VOTING_TYPES } from "../../utils";
 
 const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
+	originalComment,
 	isFirstLevelComment,
 	isSecondLevelComment,
 	setIsViewMoreExpanded,
@@ -29,82 +31,190 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		getDbUser();
 	}, []);
 
+	const scrollToSamePosition: Function = async (): Promise<void> => {
+		const height = window.scrollY;
+		await router.replace(router.asPath);
+		window.scrollTo(0, height);
+	};
+
 	const getDbUser: Function = async () => {
-		if (user && user?.emailAddresses && user.names && user.photos) {
+		if (user && user.emailAddresses) {
 			const res = await fetch(
 				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
 			);
 			const data = await res.json();
+
 			if (setDbUser) setDbUser(data.data);
 		}
 	};
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
 		if (confirm("Are you sure you want to delete this comment?")) {
-			await fetch(`/api/comments/${currComment._id}`, {
-				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
+			try {
+				if (isSecondLevelComment) {
+					if (originalComment && originalComment.replies) {
+						const deletedComment = {
+							...originalComment,
+							replies: originalComment.replies.filter(
+								(reply) => reply._id !== currComment._id
+							),
+						};
+						postUpdatedResourceToDb(deletedComment, originalComment._id);
+					}
+				} else {
+					await fetch(`/api/comments/${currComment._id}`, {
+						method: "DELETE",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					});
+				}
 
-			const height = window.scrollY;
-			await router.replace(router.asPath);
-			setIsViewMoreExpanded(false);
-			window.scrollTo(0, height);
+				await scrollToSamePosition();
+			} catch (error) {
+				console.error(error);
+			}
 		}
 		setOptionsVisible(false);
 	};
 
-	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+	const shouldDoVoteUpdate: Function = (
+		voteType: string,
+		body: UserModel
+	): Boolean => {
+		const value = false;
+
+		if (body.upvotedIds && body.downvotedIds) {
+			if (voteType === VOTING_TYPES.upvoting)
+				return !body.upvotedIds.includes(currComment._id);
+			else if (voteType === VOTING_TYPES.downvoting)
+				return !body.downvotedIds.includes(currComment._id);
+			else if (voteType === VOTING_TYPES.undoUpvoting)
+				return body.upvotedIds.includes(currComment._id);
+			else if (voteType === VOTING_TYPES.undoDownvoting)
+				return body.downvotedIds.includes(currComment._id);
+		}
+
+		return value;
+	};
+
+	const getUpdatedVoteCommentBody: Function = (
+		voteType: string,
+		comment: CommentModel
+	): CommentModel => {
+		if (voteType === VOTING_TYPES.upvoting)
+			return { ...comment, upvotes: comment.upvotes + 1 };
+		else if (voteType === VOTING_TYPES.downvoting)
+			return { ...comment, downvotes: comment.downvotes + 1 };
+		else if (voteType === VOTING_TYPES.undoUpvoting)
+			return { ...comment, upvotes: comment.upvotes - 1 };
+		else if (voteType === VOTING_TYPES.undoDownvoting)
+			return { ...comment, downvotes: comment.downvotes - 1 };
+		return comment;
+	};
+
+	const getUpdatedUserVoteIdsBody: Function = (
+		voteType: string,
+		user: UserModel
+	): UserModel => {
+		if (user.upvotedIds && user.downvotedIds) {
+			if (voteType === VOTING_TYPES.upvoting)
+				return {
+					...user,
+					upvotedIds: [...user.upvotedIds, currComment._id],
+				};
+			else if (voteType === VOTING_TYPES.downvoting)
+				return {
+					...user,
+					downvotedIds: [...user.downvotedIds, currComment._id],
+				};
+			else if (voteType === VOTING_TYPES.undoUpvoting)
+				return {
+					...user,
+					upvotedIds: user.upvotedIds.filter((id) => currComment._id !== id),
+				};
+			else if (voteType === VOTING_TYPES.undoDownvoting)
+				return {
+					...user,
+					downvotedIds: user.downvotedIds.filter(
+						(id) => currComment._id !== id
+					),
+				};
+		}
+		return user;
+	};
+
+	const voteHandler: Function = async (voteType: string) => {
 		if (dbUser) {
-			let body: UserModel = dbUser;
+			getDbUser();
+			let userBody: UserModel = dbUser;
 
-			if (body && body.upvotedIds) {
-				if (!body.upvotedIds.includes(currComment._id)) {
-					body = { ...body, upvotedIds: [...body.upvotedIds, currComment._id] };
-
+			if (userBody && userBody.upvotedIds && userBody.downvotedIds) {
+				if (shouldDoVoteUpdate(voteType, userBody)) {
 					try {
-						console.log(body._id);
-						await fetch(`/api/users/${body._id}`, {
-							method: "PUT",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
+						// Post incremented upvotes to db.
+						let commentBody: CommentModel = { ...currComment };
+
+						commentBody = getUpdatedVoteCommentBody(voteType, commentBody);
+
+						if (isSecondLevelComment) {
+							if (originalComment) {
+								const updatedComment = {
+									...originalComment,
+								};
+
+								if (updatedComment.replies) {
+									for (let i = 0; i < updatedComment.replies.length; i++) {
+										if (updatedComment.replies[i]._id === currComment._id) {
+											updatedComment.replies[i] = commentBody;
+										}
+									}
+								}
+
+								commentBody = updatedComment;
+							}
+						}
+
+						if (isSecondLevelComment) {
+							if (originalComment) {
+								await postUpdatedResourceToDb(commentBody, originalComment._id);
+							}
+						} else {
+							await postUpdatedResourceToDb(commentBody, currComment._id);
+						}
 					} catch (error) {
-						return console.error(error);
+						console.error(error);
 					}
+
 					try {
-						let body: CommentModel = currComment;
-
-						body = { ...body, upvotes: body.upvotes ? body.upvotes + 1 : 0 };
-
-						await fetch(`/api/comments/${currComment._id}`, {
-							method: "PUT",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
+						// Add comment id to user's upvoted ids.
+						userBody = getUpdatedUserVoteIdsBody(voteType, userBody);
+						await postUpdatedResourceToDb(userBody);
 						getDbUser();
 					} catch (error) {
 						console.error(error);
 					}
 				} else {
-					console.log("Already liked!");
+					// alert(upvoting ? "Already liked!" : "Already disliked!");
 				}
 			}
 
 			setCommentFormToReplyVisible(false);
 			setCommentFormToEditVisible(false);
 
-			const height = window.scrollY;
-			await router.replace(router.asPath);
-			setIsViewMoreExpanded(false);
-			window.scrollTo(0, height);
+			await scrollToSamePosition();
 		}
+	};
+	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+		if (dbUser?.upvotedIds?.includes(currComment._id))
+			voteHandler(VOTING_TYPES.undoUpvoting);
+		else voteHandler(VOTING_TYPES.upvoting);
+	};
+
+	const downVoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+		if (dbUser?.downvotedIds?.includes(currComment._id))
+			voteHandler(VOTING_TYPES.undoDownvoting);
+		else voteHandler(VOTING_TYPES.downvoting);
 	};
 
 	return (
@@ -133,7 +243,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						</button>
 						<p className="upvote-count">{currComment.upvotes}</p>
 					</div>
-					<button className="downvote">
+					<button className="downvote" onClick={downVoteHandler}>
 						<span>
 							<MdThumbDown className="icon" />
 						</span>
@@ -148,15 +258,23 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						REPLY
 					</button>
 				</div>
-				{(commentFormToReplyVisible || commentFormToEditVisible) && (
+				{(commentFormToEditVisible || commentFormToReplyVisible) && (
 					<CommentForm
 						isFirstLevelComment={isFirstLevelComment}
 						isSecondLevelComment={isSecondLevelComment}
 						commentFormToEditVisible={commentFormToEditVisible}
+						commentFormToReplyVisible={commentFormToReplyVisible}
 						setCommentFormToEditVisible={setCommentFormToEditVisible}
 						setCommentFormToReplyVisible={setCommentFormToReplyVisible}
 						setIsViewMoreExpanded={setIsViewMoreExpanded}
-						currComment={currComment}
+						currComment={
+							isFirstLevelComment || isSecondLevelComment
+								? commentFormToEditVisible
+									? currComment
+									: originalComment
+								: currComment
+						}
+						originalComment={originalComment}
 					/>
 				)}
 			</div>

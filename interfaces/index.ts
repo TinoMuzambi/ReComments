@@ -46,6 +46,7 @@ export interface CommentProps {
 
 export interface CommentContentProps {
 	currComment: CommentModel;
+	originalComment?: CommentModel;
 	isFirstLevelComment: boolean;
 	isSecondLevelComment: boolean;
 	setIsViewMoreExpanded: Dispatch<SetStateAction<boolean>>;
@@ -55,10 +56,12 @@ export interface CommentFormProps {
 	isFirstLevelComment: boolean;
 	isSecondLevelComment: boolean;
 	currComment?: CommentModel;
+	originalComment?: CommentModel;
 	setIsViewMoreExpanded?: Dispatch<SetStateAction<boolean>>;
 	setCommentFormToEditVisible?: Dispatch<SetStateAction<boolean>>;
 	setCommentFormToReplyVisible?: Dispatch<SetStateAction<boolean>>;
 	commentFormToEditVisible?: boolean;
+	commentFormToReplyVisible?: boolean;
 }
 
 export interface FormProps {
@@ -77,8 +80,8 @@ export interface CommentModel {
 	email: string;
 	image: string;
 	comment: string;
-	upvotes?: number;
-	downvotes?: number;
+	upvotes: number;
+	downvotes: number;
 	mention?: string | null;
 	replies?: CommentModel[];
 	edited: boolean;
