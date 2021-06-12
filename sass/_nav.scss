@@ -6,6 +6,15 @@
 	.nav {
 		background: $primary-color;
 		padding: 1rem;
+		transition: max-height 0.2s ease !important;
+
+		@include mq(500px) {
+			max-height: 5.5rem;
+
+			&.open {
+				max-height: 1000rem;
+			}
+		}
 
 		.links {
 			@include flexAllRow;
@@ -47,6 +56,11 @@
 
 				@include mq(500px) {
 					flex-direction: column;
+					transform: translateY(-50vh);
+
+					&.open {
+						transform: translateY(0);
+					}
 				}
 
 				.link {

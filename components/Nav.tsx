@@ -1,4 +1,4 @@
-import { MouseEventHandler, useContext } from "react";
+import { MouseEventHandler, useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -6,6 +6,7 @@ import { AppContext } from "../context/AppContext";
 import { handleSignoutClick } from "../utils/gapi";
 
 const Nav: React.FC = () => {
+	const [navOpen, setNavOpen] = useState(false);
 	const { setSignedIn, setUser, user, signedIn, setDbUser } =
 		useContext(AppContext);
 	const router = useRouter();
@@ -23,15 +24,17 @@ const Nav: React.FC = () => {
 
 	return (
 		<header className="nav-header">
-			<nav className="nav">
+			<nav className={`nav ${navOpen && "open"}`}>
 				<ul className="links">
 					<div className="row">
 						<div className="logo-holder">
 							<h1 className="logo">R</h1>
 						</div>
-						<button className="expand">X</button>
+						<button onClick={() => setNavOpen(!navOpen)} className="expand">
+							X
+						</button>
 					</div>
-					<div className="links-holder">
+					<div className={`links-holder ${navOpen && "open"}`}>
 						<Link href="/">
 							<a className="link">Home</a>
 						</Link>
