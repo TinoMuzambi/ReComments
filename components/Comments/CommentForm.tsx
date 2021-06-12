@@ -20,6 +20,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	setCommentFormToReplyVisible,
 	setIsViewMoreExpanded,
 	currComment,
+	originalComment,
 }) => {
 	const [cancelCommentButtonsVisible, setCancelCommentButtonsVisible] =
 		useState(commentFormToEditVisible || commentFormToReplyVisible);
@@ -41,10 +42,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		}
 	}, [commentFormToEditVisible]);
 
-	const getComment: Function = async (): Promise<any> => {
+	const getComment: Function = async (comment: CommentModel): Promise<any> => {
 		let commentToUpdate: any;
-		if (currComment) {
-			const response = await fetch(`/api/comments/${currComment._id}`);
+		if (comment) {
+			const response = await fetch(`/api/comments/${comment._id}`);
 			// Get comment to update.
 			commentToUpdate = await response.json();
 			commentToUpdate = commentToUpdate.data[0];
@@ -114,12 +115,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					if (commentFormToEditVisible) {
 						// Edit comment.
 						if (currComment) {
-							const commentToUpdate = await getComment();
-							body = {
-								...commentToUpdate,
-							};
-
 							if (isSecondLevelComment || isFirstLevelComment) {
+								const commentToUpdate = await getComment(originalComment);
+								body = {
+									...commentToUpdate,
+								};
 								// Editing replies.
 								if (body && body.replies) {
 									for (let i = 0; i < body.replies.length; i++) {
@@ -138,6 +138,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
 									}
 								}
 							} else {
+								const commentToUpdate = await getComment(currComment);
+								body = {
+									...commentToUpdate,
+								};
 								// Editing top level comment.
 								body = {
 									...commentToUpdate,
@@ -164,7 +168,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					) {
 						if (currComment) {
 							// Reply to comment.
-							const commentToUpdate = await getComment();
+							const commentToUpdate = await getComment(currComment);
 
 							if (isSecondLevelComment) {
 								// Add mention if second level comment.
