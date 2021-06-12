@@ -77,11 +77,11 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		if (body.upvotedIds && body.downvotedIds) {
 			if (voteType === VOTING_TYPES.upvoting)
 				return !body.upvotedIds.includes(currComment._id);
-			if (voteType === VOTING_TYPES.downvoting)
+			else if (voteType === VOTING_TYPES.downvoting)
 				return !body.downvotedIds.includes(currComment._id);
-			if (voteType === VOTING_TYPES.undoUpvoting)
+			else if (voteType === VOTING_TYPES.undoUpvoting)
 				return body.upvotedIds.includes(currComment._id);
-			if (voteType === VOTING_TYPES.undoDownvoting)
+			else if (voteType === VOTING_TYPES.undoDownvoting)
 				return body.downvotedIds.includes(currComment._id);
 		}
 
@@ -94,11 +94,11 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	): CommentModel => {
 		if (voteType === VOTING_TYPES.upvoting)
 			return { ...comment, upvotes: comment.upvotes + 1 };
-		if (voteType === VOTING_TYPES.downvoting)
+		else if (voteType === VOTING_TYPES.downvoting)
 			return { ...comment, downvotes: comment.downvotes + 1 };
-		if (voteType === VOTING_TYPES.undoUpvoting)
+		else if (voteType === VOTING_TYPES.undoUpvoting)
 			return { ...comment, upvotes: comment.upvotes - 1 };
-		if (voteType === VOTING_TYPES.undoDownvoting)
+		else if (voteType === VOTING_TYPES.undoDownvoting)
 			return { ...comment, downvotes: comment.downvotes - 1 };
 		return comment;
 	};
@@ -113,17 +113,17 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					...user,
 					upvotedIds: [...user.upvotedIds, currComment._id],
 				};
-			if (voteType === VOTING_TYPES.downvoting)
+			else if (voteType === VOTING_TYPES.downvoting)
 				return {
 					...user,
 					downvotedIds: [...user.downvotedIds, currComment._id],
 				};
-			if (voteType === VOTING_TYPES.undoUpvoting)
+			else if (voteType === VOTING_TYPES.undoUpvoting)
 				return {
 					...user,
 					upvotedIds: user.upvotedIds.filter((id) => currComment._id !== id),
 				};
-			if (voteType === VOTING_TYPES.undoDownvoting)
+			else if (voteType === VOTING_TYPES.undoDownvoting)
 				return {
 					...user,
 					downvotedIds: user.downvotedIds.filter(
