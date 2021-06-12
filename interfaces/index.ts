@@ -80,7 +80,7 @@ export interface CommentModel {
 	email: string;
 	image: string;
 	comment: string;
-	upvotes?: number;
+	upvotes: number;
 	downvotes?: number;
 	mention?: string | null;
 	replies?: CommentModel[];
