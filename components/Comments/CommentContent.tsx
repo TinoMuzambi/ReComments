@@ -68,6 +68,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 			if (body && body.upvotedIds) {
 				if (!body.upvotedIds.includes(currComment._id)) {
+					// Add comment id to user's upvoted ids.
 					body = { ...body, upvotedIds: [...body.upvotedIds, currComment._id] };
 
 					try {
@@ -81,13 +82,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 						body = { ...body, upvotes: body.upvotes ? body.upvotes + 1 : 0 };
 
-						await fetch(`/api/comments/${currComment._id}`, {
-							method: "PUT",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
+						await postUpdatedResourceToDb(currComment, body);
 						getDbUser();
 					} catch (error) {
 						console.error(error);
