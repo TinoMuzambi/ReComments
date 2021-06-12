@@ -41,7 +41,6 @@
 
 			.text {
 				white-space: pre-wrap;
-				z-index: -1;
 
 				.embed-link {
 					color: rgb(0, 166, 232);
@@ -114,7 +113,6 @@
 			color: white;
 			border-radius: 0.2rem;
 			right: 2rem;
-			z-index: 2;
 			opacity: 0;
 			pointer-events: none;
 
