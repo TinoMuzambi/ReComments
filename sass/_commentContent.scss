@@ -64,6 +64,15 @@
 				gap: 0.5rem;
 				color: grey;
 
+				.upvote,
+				.downvote {
+					&.active {
+						span .icon {
+							color: $accent-color;
+						}
+					}
+				}
+
 				.upvotes {
 					@include flexAllRow;
 					gap: 0.2rem;
