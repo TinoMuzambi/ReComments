@@ -196,11 +196,15 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		}
 	};
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		voteHandler(true);
+		if (dbUser?.upvotedIds?.includes(currComment._id))
+			voteHandler(VOTING_TYPES.undoUpvoting);
+		else voteHandler(VOTING_TYPES.upvoting);
 	};
 
 	const downVoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		voteHandler(false);
+		if (dbUser?.downvotedIds?.includes(currComment._id))
+			voteHandler(VOTING_TYPES.undoDownvoting);
+		else voteHandler(VOTING_TYPES.downvoting);
 	};
 
 	return (
