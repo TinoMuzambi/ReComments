@@ -218,12 +218,12 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				<img
 					src={user?.photos[0].url}
 					alt={user?.names[0].givenName}
-					className={`profile ${isFirstLevelComment && "sm"}`}
+					className={`profile ${isSecondLevelComment && "sm"}`}
 				/>
 			)}
 			<form className="comment-form" onSubmit={submitHandler}>
 				<textarea
-					className={`text ${isFirstLevelComment && "sm"}`}
+					className={`text ${isSecondLevelComment && "sm"}`}
 					onFocus={() => {
 						if (!isFirstLevelComment && !isSecondLevelComment)
 							setCancelCommentButtonsVisible(true);

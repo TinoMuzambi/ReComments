@@ -4,6 +4,10 @@
 	.expand {
 		margin-left: 4rem;
 
+		@include mq(500px) {
+			margin-left: 3rem;
+		}
+
 		.view-more {
 			@include buttonReset;
 			color: $accent-color;

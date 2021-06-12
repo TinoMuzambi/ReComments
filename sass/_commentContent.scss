@@ -16,9 +16,19 @@
 			border-radius: 50%;
 			pointer-events: none;
 
+			@include mq(500px) {
+				height: 2rem;
+				width: 2rem;
+			}
+
 			&.sm {
 				width: 2rem;
 				height: 2rem;
+
+				@include mq(500px) {
+					height: 1.5rem;
+					width: 1.5rem;
+				}
 			}
 		}
 
