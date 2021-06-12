@@ -1,6 +1,6 @@
 import { CommentModel } from "../interfaces";
 
-export const postUpdatedCommentToDb = async (
+export const postUpdatedResourceToDb = async (
 	body: CommentModel,
 	comment: CommentModel
 ): Promise<void> => {

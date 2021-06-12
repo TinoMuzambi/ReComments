@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
 import { CommentFormProps, CommentModel } from "../../interfaces";
-import { postUpdatedCommentToDb } from "../../utils";
+import { postUpdatedResourceToDb } from "../../utils";
 
 const CommentForm: React.FC<CommentFormProps> = ({
 	isFirstLevelComment,
@@ -131,7 +131,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 								// Post update to DB.
 								if (originalComment)
-									await postUpdatedCommentToDb(body, originalComment);
+									await postUpdatedResourceToDb(body, originalComment);
 							} else {
 								// Editing top level comment.
 								body = {
@@ -144,7 +144,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 							// Post update to DB.
 
-							await postUpdatedCommentToDb(body, currComment);
+							await postUpdatedResourceToDb(body, currComment);
 
 							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
@@ -186,7 +186,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							}
 
 							// Post updated comment to DB.
-							await postUpdatedCommentToDb(body, currComment);
+							await postUpdatedResourceToDb(body, currComment);
 
 							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
