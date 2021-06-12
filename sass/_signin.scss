@@ -3,6 +3,10 @@
 	gap: 1rem;
 	min-height: calc(100vh - 4.2rem);
 
+	&.padding {
+		padding: 2rem;
+	}
+
 	.title {
 		font-size: 3rem;
 
