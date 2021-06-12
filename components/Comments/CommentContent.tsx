@@ -73,11 +73,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					body = { ...body, upvotedIds: [...body.upvotedIds, currComment._id] };
 
 					try {
-						await postUpdatedResourceToDb(body);
-					} catch (error) {
-						return console.error(error);
-					}
-					try {
 						// Post incremented upvotes to db.
 						let body: CommentModel = { ...currComment };
 
@@ -87,7 +82,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						await postUpdatedResourceToDb(currComment, body);
 						getDbUser();
 					} catch (error) {
-						console.error(error);
+						return console.error(error);
+					}
+					try {
+						await postUpdatedResourceToDb(body);
+					} catch (error) {
+						return console.error(error);
 					}
 				} else {
 					console.log("Already liked!");
