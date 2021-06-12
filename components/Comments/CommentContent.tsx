@@ -79,17 +79,17 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					} catch (error) {
 						console.error(error);
 					}
-					try {
-						// Add comment id to user's upvoted ids.
-						userBody = {
-							...userBody,
-							upvotedIds: [...userBody.upvotedIds, currComment._id],
-						};
-						await postUpdatedResourceToDb(userBody);
-						getDbUser();
-					} catch (error) {
-						return console.error(error);
-					}
+					// try {
+					// 	// Add comment id to user's upvoted ids.
+					// 	userBody = {
+					// 		...userBody,
+					// 		upvotedIds: [...userBody.upvotedIds, currComment._id],
+					// 	};
+					// 	await postUpdatedResourceToDb(userBody);
+					// 	getDbUser();
+					// } catch (error) {
+					// 	return console.error(error);
+					// }
 				} else {
 					console.log("Already liked!");
 				}
