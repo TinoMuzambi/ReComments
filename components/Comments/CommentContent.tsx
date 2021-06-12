@@ -73,8 +73,11 @@ const CommentContent: React.FC<CommentContentProps> = ({
 			getDbUser();
 			let userBody: UserModel = dbUser;
 
-			if (userBody && userBody.upvotedIds) {
-				if (!userBody.upvotedIds.includes(currComment._id)) {
+			if (userBody && userBody.upvotedIds && userBody.downvotedIds) {
+				const shouldUpvoteOrDownvote = upvoting
+					? !userBody.upvotedIds.includes(currComment._id)
+					: !userBody.downvotedIds.includes(currComment._id);
+				if (shouldUpvoteOrDownvote) {
 					try {
 						// Post incremented upvotes to db.
 						let commentBody: CommentModel = { ...currComment };
