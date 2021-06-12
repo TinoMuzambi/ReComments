@@ -219,6 +219,22 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		else voteHandler(VOTING_TYPES.downvoting);
 	};
 
+	const currCommentUpvoted: Function = (): Boolean => {
+		let value = false;
+		if (dbUser && dbUser.upvotedIds) {
+			value = dbUser.upvotedIds.includes(currComment._id);
+		}
+		return value;
+	};
+
+	const currCommentDownvoted: Function = (): Boolean => {
+		let value = false;
+		if (dbUser && dbUser.downvotedIds) {
+			value = dbUser.downvotedIds.includes(currComment._id);
+		}
+		return value;
+	};
+
 	return (
 		<div className="content">
 			<div className="body">
