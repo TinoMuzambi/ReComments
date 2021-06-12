@@ -221,69 +221,75 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	return (
 		<div className="content">
-			<img src={currComment.image} alt={currComment.name} className="profile" />
-			<div className="details">
-				<div className="top">
-					<h5 className="name">{currComment.name}</h5>
-					<p className="datetime">
-						{moment(currComment.createdAt).fromNow()}{" "}
-						{currComment?.edited && "(edited)"}
-					</p>
-				</div>
-				<p className="text">
-					{currComment?.mention && (
-						<span className="mention">{currComment.mention} </span>
-					)}
+			<div className="body">
+				<img
+					src={currComment.image}
+					alt={currComment.name}
+					className="profile"
+				/>
+				<div className="details">
+					<div className="top">
+						<h5 className="name">{currComment.name}</h5>
+						<p className="datetime">
+							{moment(currComment.createdAt).fromNow()}{" "}
+							{currComment?.edited && "(edited)"}
+						</p>
+					</div>
+					<p className="text">
+						{currComment?.mention && (
+							<span className="mention">{currComment.mention} </span>
+						)}
 
-					{parse(
-						Autolinker.link(currComment.comment, {
-							className: "embed-link",
-						})
-					)}
-				</p>
-				<div className="actions">
-					<div className="upvotes">
-						<button className="upvote" onClick={upvoteHandler}>
+						{parse(
+							Autolinker.link(currComment.comment, {
+								className: "embed-link",
+							})
+						)}
+					</p>
+					<div className="actions">
+						<div className="upvotes">
+							<button className="upvote" onClick={upvoteHandler}>
+								<span>
+									<MdThumbUp className="icon" />
+								</span>
+							</button>
+							<p className="upvote-count">{currComment.upvotes}</p>
+						</div>
+						<button className="downvote" onClick={downVoteHandler}>
 							<span>
-								<MdThumbUp className="icon" />
+								<MdThumbDown className="icon" />
 							</span>
 						</button>
-						<p className="upvote-count">{currComment.upvotes}</p>
+						<button
+							className="reply"
+							onClick={() => {
+								setCommentFormToReplyVisible(true);
+								setCommentFormToEditVisible(false);
+							}}
+						>
+							REPLY
+						</button>
 					</div>
-					<button className="downvote" onClick={downVoteHandler}>
-						<span>
-							<MdThumbDown className="icon" />
-						</span>
-					</button>
-					<button
-						className="reply"
-						onClick={() => {
-							setCommentFormToReplyVisible(true);
-							setCommentFormToEditVisible(false);
-						}}
-					>
-						REPLY
-					</button>
+					{(commentFormToEditVisible || commentFormToReplyVisible) && (
+						<CommentForm
+							isFirstLevelComment={isFirstLevelComment}
+							isSecondLevelComment={isSecondLevelComment}
+							commentFormToEditVisible={commentFormToEditVisible}
+							commentFormToReplyVisible={commentFormToReplyVisible}
+							setCommentFormToEditVisible={setCommentFormToEditVisible}
+							setCommentFormToReplyVisible={setCommentFormToReplyVisible}
+							setIsViewMoreExpanded={setIsViewMoreExpanded}
+							currComment={
+								isFirstLevelComment || isSecondLevelComment
+									? commentFormToEditVisible
+										? currComment
+										: originalComment
+									: currComment
+							}
+							originalComment={originalComment}
+						/>
+					)}
 				</div>
-				{(commentFormToEditVisible || commentFormToReplyVisible) && (
-					<CommentForm
-						isFirstLevelComment={isFirstLevelComment}
-						isSecondLevelComment={isSecondLevelComment}
-						commentFormToEditVisible={commentFormToEditVisible}
-						commentFormToReplyVisible={commentFormToReplyVisible}
-						setCommentFormToEditVisible={setCommentFormToEditVisible}
-						setCommentFormToReplyVisible={setCommentFormToReplyVisible}
-						setIsViewMoreExpanded={setIsViewMoreExpanded}
-						currComment={
-							isFirstLevelComment || isSecondLevelComment
-								? commentFormToEditVisible
-									? currComment
-									: originalComment
-								: currComment
-						}
-						originalComment={originalComment}
-					/>
-				)}
 			</div>
 			<div className="options">
 				<button

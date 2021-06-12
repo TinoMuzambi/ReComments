@@ -1,85 +1,89 @@
 .content {
 	display: flex;
-	gap: 1rem;
-	position: relative;
+	align-items: center;
+	justify-content: space-between;
 
-	.profile {
-		height: 3rem;
-		width: 3rem;
-		border-radius: 50%;
-		pointer-events: none;
-	}
+	.body {
+		display: flex;
+		gap: 1rem;
+		position: relative;
 
-	.details {
-		width: 100%;
-
-		.upvote,
-		.downvote,
-		.reply {
-			@include buttonReset;
-			color: inherit;
-
-			&:hover {
-				transform: scale(0.9);
-			}
+		.profile {
+			height: 3rem;
+			width: 3rem;
+			border-radius: 50%;
+			pointer-events: none;
 		}
 
-		.top {
-			@include flexAllRow;
-			justify-content: flex-start;
-			gap: 0.5rem;
+		.details {
+			width: 100%;
 
-			.datetime {
-				font-size: 0.7rem;
-			}
-		}
+			.upvote,
+			.downvote,
+			.reply {
+				@include buttonReset;
+				color: inherit;
 
-		.text {
-			white-space: pre-wrap;
-
-			.embed-link {
-				color: rgb(0, 166, 232);
-			}
-
-			&:hover {
-				.options {
-					opacity: 1;
+				&:hover {
+					transform: scale(0.9);
 				}
 			}
 
-			.mention {
-				color: rgb(61, 166, 255);
-			}
-		}
-
-		.actions {
-			@include flexAllRow;
-			justify-content: flex-start;
-			gap: 0.5rem;
-			color: grey;
-
-			.upvotes {
+			.top {
 				@include flexAllRow;
-				gap: 0.2rem;
+				justify-content: flex-start;
+				gap: 0.5rem;
+
+				.datetime {
+					font-size: 0.7rem;
+				}
 			}
 
-			.icon {
-				color: grey;
-				font-size: 1.3em;
+			.text {
+				white-space: pre-wrap;
+				z-index: -1;
+
+				.embed-link {
+					color: rgb(0, 166, 232);
+				}
 
 				&:hover {
-					color: black;
+					.options {
+						opacity: 1;
+					}
+				}
+
+				.mention {
+					color: rgb(61, 166, 255);
+				}
+			}
+
+			.actions {
+				@include flexAllRow;
+				justify-content: flex-start;
+				gap: 0.5rem;
+				color: grey;
+
+				.upvotes {
+					@include flexAllRow;
+					gap: 0.2rem;
+				}
+
+				.icon {
+					color: grey;
+					font-size: 1.3em;
+
+					&:hover {
+						color: black;
+					}
 				}
 			}
 		}
 	}
 
 	.options {
-		position: absolute;
-		right: 1rem;
-		top: 5rem;
-		transform: translateY(-50%);
-		// opacity: 0;
+		position: relative;
+		margin-right: 5rem;
 
 		.select {
 			@include buttonReset;
@@ -95,11 +99,13 @@
 		}
 
 		.holder {
+			position: absolute;
+			top: 0;
+			right: 0;
 			padding: 0.5rem;
 			background: $primary-color;
 			color: white;
 			border-radius: 0.2rem;
-			position: relative;
 			right: 2rem;
 			z-index: 2;
 			opacity: 0;
