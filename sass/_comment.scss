@@ -6,7 +6,7 @@
 
 		.view-more {
 			@include buttonReset;
-			color: rgb(61, 166, 255);
+			color: $accent-color;
 			font-size: 1rem;
 
 			&:hover {
