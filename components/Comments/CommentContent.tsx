@@ -75,11 +75,9 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 						commentBody = { ...commentBody, upvotes: commentBody.upvotes + 1 };
 
-						console.log("before", commentBody);
-						await postUpdatedResourceToDb(currComment, commentBody);
-						getDbUser();
+						await postUpdatedResourceToDb(commentBody, currComment);
 					} catch (error) {
-						return console.error(error);
+						console.error(error);
 					}
 					try {
 						// Add comment id to user's upvoted ids.
@@ -88,6 +86,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 							upvotedIds: [...userBody.upvotedIds, currComment._id],
 						};
 						await postUpdatedResourceToDb(userBody);
+						getDbUser();
 					} catch (error) {
 						return console.error(error);
 					}

@@ -17,7 +17,6 @@ export const postUpdatedResourceToDb = async (
 	body: CommentModel | UserModel,
 	comment?: CommentModel
 ): Promise<void> => {
-	console.log(body);
 	if (instanceOfCommentModel(body)) {
 		if (comment) {
 			await fetch(`/api/comments/${comment._id}`, {
