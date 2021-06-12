@@ -25,13 +25,13 @@ const Nav: React.FC = () => {
 	return (
 		<header className="nav-header">
 			<nav className={`nav ${navOpen && "open"}`}>
-				<ul className="links">
+				<ul className={`links ${navOpen && "open"}`}>
 					<div className="row">
 						<div className="logo-holder">
 							<h1 className="logo">R</h1>
 						</div>
 						<div
-							className={`burger ${navOpen && "active"}`}
+							className={`burger ${navOpen && "open"}`}
 							onClick={() => setNavOpen(!navOpen)}
 						>
 							<div className="top"></div>

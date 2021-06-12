@@ -24,6 +24,11 @@
 
 			@include mq(500px) {
 				flex-direction: column;
+				pointer-events: none;
+
+				&.open {
+					pointer-events: all;
+				}
 			}
 
 			.row {
@@ -43,6 +48,7 @@
 
 				.burger {
 					display: none;
+					pointer-events: all;
 
 					@include mq(500px) {
 						display: block;
@@ -59,7 +65,7 @@
 							transition: transform 0.5s;
 						}
 
-						&.active {
+						&.open {
 							.top {
 								transform: rotate(45deg) translateY(1.5rem);
 							}
