@@ -75,7 +75,31 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 						commentBody = { ...commentBody, upvotes: commentBody.upvotes + 1 };
 
-						await postUpdatedResourceToDb(commentBody, currComment);
+						if (isSecondLevelComment) {
+							if (originalComment) {
+								const updatedComment = {
+									...originalComment,
+								};
+
+								if (updatedComment.replies) {
+									for (let i = 0; i < updatedComment.replies.length; i++) {
+										if (updatedComment.replies[i]._id === currComment._id) {
+											updatedComment.replies[i] = commentBody;
+										}
+									}
+								}
+
+								commentBody = updatedComment;
+							}
+						}
+
+						if (isSecondLevelComment) {
+							if (originalComment) {
+								await postUpdatedResourceToDb(commentBody, originalComment);
+							}
+						} else {
+							await postUpdatedResourceToDb(commentBody, currComment);
+						}
 					} catch (error) {
 						console.error(error);
 					}
