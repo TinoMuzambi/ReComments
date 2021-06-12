@@ -65,27 +65,29 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
 		if (dbUser) {
 			getDbUser();
-			let body: UserModel = dbUser;
+			let userBody: UserModel = dbUser;
 
-			if (body && body.upvotedIds) {
-				if (!body.upvotedIds.includes(currComment._id)) {
-					// Add comment id to user's upvoted ids.
-					body = { ...body, upvotedIds: [...body.upvotedIds, currComment._id] };
-
+			if (userBody && userBody.upvotedIds) {
+				if (!userBody.upvotedIds.includes(currComment._id)) {
 					try {
 						// Post incremented upvotes to db.
-						let body: CommentModel = { ...currComment };
+						let commentBody: CommentModel = { ...currComment };
 
-						body = { ...body, upvotes: body.upvotes + 1 };
+						commentBody = { ...commentBody, upvotes: commentBody.upvotes + 1 };
 
-						console.log("before", body);
-						await postUpdatedResourceToDb(currComment, body);
+						console.log("before", commentBody);
+						await postUpdatedResourceToDb(currComment, commentBody);
 						getDbUser();
 					} catch (error) {
 						return console.error(error);
 					}
 					try {
-						await postUpdatedResourceToDb(body);
+						// Add comment id to user's upvoted ids.
+						userBody = {
+							...userBody,
+							upvotedIds: [...userBody.upvotedIds, currComment._id],
+						};
+						await postUpdatedResourceToDb(userBody);
 					} catch (error) {
 						return console.error(error);
 					}
