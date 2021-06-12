@@ -13,15 +13,41 @@
 			list-style: none;
 			color: white;
 
-			.logo-holder {
-				.logo {
-					font-weight: 900;
+			@include mq(500px) {
+				flex-direction: column;
+			}
+
+			.row {
+				width: 100%;
+				@include flexAllRow;
+				justify-content: space-between;
+
+				.logo-holder {
+					.logo {
+						font-weight: 900;
+
+						@include mq(500px) {
+							font-size: 3rem;
+						}
+					}
+				}
+
+				.expand {
+					display: none;
+
+					@include mq(500px) {
+						display: block;
+					}
 				}
 			}
 
 			.links-holder {
 				@include flexAllRow;
 				gap: 2rem;
+
+				@include mq(500px) {
+					flex-direction: column;
+				}
 
 				.link {
 					cursor: pointer;

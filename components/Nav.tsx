@@ -25,8 +25,11 @@ const Nav: React.FC = () => {
 		<header className="nav-header">
 			<nav className="nav">
 				<ul className="links">
-					<div className="logo-holder">
-						<h1 className="logo">R</h1>
+					<div className="row">
+						<div className="logo-holder">
+							<h1 className="logo">R</h1>
+						</div>
+						<button className="expand">X</button>
 					</div>
 					<div className="links-holder">
 						<Link href="/">
