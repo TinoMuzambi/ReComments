@@ -100,7 +100,11 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 			const height = window.scrollY;
 			await router.replace(router.asPath);
-			setIsViewMoreExpanded(false);
+			if (isSecondLevelComment) {
+				setIsViewMoreExpanded(true);
+			} else {
+				setIsViewMoreExpanded(false);
+			}
 			window.scrollTo(0, height);
 		}
 	};
