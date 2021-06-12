@@ -37,6 +37,10 @@
 		.text {
 			white-space: pre-wrap;
 
+			.embed-link {
+				color: rgb(0, 166, 232);
+			}
+
 			&:hover {
 				.options {
 					opacity: 1;

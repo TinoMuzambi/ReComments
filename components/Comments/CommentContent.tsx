@@ -3,6 +3,8 @@ import moment from "moment";
 import { MdThumbUp, MdThumbDown, MdEdit, MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useRouter } from "next/router";
+import parse from "html-react-parser";
+import Autolinker from "autolinker";
 
 import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
@@ -232,7 +234,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					{currComment?.mention && (
 						<span className="mention">{currComment.mention} </span>
 					)}
-					{currComment.comment}
+
+					{parse(
+						Autolinker.link(currComment.comment, {
+							className: "embed-link",
+						})
+					)}
 				</p>
 				<div className="actions">
 					<div className="upvotes">
