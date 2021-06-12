@@ -39,18 +39,20 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
 							</span>
 						)}
 					</button>
-					{isViewMoreExpanded &&
-						comment.replies.map((reply: CommentModel) => (
-							<div key={reply._id}>
-								<CommentContent
-									currComment={reply}
-									originalComment={comment}
-									isFirstLevelComment={false}
-									isSecondLevelComment={true}
-									setIsViewMoreExpanded={setIsViewMoreExpanded}
-								/>
-							</div>
-						))}
+					{comment.replies.map((reply: CommentModel) => (
+						<div
+							className={`wrapper ${isViewMoreExpanded && "visible"}`}
+							key={reply._id}
+						>
+							<CommentContent
+								currComment={reply}
+								originalComment={comment}
+								isFirstLevelComment={false}
+								isSecondLevelComment={true}
+								setIsViewMoreExpanded={setIsViewMoreExpanded}
+							/>
+						</div>
+					))}
 				</div>
 			)}
 		</article>
