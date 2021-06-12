@@ -50,6 +50,17 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		}
 	};
 
+	const editHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+		if (dbUser) {
+			if (dbUser.userId === currComment.authorId) {
+				setCommentFormToEditVisible(true);
+				setCommentFormToReplyVisible(false);
+				setOptionsVisible(false);
+			} else {
+				alert("This ain't your comment to edit!");
+			}
+		}
+	};
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
 		if (dbUser) {
 			if (dbUser.userId === currComment.authorId) {
@@ -328,14 +339,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 				</button>
 
 				<div className={`holder ${optionsVisible && "visible"}`}>
-					<button
-						className="item"
-						onClick={() => {
-							setCommentFormToEditVisible(true);
-							setCommentFormToReplyVisible(false);
-							setOptionsVisible(false);
-						}}
-					>
+					<button className="item" onClick={editHandler}>
 						<MdEdit className="icon" /> <p className="label">Edit</p>
 					</button>
 					<button className="item" onClick={deleteHandler}>
