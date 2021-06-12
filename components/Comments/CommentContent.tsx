@@ -38,11 +38,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	};
 
 	const getDbUser: Function = async () => {
-		if (user && user?.emailAddresses && user.names && user.photos) {
+		if (user && user.emailAddresses) {
 			const res = await fetch(
 				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
 			);
 			const data = await res.json();
+
 			if (setDbUser) setDbUser(data.data);
 		}
 	};
@@ -72,6 +73,8 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		voteType: string,
 		body: UserModel
 	): Boolean => {
+		console.log("here");
+
 		const value = false;
 
 		if (body.upvotedIds && body.downvotedIds) {
@@ -135,6 +138,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	};
 
 	const voteHandler: Function = async (voteType: string) => {
+		console.log(dbUser);
 		if (dbUser) {
 			getDbUser();
 			let userBody: UserModel = dbUser;
