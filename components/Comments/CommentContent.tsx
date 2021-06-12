@@ -117,17 +117,22 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 					try {
 						// Add comment id to user's upvoted ids.
-						userBody = {
-							...userBody,
-							upvotedIds: [...userBody.upvotedIds, currComment._id],
-						};
+						userBody = upvoting
+							? {
+									...userBody,
+									upvotedIds: [...userBody.upvotedIds, currComment._id],
+							  }
+							: {
+									...userBody,
+									downvotedIds: [...userBody.downvotedIds, currComment._id],
+							  };
 						await postUpdatedResourceToDb(userBody);
 						getDbUser();
 					} catch (error) {
 						console.error(error);
 					}
 				} else {
-					alert("Already liked!");
+					alert(upvoting ? "Already liked!" : "Already disliked!");
 				}
 			}
 
