@@ -22,7 +22,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	currComment,
 }) => {
 	const [cancelCommentButtonsVisible, setCancelCommentButtonsVisible] =
-		useState(false);
+		useState(commentFormToEditVisible || commentFormToReplyVisible);
 	const [commentInput, setCommentInput] = useState("");
 	const { user } = useContext(AppContext);
 	const router = useRouter();
