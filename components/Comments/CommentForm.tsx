@@ -121,7 +121,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 							if (isSecondLevelComment || isFirstLevelComment) {
 								// Editing replies.
-								console.log(body);
 								if (body && body.replies) {
 									for (let i = 0; i < body.replies.length; i++) {
 										if (body.replies[i]._id === currComment._id) {
@@ -149,13 +148,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							}
 
 							// Post update to DB.
-							await fetch(`/api/comments/${currComment._id}`, {
-								method: "PUT",
-								headers: {
-									"Content-Type": "application/json",
-								},
-								body: JSON.stringify(body),
-							});
+							await postUpdatedCommentToDb(body);
+
+							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
 							if (setCommentFormToReplyVisible)
 								setCommentFormToReplyVisible(false);
