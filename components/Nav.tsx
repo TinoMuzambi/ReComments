@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { MouseEventHandler, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -10,7 +10,7 @@ const Nav: React.FC = () => {
 		useContext(AppContext);
 	const router = useRouter();
 
-	const handleSignOut = () => {
+	const handleSignOut: MouseEventHandler<HTMLLIElement> = () => {
 		if (setSignedIn) {
 			router.push("/");
 			gapi.auth2.getAuthInstance().signOut();
