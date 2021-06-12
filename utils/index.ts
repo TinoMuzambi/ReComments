@@ -15,18 +15,16 @@ function instanceOfCommentModel(object: any): object is CommentModel {
 
 export const postUpdatedResourceToDb = async (
 	body: CommentModel | UserModel,
-	comment?: CommentModel
+	commentId?: string
 ): Promise<void> => {
 	if (instanceOfCommentModel(body)) {
-		if (comment) {
-			await fetch(`/api/comments/${comment._id}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(body),
-			});
-		}
+		await fetch(`/api/comments/${commentId}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(body),
+		});
 	} else {
 		await fetch(`/api/users/${body._id}`, {
 			method: "PUT",
