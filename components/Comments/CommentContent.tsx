@@ -103,6 +103,37 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		return comment;
 	};
 
+	const getUpdatedUserVoteIdsBody: Function = (
+		voteType: string,
+		user: UserModel
+	): UserModel => {
+		if (user.upvotedIds && user.downvotedIds) {
+			if (voteType === VOTING_TYPES.upvoting)
+				return {
+					...user,
+					upvotedIds: [...user.upvotedIds, currComment._id],
+				};
+			if (voteType === VOTING_TYPES.downvoting)
+				return {
+					...user,
+					downvotedIds: [...user.downvotedIds, currComment._id],
+				};
+			if (voteType === VOTING_TYPES.undoUpvoting)
+				return {
+					...user,
+					upvotedIds: user.upvotedIds.filter((id) => currComment._id !== id),
+				};
+			if (voteType === VOTING_TYPES.undoDownvoting)
+				return {
+					...user,
+					downvotedIds: user.downvotedIds.filter(
+						(id) => currComment._id !== id
+					),
+				};
+		}
+		return user;
+	};
+
 	const voteHandler: Function = async (voteType: string) => {
 		if (dbUser) {
 			getDbUser();
@@ -147,15 +178,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 					try {
 						// Add comment id to user's upvoted ids.
-						userBody = upvoting
-							? {
-									...userBody,
-									upvotedIds: [...userBody.upvotedIds, currComment._id],
-							  }
-							: {
-									...userBody,
-									downvotedIds: [...userBody.downvotedIds, currComment._id],
-							  };
+						userBody = getUpdatedUserVoteIdsBody(voteType, userBody);
 						await postUpdatedResourceToDb(userBody);
 						getDbUser();
 					} catch (error) {
