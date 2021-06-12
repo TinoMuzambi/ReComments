@@ -73,8 +73,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		voteType: string,
 		body: UserModel
 	): Boolean => {
-		console.log("here");
-
 		const value = false;
 
 		if (body.upvotedIds && body.downvotedIds) {
