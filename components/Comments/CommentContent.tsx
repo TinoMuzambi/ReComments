@@ -264,14 +264,20 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					</p>
 					<div className="actions">
 						<div className="upvotes">
-							<button className="upvote" onClick={upvoteHandler}>
+							<button
+								className={`upvote ${currCommentUpvoted() && "active"}`}
+								onClick={upvoteHandler}
+							>
 								<span>
 									<MdThumbUp className="icon" />
 								</span>
 							</button>
 							<p className="upvote-count">{currComment.upvotes}</p>
 						</div>
-						<button className="downvote" onClick={downVoteHandler}>
+						<button
+							className={`downvote ${currCommentDownvoted() && "active"}`}
+							onClick={downVoteHandler}
+						>
 							<span>
 								<MdThumbDown className="icon" />
 							</span>
