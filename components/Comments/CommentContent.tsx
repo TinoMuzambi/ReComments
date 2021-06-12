@@ -31,6 +31,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		getDbUser();
 	}, []);
 
+	const scrollToSamePosition: Function = async (): Promise<void> => {
+		const height = window.scrollY;
+		await router.replace(router.asPath);
+		window.scrollTo(0, height);
+	};
+
 	const getDbUser: Function = async () => {
 		if (user && user?.emailAddresses && user.names && user.photos) {
 			const res = await fetch(
@@ -122,14 +128,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 			setCommentFormToReplyVisible(false);
 			setCommentFormToEditVisible(false);
 
-			const height = window.scrollY;
-			await router.replace(router.asPath);
-			if (isSecondLevelComment) {
-				setIsViewMoreExpanded(true);
-			} else {
-				setIsViewMoreExpanded(false);
-			}
-			window.scrollTo(0, height);
+			await scrollToSamePosition();
 		}
 	};
 
