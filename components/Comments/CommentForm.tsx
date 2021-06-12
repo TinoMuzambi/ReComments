@@ -246,7 +246,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							className="submit"
 							disabled={commentInput.length <= 0}
 						>
-							{commentFormToEditVisible ? "Save" : "Comment"}
+							{commentFormToEditVisible
+								? "Save"
+								: commentFormToReplyVisible
+								? "Reply"
+								: "Comment"}
 						</button>
 					</div>
 				)}
