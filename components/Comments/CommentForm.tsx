@@ -52,7 +52,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		return commentToUpdate;
 	};
 
-	const postUpdateToDb = async (body: CommentModel): Promise<void> => {
+	const postUpdatedCommentToDb = async (body: CommentModel): Promise<void> => {
 		if (currComment) {
 			await fetch(`/api/comments/${currComment._id}`, {
 				method: "PUT",
@@ -189,7 +189,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							}
 
 							// Post updated comment to DB.
-							await postUpdateToDb(body);
+							await postUpdatedCommentToDb(body);
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
 							if (setCommentFormToReplyVisible)
 								setCommentFormToReplyVisible(false);
