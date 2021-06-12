@@ -52,6 +52,28 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		return commentToUpdate;
 	};
 
+	const postUpdateToDb = async (body: CommentModel): Promise<void> => {
+		if (currComment) {
+			await fetch(`/api/comments/${currComment._id}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(body),
+			});
+		}
+	};
+
+	const postNewCommentToDb = async (body: CommentModel): Promise<void> => {
+		await fetch("/api/comments", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(body),
+		});
+	};
+
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
 		setCancelCommentButtonsVisible(false);
@@ -167,26 +189,14 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							}
 
 							// Post updated comment to DB.
-							await fetch(`/api/comments/${currComment._id}`, {
-								method: "PUT",
-								headers: {
-									"Content-Type": "application/json",
-								},
-								body: JSON.stringify(body),
-							});
+							await postUpdateToDb(body);
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
 							if (setCommentFormToReplyVisible)
 								setCommentFormToReplyVisible(false);
 						}
 					} else {
 						// Post new comment to DB.
-						await fetch("/api/comments", {
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
+						await postNewCommentToDb(body);
 					}
 
 					// Refresh then scroll to same place on the page.
