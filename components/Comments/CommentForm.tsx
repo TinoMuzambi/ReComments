@@ -41,6 +41,17 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		}
 	}, [commentFormToEditVisible]);
 
+	const getComment: Function = async (): Promise<any> => {
+		let commentToUpdate: any;
+		if (currComment) {
+			const response = await fetch(`/api/comments/${currComment._id}`);
+			// Get comment to update.
+			commentToUpdate = await response.json();
+			commentToUpdate = commentToUpdate.data[0];
+		}
+		return commentToUpdate;
+	};
+
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault();
 		setCancelCommentButtonsVisible(false);
@@ -130,10 +141,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					) {
 						if (currComment) {
 							// Reply to comment.
-							const response = await fetch(`/api/comments/${currComment._id}`);
-							// Get comment to update.
-							let commentToUpdate = await response.json();
-							commentToUpdate = commentToUpdate.data[0];
+							const commentToUpdate = await getComment();
 
 							if (isSecondLevelComment) {
 								// Add mention if second level comment.
