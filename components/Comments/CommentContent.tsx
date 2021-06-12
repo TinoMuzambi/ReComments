@@ -138,7 +138,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	};
 
 	const voteHandler: Function = async (voteType: string) => {
-		console.log(dbUser);
 		if (dbUser) {
 			getDbUser();
 			let userBody: UserModel = dbUser;
