@@ -258,7 +258,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 				<img
 					src={currComment.image}
 					alt={currComment.name}
-					className="profile"
+					className={`profile ${isSecondLevelComment && "sm"}`}
 				/>
 				<div className="details">
 					<div className="top">

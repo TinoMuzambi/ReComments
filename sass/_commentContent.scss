@@ -13,6 +13,11 @@
 			width: 3rem;
 			border-radius: 50%;
 			pointer-events: none;
+
+			&.sm {
+				width: 2rem;
+				height: 2rem;
+			}
 		}
 
 		.details {
