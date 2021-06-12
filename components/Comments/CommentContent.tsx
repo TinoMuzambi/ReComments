@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
 import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
+import { postUpdatedResourceToDb } from "../../utils";
 
 const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
@@ -71,13 +72,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 					try {
 						console.log(body._id);
-						await fetch(`/api/users/${body._id}`, {
-							method: "PUT",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						});
+						await postUpdatedResourceToDb(body, "user");
 					} catch (error) {
 						return console.error(error);
 					}

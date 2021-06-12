@@ -131,7 +131,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 								// Post update to DB.
 								if (originalComment)
-									await postUpdatedResourceToDb(body, originalComment);
+									await postUpdatedResourceToDb(
+										body,
+										"comment",
+										originalComment
+									);
 							} else {
 								// Editing top level comment.
 								body = {
@@ -144,7 +148,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 							// Post update to DB.
 
-							await postUpdatedResourceToDb(body, currComment);
+							await postUpdatedResourceToDb(body, "comment", currComment);
 
 							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
@@ -186,7 +190,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							}
 
 							// Post updated comment to DB.
-							await postUpdatedResourceToDb(body, currComment);
+							await postUpdatedResourceToDb(body, "comment", currComment);
 
 							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
