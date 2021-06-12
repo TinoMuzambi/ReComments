@@ -68,7 +68,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		setOptionsVisible(false);
 	};
 
-	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+	const voteHandler: Function = async (upvoting: boolean) => {
 		if (dbUser) {
 			getDbUser();
 			let userBody: UserModel = dbUser;
@@ -79,7 +79,9 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						// Post incremented upvotes to db.
 						let commentBody: CommentModel = { ...currComment };
 
-						commentBody = { ...commentBody, upvotes: commentBody.upvotes + 1 };
+						commentBody = upvoting
+							? { ...commentBody, upvotes: commentBody.upvotes + 1 }
+							: { ...commentBody, downvotes: commentBody.downvotes + 1 };
 
 						if (isSecondLevelComment) {
 							if (originalComment) {
@@ -109,6 +111,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					} catch (error) {
 						console.error(error);
 					}
+
 					try {
 						// Add comment id to user's upvoted ids.
 						userBody = {
@@ -118,10 +121,10 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						await postUpdatedResourceToDb(userBody);
 						getDbUser();
 					} catch (error) {
-						return console.error(error);
+						console.error(error);
 					}
 				} else {
-					console.log("Already liked!");
+					alert("Already liked!");
 				}
 			}
 
@@ -131,9 +134,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 			await scrollToSamePosition();
 		}
 	};
+	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+		voteHandler(true);
+	};
 
 	const downVoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		console.log("Downvote boo");
+		voteHandler(false);
 	};
 
 	return (

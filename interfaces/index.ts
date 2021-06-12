@@ -81,7 +81,7 @@ export interface CommentModel {
 	image: string;
 	comment: string;
 	upvotes: number;
-	downvotes?: number;
+	downvotes: number;
 	mention?: string | null;
 	replies?: CommentModel[];
 	edited: boolean;
