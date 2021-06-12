@@ -10,6 +10,10 @@
 		flex: 1;
 		padding-right: 2rem;
 
+		@include mq(320px) {
+			width: 80%;
+		}
+
 		.profile {
 			height: 3rem;
 			width: 3rem;
@@ -21,6 +25,11 @@
 				width: 2rem;
 			}
 
+			@include mq(320px) {
+				height: 1.5rem;
+				width: 1.5rem;
+			}
+
 			&.sm {
 				width: 2rem;
 				height: 2rem;
@@ -28,6 +37,11 @@
 				@include mq(500px) {
 					height: 1.5rem;
 					width: 1.5rem;
+				}
+
+				@include mq(320px) {
+					height: 0.7rem;
+					width: 0.7rem;
 				}
 			}
 		}
