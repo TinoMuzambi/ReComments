@@ -5,6 +5,11 @@
 
 	&.padding {
 		padding: 2rem;
+		align-items: flex-start;
+
+		ul {
+			list-style: none;
+		}
 	}
 
 	.title {
