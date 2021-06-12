@@ -30,9 +30,14 @@ const Nav: React.FC = () => {
 						<div className="logo-holder">
 							<h1 className="logo">R</h1>
 						</div>
-						<button onClick={() => setNavOpen(!navOpen)} className="expand">
-							X
-						</button>
+						<div
+							className={`burger ${navOpen && "active"}`}
+							onClick={() => setNavOpen(!navOpen)}
+						>
+							<div className="top"></div>
+							<div className="middle"></div>
+							<div className="bottom"></div>
+						</div>
 					</div>
 					<div className={`links-holder ${navOpen && "open"}`}>
 						<Link href="/">
