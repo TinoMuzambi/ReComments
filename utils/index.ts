@@ -37,3 +37,10 @@ export const postUpdatedResourceToDb = async (
 		});
 	}
 };
+
+export const VOTING_TYPES = {
+	upvoting: "upvoting",
+	downvoting: "downvoting",
+	undoUpvoting: "undoUpvoting",
+	undoDownvoting: "undoDownvoting",
+};
