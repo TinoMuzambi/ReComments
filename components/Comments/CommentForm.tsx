@@ -64,6 +64,14 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		}
 	};
 
+	const scrollToSamePosition: Function = async (): Promise<void> => {
+		const height = window.scrollY;
+		await router.replace(router.asPath);
+		setCommentInput("");
+		setCancelCommentButtonsVisible(false);
+		window.scrollTo(0, height);
+	};
+
 	const postNewCommentToDb = async (body: CommentModel): Promise<void> => {
 		await fetch("/api/comments", {
 			method: "POST",
@@ -200,11 +208,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					}
 
 					// Refresh then scroll to same place on the page.
-					const height = window.scrollY;
-					await router.replace(router.asPath);
-					setCommentInput("");
-					setCancelCommentButtonsVisible(false);
-					window.scrollTo(0, height);
+					await scrollToSamePosition();
 				} catch (error) {
 					console.error(error);
 				}
