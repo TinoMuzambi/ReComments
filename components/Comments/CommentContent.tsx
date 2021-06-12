@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
 import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
-import { postUpdatedResourceToDb } from "../../utils";
+import { postUpdatedResourceToDb, VOTING_TYPES } from "../../utils";
 
 const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
@@ -68,16 +68,33 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		setOptionsVisible(false);
 	};
 
-	const voteHandler: Function = async (upvoting: boolean) => {
+	const shouldDoVoteUpdate: Function = (
+		voteType: string,
+		body: UserModel
+	): Boolean => {
+		const value = false;
+
+		if (body.upvotedIds && body.downvotedIds) {
+			if (voteType === VOTING_TYPES.upvoting)
+				return !body.upvotedIds.includes(currComment._id);
+			if (voteType === VOTING_TYPES.downvoting)
+				return !body.downvotedIds.includes(currComment._id);
+			if (voteType === VOTING_TYPES.undoUpvoting)
+				return body.upvotedIds.includes(currComment._id);
+			if (voteType === VOTING_TYPES.undoDownvoting)
+				return body.downvotedIds.includes(currComment._id);
+		}
+
+		return value;
+	};
+
+	const voteHandler: Function = async (voteType: string) => {
 		if (dbUser) {
 			getDbUser();
 			let userBody: UserModel = dbUser;
 
 			if (userBody && userBody.upvotedIds && userBody.downvotedIds) {
-				const shouldUpvoteOrDownvote = upvoting
-					? !userBody.upvotedIds.includes(currComment._id)
-					: !userBody.downvotedIds.includes(currComment._id);
-				if (shouldUpvoteOrDownvote) {
+				if (shouldDoVoteUpdate(voteType, userBody)) {
 					try {
 						// Post incremented upvotes to db.
 						let commentBody: CommentModel = { ...currComment };
@@ -132,7 +149,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						console.error(error);
 					}
 				} else {
-					alert(upvoting ? "Already liked!" : "Already disliked!");
+					// alert(upvoting ? "Already liked!" : "Already disliked!");
 				}
 			}
 
