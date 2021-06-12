@@ -165,6 +165,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 									: originalComment
 								: currComment
 						}
+						originalComment={originalComment}
 					/>
 				)}
 			</div>

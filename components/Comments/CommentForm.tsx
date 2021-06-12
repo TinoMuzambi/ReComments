@@ -53,9 +53,20 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		return commentToUpdate;
 	};
 
-	const postUpdatedCommentToDb = async (body: CommentModel): Promise<void> => {
-		if (currComment) {
-			await fetch(`/api/comments/${currComment._id}`, {
+	const scrollToSamePosition: Function = async (): Promise<void> => {
+		const height = window.scrollY;
+		await router.replace(router.asPath);
+		setCommentInput("");
+		setCancelCommentButtonsVisible(false);
+		window.scrollTo(0, height);
+	};
+
+	const postUpdatedCommentToDb = async (
+		body: CommentModel,
+		comment: CommentModel
+	): Promise<void> => {
+		if (comment) {
+			await fetch(`/api/comments/${comment._id}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
@@ -63,14 +74,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				body: JSON.stringify(body),
 			});
 		}
-	};
-
-	const scrollToSamePosition: Function = async (): Promise<void> => {
-		const height = window.scrollY;
-		await router.replace(router.asPath);
-		setCommentInput("");
-		setCancelCommentButtonsVisible(false);
-		window.scrollTo(0, height);
 	};
 
 	const postNewCommentToDb = async (body: CommentModel): Promise<void> => {
@@ -116,23 +119,25 @@ const CommentForm: React.FC<CommentFormProps> = ({
 						// Edit comment.
 						if (currComment) {
 							if (isSecondLevelComment || isFirstLevelComment) {
-								const commentToUpdate = await getComment(originalComment);
-								body = {
-									...commentToUpdate,
-								};
+								if (originalComment)
+									body = {
+										...originalComment,
+									};
 								// Editing replies.
-								if (body && body.replies) {
+								if (body && body.replies && originalComment) {
 									for (let i = 0; i < body.replies.length; i++) {
-										if (body.replies[i]._id === currComment._id) {
-											let newReplies = commentToUpdate.replies;
+										if (
+											body.replies[i]._id === currComment._id &&
+											originalComment.replies
+										) {
+											let newReplies = originalComment.replies;
 											newReplies[i] = {
 												...newReplies[i],
 												comment: commentInput,
 												edited: true,
 												updatedAt: new Date(),
 											};
-											body = { ...commentToUpdate, replies: newReplies };
-											console.log(body);
+											body = { ...originalComment, replies: newReplies };
 											break;
 										}
 									}
@@ -152,7 +157,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							}
 
 							// Post update to DB.
-							await postUpdatedCommentToDb(body);
+							if (originalComment)
+								await postUpdatedCommentToDb(body, originalComment);
 
 							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
@@ -194,7 +200,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							}
 
 							// Post updated comment to DB.
-							await postUpdatedCommentToDb(body);
+							await postUpdatedCommentToDb(body, currComment);
 
 							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
