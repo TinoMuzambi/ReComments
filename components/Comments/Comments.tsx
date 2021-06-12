@@ -10,7 +10,6 @@ const Comments: React.FC<CommentsProps> = ({ comments }) => {
 					{comments?.length || 0}{" "}
 					{comments?.length === 1 ? "Comment" : "Comments"}
 				</h5>
-				<button className="sort">Sort by</button>
 			</div>
 			<CommentForm isFirstLevelComment={false} isSecondLevelComment={false} />
 			{comments?.map((comment: CommentModel) => (
