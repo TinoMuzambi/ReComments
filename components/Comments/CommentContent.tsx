@@ -42,17 +42,21 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
 		if (confirm("Are you sure you want to delete this comment?")) {
-			await fetch(`/api/comments/${currComment._id}`, {
-				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
+			try {
+				await fetch(`/api/comments/${currComment._id}`, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
 
-			const height = window.scrollY;
-			await router.replace(router.asPath);
-			setIsViewMoreExpanded(false);
-			window.scrollTo(0, height);
+				const height = window.scrollY;
+				await router.replace(router.asPath);
+				setIsViewMoreExpanded(false);
+				window.scrollTo(0, height);
+			} catch (error) {
+				console.error(error);
+			}
 		}
 		setOptionsVisible(false);
 	};

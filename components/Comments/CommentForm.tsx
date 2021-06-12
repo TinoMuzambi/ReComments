@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
 import { CommentFormProps, CommentModel } from "../../interfaces";
+import { postUpdatedCommentToDb } from "../../utils";
 
 const CommentForm: React.FC<CommentFormProps> = ({
 	isFirstLevelComment,
@@ -59,21 +60,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		setCommentInput("");
 		setCancelCommentButtonsVisible(false);
 		window.scrollTo(0, height);
-	};
-
-	const postUpdatedCommentToDb = async (
-		body: CommentModel,
-		comment: CommentModel
-	): Promise<void> => {
-		if (comment) {
-			await fetch(`/api/comments/${comment._id}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(body),
-			});
-		}
 	};
 
 	const postNewCommentToDb = async (body: CommentModel): Promise<void> => {
