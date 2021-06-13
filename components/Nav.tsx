@@ -14,7 +14,6 @@ const Nav: React.FC = () => {
 	const handleSignOut: MouseEventHandler<HTMLLIElement> = () => {
 		if (setSignedIn) {
 			router.push("/");
-			gapi.auth2.getAuthInstance().signOut();
 			setSignedIn(false);
 			if (setUser) setUser(null);
 			if (setDbUser) setDbUser(null);
