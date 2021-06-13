@@ -49,7 +49,8 @@ export async function execute(
 	setFetching?: Function,
 	setNoResults?: Function
 ) {
-	const isUrl = videoId.indexOf("youtube.com") !== -1;
+	const isUrl =
+		videoId.indexOf("youtube.com") !== -1 || videoId.indexOf("youtu.be") !== -1;
 
 	let path: string = "";
 	if (isUrl) {
