@@ -26,6 +26,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const [cancelCommentButtonsVisible, setCancelCommentButtonsVisible] =
 		useState(commentFormToEditVisible || commentFormToReplyVisible);
 	const [commentInput, setCommentInput] = useState("");
+
 	const { user } = useContext(AppContext);
 	const router = useRouter();
 
@@ -42,17 +43,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			if (currComment) setCommentInput(currComment.comment);
 		}
 	}, [commentFormToEditVisible]);
-
-	const getComment: Function = async (comment: CommentModel): Promise<any> => {
-		let commentToUpdate: any;
-		if (comment) {
-			const response = await fetch(`/api/comments/${comment._id}`);
-			// Get comment to update.
-			commentToUpdate = await response.json();
-			commentToUpdate = commentToUpdate.data[0];
-		}
-		return commentToUpdate;
-	};
 
 	const scrollToSamePosition: Function = async (): Promise<void> => {
 		const height = window.scrollY;
@@ -72,7 +62,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		});
 	};
 
-	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
+	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e): void => {
 		e.preventDefault();
 		setCancelCommentButtonsVisible(false);
 		if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
@@ -80,9 +70,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
 	};
 
-	const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
+	const submitHandler: FormEventHandler<HTMLFormElement> = (e): void => {
 		e.preventDefault();
-		const submitComment: Function = async () => {
+
+		const submitComment: Function = async (): Promise<void> => {
 			if (user && user.emailAddresses && user.names && user.photos) {
 				let body: CommentModel = {
 					_id: uuidv4(),
@@ -131,11 +122,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 								// Post update to DB.
 								if (originalComment)
-									await postUpdatedResourceToDb(
-										body,
-
-										originalComment._id
-									);
+									await postUpdatedResourceToDb(body, originalComment._id);
 							} else {
 								// Editing top level comment.
 								body = {
@@ -147,7 +134,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							}
 
 							// Post update to DB.
-
 							await postUpdatedResourceToDb(body, currComment._id);
 
 							// Hide forms and expand view more.
@@ -162,16 +148,14 @@ const CommentForm: React.FC<CommentFormProps> = ({
 						isSecondLevelComment ||
 						commentFormToReplyVisible
 					) {
-						if (currComment) {
+						if (currComment && currComment.replies) {
 							// Reply to comment.
-							const commentToUpdate = await getComment(currComment);
-
 							if (isSecondLevelComment) {
 								// Add mention if second level comment.
 								body = {
-									...commentToUpdate,
+									...currComment,
 									replies: [
-										...commentToUpdate?.replies,
+										...currComment?.replies,
 										{
 											...body,
 											comment: commentInput.replace(
@@ -184,8 +168,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								};
 							} else {
 								body = {
-									...commentToUpdate,
-									replies: [...commentToUpdate?.replies, body],
+									...currComment,
+									replies: [...currComment?.replies, body],
 								};
 							}
 
