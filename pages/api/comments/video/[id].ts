@@ -13,9 +13,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (method) {
 		case "GET":
 			try {
-				const comment: Comment[] = await Comment.findOne({ videoId: id });
+				const comment: Comment[] = await Comment.find({ videoId: id });
 
-				if (!comment) {
+				if (!comment || comment.length === 0) {
 					return res
 						.status(404)
 						.json({ success: false, data: { message: "Comment not found" } });

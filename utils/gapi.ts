@@ -43,23 +43,42 @@ export function loadClient() {
 }
 
 export async function execute(
-	videoId: string,
+	query: string,
 	fullPath: boolean,
 	setResults?: Function,
 	setFetching?: Function,
 	setNoResults?: Function
 ) {
-	let start = videoId.indexOf("v=") + 2;
-	if (start === 1) {
-		start = videoId.length - 11;
+	const isUrl =
+		query.indexOf("youtube.com") !== -1 || query.indexOf("youtu.be") !== -1;
+
+	let path: string = "";
+	if (isUrl) {
+		let start = query.indexOf("v=") + 2;
+		if (start === 1) {
+			start = query.length - 11;
+		}
+		path = fullPath ? query.substring(start, start + 11) : query;
 	}
-	const path = fullPath ? videoId.substring(start, start + 11) : videoId;
 
 	try {
+		let videoIds: string[] = [];
+		if (!isUrl) {
+			const videos = await gapi.client.youtube.search.list({
+				part: ["snippet"],
+				maxResults: 25,
+				q: query,
+			});
+			videos.result.items?.map((item) =>
+				videoIds.push(item.id?.videoId as string)
+			);
+		}
+
 		const response = await gapi.client.youtube.videos.list({
 			part: ["snippet,statistics,player,status"],
-			id: [path],
+			id: isUrl ? path : [videoIds.join(",")],
 		});
+
 		if (setResults) setResults(response.result.items);
 		if (setFetching) setFetching(false);
 		if (response.result.pageInfo) {

@@ -64,8 +64,8 @@ export interface CommentFormProps {
 
 export interface FormProps {
 	handleSubmit: FormEventHandler<HTMLFormElement>;
-	url: string;
-	setUrl: Function;
+	searchTerm: string;
+	setSearchTerm: Function;
 }
 
 export interface CommentModel {
@@ -107,13 +107,21 @@ export interface ContextProps {
 	setUser?: Function;
 	dbUser: UserModel | null;
 	setDbUser?: Function;
+	searchResults: gapi.client.youtube.Video[] | null;
+	setSearchResults?: Function;
 }
 
 export type Actions = {
-	type: "UPDATE_SIGNED_IN" | "SET_USER" | "SET_DB_USER";
+	type: "UPDATE_SIGNED_IN" | "SET_USER" | "SET_DB_USER" | "SET_SEARCH_RESULTS";
 	auth: boolean;
 	user: User;
 	dbUser: UserModel | null;
+	searchResults: gapi.client.youtube.Video[] | null;
 };
 
-export type State = { signedIn: boolean; user: User; dbUser: UserModel | null };
+export type State = {
+	signedIn: boolean;
+	user: User;
+	dbUser: UserModel | null;
+	searchResults: gapi.client.youtube.Video[] | null;
+};
