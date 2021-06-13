@@ -49,36 +49,43 @@ export async function execute(
 	setFetching?: Function,
 	setNoResults?: Function
 ) {
-	let start = videoId.indexOf("v=") + 2;
-	if (start === 1) {
-		start = videoId.length - 11;
+	const isUrl = videoId.indexOf("youtube.com") !== -1;
+
+	let path: string = "";
+	if (isUrl) {
+		let start = videoId.indexOf("v=") + 2;
+		if (start === 1) {
+			start = videoId.length - 11;
+		}
+		path = fullPath ? videoId.substring(start, start + 11) : videoId;
 	}
-	const path = fullPath ? videoId.substring(start, start + 11) : videoId;
 
 	let ids: string[] = [];
 	try {
-		await gapi.client.youtube.search
-			.list({
-				part: ["snippet"],
-				maxResults: 25,
-				q: "surfing",
-			})
-			.then(
-				function (response) {
-					// Handle the results here (response.result has the parsed body).
-					response.result.items?.map((item) =>
-						ids.push(item.id?.videoId as string)
-					);
-					console.log(ids.join(","));
-				},
-				function (err) {
-					console.error("Execute error", err);
-				}
-			);
+		if (!isUrl) {
+			await gapi.client.youtube.search
+				.list({
+					part: ["snippet"],
+					maxResults: 25,
+					q: "surfing",
+				})
+				.then(
+					function (response) {
+						// Handle the results here (response.result has the parsed body).
+						response.result.items?.map((item) =>
+							ids.push(item.id?.videoId as string)
+						);
+						console.log(ids.join(","));
+					},
+					function (err) {
+						console.error("Execute error", err);
+					}
+				);
+		}
 
 		const response = await gapi.client.youtube.videos.list({
 			part: ["snippet,statistics,player,status"],
-			id: [ids.join(",")],
+			id: isUrl ? path : [ids.join(",")],
 		});
 		console.log(response);
 		if (setResults) setResults(response.result.items);
