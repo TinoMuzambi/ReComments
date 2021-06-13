@@ -4,10 +4,10 @@ export const getSignedIn: Function = (): boolean => {
 
 export const updateSignInStatus = (
 	isSignedIn: boolean,
-	cb: Function,
+	callback: Function,
 	cancelLoading?: Function
 ) => {
-	if (isSignedIn) makeApiCall(cb);
+	if (isSignedIn) makeApiCall(callback);
 	else if (cancelLoading) cancelLoading();
 };
 
@@ -21,16 +21,14 @@ export function handleSignoutClick() {
 	gapi.auth2.getAuthInstance().signOut();
 }
 
-// Load the API and make an API call.  Display the results on the screen.
-function makeApiCall(cb: Function) {
+function makeApiCall(callback: Function) {
 	gapi.client.people.people
 		.get({
 			resourceName: "people/me",
 			personFields: "names,emailAddresses,photos",
 		})
 		.then(function (resp: gapi.client.Response<gapi.client.people.Person>) {
-			// console.log(resp.result);
-			cb(resp.result);
+			callback(resp.result);
 		});
 }
 
@@ -43,7 +41,7 @@ export function loadClient() {
 			function () {}
 		);
 }
-// Make sure the client is loaded and sign-in is complete before calling this method.
+
 export async function execute(
 	videoId: string,
 	fullPath: boolean,
