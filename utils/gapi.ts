@@ -68,7 +68,7 @@ export async function execute(
 				.list({
 					part: ["snippet"],
 					maxResults: 25,
-					q: "surfing",
+					q: videoId,
 				})
 				.then(
 					function (response) {
