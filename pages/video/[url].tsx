@@ -62,10 +62,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	let res: any;
 	if (context && context.params)
 		res = await fetch(`${BASE_URL}/api/comments/video/${context.params.url}`);
-	const comments = await res.json();
+	let comments = await res.json();
+
+	comments = !comments.success && [];
 
 	return {
-		props: { dbComments: comments.data.reverse() || null },
+		props: { dbComments: comments.data || null },
 	};
 };
 
