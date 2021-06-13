@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (method) {
 		case "GET":
 			try {
-				const comment: Comment[] = await Comment.find({ videoId: id });
+				const comment: Comment[] = await Comment.findOne({ videoId: id });
 
 				if (!comment) {
 					return res
