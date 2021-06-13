@@ -4,12 +4,12 @@ const Form: React.FC<FormProps> = ({ handleSubmit, url, setUrl }) => {
 	return (
 		<form className="form" onSubmit={handleSubmit}>
 			<input
-				type="url"
-				placeholder="Enter YouTube video url"
+				type="search"
+				placeholder="Enter YouTube video url or search term..."
 				required
 				value={url}
 				onChange={(e) => setUrl(e.target.value)}
-				className="url"
+				className="search"
 			/>
 			<button type="submit" className="submit">
 				Search
