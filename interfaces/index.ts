@@ -107,8 +107,8 @@ export interface ContextProps {
 	setUser?: Function;
 	dbUser: UserModel | null;
 	setDbUser?: Function;
-	results: gapi.client.youtube.Video[] | null;
-	setResults?: Function;
+	searchResults: gapi.client.youtube.Video[] | null;
+	setSearchResults?: Function;
 }
 
 export type Actions = {
@@ -116,12 +116,12 @@ export type Actions = {
 	auth: boolean;
 	user: User;
 	dbUser: UserModel | null;
-	results: gapi.client.youtube.Video[] | null;
+	searchResults: gapi.client.youtube.Video[] | null;
 };
 
 export type State = {
 	signedIn: boolean;
 	user: User;
 	dbUser: UserModel | null;
-	results: gapi.client.youtube.Video[] | null;
+	searchResults: gapi.client.youtube.Video[] | null;
 };
