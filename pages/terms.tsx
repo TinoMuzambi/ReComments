@@ -1,4 +1,4 @@
-const Terms = () => {
+const Terms: React.FC = () => {
 	return (
 		<main className="main padding">
 			<h1>Terms and Conditions</h1>
