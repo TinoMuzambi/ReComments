@@ -78,6 +78,7 @@ export async function execute(
 			part: ["snippet,statistics,player,status"],
 			id: isUrl ? path : [videoIds.join(",")],
 		});
+
 		if (setResults) setResults(response.result.items);
 		if (setFetching) setFetching(false);
 		if (response.result.pageInfo) {
