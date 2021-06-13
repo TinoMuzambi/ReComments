@@ -11,7 +11,7 @@ const Comments: React.FC<CommentsProps> = ({ comments }) => {
 					{comments?.length === 1 ? " Comment" : " Comments"}
 				</h5>
 			</div>
-			<CommentForm isFirstLevelComment={false} isSecondLevelComment={false} />
+			<CommentForm isSecondLevelComment={false} />
 			{comments?.map((comment: CommentModel) => (
 				<div key={comment._id}>
 					<Comment comment={comment} />

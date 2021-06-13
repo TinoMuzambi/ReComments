@@ -13,7 +13,6 @@ import { CommentFormProps, CommentModel } from "../../interfaces";
 import { postUpdatedResourceToDb } from "../../utils";
 
 const CommentForm: React.FC<CommentFormProps> = ({
-	isFirstLevelComment,
 	commentFormToEditVisible,
 	commentFormToReplyVisible,
 	setCommentFormToEditVisible,
@@ -95,7 +94,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					if (commentFormToEditVisible) {
 						// Edit comment.
 						if (currComment) {
-							if (isSecondLevelComment || isFirstLevelComment) {
+							if (isSecondLevelComment) {
 								if (originalComment)
 									body = {
 										...originalComment,
@@ -143,11 +142,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							if (setCommentFormToEditVisible)
 								setCommentFormToEditVisible(false);
 						}
-					} else if (
-						isFirstLevelComment ||
-						isSecondLevelComment ||
-						commentFormToReplyVisible
-					) {
+					} else if (isSecondLevelComment || commentFormToReplyVisible) {
 						if (currComment && currComment.replies) {
 							// Reply to comment.
 							if (isSecondLevelComment) {
@@ -197,7 +192,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	};
 
 	return (
-		<article className={`comment-form-holder ${isFirstLevelComment && "sm"}`}>
+		<article className={`comment-form-holder ${isSecondLevelComment && "sm"}`}>
 			{user && user.photos && user.names && (
 				<img
 					src={user?.photos[0].url}
@@ -209,15 +204,13 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				<textarea
 					className={`text ${isSecondLevelComment && "sm"}`}
 					onFocus={() => {
-						if (!isFirstLevelComment && !isSecondLevelComment)
-							setCancelCommentButtonsVisible(true);
+						if (!isSecondLevelComment) setCancelCommentButtonsVisible(true);
 					}}
 					placeholder="Enter a comment"
 					value={commentInput}
 					onChange={(e) => setCommentInput(e.target.value)}
 				/>
 				{(cancelCommentButtonsVisible ||
-					isFirstLevelComment ||
 					isSecondLevelComment ||
 					commentFormToEditVisible ||
 					commentFormToReplyVisible) && (

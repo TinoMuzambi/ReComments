@@ -14,7 +14,6 @@ import { postUpdatedResourceToDb, VOTING_TYPES } from "../../utils";
 const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
 	originalComment,
-	isFirstLevelComment,
 	isSecondLevelComment,
 	setIsViewMoreExpanded,
 }) => {
@@ -316,7 +315,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					</div>
 					{(commentFormToEditVisible || commentFormToReplyVisible) && (
 						<CommentForm
-							isFirstLevelComment={isFirstLevelComment}
 							isSecondLevelComment={isSecondLevelComment}
 							commentFormToEditVisible={commentFormToEditVisible}
 							commentFormToReplyVisible={commentFormToReplyVisible}
@@ -324,7 +322,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 							setCommentFormToReplyVisible={setCommentFormToReplyVisible}
 							setIsViewMoreExpanded={setIsViewMoreExpanded}
 							currComment={
-								isFirstLevelComment || isSecondLevelComment
+								isSecondLevelComment
 									? commentFormToEditVisible
 										? currComment
 										: originalComment

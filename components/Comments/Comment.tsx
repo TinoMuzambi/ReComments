@@ -11,7 +11,6 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
 		<article className="comment">
 			<CommentContent
 				currComment={comment}
-				isFirstLevelComment={false}
 				isSecondLevelComment={false}
 				setIsViewMoreExpanded={setIsViewMoreExpanded}
 			/>
@@ -47,7 +46,6 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
 							<CommentContent
 								currComment={reply}
 								originalComment={comment}
-								isFirstLevelComment={false}
 								isSecondLevelComment={true}
 								setIsViewMoreExpanded={setIsViewMoreExpanded}
 							/>
