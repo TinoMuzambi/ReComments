@@ -107,13 +107,21 @@ export interface ContextProps {
 	setUser?: Function;
 	dbUser: UserModel | null;
 	setDbUser?: Function;
+	results: gapi.client.youtube.Video[] | null;
+	setResults?: Function;
 }
 
 export type Actions = {
-	type: "UPDATE_SIGNED_IN" | "SET_USER" | "SET_DB_USER";
+	type: "UPDATE_SIGNED_IN" | "SET_USER" | "SET_DB_USER" | "SET_SEARCH_RESULTS";
 	auth: boolean;
 	user: User;
 	dbUser: UserModel | null;
+	results: gapi.client.youtube.Video[] | null;
 };
 
-export type State = { signedIn: boolean; user: User; dbUser: UserModel | null };
+export type State = {
+	signedIn: boolean;
+	user: User;
+	dbUser: UserModel | null;
+	results: gapi.client.youtube.Video[] | null;
+};

@@ -7,6 +7,7 @@ const initialState: ContextProps = {
 	signedIn: false,
 	user: null,
 	dbUser: null,
+	results: [],
 };
 
 export const AppContext = createContext<ContextProps>(initialState);
@@ -20,6 +21,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 			auth: value,
 			user: state.user,
 			dbUser: state.dbUser,
+			results: state.results,
 		});
 	};
 
@@ -29,6 +31,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 			auth: state.signedIn,
 			user: value,
 			dbUser: state.dbUser,
+			results: state.results,
 		});
 	};
 
@@ -38,6 +41,17 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 			auth: state.signedIn,
 			user: state.user,
 			dbUser: value,
+			results: state.results,
+		});
+	};
+
+	const setResults = (value: gapi.client.youtube.Video[] | null) => {
+		dispatch({
+			type: "SET_DB_USER",
+			auth: state.signedIn,
+			user: state.user,
+			dbUser: state.dbUser,
+			results: value,
 		});
 	};
 
@@ -50,6 +64,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 				setUser,
 				dbUser: state.dbUser,
 				setDbUser,
+				results: state.results,
+				setResults,
 			}}
 		>
 			{children}
