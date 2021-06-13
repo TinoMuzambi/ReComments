@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react";
 
 import AppReducer from "./AppReducer";
-import { AppProviderProps, ContextProps, UserModel } from "../interfaces";
+import { AppProviderProps, ContextProps, UserModel, User } from "../interfaces";
 
 const initialState: ContextProps = {
 	signedIn: false,
@@ -23,7 +23,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 		});
 	};
 
-	const setUser = (value: {} | null) => {
+	const setUser = (value: User) => {
 		dispatch({
 			type: "SET_USER",
 			auth: state.signedIn,

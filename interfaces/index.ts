@@ -100,7 +100,7 @@ export interface UserModel {
 	downvotedIds?: string[];
 }
 
-type User = gapi.client.people.Person | null;
+export type User = gapi.client.people.Person | null;
 
 export interface ContextProps {
 	signedIn: boolean;
