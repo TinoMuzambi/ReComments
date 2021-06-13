@@ -1,4 +1,10 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
+import {
+	FormEvent,
+	FormEventHandler,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -23,7 +29,7 @@ const Search: React.FC = () => {
 		if (!signedIn) router.push("/");
 	}, [signedIn]);
 
-	const handleSubmit = (e: FormEvent) => {
+	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
 		e.preventDefault();
 		setFetching(true);
 		const makeCall = async () => {

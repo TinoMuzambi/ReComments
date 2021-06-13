@@ -12,6 +12,7 @@ import { UserModel } from "../interfaces";
 
 const Home: Function = () => {
 	const [loading, setLoading] = useState(false);
+
 	const { setSignedIn, signedIn, setUser, user } = useContext(AppContext);
 	const router = useRouter();
 
