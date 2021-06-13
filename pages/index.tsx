@@ -11,28 +11,9 @@ import {
 import { UserModel } from "../interfaces";
 
 const Home: Function = () => {
-	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 	const { setSignedIn, signedIn, setUser, user } = useContext(AppContext);
-
-	const updateContext: Function = (
-		res: gapi.client.Response<gapi.client.people.Person>
-	) => {
-		if (setSignedIn) {
-			setSignedIn(true);
-			if (setUser) setUser(res);
-		}
-		router.push("/search");
-		setLoading(false);
-	};
-
-	const cancelLoading: Function = () => {
-		setLoading(false);
-	};
-
-	const signIn: MouseEventHandler<HTMLButtonElement> = async () => {
-		handleAuthClick();
-	};
+	const router = useRouter();
 
 	useEffect(() => {
 		setLoading(true);
@@ -99,6 +80,25 @@ const Home: Function = () => {
 				} catch (error) {}
 			}
 		}
+	};
+
+	const updateContext: Function = (
+		res: gapi.client.Response<gapi.client.people.Person>
+	) => {
+		if (setSignedIn) {
+			setSignedIn(true);
+			if (setUser) setUser(res);
+		}
+		router.push("/search");
+		setLoading(false);
+	};
+
+	const cancelLoading: Function = () => {
+		setLoading(false);
+	};
+
+	const signIn: MouseEventHandler<HTMLButtonElement> = async () => {
+		handleAuthClick();
 	};
 
 	if (loading)
