@@ -1,3 +1,5 @@
+import { MdClear, MdSearch } from "react-icons/md";
+
 import { FormProps } from "../interfaces";
 
 const Form: React.FC<FormProps> = ({
@@ -16,7 +18,10 @@ const Form: React.FC<FormProps> = ({
 				className="search"
 			/>
 			<button type="submit" className="submit">
-				Search
+				<MdSearch className="icon" />
+			</button>
+			<button className="clear" type="reset">
+				<MdClear className="icon" />
 			</button>
 		</form>
 	);
