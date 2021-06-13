@@ -7,8 +7,8 @@ const Comments: React.FC<CommentsProps> = ({ comments }) => {
 		<section className="comments">
 			<div className="totals">
 				<h5 className="total">
-					{comments?.length || 0}{" "}
-					{comments?.length === 1 ? "Comment" : "Comments"}
+					{comments?.length || 0}
+					{comments?.length === 1 ? " Comment" : " Comments"}
 				</h5>
 			</div>
 			<CommentForm isFirstLevelComment={false} isSecondLevelComment={false} />
