@@ -1,14 +1,21 @@
+import { FormEventHandler, useContext } from "react";
 import { MdClear, MdSearch } from "react-icons/md";
 
 import { FormProps } from "../interfaces";
+import { AppContext } from "../context/AppContext";
 
 const Form: React.FC<FormProps> = ({
 	handleSubmit,
 	searchTerm,
 	setSearchTerm,
 }) => {
+	const { setSearchResults } = useContext(AppContext);
+
+	const handleReset: FormEventHandler<HTMLFormElement> = () => {
+		if (setSearchResults) setSearchResults([]);
+	};
 	return (
-		<form className="form" onSubmit={handleSubmit}>
+		<form className="form" onSubmit={handleSubmit} onReset={handleReset}>
 			<input
 				type="search"
 				placeholder="Enter YouTube video url or search term..."
