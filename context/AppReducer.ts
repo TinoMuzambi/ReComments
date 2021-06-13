@@ -20,6 +20,7 @@ const Reducer = (state: State, action: Actions) => {
 			};
 		}
 		case "SET_SEARCH_RESULTS": {
+			console.log(action);
 			return {
 				...state,
 				searchResults: action.searchResults,

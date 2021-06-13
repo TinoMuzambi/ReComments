@@ -47,10 +47,7 @@ const Search: React.FC = () => {
 			);
 		};
 		makeCall();
-		if (setSearchResults) {
-			console.log(results);
-			setSearchResults(results);
-		}
+		// if (setSearchResults) setSearchResults(results);
 	};
 
 	return (
