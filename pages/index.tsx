@@ -10,7 +10,7 @@ import {
 } from "../utils/gapi";
 import { UserModel } from "../interfaces";
 
-export default function Home() {
+const Home: Function = () => {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 	const { setSignedIn, signedIn, setUser, user } = useContext(AppContext);
@@ -126,4 +126,6 @@ export default function Home() {
 			</button>
 		</main>
 	);
-}
+};
+
+export default Home;
