@@ -55,7 +55,27 @@ export async function execute(
 	}
 	const path = fullPath ? videoId.substring(start, start + 11) : videoId;
 
+	let ids: string[] = [];
 	try {
+		gapi.client.youtube.search
+			.list({
+				part: ["snippet"],
+				maxResults: 25,
+				q: "surfing",
+			})
+			.then(
+				function (response) {
+					// Handle the results here (response.result has the parsed body).
+					response.result.items?.map((item) =>
+						ids.push(item.id?.videoId as string)
+					);
+					console.log("Response", ids);
+				},
+				function (err) {
+					console.error("Execute error", err);
+				}
+			);
+
 		const response = await gapi.client.youtube.videos.list({
 			part: ["snippet,statistics,player,status"],
 			id: [path],
