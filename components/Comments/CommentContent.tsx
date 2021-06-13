@@ -26,6 +26,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		useState(false);
 	// Is the orange options box with the edit and delete buttons visible?
 	const [optionsVisible, setOptionsVisible] = useState(false);
+
 	const router = useRouter();
 	const { dbUser, user, setDbUser } = useContext(AppContext);
 
@@ -39,7 +40,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		window.scrollTo(0, height);
 	};
 
-	const getDbUser: Function = async () => {
+	const getDbUser: Function = async (): Promise<void> => {
 		if (user && user.emailAddresses) {
 			const res = await fetch(
 				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
@@ -50,52 +51,54 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		}
 	};
 
-	const editHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		if (dbUser) {
-			if (dbUser.userId === currComment.authorId) {
-				setCommentFormToEditVisible(true);
-				setCommentFormToReplyVisible(false);
-				setOptionsVisible(false);
-			} else {
-				alert("This ain't your comment to edit!");
-			}
-		}
-	};
-	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		if (dbUser) {
-			if (dbUser.userId === currComment.authorId) {
-				if (confirm("Are you sure you want to delete this comment?")) {
-					try {
-						if (isSecondLevelComment) {
-							if (originalComment && originalComment.replies) {
-								const deletedComment = {
-									...originalComment,
-									replies: originalComment.replies.filter(
-										(reply) => reply._id !== currComment._id
-									),
-								};
-								postUpdatedResourceToDb(deletedComment, originalComment._id);
-							}
-						} else {
-							await fetch(`/api/comments/${currComment._id}`, {
-								method: "DELETE",
-								headers: {
-									"Content-Type": "application/json",
-								},
-							});
-						}
-
-						await scrollToSamePosition();
-					} catch (error) {
-						console.error(error);
-					}
+	const editHandler: MouseEventHandler<HTMLButtonElement> =
+		async (): Promise<void> => {
+			if (dbUser) {
+				if (dbUser.userId === currComment.authorId) {
+					setCommentFormToEditVisible(true);
+					setCommentFormToReplyVisible(false);
+					setOptionsVisible(false);
+				} else {
+					alert("This ain't your comment to edit!");
 				}
-			} else {
-				alert("This ain't your comment to delete!");
 			}
-		}
-		setOptionsVisible(false);
-	};
+		};
+	const deleteHandler: MouseEventHandler<HTMLButtonElement> =
+		async (): Promise<void> => {
+			if (dbUser) {
+				if (dbUser.userId === currComment.authorId) {
+					if (confirm("Are you sure you want to delete this comment?")) {
+						try {
+							if (isSecondLevelComment) {
+								if (originalComment && originalComment.replies) {
+									const deletedComment = {
+										...originalComment,
+										replies: originalComment.replies.filter(
+											(reply) => reply._id !== currComment._id
+										),
+									};
+									postUpdatedResourceToDb(deletedComment, originalComment._id);
+								}
+							} else {
+								await fetch(`/api/comments/${currComment._id}`, {
+									method: "DELETE",
+									headers: {
+										"Content-Type": "application/json",
+									},
+								});
+							}
+
+							await scrollToSamePosition();
+						} catch (error) {
+							console.error(error);
+						}
+					}
+				} else {
+					alert("This ain't your comment to delete!");
+				}
+			}
+			setOptionsVisible(false);
+		};
 
 	const shouldDoVoteUpdate: Function = (
 		voteType: string,
@@ -163,7 +166,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		return user;
 	};
 
-	const voteHandler: Function = async (voteType: string) => {
+	const voteHandler: Function = async (voteType: string): Promise<void> => {
 		if (dbUser) {
 			getDbUser();
 			let userBody: UserModel = dbUser;
@@ -224,17 +227,19 @@ const CommentContent: React.FC<CommentContentProps> = ({
 			await scrollToSamePosition();
 		}
 	};
-	const upvoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		if (dbUser?.upvotedIds?.includes(currComment._id))
-			voteHandler(VOTING_TYPES.undoUpvoting);
-		else voteHandler(VOTING_TYPES.upvoting);
-	};
+	const upvoteHandler: MouseEventHandler<HTMLButtonElement> =
+		async (): Promise<void> => {
+			if (dbUser?.upvotedIds?.includes(currComment._id))
+				voteHandler(VOTING_TYPES.undoUpvoting);
+			else voteHandler(VOTING_TYPES.upvoting);
+		};
 
-	const downVoteHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-		if (dbUser?.downvotedIds?.includes(currComment._id))
-			voteHandler(VOTING_TYPES.undoDownvoting);
-		else voteHandler(VOTING_TYPES.downvoting);
-	};
+	const downVoteHandler: MouseEventHandler<HTMLButtonElement> =
+		async (): Promise<void> => {
+			if (dbUser?.downvotedIds?.includes(currComment._id))
+				voteHandler(VOTING_TYPES.undoDownvoting);
+			else voteHandler(VOTING_TYPES.downvoting);
+		};
 
 	const currCommentUpvoted: Function = (): Boolean => {
 		let value = false;
