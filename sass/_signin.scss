@@ -21,6 +21,7 @@
 	}
 
 	.sign-in {
+		@include flexAllRow;
 		font-family: inherit;
 		background: $primary-color;
 		border: none;
@@ -30,6 +31,10 @@
 
 		&:hover {
 			background: rgba($color: orangered, $alpha: 0.8);
+		}
+
+		.icon {
+			font-size: 2rem;
 		}
 	}
 }

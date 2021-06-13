@@ -119,9 +119,7 @@ const Home: Function = () => {
 		<main className="main">
 			<h1 className="title">ReComments</h1>
 			<button className="sign-in" onClick={signIn}>
-				<span>
-					<FcGoogle />
-				</span>
+				<FcGoogle className="icon" />
 				&nbsp;Sign In with Google
 			</button>
 		</main>
