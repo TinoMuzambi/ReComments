@@ -17,7 +17,6 @@ import AppState from "../components/AppState";
 import { loadClient, execute } from "../utils/gapi";
 
 const Search: React.FC = () => {
-	const [results, setResults] = useState<gapi.client.youtube.Video[]>([]);
 	const [searchInput, setSearchInput] = useState("");
 	const [isFetchingData, setIsFetchingData] = useState(false);
 	const [noResultsFound, setNoResultsFound] = useState(false);
@@ -29,10 +28,6 @@ const Search: React.FC = () => {
 		if (!signedIn) router.push("/");
 	}, [signedIn]);
 
-	useEffect(() => {
-		if (setSearchResults) setSearchResults(results);
-	}, [results]);
-
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
 		e.preventDefault();
 		setIsFetchingData(true);
@@ -41,13 +36,12 @@ const Search: React.FC = () => {
 			execute(
 				searchInput,
 				true,
-				setResults,
+				setSearchResults,
 				setIsFetchingData,
 				setNoResultsFound
 			);
 		};
 		makeCall();
-		// if (setSearchResults) setSearchResults(results);
 	};
 
 	return (
