@@ -55,11 +55,13 @@ const Video: React.FC<VideoProps> = ({ dbComments }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+	const BASE_URL =
+		process.env.NODE_ENV === "production"
+			? "https://recomments.tinomuzambi.com"
+			: "http://localhost:3000";
 	let res: any;
 	if (context && context.params)
-		res = await fetch(
-			`http://localhost:3000/api/comments/video/${context.params.url}`
-		);
+		res = await fetch(`${BASE_URL}/api/comments/video/${context.params.url}`);
 	const comments = await res.json();
 	return {
 		props: { dbComments: comments.data.reverse() || null },
