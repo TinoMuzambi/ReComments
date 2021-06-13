@@ -16,12 +16,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				const comment: Comment[] = await Comment.find({ videoId: id });
 
 				if (!comment) {
-					return res.status(404).json({ success: false });
+					return res
+						.status(404)
+						.json({ success: false, data: { message: "Comment not found" } });
 				}
 
 				res.status(200).json({ success: true, data: comment });
 			} catch (error) {
-				return res.status(400).json({ success: false });
+				return res.status(400).json({ success: false, data: error });
 			}
 			break;
 		default:
