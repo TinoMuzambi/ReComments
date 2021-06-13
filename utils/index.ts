@@ -1,6 +1,8 @@
 import { CommentModel, UserModel } from "../interfaces";
 
-function instanceOfCommentModel(object: any): object is CommentModel {
+const instanceOfCommentModel: Function = (
+	object: any
+): object is CommentModel => {
 	return (
 		"_id" in object &&
 		"videoId" in object &&
@@ -11,7 +13,7 @@ function instanceOfCommentModel(object: any): object is CommentModel {
 		"comment" in object &&
 		"edited" in object
 	);
-}
+};
 
 export const postUpdatedResourceToDb = async (
 	body: CommentModel | UserModel,
