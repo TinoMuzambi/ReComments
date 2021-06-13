@@ -17,12 +17,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				const user: typeof User = await User.findOne({ userId: id });
 
 				if (!user) {
-					return res.status(200).json({ success: true, data: null });
+					return res
+						.status(200)
+						.json({ success: true, data: { message: "User not found" } });
 				}
 
 				res.status(200).json({ success: true, data: user });
 			} catch (error) {
-				return res.status(400).json({ success: false });
+				return res.status(400).json({ success: false, data: error });
 			}
 			break;
 		case "PUT":
@@ -33,11 +35,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				);
 
 				if (!user) {
-					return res.status(400).json({ success: false });
+					return res
+						.status(400)
+						.json({ success: false, data: { message: "User not found" } });
 				}
 				res.status(200).json({ success: true, data: user });
 			} catch (error) {
-				return res.status(400).json({ success: false });
+				return res.status(400).json({ success: false, data: error });
 			}
 			break;
 		case "DELETE":
@@ -45,11 +49,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				const deletedUser = await User.deleteOne({ _id: id });
 
 				if (!deletedUser) {
-					return res.status(400).json({ success: false });
+					return res
+						.status(400)
+						.json({ success: false, data: { message: "User not found" } });
 				}
-				res.status(200).json({ success: true, data: {} });
+				res
+					.status(200)
+					.json({ success: true, data: { message: "User deleted" } });
 			} catch (error) {
-				return res.status(400).json({ success: false });
+				return res.status(400).json({ success: false, data: error });
 			}
 			break;
 		default:
