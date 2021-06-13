@@ -18,9 +18,9 @@ import { loadClient, execute } from "../utils/gapi";
 
 const Search: React.FC = () => {
 	const [results, setResults] = useState<gapi.client.youtube.Video[]>([]);
-	const [url, setUrl] = useState("");
-	const [fetching, setFetching] = useState(false);
-	const [noResults, setNoResults] = useState(false);
+	const [urlInput, setUrlInput] = useState("");
+	const [isFetchingData, setIsFetchingData] = useState(false);
+	const [noResultsFound, setNoResultsFound] = useState(false);
 
 	const { signedIn } = useContext(AppContext);
 	const router = useRouter();
@@ -31,10 +31,10 @@ const Search: React.FC = () => {
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
 		e.preventDefault();
-		setFetching(true);
+		setIsFetchingData(true);
 		const makeCall = async () => {
 			await loadClient();
-			execute(url, true, setResults, setFetching, setNoResults);
+			execute(urlInput, true, setResults, setIsFetchingData, setNoResultsFound);
 		};
 		makeCall();
 	};
@@ -49,11 +49,17 @@ const Search: React.FC = () => {
 
 			<main className="container">
 				<section className="form-holder">
-					<Form handleSubmit={handleSubmit} url={url} setUrl={setUrl} />
+					<Form
+						handleSubmit={handleSubmit}
+						url={urlInput}
+						setUrl={setUrlInput}
+					/>
 				</section>
-				{fetching && <Loader />}
-				{noResults && !fetching && <AppState message="No results found!" />}
-				{results.length > 0 && !fetching && (
+				{isFetchingData && <Loader />}
+				{noResultsFound && !isFetchingData && (
+					<AppState message="No results found!" />
+				)}
+				{results.length > 0 && !isFetchingData && (
 					<section className="results">
 						{results.map((result) => (
 							<Link
