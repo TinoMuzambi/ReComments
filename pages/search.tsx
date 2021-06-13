@@ -22,12 +22,16 @@ const Search: React.FC = () => {
 	const [isFetchingData, setIsFetchingData] = useState(false);
 	const [noResultsFound, setNoResultsFound] = useState(false);
 
-	const { signedIn } = useContext(AppContext);
+	const { signedIn, searchResults, setSearchResults } = useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
 		if (!signedIn) router.push("/");
 	}, [signedIn]);
+
+	useEffect(() => {
+		if (setSearchResults) setSearchResults(results);
+	}, [results]);
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
 		e.preventDefault();
@@ -43,6 +47,10 @@ const Search: React.FC = () => {
 			);
 		};
 		makeCall();
+		if (setSearchResults) {
+			console.log(results);
+			setSearchResults(results);
+		}
 	};
 
 	return (
@@ -65,9 +73,9 @@ const Search: React.FC = () => {
 				{noResultsFound && !isFetchingData && (
 					<AppState message="No results found!" />
 				)}
-				{results.length > 0 && !isFetchingData && (
+				{searchResults && searchResults.length > 0 && !isFetchingData && (
 					<section className="results">
-						{results.map((result) => (
+						{searchResults.map((result) => (
 							<Link
 								key={result.id}
 								href={{

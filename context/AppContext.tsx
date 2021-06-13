@@ -15,7 +15,7 @@ export const AppContext = createContext<ContextProps>(initialState);
 export const AppProvider = ({ children }: AppProviderProps) => {
 	const [state, dispatch] = useReducer(AppReducer, initialState);
 
-	const setSignedIn = (value: boolean) => {
+	const setSignedIn: Function = (value: boolean) => {
 		dispatch({
 			type: "UPDATE_SIGNED_IN",
 			auth: value,
@@ -25,7 +25,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 		});
 	};
 
-	const setUser = (value: User) => {
+	const setUser: Function = (value: User) => {
 		dispatch({
 			type: "SET_USER",
 			auth: state.signedIn,
@@ -35,7 +35,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 		});
 	};
 
-	const setDbUser = (value: UserModel | null) => {
+	const setDbUser: Function = (value: UserModel | null) => {
 		dispatch({
 			type: "SET_DB_USER",
 			auth: state.signedIn,
@@ -45,7 +45,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 		});
 	};
 
-	const setResults = (value: gapi.client.youtube.Video[] | null) => {
+	const setSearchResults: Function = (
+		value: gapi.client.youtube.Video[] | null
+	) => {
 		dispatch({
 			type: "SET_SEARCH_RESULTS",
 			auth: state.signedIn,
@@ -65,7 +67,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 				dbUser: state.dbUser,
 				setDbUser,
 				searchResults: state.searchResults,
-				setSearchResults: setResults,
+				setSearchResults,
 			}}
 		>
 			{children}
