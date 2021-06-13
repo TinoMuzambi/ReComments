@@ -64,7 +64,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		res = await fetch(`${BASE_URL}/api/comments/video/${context.params.url}`);
 	let comments = await res.json();
 
-	console.log(comments);
 	if (!comments.success) comments = [];
 
 	return {
