@@ -18,7 +18,7 @@ import { loadClient, execute } from "../utils/gapi";
 
 const Search: React.FC = () => {
 	const [results, setResults] = useState<gapi.client.youtube.Video[]>([]);
-	const [urlInput, setUrlInput] = useState("");
+	const [searchInput, setSearchInput] = useState("");
 	const [isFetchingData, setIsFetchingData] = useState(false);
 	const [noResultsFound, setNoResultsFound] = useState(false);
 
@@ -34,7 +34,13 @@ const Search: React.FC = () => {
 		setIsFetchingData(true);
 		const makeCall = async () => {
 			await loadClient();
-			execute(urlInput, true, setResults, setIsFetchingData, setNoResultsFound);
+			execute(
+				searchInput,
+				true,
+				setResults,
+				setIsFetchingData,
+				setNoResultsFound
+			);
 		};
 		makeCall();
 	};
@@ -51,8 +57,8 @@ const Search: React.FC = () => {
 				<section className="form-holder">
 					<Form
 						handleSubmit={handleSubmit}
-						url={urlInput}
-						setUrl={setUrlInput}
+						searchTerm={searchInput}
+						setSearchTerm={setSearchInput}
 					/>
 				</section>
 				{isFetchingData && <Loader />}

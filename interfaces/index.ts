@@ -64,8 +64,8 @@ export interface CommentFormProps {
 
 export interface FormProps {
 	handleSubmit: FormEventHandler<HTMLFormElement>;
-	url: string;
-	setUrl: Function;
+	searchTerm: string;
+	setSearchTerm: Function;
 }
 
 export interface CommentModel {

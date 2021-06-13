@@ -1,14 +1,18 @@
 import { FormProps } from "../interfaces";
 
-const Form: React.FC<FormProps> = ({ handleSubmit, url, setUrl }) => {
+const Form: React.FC<FormProps> = ({
+	handleSubmit,
+	searchTerm,
+	setSearchTerm,
+}) => {
 	return (
 		<form className="form" onSubmit={handleSubmit}>
 			<input
 				type="search"
 				placeholder="Enter YouTube video url or search term..."
 				required
-				value={url}
-				onChange={(e) => setUrl(e.target.value)}
+				value={searchTerm}
+				onChange={(e) => setSearchTerm(e.target.value)}
 				className="search"
 			/>
 			<button type="submit" className="submit">
