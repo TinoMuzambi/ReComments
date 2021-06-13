@@ -38,7 +38,7 @@ const Video: React.FC<VideoProps> = ({ dbComments }) => {
 				<Meta
 					title={`${result.snippet.title} | ReComments`}
 					description={`Comment on '${result.snippet.title}' from ${result.snippet.channelTitle} on ReComments!`}
-					url={`https://re-comments.vercel.app/video/${result.id}`}
+					url={`https://recomments.tinomuzambi.com/video/${result.id}`}
 				/>
 				<main className="video-holder">
 					<h1 className="title">{result.snippet.title}</h1>
