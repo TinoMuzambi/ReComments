@@ -1,0 +1,8 @@
+.error-holder {
+	@include flexAllCol;
+	margin-top: 2rem;
+
+	.error-image {
+		width: 40%;
+	}
+}
