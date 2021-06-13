@@ -49,7 +49,7 @@ Meta.defaultProps = {
 	keywords: "youtube, comments, google, entertainment",
 	description:
 		"Ever wanted to comment on a video but the uploader has comments turned off? ReComments is your go to for commenting on YouTube videos with comments turned off.",
-	image: "https://a.storyblok.com/f/105639/512x512/03489159d5/logo512.png",
+	image: "https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png",
 	url: "https://recomments.tinomuzambi.com/",
 };
 
