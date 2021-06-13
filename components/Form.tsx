@@ -13,6 +13,7 @@ const Form: React.FC<FormProps> = ({
 
 	const handleReset: FormEventHandler<HTMLFormElement> = () => {
 		if (setSearchResults) setSearchResults([]);
+		setSearchTerm("");
 	};
 	return (
 		<form className="form" onSubmit={handleSubmit} onReset={handleReset}>
