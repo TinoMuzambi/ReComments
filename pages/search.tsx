@@ -44,7 +44,7 @@ const Search: React.FC = () => {
 			<Meta
 				title=" Search | ReComments"
 				description="Search for a YouTube video and get to chatting in the comments!"
-				url="https://re-comments.vercel.app/search"
+				url="https://recomments.tinomuzambi.com/search"
 			/>
 
 			<main className="container">
