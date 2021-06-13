@@ -57,7 +57,7 @@ export async function execute(
 
 	let ids: string[] = [];
 	try {
-		gapi.client.youtube.search
+		await gapi.client.youtube.search
 			.list({
 				part: ["snippet"],
 				maxResults: 25,
@@ -69,7 +69,7 @@ export async function execute(
 					response.result.items?.map((item) =>
 						ids.push(item.id?.videoId as string)
 					);
-					console.log("Response", ids);
+					console.log(ids.join(","));
 				},
 				function (err) {
 					console.error("Execute error", err);
@@ -78,8 +78,9 @@ export async function execute(
 
 		const response = await gapi.client.youtube.videos.list({
 			part: ["snippet,statistics,player,status"],
-			id: [path],
+			id: [ids.join(",")],
 		});
+		console.log(response);
 		if (setResults) setResults(response.result.items);
 		if (setFetching) setFetching(false);
 		if (response.result.pageInfo) {
