@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { GetServerSideProps } from "next";
+import { NextPage } from "next";
 
 import Meta from "../../components/Meta";
 import Player from "../../components/Player";
@@ -10,7 +10,7 @@ import Comments from "../../components/Comments/Comments";
 import { loadClient, execute } from "../../utils/gapi";
 import { VideoProps } from "../../interfaces";
 
-const Video: React.FC<VideoProps> = ({ dbComments }) => {
+const Video: NextPage<VideoProps> = ({ dbComments }) => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
 	const router = useRouter();
 
@@ -54,21 +54,19 @@ const Video: React.FC<VideoProps> = ({ dbComments }) => {
 	else return <AppState message="Loading..." />;
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+Video.getInitialProps = async (req) => {
 	const BASE_URL =
 		process.env.NODE_ENV === "production"
 			? "https://recomments.tinomuzambi.com"
 			: "http://localhost:3000";
 	let res: any;
-	if (context && context.params)
-		res = await fetch(`${BASE_URL}/api/comments/video/${context.params.url}`);
+	if (req && req.query)
+		res = await fetch(`${BASE_URL}/api/comments/video/${req.query.url}`);
 	let comments = await res.json();
 
 	if (!comments.success) comments = [];
 
-	return {
-		props: { dbComments: comments.data || null },
-	};
+	return { dbComments: comments.data || null };
 };
 
 export default Video;
