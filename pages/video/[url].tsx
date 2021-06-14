@@ -20,7 +20,7 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 
 			try {
 				await loadClient();
-				await execute(url, false, (res: any) => {
+				execute(url, false, (res: gapi.client.youtube.Video[]) => {
 					setResult(res[0]);
 				});
 			} catch (error) {
