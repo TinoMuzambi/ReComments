@@ -18,8 +18,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 				if (!user) {
 					return res
-						.status(200)
-						.json({ success: true, data: { message: "User not found" } });
+						.status(404)
+						.json({ success: false, data: { message: "User not found" } });
 				}
 
 				res.status(200).json({ success: true, data: user });

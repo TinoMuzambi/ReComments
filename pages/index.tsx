@@ -56,8 +56,8 @@ const Home: React.FC = () => {
 				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
 			);
 			const userRes = await res.json();
-			const data = userRes?.data;
-			if (!data) {
+
+			if (!userRes.success) {
 				const body: UserModel = {
 					userId: user.emailAddresses[0].metadata?.source?.id as string,
 					email: user.emailAddresses[0].value as string,
