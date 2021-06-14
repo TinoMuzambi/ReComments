@@ -3,8 +3,10 @@ import Autolinker from "autolinker";
 import { BiLike, BiDislike } from "react-icons/bi";
 import { VscEye } from "react-icons/vsc";
 import { MdDateRange } from "react-icons/md";
+import moment from "moment";
 
 import { StatsProps } from "../interfaces";
+import { numberWithCommas } from "../utils";
 
 const Stats: React.FC<StatsProps> = ({ result }) => {
 	return (
@@ -15,7 +17,9 @@ const Stats: React.FC<StatsProps> = ({ result }) => {
 						<VscEye />
 					</span>
 					<p className="text">
-						{result.statistics ? result.statistics.viewCount : 0}
+						{result.statistics
+							? numberWithCommas(result.statistics.viewCount)
+							: 0}
 					</p>
 				</div>
 				<div className="stat">
@@ -23,7 +27,9 @@ const Stats: React.FC<StatsProps> = ({ result }) => {
 						<BiLike />
 					</span>
 					<p className="text">
-						{result.statistics ? result.statistics.likeCount : 0}
+						{result.statistics
+							? numberWithCommas(result.statistics.likeCount)
+							: 0}
 					</p>
 				</div>
 				<div className="stat">
@@ -31,7 +37,9 @@ const Stats: React.FC<StatsProps> = ({ result }) => {
 						<BiDislike />
 					</span>{" "}
 					<p className="text">
-						{result.statistics ? result.statistics.dislikeCount : 0}
+						{result.statistics
+							? numberWithCommas(result.statistics.dislikeCount)
+							: 0}
 					</p>
 				</div>
 				<div className="stat">
@@ -40,7 +48,9 @@ const Stats: React.FC<StatsProps> = ({ result }) => {
 					</span>{" "}
 					<p className="text">
 						{result.snippet?.publishedAt &&
-							new Date(result.snippet.publishedAt).toLocaleDateString()}
+							moment(
+								new Date(result.snippet.publishedAt).toLocaleDateString()
+							).format("MMMM Do YYYY")}
 					</p>
 				</div>
 			</div>
