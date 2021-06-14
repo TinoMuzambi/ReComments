@@ -12,7 +12,7 @@ const initialState: ContextProps = {
 
 export const AppContext = createContext<ContextProps>(initialState);
 
-export const AppProvider = ({ children }: AppProviderProps) => {
+export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
 	const [state, dispatch] = useReducer(AppReducer, initialState);
 
 	const setSignedIn: Function = (value: boolean) => {
