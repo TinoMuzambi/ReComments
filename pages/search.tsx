@@ -20,6 +20,7 @@ const Search: React.FC = (): JSX.Element => {
 	const [searchInput, setSearchInput] = useState("");
 	const [isFetchingData, setIsFetchingData] = useState(false);
 	const [noResultsFound, setNoResultsFound] = useState(false);
+	const [useBlockFormat, setUseBlockFormat] = useState(true);
 
 	const { signedIn, searchResults, setSearchResults } = useContext(AppContext);
 	const router = useRouter();
@@ -47,6 +48,7 @@ const Search: React.FC = (): JSX.Element => {
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
 		e.preventDefault();
 		setIsFetchingData(true);
+		setUseBlockFormat(true);
 		const makeCall = async () => {
 			await loadClient();
 			execute(
