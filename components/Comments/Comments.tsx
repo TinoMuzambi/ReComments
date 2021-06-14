@@ -2,7 +2,7 @@ import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import { CommentsProps, CommentModel } from "../../interfaces";
 
-const Comments: React.FC<CommentsProps> = ({ comments }) => {
+const Comments: React.FC<CommentsProps> = ({ comments }): JSX.Element => {
 	return (
 		<section className="comments">
 			<div className="totals">

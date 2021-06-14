@@ -10,12 +10,12 @@ import Comments from "../../components/Comments/Comments";
 import { loadClient, execute } from "../../utils/gapi";
 import { VideoProps } from "../../interfaces";
 
-const Video: NextPage<VideoProps> = ({ dbComments }) => {
+const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
 	const router = useRouter();
 
 	useEffect(() => {
-		const getRes: Function = async () => {
+		const getRes: Function = async (): Promise<void> => {
 			const url = router.query.url as string;
 
 			try {

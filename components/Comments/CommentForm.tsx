@@ -21,7 +21,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	setIsViewMoreExpanded,
 	currComment,
 	originalComment,
-}) => {
+}): JSX.Element => {
 	const [cancelCommentButtonsVisible, setCancelCommentButtonsVisible] =
 		useState(commentFormToEditVisible || commentFormToReplyVisible);
 	const [commentInput, setCommentInput] = useState("");

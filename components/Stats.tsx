@@ -8,7 +8,7 @@ import moment from "moment";
 import { StatsProps } from "../interfaces";
 import { numberWithCommas } from "../utils";
 
-const Stats: React.FC<StatsProps> = ({ result }) => {
+const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 	return (
 		<>
 			<div className="stats">

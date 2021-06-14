@@ -2,7 +2,7 @@ import parse from "html-react-parser";
 
 import { PlayerProps } from "../interfaces";
 
-const Player: React.FC<PlayerProps> = ({ result }) => {
+const Player: React.FC<PlayerProps> = ({ result }): JSX.Element => {
 	return (
 		<>
 			{result &&

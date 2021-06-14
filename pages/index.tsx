@@ -10,7 +10,7 @@ import {
 } from "../utils/gapi";
 import { UserModel } from "../interfaces";
 
-const Home: React.FC = () => {
+const Home: React.FC = (): JSX.Element => {
 	const [loading, setLoading] = useState(false);
 
 	const { setSignedIn, signedIn, setUser, user } = useContext(AppContext);

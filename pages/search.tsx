@@ -16,7 +16,7 @@ import Form from "../components/Form";
 import AppState from "../components/AppState";
 import { loadClient, execute } from "../utils/gapi";
 
-const Search: React.FC = () => {
+const Search: React.FC = (): JSX.Element => {
 	const [searchInput, setSearchInput] = useState("");
 	const [isFetchingData, setIsFetchingData] = useState(false);
 	const [noResultsFound, setNoResultsFound] = useState(false);

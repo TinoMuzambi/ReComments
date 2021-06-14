@@ -1,4 +1,4 @@
-const Privacy: React.FC = () => {
+const Privacy: React.FC = (): JSX.Element => {
 	return (
 		<main className="main padding">
 			<h1>Privacy Policy</h1>

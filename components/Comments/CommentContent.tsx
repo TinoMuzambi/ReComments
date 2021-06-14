@@ -16,7 +16,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	originalComment,
 	isSecondLevelComment,
 	setIsViewMoreExpanded,
-}) => {
+}): JSX.Element => {
 	// Is the comment for visible with the intent to reply to the comment?
 	const [commentFormToReplyVisible, setCommentFormToReplyVisible] =
 		useState(false);

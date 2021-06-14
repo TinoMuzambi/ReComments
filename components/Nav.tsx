@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { AppContext } from "../context/AppContext";
 import { handleSignoutClick } from "../utils/gapi";
 
-const Nav: React.FC = () => {
+const Nav: React.FC = (): JSX.Element => {
 	const [navOpen, setNavOpen] = useState(false);
 	const { setSignedIn, setUser, user, signedIn, setDbUser } =
 		useContext(AppContext);

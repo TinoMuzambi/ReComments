@@ -8,7 +8,7 @@ const Form: React.FC<FormProps> = ({
 	handleSubmit,
 	searchTerm,
 	setSearchTerm,
-}) => {
+}): JSX.Element => {
 	const { setSearchResults } = useContext(AppContext);
 
 	const handleReset: FormEventHandler<HTMLFormElement> = () => {

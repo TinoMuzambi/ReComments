@@ -1,6 +1,6 @@
 import { AppStateProps } from "../interfaces";
 
-const Loading: React.FC<AppStateProps> = ({ message }) => {
+const Loading: React.FC<AppStateProps> = ({ message }): JSX.Element => {
 	return (
 		<main className="main">
 			<div className="error-holder">
