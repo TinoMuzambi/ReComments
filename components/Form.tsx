@@ -12,7 +12,7 @@ const Form: React.FC<FormProps> = ({
 	const { setSearchResults } = useContext(AppContext);
 
 	const handleReset: FormEventHandler<HTMLFormElement> = () => {
-		if (setSearchResults) setSearchResults([]);
+		if (setSearchResults) setSearchResults(null);
 		setSearchTerm("");
 	};
 	return (

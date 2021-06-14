@@ -80,6 +80,7 @@ export const execute: Function = async (
 					part: ["snippet,statistics,player,status"],
 					chart: "mostPopular",
 					regionCode: "US",
+					maxResults: 30,
 			  })
 			: await gapi.client.youtube.videos.list({
 					part: ["snippet,statistics,player,status"],

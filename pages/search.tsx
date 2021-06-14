@@ -20,7 +20,7 @@ const Search: React.FC = (): JSX.Element => {
 	const [searchInput, setSearchInput] = useState("");
 	const [isFetchingData, setIsFetchingData] = useState(false);
 	const [noResultsFound, setNoResultsFound] = useState(false);
-	const [useBlockFormat, setUseBlockFormat] = useState(true);
+	const [useBlockFormat, setUseBlockFormat] = useState(false);
 
 	const { signedIn, searchResults, setSearchResults } = useContext(AppContext);
 	const router = useRouter();
@@ -30,20 +30,27 @@ const Search: React.FC = (): JSX.Element => {
 	}, [signedIn]);
 
 	useEffect(() => {
-		setIsFetchingData(true);
-		const makeCall = async () => {
-			await loadClient();
-			execute(
-				true,
-				searchInput,
-				true,
-				setSearchResults,
-				setIsFetchingData,
-				setNoResultsFound
-			);
-		};
-		makeCall();
-	}, []);
+		if (!searchInput) {
+			try {
+				setUseBlockFormat(true);
+				setIsFetchingData(true);
+				const makeCall = async () => {
+					await loadClient();
+					execute(
+						true,
+						searchInput,
+						true,
+						setSearchResults,
+						setIsFetchingData,
+						setNoResultsFound
+					);
+				};
+				makeCall();
+			} catch (error) {
+				console.error(error);
+			}
+		}
+	}, [searchResults]);
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
 		e.preventDefault();
