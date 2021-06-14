@@ -82,7 +82,6 @@ export const execute: Function = async (
 			  })
 			: await gapi.client.youtube.videos.list({
 					part: ["snippet,statistics,player,status"],
-					id: isUrl ? path : [videoIds.join(",")],
 					chart: "mostPopular",
 					regionCode: "US",
 			  });

@@ -24,11 +24,9 @@ const Home: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		const getRes: Function = async (): Promise<void> => {
-			const url = router.query.url as string;
-
 			try {
 				await loadClient();
-				execute(true, url, false, (res: gapi.client.youtube.Video[]) => {
+				execute(true, "", false, (res: gapi.client.youtube.Video[]) => {
 					setResult(res);
 				});
 			} catch (error) {
