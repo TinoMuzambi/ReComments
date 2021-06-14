@@ -1,10 +1,4 @@
-import {
-	FormEvent,
-	FormEventHandler,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -12,12 +6,12 @@ import { AppContext } from "../context/AppContext";
 import Meta from "../components/Meta";
 import Loader from "../components/Loader";
 import Result from "../components/Result";
-import Form from "../components/Form";
+
 import AppState from "../components/AppState";
 import { loadClient, execute } from "../utils/gapi";
 
-const Search: React.FC = (): JSX.Element => {
-	const [searchInput, setSearchInput] = useState("");
+const Home: React.FC = (): JSX.Element => {
+	const [result, setResult] = useState<gapi.client.youtube.Video[]>();
 	const [isFetchingData, setIsFetchingData] = useState(false);
 	const [noResultsFound, setNoResultsFound] = useState(false);
 
@@ -28,22 +22,22 @@ const Search: React.FC = (): JSX.Element => {
 		if (!signedIn) router.push("/");
 	}, [signedIn]);
 
-	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
-		e.preventDefault();
-		setIsFetchingData(true);
-		const makeCall = async () => {
-			await loadClient();
-			execute(
-				false,
-				searchInput,
-				true,
-				setSearchResults,
-				setIsFetchingData,
-				setNoResultsFound
-			);
+	useEffect(() => {
+		const getRes: Function = async (): Promise<void> => {
+			const url = router.query.url as string;
+
+			try {
+				await loadClient();
+				execute(true, url, false, (res: gapi.client.youtube.Video[]) => {
+					setResult(res);
+				});
+			} catch (error) {
+				console.log(error);
+				router.push("/search");
+			}
 		};
-		makeCall();
-	};
+		getRes();
+	}, []);
 
 	return (
 		<>
@@ -54,13 +48,6 @@ const Search: React.FC = (): JSX.Element => {
 			/>
 
 			<main className="container">
-				<section className="form-holder">
-					<Form
-						handleSubmit={handleSubmit}
-						searchTerm={searchInput}
-						setSearchTerm={setSearchInput}
-					/>
-				</section>
 				{isFetchingData && <Loader />}
 				{noResultsFound && !isFetchingData && (
 					<AppState message="No results found!" />
@@ -86,4 +73,4 @@ const Search: React.FC = (): JSX.Element => {
 	);
 };
 
-export default Search;
+export default Home;

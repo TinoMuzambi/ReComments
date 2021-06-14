@@ -43,6 +43,7 @@ export const loadClient: Function = () => {
 };
 
 export const execute: Function = async (
+	popular: boolean,
 	query: string,
 	fullPath: boolean,
 	setResults?: Function,
@@ -74,10 +75,17 @@ export const execute: Function = async (
 			);
 		}
 
-		const response = await gapi.client.youtube.videos.list({
-			part: ["snippet,statistics,player,status"],
-			id: isUrl ? path : [videoIds.join(",")],
-		});
+		const response = popular
+			? await gapi.client.youtube.videos.list({
+					part: ["snippet,statistics,player,status"],
+					id: isUrl ? path : [videoIds.join(",")],
+			  })
+			: await gapi.client.youtube.videos.list({
+					part: ["snippet,statistics,player,status"],
+					id: isUrl ? path : [videoIds.join(",")],
+					chart: "mostPopular",
+					regionCode: "US",
+			  });
 
 		if (setResults) setResults(response.result.items);
 		if (setFetching) setFetching(false);
