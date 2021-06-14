@@ -22,6 +22,7 @@ export interface PlayerProps {
 
 export interface ResultProps {
 	result: gapi.client.youtube.Video;
+	blockFormat: boolean;
 }
 
 export interface StatsProps {

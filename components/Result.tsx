@@ -1,6 +1,9 @@
 import { ResultProps } from "../interfaces";
 
-const Result: React.FC<ResultProps> = ({ result }): JSX.Element => {
+const Result: React.FC<ResultProps> = ({
+	result,
+	blockFormat,
+}): JSX.Element => {
 	return (
 		<div className="result">
 			<img

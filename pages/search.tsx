@@ -93,7 +93,7 @@ const Search: React.FC = (): JSX.Element => {
 								}}
 							>
 								<a>
-									<Result result={result} />
+									<Result result={result} blockFormat={useBlockFormat} />
 								</a>
 							</Link>
 						))}
