@@ -48,7 +48,7 @@ const Search: React.FC = (): JSX.Element => {
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
 		e.preventDefault();
 		setIsFetchingData(true);
-		setUseBlockFormat(true);
+		setUseBlockFormat(false);
 		const makeCall = async () => {
 			await loadClient();
 			execute(
