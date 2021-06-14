@@ -2,6 +2,10 @@
 	padding: 1rem;
 
 	.results {
+		&.block {
+			display: flex;
+			flex-wrap: wrap;
+		}
 		.title {
 			font-size: 2rem;
 		}
