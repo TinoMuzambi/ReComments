@@ -84,7 +84,7 @@ const Search: React.FC = (): JSX.Element => {
 					<AppState message="No results found!" />
 				)}
 				{searchResults && searchResults.length > 0 && !isFetchingData && (
-					<section className="results">
+					<section className={`results ${useBlockFormat && "block"}`}>
 						{searchResults.map((result) => (
 							<Link
 								key={result.id}
