@@ -5,7 +5,7 @@ const Result: React.FC<ResultProps> = ({
 	blockFormat,
 }): JSX.Element => {
 	return (
-		<div className={`results ${blockFormat && "block"}`}>
+		<div className={`result ${blockFormat && "block"}`}>
 			<img
 				src={
 					result.snippet &&

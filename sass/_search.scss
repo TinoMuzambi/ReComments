@@ -5,6 +5,10 @@
 		&.block {
 			display: flex;
 			flex-wrap: wrap;
+
+			a {
+				width: 30%;
+			}
 		}
 		.title {
 			font-size: 2rem;
@@ -22,12 +26,39 @@
 			position: relative;
 			border-bottom: 1px solid black;
 
-			@include mq(768px) {
-				margin: 2rem auto 0;
+			&.block {
+				margin: 0;
 				flex-direction: column;
-				gap: 2rem;
-				width: fit-content;
-				padding: 2rem;
+				gap: 0rem;
+				padding: 1rem;
+				border: none;
+
+				.thumbnail {
+					width: 100%;
+					object-fit: contain;
+				}
+
+				.details {
+					.name {
+						font-size: 1rem;
+					}
+
+					.bottom {
+						position: static;
+					}
+
+					.uploader {
+						font-size: 1rem;
+					}
+				}
+
+				@include mq(768px) {
+					margin: 2rem auto 0;
+					flex-direction: column;
+					gap: 2rem;
+					width: fit-content;
+					padding: 2rem;
+				}
 			}
 
 			.thumbnail {
