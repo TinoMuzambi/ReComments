@@ -44,3 +44,7 @@ export const VOTING_TYPES = {
 	undoUpvoting: "undoUpvoting",
 	undoDownvoting: "undoDownvoting",
 };
+
+export const numberWithCommas: Function = (x: number): string => {
+	return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+};
