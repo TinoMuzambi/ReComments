@@ -2,7 +2,7 @@ export const getSignedIn: Function = (): boolean => {
 	return gapi.auth2.getAuthInstance().isSignedIn.get();
 };
 
-export const updateSignInStatus = (
+export const updateSignInStatus: Function = (
 	isSignedIn: boolean,
 	callback: Function,
 	cancelLoading?: Function
@@ -11,17 +11,17 @@ export const updateSignInStatus = (
 	else if (cancelLoading) cancelLoading();
 };
 
-export function handleAuthClick() {
+export const handleAuthClick: Function = () => {
 	gapi.auth2
 		.getAuthInstance()
 		.signIn({ scope: "https://www.googleapis.com/auth/youtube.readonly" });
-}
+};
 
-export function handleSignoutClick() {
+export const handleSignoutClick: Function = () => {
 	gapi.auth2.getAuthInstance().signOut();
-}
+};
 
-function makeApiCall(callback: Function) {
+const makeApiCall: Function = (callback: Function) => {
 	gapi.client.people.people
 		.get({
 			resourceName: "people/me",
@@ -30,9 +30,9 @@ function makeApiCall(callback: Function) {
 		.then(function (resp: gapi.client.Response<gapi.client.people.Person>) {
 			callback(resp.result);
 		});
-}
+};
 
-export function loadClient() {
+export const loadClient: Function = () => {
 	gapi.client.setApiKey(process.env.GAPP_API_KEY || "");
 	return gapi.client
 		.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest", "")
@@ -40,15 +40,15 @@ export function loadClient() {
 			function () {},
 			function () {}
 		);
-}
+};
 
-export async function execute(
+export const execute: Function = async (
 	query: string,
 	fullPath: boolean,
 	setResults?: Function,
 	setFetching?: Function,
 	setNoResults?: Function
-) {
+) => {
 	const isUrl =
 		query.indexOf("youtube.com") !== -1 || query.indexOf("youtu.be") !== -1;
 
@@ -92,4 +92,4 @@ export async function execute(
 		console.error(err);
 		if (setResults) setResults(err);
 	}
-}
+};
