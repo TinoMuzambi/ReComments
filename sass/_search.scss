@@ -5,9 +5,12 @@
 		&.block {
 			display: flex;
 			flex-wrap: wrap;
+			justify-content: center;
 
 			a {
 				width: 30%;
+				display: inline-block;
+				padding: 0;
 			}
 		}
 		.title {
@@ -27,14 +30,13 @@
 			border-bottom: 1px solid black;
 
 			&.block {
-				margin: 0;
 				flex-direction: column;
 				gap: 0rem;
-				padding: 1rem;
 				border: none;
+				width: 100%;
 
 				.thumbnail {
-					width: 100%;
+					width: 80%;
 					object-fit: contain;
 				}
 
