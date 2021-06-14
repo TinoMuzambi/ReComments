@@ -28,6 +28,22 @@ const Search: React.FC = (): JSX.Element => {
 		if (!signedIn) router.push("/");
 	}, [signedIn]);
 
+	useEffect(() => {
+		setIsFetchingData(true);
+		const makeCall = async () => {
+			await loadClient();
+			execute(
+				true,
+				searchInput,
+				true,
+				setSearchResults,
+				setIsFetchingData,
+				setNoResultsFound
+			);
+		};
+		makeCall();
+	}, []);
+
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
 		e.preventDefault();
 		setIsFetchingData(true);
