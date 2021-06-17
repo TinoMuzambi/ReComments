@@ -99,6 +99,10 @@ export interface UserModel {
 	downvotedIds?: string[];
 }
 
+export interface HomeModel {
+	videos: string[];
+}
+
 export type User = gapi.client.people.Person | null;
 
 export interface ContextProps {
