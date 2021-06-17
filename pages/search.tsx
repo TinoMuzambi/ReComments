@@ -15,6 +15,7 @@ import Result from "../components/Result";
 import Form from "../components/Form";
 import AppState from "../components/AppState";
 import { loadClient, execute } from "../utils/gapi";
+import { shuffle } from "../utils";
 
 const Search: React.FC = (): JSX.Element => {
 	const [searchInput, setSearchInput] = useState("");
@@ -92,7 +93,7 @@ const Search: React.FC = (): JSX.Element => {
 				)}
 				{searchResults && searchResults.length > 0 && !isFetchingData && (
 					<section className={`results ${useBlockFormat && "block"}`}>
-						{searchResults.map((result) => (
+						{shuffle(searchResults).map((result: gapi.client.youtube.Video) => (
 							<Link
 								key={result.id}
 								href={{
