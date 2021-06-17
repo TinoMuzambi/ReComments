@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import Comment from "../../../models/Comment";
+import Home from "../../../models/Home";
 import dbConnect from "../../../utils/dbConnect";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -10,11 +10,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (method) {
 		case "GET":
 			try {
-				const comments: Comment[] = await Comment.find({}).sort({
-					updatedAt: -1,
-				});
+				const videos: typeof Home[] = await Home.find({});
 
-				res.status(200).json({ success: "true", data: comments });
+				res.status(200).json({ success: "true", data: videos });
 			} catch (error) {
 				res.status(400).json({ success: "false", data: error });
 			}
