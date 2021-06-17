@@ -1,5 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
+import { HomeModel } from "../interfaces";
+
 const HomeSchema: Schema = new mongoose.Schema(
 	{
 		videos: {
@@ -12,4 +14,4 @@ const HomeSchema: Schema = new mongoose.Schema(
 );
 
 export default mongoose.models.Home ||
-	mongoose.model<CommentModel>("Home", HomeSchema);
+	mongoose.model<HomeModel>("Home", HomeSchema);
