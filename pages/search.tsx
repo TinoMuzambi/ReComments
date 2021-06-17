@@ -46,9 +46,7 @@ const Search: React.FC = (): JSX.Element => {
 					);
 				};
 				makeCall();
-			} catch (error) {
-				console.error(error);
-			}
+			} catch (error) {}
 		}
 	}, []);
 
