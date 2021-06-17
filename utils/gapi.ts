@@ -50,9 +50,6 @@ export const execute: Function = async (
 	setFetching?: Function,
 	setNoResults?: Function
 ) => {
-	const isUrl =
-		query.indexOf("youtube.com") !== -1 || query.indexOf("youtu.be") !== -1;
-
 	let path: string = "";
 	let start = query.indexOf("v=") + 2;
 	if (start === 1) {
