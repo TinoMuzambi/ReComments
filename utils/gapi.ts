@@ -27,7 +27,7 @@ const makeApiCall: Function = (callback: Function) => {
 			resourceName: "people/me",
 			personFields: "names,emailAddresses,photos",
 		})
-		.then(function (resp: gapi.client.Response<gapi.client.people.Person>) {
+		.then((resp: gapi.client.Response<gapi.client.people.Person>) => {
 			callback(resp.result);
 		});
 };
