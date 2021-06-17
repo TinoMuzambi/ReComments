@@ -93,7 +93,7 @@ const Search: React.FC = (): JSX.Element => {
 				)}
 				{searchResults && searchResults.length > 0 && !isFetchingData && (
 					<section className={`results ${useBlockFormat && "block"}`}>
-						{shuffle(searchResults).map((result: gapi.client.youtube.Video) => (
+						{searchResults.map((result: gapi.client.youtube.Video) => (
 							<Link
 								key={result.id}
 								href={{

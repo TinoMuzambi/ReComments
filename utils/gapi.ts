@@ -1,3 +1,5 @@
+import { shuffle } from ".";
+
 export const getSignedIn: Function = (): boolean => {
 	return gapi.auth2.getAuthInstance().isSignedIn.get();
 };
@@ -73,7 +75,7 @@ export const execute: Function = async (
 			});
 		}
 
-		if (setResults) setResults(response.result.items);
+		if (setResults) setResults(shuffle(response.result.items));
 
 		if (setFetching) setFetching(false);
 
