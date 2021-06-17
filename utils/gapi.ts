@@ -58,21 +58,22 @@ export const execute: Function = async (
 	path = fullPath ? query.substring(start, start + 11) : query;
 
 	try {
-		let response:
-			| gapi.client.Request<gapi.client.youtube.VideoListResponse>
-			| string[];
+		let response: gapi.client.Request<gapi.client.youtube.VideoListResponse>;
 
 		if (popular) {
-			response = await gapi.client.youtube.videos.list({
-				part: ["snippet,statistics,player,status"],
-				chart: "mostPopular",
-				regionCode: "US",
-				maxResults: 30,
-			});
-		} else {
 			const res = await fetch("/api/home");
 			const data = await res.json();
-			response = data.data.videos;
+			console.log(data);
+			const resp = data.data[0].videos;
+			response = await gapi.client.youtube.videos.list({
+				part: ["snippet,statistics,player,status"],
+				id: [resp.join(",")],
+			});
+		} else {
+			response = await gapi.client.youtube.videos.list({
+				part: ["snippet,statistics,player,status"],
+				id: [path],
+			});
 		}
 		console.log(response);
 		if (popular) {
