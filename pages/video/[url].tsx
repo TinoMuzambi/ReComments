@@ -24,7 +24,6 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 					setResult(res[0]);
 				});
 			} catch (error) {
-				console.log(error);
 				router.push("/search");
 			}
 		};
