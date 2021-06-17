@@ -13,5 +13,5 @@ const HomeSchema: Schema = new mongoose.Schema(
 	}
 );
 
-export default mongoose.models.Home ||
-	mongoose.model<HomeModel>("HomeVideos", HomeSchema);
+export default mongoose.models.HomeVideo ||
+	mongoose.model<HomeModel>("HomeVideo", HomeSchema);
