@@ -58,7 +58,7 @@ export const execute: Function = async (
 	path = fullPath ? query.substring(start, start + 11) : query;
 
 	try {
-		let response: gapi.client.Request<gapi.client.youtube.VideoListResponse>;
+		let response: gapi.client.Response<gapi.client.youtube.VideoListResponse>;
 
 		if (popular) {
 			const res = await fetch("/api/home");
