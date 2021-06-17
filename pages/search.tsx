@@ -30,26 +30,26 @@ const Search: React.FC = (): JSX.Element => {
 	}, [signedIn]);
 
 	useEffect(() => {
-		if (!searchInput) {
-			try {
-				setUseBlockFormat(true);
-				setIsFetchingData(true);
-				const makeCall = async () => {
-					await loadClient();
-					execute(
-						true,
-						searchInput,
-						true,
-						setSearchResults,
-						setIsFetchingData,
-						setNoResultsFound
-					);
-				};
-				makeCall();
-			} catch (error) {
-				console.error(error);
-			}
-		}
+		// if (!searchInput) {
+		// 	try {
+		// 		setUseBlockFormat(true);
+		// 		setIsFetchingData(true);
+		// 		const makeCall = async () => {
+		// 			await loadClient();
+		// 			execute(
+		// 				true,
+		// 				searchInput,
+		// 				true,
+		// 				setSearchResults,
+		// 				setIsFetchingData,
+		// 				setNoResultsFound
+		// 			);
+		// 		};
+		// 		makeCall();
+		// 	} catch (error) {
+		// 		console.error(error);
+		// 	}
+		// }
 	}, [searchResults]);
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
