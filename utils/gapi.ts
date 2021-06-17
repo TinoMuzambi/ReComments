@@ -21,15 +21,12 @@ export const handleSignoutClick: Function = () => {
 	gapi.auth2.getAuthInstance().signOut();
 };
 
-const makeApiCall: Function = (callback: Function) => {
-	return gapi.client.people.people
-		.get({
-			resourceName: "people/me",
-			personFields: "names,emailAddresses,photos",
-		})
-		.then((resp: gapi.client.Response<gapi.client.people.Person>) => {
-			callback(resp.result);
-		});
+const makeApiCall: Function = async (callback: Function) => {
+	const resp = await gapi.client.people.people.get({
+		resourceName: "people/me",
+		personFields: "names,emailAddresses,photos",
+	});
+	callback(resp.result);
 };
 
 export const loadClient: Function = () => {
