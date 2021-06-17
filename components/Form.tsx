@@ -18,8 +18,8 @@ const Form: React.FC<FormProps> = ({
 	return (
 		<form className="form" onSubmit={handleSubmit} onReset={handleReset}>
 			<input
-				type="search"
-				placeholder="Enter YouTube video url or search term..."
+				type="url"
+				placeholder="Enter YouTube video url..."
 				required
 				value={searchTerm}
 				onChange={(e) => setSearchTerm(e.target.value)}

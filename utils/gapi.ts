@@ -54,38 +54,29 @@ export const execute: Function = async (
 		query.indexOf("youtube.com") !== -1 || query.indexOf("youtu.be") !== -1;
 
 	let path: string = "";
-	if (isUrl) {
-		let start = query.indexOf("v=") + 2;
-		if (start === 1) {
-			start = query.length - 11;
-		}
-		path = fullPath ? query.substring(start, start + 11) : query;
+	let start = query.indexOf("v=") + 2;
+	if (start === 1) {
+		start = query.length - 11;
 	}
+	path = fullPath ? query.substring(start, start + 11) : query;
 
 	try {
-		let videoIds: string[] = [];
-		if (!isUrl) {
-			const videos = await gapi.client.youtube.search.list({
-				part: ["snippet"],
-				maxResults: 25,
-				q: query,
-			});
-			videos.result.items?.map((item) =>
-				videoIds.push(item.id?.videoId as string)
-			);
-		}
+		let response:
+			| gapi.client.Request<gapi.client.youtube.VideoListResponse>
+			| string[];
 
-		const response = popular
-			? await gapi.client.youtube.videos.list({
-					part: ["snippet,statistics,player,status"],
-					chart: "mostPopular",
-					regionCode: "US",
-					maxResults: 30,
-			  })
-			: await gapi.client.youtube.videos.list({
-					part: ["snippet,statistics,player,status"],
-					id: isUrl ? path : [videoIds.join(",")],
-			  });
+		if (popular) {
+			response = await gapi.client.youtube.videos.list({
+				part: ["snippet,statistics,player,status"],
+				chart: "mostPopular",
+				regionCode: "US",
+				maxResults: 30,
+			});
+		} else {
+			const res = await fetch("/api/home");
+			const data = await res.json();
+			response = data.data.videos;
+		}
 
 		if (setResults) setResults(response.result.items);
 		if (setFetching) setFetching(false);
