@@ -32,9 +32,9 @@ const Search: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		if (!searchInput) {
 			try {
-				setUseBlockFormat(true);
-				setIsFetchingData(true);
 				const makeCall = async () => {
+					setUseBlockFormat(true);
+					setIsFetchingData(true);
 					await loadClient();
 					execute(
 						true,
@@ -45,7 +45,7 @@ const Search: React.FC = (): JSX.Element => {
 						setNoResultsFound
 					);
 				};
-				makeCall();
+				if (!searchResults) makeCall();
 			} catch (error) {}
 		}
 	}, []);
