@@ -74,14 +74,20 @@ export const execute: Function = async (
 			const data = await res.json();
 			response = data.data.videos;
 		}
-
-		if (setResults) setResults(response.result.items);
+		console.log(response);
+		if (popular) {
+			if (setResults) setResults(response);
+		} else {
+			if (setResults) setResults(response.result.items);
+		}
 		if (setFetching) setFetching(false);
-		if (response.result.pageInfo) {
-			if (response.result.pageInfo.totalResults === 0) {
-				if (setNoResults) setNoResults(true);
-			} else {
-				if (setNoResults) setNoResults(false);
+		if (!popular) {
+			if (response.result.pageInfo) {
+				if (response.result.pageInfo.totalResults === 0) {
+					if (setNoResults) setNoResults(true);
+				} else {
+					if (setNoResults) setNoResults(false);
+				}
 			}
 		}
 	} catch (err) {
