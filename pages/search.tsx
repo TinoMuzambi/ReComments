@@ -32,8 +32,8 @@ const Search: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		if (!searchInput) {
 			try {
+				setUseBlockFormat(true);
 				const makeCall = async () => {
-					setUseBlockFormat(true);
 					setIsFetchingData(true);
 					await loadClient();
 					execute(
