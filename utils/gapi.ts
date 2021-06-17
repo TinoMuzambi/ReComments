@@ -12,7 +12,7 @@ export const updateSignInStatus: Function = (
 };
 
 export const handleAuthClick: Function = () => {
-	gapi.auth2
+	return gapi.auth2
 		.getAuthInstance()
 		.signIn({ scope: "https://www.googleapis.com/auth/youtube.readonly" });
 };
@@ -22,7 +22,7 @@ export const handleSignoutClick: Function = () => {
 };
 
 const makeApiCall: Function = (callback: Function) => {
-	gapi.client.people.people
+	return gapi.client.people.people
 		.get({
 			resourceName: "people/me",
 			personFields: "names,emailAddresses,photos",
@@ -63,8 +63,9 @@ export const execute: Function = async (
 		if (popular) {
 			const res = await fetch("/api/home");
 			const data = await res.json();
-			console.log(data);
+
 			const resp = data.data[0].videos;
+			console.log(resp);
 			response = await gapi.client.youtube.videos.list({
 				part: ["snippet,statistics,player,status"],
 				id: [resp.join(",")],
