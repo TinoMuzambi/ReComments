@@ -15,7 +15,6 @@ import Result from "../components/Result";
 import Form from "../components/Form";
 import AppState from "../components/AppState";
 import { loadClient, execute } from "../utils/gapi";
-import { shuffle } from "../utils";
 
 const Search: React.FC = (): JSX.Element => {
 	const [searchInput, setSearchInput] = useState("");
