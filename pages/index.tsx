@@ -18,7 +18,7 @@ const Home: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		setLoading(true);
-		gapi.load("client:auth2", function () {
+		gapi.load("client:auth2", () => {
 			gapi.client
 				.init({
 					apiKey: process.env.GAPI_API_KEY,
