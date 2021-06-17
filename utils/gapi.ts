@@ -62,7 +62,6 @@ export const execute: Function = async (
 			const data = await res.json();
 
 			const resp = data.data[0].videos;
-			console.log(resp);
 			response = await gapi.client.youtube.videos.list({
 				part: ["snippet,statistics,player,status"],
 				id: [resp.join(",")],
@@ -73,7 +72,7 @@ export const execute: Function = async (
 				id: [path],
 			});
 		}
-		console.log(response);
+
 		if (popular) {
 			if (setResults) setResults(response);
 		} else {
