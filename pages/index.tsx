@@ -21,7 +21,7 @@ const Home: React.FC = (): JSX.Element => {
 		gapi.load("client:auth2", () => {
 			gapi.client
 				.init({
-					apiKey: process.env.GAPI_API_KEY,
+					apiKey: process.env.GAPP_API_KEY,
 					discoveryDocs: [
 						"https://people.googleapis.com/$discovery/rest?version=v1",
 						"https://youtube.googleapis.com/$discovery/rest?version=v3",
