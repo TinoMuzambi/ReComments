@@ -48,9 +48,9 @@ const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 					</span>{" "}
 					<p className="text">
 						{result.snippet?.publishedAt &&
-							moment(
-								new Date(result.snippet.publishedAt).toLocaleDateString()
-							).format("MMMM Do YYYY")}
+							moment(new Date(result.snippet.publishedAt)).format(
+								"MMMM Do YYYY"
+							)}
 					</p>
 				</div>
 			</div>
