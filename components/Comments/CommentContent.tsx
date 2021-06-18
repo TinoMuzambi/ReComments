@@ -47,6 +47,22 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		else setNoticeVisible(false);
 	}, [noticeTitle]);
 
+	useEffect(() => {
+		let timer: NodeJS.Timeout;
+		if (noticeNoButtons === 1) {
+			console.log("here");
+			if (noticeVisible) {
+				timer = setTimeout(() => {
+					setNoticeVisible(false);
+					setNoticeTitle("");
+				}, 3000);
+			}
+		}
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [noticeVisible]);
+
 	const scrollToSamePosition: Function = async (): Promise<void> => {
 		const height = window.scrollY;
 		await router.replace(router.asPath);
