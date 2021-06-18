@@ -10,6 +10,8 @@
 
 	.buttons {
 		margin-top: 1rem;
+		display: flex;
+		gap: 0.5rem;
 
 		.confirm,
 		.cancel {
@@ -17,6 +19,10 @@
 			background: white;
 			padding: 0.5rem 1rem;
 			border-radius: 10000rem;
+
+			&:hover {
+				transform: scale(0.9);
+			}
 		}
 	}
 }

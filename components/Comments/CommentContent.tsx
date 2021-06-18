@@ -270,8 +270,9 @@ const CommentContent: React.FC<CommentContentProps> = ({
 			<Notice
 				title="Title"
 				subtitle="Subtitle"
-				noButtons={1}
+				noButtons={2}
 				firstButtonText="Ok"
+				secondButtonText="Cancel"
 				confirmCallback={() => {}}
 			/>
 			<div className="body">
