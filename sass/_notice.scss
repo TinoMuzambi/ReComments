@@ -21,6 +21,11 @@
 
 	.title {
 		margin: 0;
+		font-size: 1.5rem;
+
+		@include mq(768px) {
+			font-size: 1.2rem;
+		}
 	}
 
 	.buttons {
