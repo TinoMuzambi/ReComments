@@ -2,6 +2,7 @@ import { MouseEventHandler } from "react";
 import { NoticeProps } from "../interfaces";
 
 const Notice: React.FC<NoticeProps> = ({
+	visible,
 	title,
 	subtitle,
 	noButtons,
@@ -19,7 +20,7 @@ const Notice: React.FC<NoticeProps> = ({
 	};
 
 	return (
-		<div className="notice">
+		<div className={`notice ${visible && "visible"}`}>
 			<h1 className="title">{title}</h1>
 			<p className="subtitle">{subtitle}</p>
 			<div className="buttons">
