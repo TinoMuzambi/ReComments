@@ -61,6 +61,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					setOptionsVisible(false);
 				} else {
 					alert("This ain't your comment to edit!");
+					setOptionsVisible(false);
 				}
 			}
 		};
