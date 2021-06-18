@@ -10,6 +10,7 @@ import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
 import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
 import { postUpdatedResourceToDb, VOTING_TYPES } from "../../utils";
+import Spinner from "../Spinner";
 
 const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
@@ -25,6 +26,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		useState(false);
 	// Is the orange options box with the edit and delete buttons visible?
 	const [optionsVisible, setOptionsVisible] = useState(false);
+	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
 	const router = useRouter();
 	const { dbUser, user, setDbUser } = useContext(AppContext);
@@ -67,6 +69,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 			if (dbUser) {
 				if (dbUser.userId === currComment.authorId) {
 					if (confirm("Are you sure you want to delete this comment?")) {
+						setSpinnerVisible(true);
 						try {
 							if (isSecondLevelComment) {
 								if (originalComment && originalComment.replies) {
@@ -91,6 +94,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						} catch (error) {
 							console.error(error);
 						}
+						setSpinnerVisible(false);
 					}
 				} else {
 					alert("This ain't your comment to delete!");
@@ -350,6 +354,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					</button>
 				</div>
 			</div>
+			{spinnerVisible && <Spinner />}
 		</div>
 	);
 };
