@@ -9,8 +9,18 @@
 	z-index: 2;
 	opacity: 0;
 
+	@include mq(768px) {
+		padding: 1rem;
+		width: 60%;
+		top: 2rem;
+	}
+
 	&.visible {
 		opacity: 1;
+	}
+
+	.title {
+		margin: 0;
 	}
 
 	.buttons {
