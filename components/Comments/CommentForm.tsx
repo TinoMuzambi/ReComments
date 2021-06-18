@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import { AppContext } from "../../context/AppContext";
 import { CommentFormProps, CommentModel } from "../../interfaces";
 import { postUpdatedResourceToDb } from "../../utils";
+import Spinner from "../Spinner";
 
 const CommentForm: React.FC<CommentFormProps> = ({
 	commentFormToEditVisible,
@@ -53,7 +54,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	};
 
 	const postNewCommentToDb = async (body: CommentModel): Promise<void> => {
-		setSpinnerVisible(true);
 		await fetch("/api/comments", {
 			method: "POST",
 			headers: {
@@ -61,7 +61,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			},
 			body: JSON.stringify(body),
 		});
-		setSpinnerVisible(false);
 	};
 
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e): void => {
@@ -76,6 +75,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		e.preventDefault();
 
 		const submitComment: Function = async (): Promise<void> => {
+			setSpinnerVisible(true);
 			if (user && user.emailAddresses && user.names && user.photos) {
 				let body: CommentModel = {
 					_id: uuidv4(),
@@ -190,6 +190,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					console.error(error);
 				}
 			}
+			setSpinnerVisible(false);
 		};
 		submitComment();
 	};
@@ -235,6 +236,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					</div>
 				)}
 			</form>
+			{spinnerVisible && <Spinner />}
 		</article>
 	);
 };
