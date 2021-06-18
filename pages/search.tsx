@@ -119,7 +119,7 @@ const Search: React.FC = (): JSX.Element => {
 					</section>
 				)}
 			</main>
-			<Spinner />
+			{spinnerVisible && <Spinner />}
 		</>
 	);
 };
