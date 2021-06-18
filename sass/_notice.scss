@@ -1,9 +1,22 @@
 .notice {
 	background: $primary-color;
 	color: white;
-	padding: 1rem;
-	position: absolute;
-	top: 2rem;
+	padding: 0.5rem 6rem 1rem 1rem;
+	border-radius: 1rem;
+	position: fixed;
+	top: 6rem;
 	right: 2rem;
 	z-index: 2;
+
+	.buttons {
+		margin-top: 1rem;
+
+		.confirm,
+		.cancel {
+			@include buttonReset;
+			background: white;
+			padding: 0.5rem 1rem;
+			border-radius: 10000rem;
+		}
+	}
 }

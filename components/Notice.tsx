@@ -12,7 +12,7 @@ const Notice: React.FC<NoticeProps> = ({
 	return (
 		<div className="notice">
 			<h1 className="title">{title}</h1>
-			<h5 className="subtitle">{subtitle}</h5>
+			<p className="subtitle">{subtitle}</p>
 			<div className="buttons">
 				{noButtons === 1 ? (
 					<button className="confirm" onClick={confirmCallback}>
