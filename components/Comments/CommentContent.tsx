@@ -55,7 +55,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 				timer = setTimeout(() => {
 					setNoticeVisible(false);
 					setNoticeTitle("");
-				}, 3000);
+				}, 4000);
 			}
 		}
 		return () => {
