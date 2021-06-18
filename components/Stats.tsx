@@ -1,3 +1,4 @@
+import { useState } from "react";
 import parse from "html-react-parser";
 import Autolinker from "autolinker";
 import { BiLike, BiDislike } from "react-icons/bi";
@@ -9,6 +10,8 @@ import { StatsProps } from "../interfaces";
 import { numberWithCommas } from "../utils";
 
 const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
+	const [descVisible, setDescVisible] = useState(false);
+
 	return (
 		<>
 			<div className="stats">
@@ -57,7 +60,7 @@ const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 			<h3 className="uploader">
 				{result.snippet ? result.snippet.channelTitle : "Title"}
 			</h3>
-			<p className="desc">
+			<p className={`desc ${descVisible && "full"}`}>
 				{parse(
 					Autolinker.link(
 						result.snippet
@@ -69,6 +72,9 @@ const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 					)
 				)}
 			</p>
+			<button className="more" onClick={() => setDescVisible(!descVisible)}>
+				Show {descVisible ? "Less" : "More"}
+			</button>
 		</>
 	);
 };
