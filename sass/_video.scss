@@ -54,7 +54,7 @@
 		border-bottom: 1px solid $primary-color;
 		margin-top: 1rem;
 		white-space: pre-wrap;
-		padding: 1rem;
+		padding: 1rem 0;
 
 		@include mq(500px) {
 			font-size: 0.7rem;
