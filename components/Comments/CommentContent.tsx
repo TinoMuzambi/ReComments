@@ -109,6 +109,10 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const hideNotice: Function = () => {
 		setNoticeVisible(false);
+		setNoticeTitle("");
+		setNoticeSubtitle("");
+		setNoticeFirstButtonText("");
+		setNoticeSecondButtonText("");
 	};
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> =
