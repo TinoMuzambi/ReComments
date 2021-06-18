@@ -5,7 +5,7 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import Link from "next/link";
 
 import { AppContext } from "../context/AppContext";
@@ -15,12 +15,14 @@ import Result from "../components/Result";
 import Form from "../components/Form";
 import AppState from "../components/AppState";
 import { loadClient, execute } from "../utils/gapi";
+import Spinner from "../components/Spinner";
 
 const Search: React.FC = (): JSX.Element => {
 	const [searchInput, setSearchInput] = useState("");
 	const [isFetchingData, setIsFetchingData] = useState(false);
 	const [noResultsFound, setNoResultsFound] = useState(false);
 	const [useBlockFormat, setUseBlockFormat] = useState(false);
+	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
 	const { signedIn, searchResults, setSearchResults } = useContext(AppContext);
 	const router = useRouter();
@@ -28,6 +30,18 @@ const Search: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		if (!signedIn) router.push("/");
 	}, [signedIn]);
+
+	useEffect(() => {
+		const handleRouteChange = () => {
+			setSpinnerVisible(true);
+		};
+
+		router.events.on("routeChangeStart", handleRouteChange);
+		return () => {
+			router.events.off("routeChangeStart", handleRouteChange);
+			setSpinnerVisible(false);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (!searchInput) {
@@ -105,6 +119,7 @@ const Search: React.FC = (): JSX.Element => {
 					</section>
 				)}
 			</main>
+			<Spinner />
 		</>
 	);
 };

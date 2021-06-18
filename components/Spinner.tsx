@@ -1,7 +1,7 @@
 const Spinner = () => {
 	return (
-		<div className="loadingio-spinner-eclipse-f4oz4cwoap8">
-			<div className="ldio-mz5ahte0vxn">
+		<div className="spinner">
+			<div className="inner">
 				<div></div>
 			</div>
 		</div>
