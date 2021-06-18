@@ -64,6 +64,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 				}
 			}
 		};
+
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
 			if (dbUser) {
@@ -171,6 +172,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const voteHandler: Function = async (voteType: string): Promise<void> => {
 		if (dbUser) {
+			setSpinnerVisible(true);
 			getDbUser();
 			let userBody: UserModel = dbUser;
 
@@ -228,6 +230,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 			setCommentFormToEditVisible(false);
 
 			await scrollToSamePosition();
+			setSpinnerVisible(false);
 		}
 	};
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> =
