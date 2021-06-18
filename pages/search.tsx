@@ -35,10 +35,16 @@ const Search: React.FC = (): JSX.Element => {
 		const handleRouteChange = () => {
 			setSpinnerVisible(true);
 		};
+		const handleRouteComplete = () => {
+			setSpinnerVisible(false);
+		};
 
 		router.events.on("routeChangeStart", handleRouteChange);
+		router.events.on("routeChangeComplete", handleRouteComplete);
+
 		return () => {
 			router.events.off("routeChangeStart", handleRouteChange);
+			router.events.off("routeChangeComplete", handleRouteComplete);
 			setSpinnerVisible(false);
 		};
 	}, []);
