@@ -72,7 +72,10 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					setCommentFormToReplyVisible(false);
 					setOptionsVisible(false);
 				} else {
-					alert("This ain't your comment to edit!");
+					setNoticeTitle("Only edit own comments");
+					setNoticeSubtitle("You can only edit comments that you made");
+					setNoticeNoButtons(1);
+					setNoticeFirstButtonText("Ok");
 					setOptionsVisible(false);
 				}
 			}
@@ -251,8 +254,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					} catch (error) {
 						console.error(error);
 					}
-				} else {
-					// alert(upvoting ? "Already liked!" : "Already disliked!");
 				}
 			}
 
