@@ -70,6 +70,7 @@ export interface FormProps {
 }
 
 export interface NoticeProps {
+	visible: boolean;
 	title: string;
 	subtitle: string;
 	noButtons: 1 | 2;

@@ -28,6 +28,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	// Is the orange options box with the edit and delete buttons visible?
 	const [optionsVisible, setOptionsVisible] = useState(false);
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
+	const [noticeVisible, setNoticeVisible] = useState(false);
 
 	const router = useRouter();
 	const { dbUser, user, setDbUser } = useContext(AppContext);
@@ -268,6 +269,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	return (
 		<div className="content">
 			<Notice
+				visible={noticeVisible}
 				title="Title"
 				subtitle="Subtitle"
 				noButtons={2}
