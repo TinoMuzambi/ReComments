@@ -55,6 +55,13 @@
 		margin-top: 1rem;
 		white-space: pre-wrap;
 		padding: 1rem 0;
+		max-height: 44ch;
+		overflow: hidden;
+
+		&.full {
+			max-height: 100000rem;
+			overflow: visible;
+		}
 
 		@include mq(500px) {
 			font-size: 0.7rem;
@@ -62,6 +69,14 @@
 
 		.embed-link {
 			color: rgb(0, 166, 232);
+		}
+	}
+
+	.more {
+		@include buttonReset;
+
+		&:hover {
+			transform: scale(0.9);
 		}
 	}
 }
