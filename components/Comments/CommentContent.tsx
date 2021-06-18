@@ -29,6 +29,11 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const [optionsVisible, setOptionsVisible] = useState(false);
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
 	const [noticeVisible, setNoticeVisible] = useState(false);
+	const [noticeNoButtons, setNoticeNoButtons] = useState<1 | 2>(1);
+	const [noticeTitle, setNoticeTitle] = useState("");
+	const [noticeSubtitle, setNoticeSubtitle] = useState("");
+	const [noticeFirstButtonText, setNoticeFirstButtonText] = useState("");
+	const [noticeSecondButtonText, setNoticeSecondButtonText] = useState("");
 
 	const router = useRouter();
 	const { dbUser, user, setDbUser } = useContext(AppContext);
@@ -68,38 +73,42 @@ const CommentContent: React.FC<CommentContentProps> = ({
 			}
 		};
 
+	const deleteCallback: Function = async () => {
+		setSpinnerVisible(true);
+		try {
+			if (isSecondLevelComment) {
+				if (originalComment && originalComment.replies) {
+					const deletedComment = {
+						...originalComment,
+						replies: originalComment.replies.filter(
+							(reply) => reply._id !== currComment._id
+						),
+					};
+					postUpdatedResourceToDb(deletedComment, originalComment._id);
+				}
+			} else {
+				await fetch(`/api/comments/${currComment._id}`, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+			}
+
+			await scrollToSamePosition();
+		} catch (error) {
+			console.error(error);
+		}
+		setSpinnerVisible(false);
+	};
+
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
 			if (dbUser) {
 				setNoticeVisible(true);
 				if (dbUser.userId === currComment.authorId) {
 					if (confirm("Are you sure you want to delete this comment?")) {
-						setSpinnerVisible(true);
-						try {
-							if (isSecondLevelComment) {
-								if (originalComment && originalComment.replies) {
-									const deletedComment = {
-										...originalComment,
-										replies: originalComment.replies.filter(
-											(reply) => reply._id !== currComment._id
-										),
-									};
-									postUpdatedResourceToDb(deletedComment, originalComment._id);
-								}
-							} else {
-								await fetch(`/api/comments/${currComment._id}`, {
-									method: "DELETE",
-									headers: {
-										"Content-Type": "application/json",
-									},
-								});
-							}
-
-							await scrollToSamePosition();
-						} catch (error) {
-							console.error(error);
-						}
-						setSpinnerVisible(false);
+						// INSERT CODE HERE.
 					}
 				} else {
 					alert("This ain't your comment to delete!");
@@ -271,13 +280,13 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		<div className="content">
 			<Notice
 				visible={noticeVisible}
-				title="Title"
-				subtitle="Subtitle"
-				noButtons={2}
-				firstButtonText="Ok"
-				secondButtonText="Cancel"
-				confirmCallback={() => {}}
-				cancelCallback={() => {}}
+				title={noticeTitle}
+				subtitle={noticeSubtitle}
+				noButtons={noticeNoButtons}
+				firstButtonText={noticeFirstButtonText}
+				secondButtonText={noticeSecondButtonText}
+				confirmCallback={() => deleteCallback}
+				cancelCallback={() => setNoticeVisible(false)}
 			/>
 			<div className="body">
 				<img
