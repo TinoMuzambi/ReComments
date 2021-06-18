@@ -110,6 +110,10 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		setSpinnerVisible(false);
 	};
 
+	const hideNotice: Function = () => {
+		setNoticeVisible(false);
+	};
+
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
 			if (dbUser) {
@@ -128,7 +132,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					setNoticeSubtitle("You can only delete comments that you made");
 					setNoticeNoButtons(1);
 					setNoticeFirstButtonText("Ok");
-					setNoticeConfirmCallback(() => setNoticeVisible(false));
+					setNoticeConfirmCallback(hideNotice);
 					setNoticeVisible(true);
 				}
 			}
