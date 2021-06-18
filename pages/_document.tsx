@@ -1,6 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { MouseEventHandler } from "react";
-import { useState } from "react";
 
 class MyDocument extends Document {
 	render() {
