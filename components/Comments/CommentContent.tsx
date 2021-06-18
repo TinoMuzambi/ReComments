@@ -11,6 +11,7 @@ import CommentForm from "./CommentForm";
 import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
 import { postUpdatedResourceToDb, VOTING_TYPES } from "../../utils";
 import Spinner from "../Spinner";
+import Notice from "../Notice";
 
 const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
@@ -266,6 +267,13 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	return (
 		<div className="content">
+			<Notice
+				title="Title"
+				subtitle="Subtitle"
+				noButtons={1}
+				firstButtonText="Ok"
+				confirmCallback={() => {}}
+			/>
 			<div className="body">
 				<img
 					src={currComment.image}

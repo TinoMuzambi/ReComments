@@ -81,7 +81,7 @@ export interface NoticeProps {
 	firstButtonText: string;
 	secondButtonText?: string;
 	confirmCallback: MouseEventHandler<HTMLButtonElement>;
-	cancelCallback: MouseEventHandler<HTMLButtonElement>;
+	cancelCallback?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface CommentModel {
