@@ -74,6 +74,7 @@
 
 	.more {
 		@include buttonReset;
+		margin-top: 0.5rem;
 
 		&:hover {
 			transform: scale(0.9);
