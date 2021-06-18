@@ -72,3 +72,10 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+
+.toggle {
+	@include buttonReset();
+	position: absolute;
+	top: 5rem;
+	left: 1rem;
+}
