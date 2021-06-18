@@ -1,4 +1,9 @@
-import { Dispatch, FormEventHandler, SetStateAction } from "react";
+import {
+	Dispatch,
+	FormEventHandler,
+	MouseEventHandler,
+	SetStateAction,
+} from "react";
 
 export interface WrapperProps {
 	children: JSX.Element;
@@ -67,6 +72,16 @@ export interface FormProps {
 	handleSubmit: FormEventHandler<HTMLFormElement>;
 	searchTerm: string;
 	setSearchTerm: Function;
+}
+
+export interface NoticeProps {
+	title: string;
+	subtitle: string;
+	noButtons: 1 | 2;
+	firstButtonText: string;
+	secondButtonText?: string;
+	confirmCallback: MouseEventHandler<HTMLButtonElement>;
+	cancelCallback: MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface CommentModel {
