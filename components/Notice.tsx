@@ -10,8 +10,14 @@ const Notice: React.FC<NoticeProps> = ({
 	confirmCallback,
 	cancelCallback,
 }) => {
-	const confirm: MouseEventHandler<HTMLButtonElement> = () => {};
-	const cancel: MouseEventHandler<HTMLButtonElement> = () => {};
+	const confirm: MouseEventHandler<HTMLButtonElement> = () => {
+		confirmCallback(true);
+	};
+
+	const cancel: MouseEventHandler<HTMLButtonElement> = () => {
+		if (cancelCallback) cancelCallback(true);
+	};
+
 	return (
 		<div className="notice">
 			<h1 className="title">{title}</h1>
