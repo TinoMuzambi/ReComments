@@ -29,8 +29,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const [optionsVisible, setOptionsVisible] = useState(false);
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
 	const [noticeVisible, setNoticeVisible] = useState(false);
-	const [cancelled, setCancelled] = useState(false);
-	const [confirmed, setConfirmed] = useState(false);
 
 	const router = useRouter();
 	const { dbUser, user, setDbUser } = useContext(AppContext);
@@ -278,12 +276,8 @@ const CommentContent: React.FC<CommentContentProps> = ({
 				noButtons={2}
 				firstButtonText="Ok"
 				secondButtonText="Cancel"
-				confirmCallback={(val: boolean) => {
-					setConfirmed(val);
-				}}
-				cancelCallback={(val: boolean) => {
-					setCancelled(val);
-				}}
+				confirmCallback={() => {}}
+				cancelCallback={() => {}}
 			/>
 			<div className="body">
 				<img
