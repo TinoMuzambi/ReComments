@@ -1,22 +1,14 @@
-import { FormEventHandler, useContext } from "react";
-import { MdClear, MdSearch } from "react-icons/md";
+import { MdSearch } from "react-icons/md";
 
 import { FormProps } from "../interfaces";
-import { AppContext } from "../context/AppContext";
 
 const Form: React.FC<FormProps> = ({
 	handleSubmit,
 	searchTerm,
 	setSearchTerm,
 }): JSX.Element => {
-	const { setSearchResults } = useContext(AppContext);
-
-	const handleReset: FormEventHandler<HTMLFormElement> = () => {
-		if (setSearchResults) setSearchResults(null);
-		setSearchTerm("");
-	};
 	return (
-		<form className="form" onSubmit={handleSubmit} onReset={handleReset}>
+		<form className="form" onSubmit={handleSubmit}>
 			<input
 				type="url"
 				placeholder="Enter YouTube video url..."
@@ -27,9 +19,6 @@ const Form: React.FC<FormProps> = ({
 			/>
 			<button type="submit" className="submit">
 				<MdSearch className="icon" />
-			</button>
-			<button className="clear" type="reset">
-				<MdClear className="icon" />
 			</button>
 		</form>
 	);
