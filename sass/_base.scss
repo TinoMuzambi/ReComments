@@ -16,6 +16,7 @@ $accent-color: rgb(61, 166, 255);
 	outline: none;
 	border: none;
 	cursor: pointer;
+	color: inherit;
 }
 
 @mixin flexColCenter {
@@ -60,6 +61,11 @@ $accent-color: rgb(61, 166, 255);
 
 body {
 	background: whitesmoke;
+
+	&.dark {
+		background: rgb(29, 29, 29);
+		color: white;
+	}
 }
 
 a {
