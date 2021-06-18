@@ -25,6 +25,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const [cancelCommentButtonsVisible, setCancelCommentButtonsVisible] =
 		useState(commentFormToEditVisible || commentFormToReplyVisible);
 	const [commentInput, setCommentInput] = useState("");
+	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
 	const { user } = useContext(AppContext);
 	const router = useRouter();
@@ -52,6 +53,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	};
 
 	const postNewCommentToDb = async (body: CommentModel): Promise<void> => {
+		setSpinnerVisible(true);
 		await fetch("/api/comments", {
 			method: "POST",
 			headers: {
@@ -59,6 +61,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			},
 			body: JSON.stringify(body),
 		});
+		setSpinnerVisible(false);
 	};
 
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e): void => {
