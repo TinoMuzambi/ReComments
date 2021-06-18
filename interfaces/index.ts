@@ -69,6 +69,17 @@ export interface FormProps {
 	setSearchTerm: Function;
 }
 
+export interface NoticeProps {
+	visible: boolean;
+	title: string;
+	subtitle: string;
+	noButtons: 1 | 2;
+	firstButtonText: string;
+	secondButtonText?: string;
+	confirmCallback: Function;
+	cancelCallback?: Function;
+}
+
 export interface CommentModel {
 	_id: string;
 	videoId: string;

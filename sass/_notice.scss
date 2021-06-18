@@ -1,0 +1,48 @@
+.notice {
+	background: $primary-color;
+	color: white;
+	padding: 1rem 6rem 1rem 1rem;
+	border-radius: 1rem;
+	position: fixed;
+	top: 6rem;
+	right: 2rem;
+	z-index: 2;
+	opacity: 0;
+
+	@include mq(768px) {
+		padding: 1rem;
+		width: 60%;
+		top: 2rem;
+	}
+
+	&.visible {
+		opacity: 1;
+	}
+
+	.title {
+		margin: 0;
+		font-size: 1.5rem;
+
+		@include mq(768px) {
+			font-size: 1.2rem;
+		}
+	}
+
+	.buttons {
+		margin-top: 1rem;
+		display: flex;
+		gap: 0.5rem;
+
+		.confirm,
+		.cancel {
+			@include buttonReset;
+			background: white;
+			padding: 0.5rem 1rem;
+			border-radius: 10000rem;
+
+			&:hover {
+				transform: scale(0.9);
+			}
+		}
+	}
+}

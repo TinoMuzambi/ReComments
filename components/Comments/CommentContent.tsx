@@ -11,6 +11,7 @@ import CommentForm from "./CommentForm";
 import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
 import { postUpdatedResourceToDb, VOTING_TYPES } from "../../utils";
 import Spinner from "../Spinner";
+import Notice from "../Notice";
 
 const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
@@ -27,6 +28,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	// Is the orange options box with the edit and delete buttons visible?
 	const [optionsVisible, setOptionsVisible] = useState(false);
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
+	const [noticeVisible, setNoticeVisible] = useState<boolean>(false);
+	const [noticeNoButtons, setNoticeNoButtons] = useState<1 | 2>(1);
+	const [noticeTitle, setNoticeTitle] = useState("");
+	const [noticeSubtitle, setNoticeSubtitle] = useState("");
+	const [noticeFirstButtonText, setNoticeFirstButtonText] = useState("");
+	const [noticeSecondButtonText, setNoticeSecondButtonText] = useState("");
 
 	const router = useRouter();
 	const { dbUser, user, setDbUser } = useContext(AppContext);
@@ -34,6 +41,27 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	useEffect(() => {
 		getDbUser();
 	}, []);
+
+	useEffect(() => {
+		if (noticeTitle !== "") setNoticeVisible(true);
+		else setNoticeVisible(false);
+	}, [noticeTitle]);
+
+	useEffect(() => {
+		let timer: NodeJS.Timeout;
+		if (noticeNoButtons === 1) {
+			console.log("here");
+			if (noticeVisible) {
+				timer = setTimeout(() => {
+					setNoticeVisible(false);
+					setNoticeTitle("");
+				}, 4000);
+			}
+		}
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [noticeVisible]);
 
 	const scrollToSamePosition: Function = async (): Promise<void> => {
 		const height = window.scrollY;
@@ -60,46 +88,66 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					setCommentFormToReplyVisible(false);
 					setOptionsVisible(false);
 				} else {
-					alert("This ain't your comment to edit!");
+					setNoticeTitle("Only edit own comments");
+					setNoticeSubtitle("You can only edit comments that you made");
+					setNoticeNoButtons(1);
+					setNoticeFirstButtonText("Ok");
 					setOptionsVisible(false);
 				}
 			}
 		};
 
+	const deleteCallback: Function = async () => {
+		setSpinnerVisible(true);
+		try {
+			if (isSecondLevelComment) {
+				if (originalComment && originalComment.replies) {
+					const deletedComment = {
+						...originalComment,
+						replies: originalComment.replies.filter(
+							(reply) => reply._id !== currComment._id
+						),
+					};
+					postUpdatedResourceToDb(deletedComment, originalComment._id);
+				}
+			} else {
+				await fetch(`/api/comments/${currComment._id}`, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+			}
+
+			await scrollToSamePosition();
+		} catch (error) {
+			console.error(error);
+		}
+		setSpinnerVisible(false);
+	};
+
+	const hideNotice: Function = () => {
+		setNoticeVisible(false);
+		setNoticeTitle("");
+		setNoticeSubtitle("");
+		setNoticeFirstButtonText("");
+		setNoticeSecondButtonText("");
+	};
+
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
 			if (dbUser) {
 				if (dbUser.userId === currComment.authorId) {
-					if (confirm("Are you sure you want to delete this comment?")) {
-						setSpinnerVisible(true);
-						try {
-							if (isSecondLevelComment) {
-								if (originalComment && originalComment.replies) {
-									const deletedComment = {
-										...originalComment,
-										replies: originalComment.replies.filter(
-											(reply) => reply._id !== currComment._id
-										),
-									};
-									postUpdatedResourceToDb(deletedComment, originalComment._id);
-								}
-							} else {
-								await fetch(`/api/comments/${currComment._id}`, {
-									method: "DELETE",
-									headers: {
-										"Content-Type": "application/json",
-									},
-								});
-							}
-
-							await scrollToSamePosition();
-						} catch (error) {
-							console.error(error);
-						}
-						setSpinnerVisible(false);
-					}
+					setNoticeTitle("Delete comment");
+					setNoticeSubtitle("Are you sure you want to delete this comment?");
+					setNoticeNoButtons(2);
+					setNoticeFirstButtonText("Yes");
+					setNoticeSecondButtonText("Cancel");
 				} else {
-					alert("This ain't your comment to delete!");
+					setNoticeTitle("Only delete own comments");
+					setNoticeSubtitle("You can only delete comments that you made");
+					setNoticeNoButtons(1);
+					setNoticeFirstButtonText("Ok");
 				}
 			}
 			setOptionsVisible(false);
@@ -222,8 +270,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					} catch (error) {
 						console.error(error);
 					}
-				} else {
-					// alert(upvoting ? "Already liked!" : "Already disliked!");
 				}
 			}
 
@@ -266,6 +312,16 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	return (
 		<div className="content">
+			<Notice
+				visible={noticeVisible}
+				title={noticeTitle}
+				subtitle={noticeSubtitle}
+				noButtons={noticeNoButtons}
+				firstButtonText={noticeFirstButtonText}
+				secondButtonText={noticeSecondButtonText}
+				confirmCallback={deleteCallback}
+				cancelCallback={hideNotice}
+			/>
 			<div className="body">
 				<img
 					src={currComment.image}
