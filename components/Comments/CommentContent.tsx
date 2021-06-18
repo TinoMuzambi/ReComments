@@ -34,9 +34,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const [noticeSubtitle, setNoticeSubtitle] = useState("");
 	const [noticeFirstButtonText, setNoticeFirstButtonText] = useState("");
 	const [noticeSecondButtonText, setNoticeSecondButtonText] = useState("");
-	const [noticeConfirmCallback, setNoticeConfirmCallback] =
-		useState<Function>();
-	const [noticeCancelCallback, setNoticeCancelCallback] = useState<Function>();
 
 	const router = useRouter();
 	const { dbUser, user, setDbUser } = useContext(AppContext);
@@ -118,22 +115,16 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		async (): Promise<void> => {
 			if (dbUser) {
 				if (dbUser.userId === currComment.authorId) {
-					console.log("here");
-					setNoticeVisible(true);
 					setNoticeTitle("Delete comment");
 					setNoticeSubtitle("Are you sure you want to delete this comment?");
 					setNoticeNoButtons(2);
 					setNoticeFirstButtonText("Yes");
 					setNoticeSecondButtonText("Cancel");
-					setNoticeConfirmCallback(deleteCallback);
-					setNoticeCancelCallback(() => setNoticeVisible(false));
 				} else {
 					setNoticeTitle("Only delete own comments");
 					setNoticeSubtitle("You can only delete comments that you made");
 					setNoticeNoButtons(1);
 					setNoticeFirstButtonText("Ok");
-					setNoticeConfirmCallback(hideNotice);
-					setNoticeVisible(true);
 				}
 			}
 			setOptionsVisible(false);
@@ -307,8 +298,8 @@ const CommentContent: React.FC<CommentContentProps> = ({
 				noButtons={noticeNoButtons}
 				firstButtonText={noticeFirstButtonText}
 				secondButtonText={noticeSecondButtonText}
-				confirmCallback={() => noticeConfirmCallback}
-				cancelCallback={() => noticeCancelCallback}
+				confirmCallback={deleteCallback}
+				cancelCallback={hideNotice}
 			/>
 			<div className="body">
 				<img

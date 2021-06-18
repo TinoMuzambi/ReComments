@@ -25,7 +25,7 @@ const Notice: React.FC<NoticeProps> = ({
 			<p className="subtitle">{subtitle}</p>
 			<div className="buttons">
 				{noButtons === 1 ? (
-					<button className="confirm" onClick={confirm}>
+					<button className="cancel" onClick={cancel}>
 						{firstButtonText}
 					</button>
 				) : (
