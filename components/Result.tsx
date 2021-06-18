@@ -1,3 +1,5 @@
+import moment from "moment";
+
 import { ResultProps } from "../interfaces";
 
 const Result: React.FC<ResultProps> = ({
@@ -26,9 +28,11 @@ const Result: React.FC<ResultProps> = ({
 						{result.snippet ? result.snippet.channelTitle : "Title"}
 					</h3>
 					<h5 className="date">
-						Uploaded on{" "}
+						Uploaded{" "}
 						{result.snippet?.publishedAt &&
-							new Date(result.snippet.publishedAt).toLocaleDateString()}
+							moment(new Date(result.snippet.publishedAt)).format(
+								"MMMM Do YYYY"
+							)}
 					</h5>
 				</div>
 			</div>
