@@ -28,7 +28,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	// Is the orange options box with the edit and delete buttons visible?
 	const [optionsVisible, setOptionsVisible] = useState(false);
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
-	const [noticeVisible, setNoticeVisible] = useState(false);
+	const [noticeVisible, setNoticeVisible] = useState<boolean>(false);
 	const [noticeNoButtons, setNoticeNoButtons] = useState<1 | 2>(1);
 	const [noticeTitle, setNoticeTitle] = useState("");
 	const [noticeSubtitle, setNoticeSubtitle] = useState("");
@@ -44,6 +44,11 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	useEffect(() => {
 		getDbUser();
 	}, []);
+
+	useEffect(() => {
+		if (noticeTitle !== "") setNoticeVisible(true);
+		else setNoticeVisible(false);
+	}, [noticeTitle]);
 
 	const scrollToSamePosition: Function = async (): Promise<void> => {
 		const height = window.scrollY;
@@ -108,26 +113,23 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
 			if (dbUser) {
-				setNoticeVisible(true);
 				if (dbUser.userId === currComment.authorId) {
-					if (confirm("Are you sure you want to delete this comment?")) {
-						setNoticeVisible(true);
-						setNoticeTitle("Delete comment");
-						setNoticeSubtitle("Are you sure you want to delete this comment?");
-						setNoticeNoButtons(2);
-						setNoticeFirstButtonText("Yes");
-						setNoticeSecondButtonText("Cancel");
-						setNoticeConfirmCallback(deleteCallback);
-						setNoticeCancelCallback(() => setNoticeVisible(false));
-					}
-				} else {
-					alert("This ain't your comment to delete!");
+					console.log("here");
 					setNoticeVisible(true);
+					setNoticeTitle("Delete comment");
+					setNoticeSubtitle("Are you sure you want to delete this comment?");
+					setNoticeNoButtons(2);
+					setNoticeFirstButtonText("Yes");
+					setNoticeSecondButtonText("Cancel");
+					setNoticeConfirmCallback(deleteCallback);
+					setNoticeCancelCallback(() => setNoticeVisible(false));
+				} else {
 					setNoticeTitle("Only delete own comments");
 					setNoticeSubtitle("You can only delete comments that you made");
 					setNoticeNoButtons(1);
 					setNoticeFirstButtonText("Ok");
 					setNoticeConfirmCallback(() => setNoticeVisible(false));
+					setNoticeVisible(true);
 				}
 			}
 			setOptionsVisible(false);

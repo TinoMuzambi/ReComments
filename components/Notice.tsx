@@ -12,11 +12,11 @@ const Notice: React.FC<NoticeProps> = ({
 	cancelCallback,
 }) => {
 	const confirm: MouseEventHandler<HTMLButtonElement> = () => {
-		confirmCallback(true);
+		confirmCallback();
 	};
 
 	const cancel: MouseEventHandler<HTMLButtonElement> = () => {
-		if (cancelCallback) cancelCallback(true);
+		if (cancelCallback) cancelCallback();
 	};
 
 	return (
