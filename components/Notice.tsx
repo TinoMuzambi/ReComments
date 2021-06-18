@@ -1,3 +1,4 @@
+import { MouseEventHandler } from "react";
 import { NoticeProps } from "../interfaces";
 
 const Notice: React.FC<NoticeProps> = ({
@@ -9,21 +10,23 @@ const Notice: React.FC<NoticeProps> = ({
 	confirmCallback,
 	cancelCallback,
 }) => {
+	const confirm: MouseEventHandler<HTMLButtonElement> = () => {};
+	const cancel: MouseEventHandler<HTMLButtonElement> = () => {};
 	return (
 		<div className="notice">
 			<h1 className="title">{title}</h1>
 			<p className="subtitle">{subtitle}</p>
 			<div className="buttons">
 				{noButtons === 1 ? (
-					<button className="confirm" onClick={confirmCallback}>
+					<button className="confirm" onClick={confirm}>
 						{firstButtonText}
 					</button>
 				) : (
 					<>
-						<button className="confirm" onClick={confirmCallback}>
+						<button className="confirm" onClick={confirm}>
 							{firstButtonText}
 						</button>
-						<button className="cancel" onClick={cancelCallback}>
+						<button className="cancel" onClick={cancel}>
 							{secondButtonText}
 						</button>
 					</>

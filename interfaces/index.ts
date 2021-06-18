@@ -1,9 +1,4 @@
-import {
-	Dispatch,
-	FormEventHandler,
-	MouseEventHandler,
-	SetStateAction,
-} from "react";
+import { Dispatch, FormEventHandler, SetStateAction } from "react";
 
 export interface WrapperProps {
 	children: JSX.Element;
@@ -80,8 +75,8 @@ export interface NoticeProps {
 	noButtons: 1 | 2;
 	firstButtonText: string;
 	secondButtonText?: string;
-	confirmCallback: MouseEventHandler<HTMLButtonElement>;
-	cancelCallback?: MouseEventHandler<HTMLButtonElement>;
+	confirmCallback: Function;
+	cancelCallback?: Function;
 }
 
 export interface CommentModel {
