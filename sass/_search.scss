@@ -8,7 +8,7 @@
 			justify-content: center;
 
 			a {
-				width: 30%;
+				width: 28rem;
 				display: inline-block;
 				padding: 0;
 			}
@@ -29,18 +29,32 @@
 			position: relative;
 			border-bottom: 1px solid black;
 
+			@include mq(768px) {
+				margin: 2rem auto 0;
+				flex-direction: column;
+				gap: 2rem;
+				width: fit-content;
+				padding: 2rem;
+			}
+
 			&.block {
 				flex-direction: column;
 				gap: 0rem;
 				border: none;
 				width: 100%;
 
+				@include mq(768px) {
+					padding: 0;
+				}
+
 				.thumbnail {
 					width: 100%;
-					object-fit: contain;
+					object-fit: cover;
 				}
 
 				.details {
+					margin-top: 1rem;
+
 					.name {
 						font-size: 1rem;
 					}
@@ -52,14 +66,6 @@
 					.uploader {
 						font-size: 1rem;
 					}
-				}
-
-				@include mq(768px) {
-					margin: 2rem auto 0;
-					flex-direction: column;
-					gap: 2rem;
-					width: fit-content;
-					padding: 2rem;
 				}
 			}
 
