@@ -97,6 +97,21 @@ a {
 	width: 3rem;
 	height: 3rem;
 
+	&::after {
+		@include pseudo;
+		content: attr(data-dark);
+		top: 0;
+		left: 3.5rem;
+		width: 9rem;
+	}
+
+	&:hover {
+		&::after {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+
 	&:hover,
 	&:focus {
 		box-shadow: 0 0 5px 5px rgba($color: $primary-color, $alpha: 1);
