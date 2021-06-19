@@ -62,6 +62,22 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		};
 	}, [noticeVisible]);
 
+	useEffect(() => {
+		const checkOptionsVisible: Function = (e: any) => {
+			if (!e.target.closest(".options")) {
+				setOptionsVisible(false);
+			}
+		};
+		document.addEventListener("click", (e) => checkOptionsVisible(e), false);
+		return () => {
+			document.removeEventListener(
+				"click",
+				(e) => checkOptionsVisible(e),
+				false
+			);
+		};
+	}, []);
+
 	const scrollToSamePosition: Function = async (): Promise<void> => {
 		const height = window.scrollY;
 		await router.replace(router.asPath);
