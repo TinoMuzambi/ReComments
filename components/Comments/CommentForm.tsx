@@ -144,7 +144,12 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								setCommentFormToEditVisible(false);
 						}
 					} else if (isSecondLevelComment || commentFormToReplyVisible) {
-						if (currComment && currComment.replies) {
+						if (
+							currComment &&
+							originalComment &&
+							originalComment.replies &&
+							currComment.replies
+						) {
 							// Reply to comment.
 							if (isSecondLevelComment) {
 								// Add mention if second level comment.
@@ -181,7 +186,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							);
 
 							// Post updated comment to DB.
-							await postUpdatedResourceToDb(body, currComment._id);
+							if (isSecondLevelComment)
+								await postUpdatedResourceToDb(body, originalComment._id);
+							else await postUpdatedResourceToDb(body, currComment._id);
 
 							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
