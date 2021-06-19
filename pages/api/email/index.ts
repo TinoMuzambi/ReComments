@@ -30,8 +30,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				<div class="bar"/>
 			</main>
 			<style>
+				@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
 				* {
-					font-family: sans-serif;
+					font-family: "Poppins", sans-serif;
 				}
 
 				header img {
