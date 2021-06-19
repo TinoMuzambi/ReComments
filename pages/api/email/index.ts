@@ -27,7 +27,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				<p>They said:</p>
 				<blockquote>${commentText}</blockquote>
 				<p>Paste this url <a href=${url} target="_blank">${url}</a> in the search box on ReComments to continue the conversation.</p>
-			</main>`,
+			</main>
+			<style>
+				* {
+					font-family: sans-serif;
+				}
+			</style>
+			`,
 	};
 
 	transporter.sendMail(options, (err, info) => {

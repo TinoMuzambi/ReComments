@@ -111,7 +111,10 @@ const Search: React.FC = (): JSX.Element => {
 									await fetch("/api/email", {
 										method: "POST",
 										body: JSON.stringify({
-											user: "me",
+											to: "t56muzambi@gmail.com",
+											fromName: "Tino",
+											commentText: "Here is one for ya' boi.",
+											url: "https://www.youtube.com/watch?v=qagP8gTp5QE&t=3s",
 										}),
 									});
 								} catch (error) {
