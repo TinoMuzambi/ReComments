@@ -4,7 +4,7 @@ import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const { to, fromName, commentText, url } = req.body;
-	console.log(to, fromName, commentText, url);
+
 	let transporter = nodemailer.createTransport({
 		service: "gmail",
 		auth: {
@@ -28,6 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				<p>They said:</p>
 				<blockquote>${commentText}</blockquote>
 				<p>Paste this url <a href=${url} target="_blank">${url}</a> in the search box on <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a> to continue the conversation.</p>
+				<div class="bar"/>
 			</main>
 			<style>
 				* {
@@ -39,38 +40,38 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				}
 
 				blockquote {
-					background:#f9f9f9;
-					border-left:10px solid #ccc;
-					margin:1.5em 10px;
-					padding:.5em 10px;
+					background: #f9f9f9;
+					border-left: 10px solid #ccc;
+					margin: 1.5em 10px;
+					padding: 0.5em 10px;
 					white-space: pre-wrap;
 				}
 
 				blockquote:before {
-					color:#ccc;
-					content:open-quote;
-					font-size:4em;
-					line-height:.1em;
-					margin-right:.25em;
-					vertical-align:-.4em;
+					color: #ccc;
+					content: open-quote;
+					font-size: 4em;
+					line-height: .1em;
+					margin-right: .25em;
+					vertical-align: -.4em;
 				}
 
-				
+				.bar {
+					margin: 0 0.5rem;
+					background: #ffa500;
+					height: 2rem;
+					width: 100%
+				}
 			</style>
 			`,
 	};
-	let error: Error,
-		inf: SMTPTransport.SentMessageInfo | {} = {};
 
 	try {
-		transporter.sendMail(options, (err, info) => {
-			if (err) {
-				error = err;
-			} else {
-				inf = info;
-			}
-		});
-		return res.status(200).json({ success: true, data: inf });
+		const send: Function = async () => {
+			const info = await transporter.sendMail(options);
+			return res.status(200).json({ success: true, data: info });
+		};
+		send();
 	} catch (error) {
 		return res.status(400).json({ success: false, error: error });
 	}
