@@ -5,6 +5,7 @@
 
 	@include mq(500px) {
 		position: static;
+		z-index: unset;
 	}
 
 	.nav {
@@ -54,7 +55,6 @@
 					display: none;
 					pointer-events: all;
 					transform: scale(0.7) translateY(0.5rem);
-					z-index: 3;
 
 					@include mq(500px) {
 						display: block;
