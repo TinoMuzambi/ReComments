@@ -39,6 +39,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					height: 100px;
 				}
 
+				b {
+					color:  #ffa500;
+				}
+
 				blockquote {
 					background: #f9f9f9;
 					border-left: 10px solid #ccc;
