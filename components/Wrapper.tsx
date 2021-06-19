@@ -10,14 +10,24 @@ const Wrapper: React.FC<WrapperProps> = ({ children }): JSX.Element => {
 	const [dark, setDark] = useState(false);
 
 	useEffect(() => {
-		if (dark) {
-			document.body.classList.add("dark");
-		} else {
-			document.body.classList.remove("dark");
+		const darkLocalStorage = JSON.parse(
+			localStorage.getItem("recomments-dark") as string
+		);
+		if (darkLocalStorage === true || darkLocalStorage === false) {
+			setDark(darkLocalStorage);
+			if (darkLocalStorage) document.body.classList.add("dark");
+			else document.body.classList.remove("dark");
 		}
-	}, [dark]);
+	}, []);
 
 	const toggleDarkMode: MouseEventHandler<HTMLButtonElement> = () => {
+		if (dark) {
+			document.body.classList.remove("dark");
+			localStorage.setItem("recomments-dark", JSON.stringify(false));
+		} else {
+			document.body.classList.add("dark");
+			localStorage.setItem("recomments-dark", JSON.stringify(true));
+		}
 		setDark(!dark);
 	};
 	return (
