@@ -172,7 +172,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 										(("@" + user.names[0].givenName) as string) + " ",
 										""
 									),
-									router.asPath
+									router.query.url
 								);
 							} else {
 								body = {

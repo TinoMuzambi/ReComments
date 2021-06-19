@@ -81,7 +81,7 @@ export const sendMail: Function = async (
 			to: to,
 			fromName: fromName,
 			commentText: commentText,
-			url: url,
+			url: "https://youtube.com/watch?v=" + url,
 		};
 		await fetch("/api/email", {
 			method: "POST",
