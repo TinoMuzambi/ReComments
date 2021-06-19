@@ -9,6 +9,7 @@ import {
 	handleAuthClick,
 } from "../utils/gapi";
 import { UserModel } from "../interfaces";
+import Meta from "../components/Meta";
 
 const SignIn: React.FC = (): JSX.Element => {
 	const [loading, setLoading] = useState(false);
@@ -117,13 +118,20 @@ const SignIn: React.FC = (): JSX.Element => {
 		);
 
 	return (
-		<main className="main">
-			<h1 className="title">ReComments</h1>
-			<button className="sign-in" onClick={signIn}>
-				<FcGoogle className="icon" />
-				&nbsp;Sign In with Google
-			</button>
-		</main>
+		<>
+			<Meta
+				title=" Sign In | ReComments"
+				description="Sign into ReComments with your Google account to start commenting!"
+				url="https://recomments.tinomuzambi.com/signin"
+			/>
+			<main className="main">
+				<h1 className="title">ReComments</h1>
+				<button className="sign-in" onClick={signIn}>
+					<FcGoogle className="icon" />
+					&nbsp;Sign In with Google
+				</button>
+			</main>
+		</>
 	);
 };
 
