@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+	const { to, commentText, url } = req.body;
 	let transporter = nodemailer.createTransport({
 		service: "gmail",
 		auth: {
@@ -14,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		from: "tinomuzambi@gmail.com",
 		to: "t56muzambi@gmail.com",
 		subject: "Test 1 2 3",
-		text: "Tino is here.",
+		text: "Tino was here.",
 	};
 
 	transporter.sendMail(options, (err, info) => {
