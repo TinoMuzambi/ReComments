@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, MouseEventHandler } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
 
@@ -36,7 +36,7 @@ const SignIn: React.FC = (): JSX.Element => {
 						updateSignInStatus(getSignedIn(), updateContext);
 					});
 
-					updateSignInStatus(getSignedIn(), updateContext, setLoading(false));
+					updateSignInStatus(getSignedIn(), updateContext, cancelLoading);
 				})
 				.catch((error) => console.error(error));
 		});
@@ -73,7 +73,7 @@ const SignIn: React.FC = (): JSX.Element => {
 				};
 
 				try {
-					await postUserToDb(body);
+					await postUserToDb();
 				} catch (error) {}
 			}
 		}
@@ -88,6 +88,14 @@ const SignIn: React.FC = (): JSX.Element => {
 		}
 		router.push("/search");
 		setLoading(false);
+	};
+
+	const cancelLoading: Function = () => {
+		setLoading(false);
+	};
+
+	const signIn: MouseEventHandler<HTMLButtonElement> = async () => {
+		handleAuthClick();
 	};
 
 	if (loading)
@@ -113,7 +121,7 @@ const SignIn: React.FC = (): JSX.Element => {
 			/>
 			<main className="main">
 				<h1 className="title">ReComments</h1>
-				<button className="sign-in" onClick={() => handleAuthClick}>
+				<button className="sign-in" onClick={signIn}>
 					<FcGoogle className="icon" />
 					&nbsp;Sign In with Google
 				</button>

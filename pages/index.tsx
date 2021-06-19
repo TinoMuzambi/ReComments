@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import Link from "next/link";
 
+import { AppContext } from "../context/AppContext";
 const Home = (): JSX.Element => {
+	const { signedIn } = useContext(AppContext);
+
 	return (
 		<>
 			<main className="main index">
@@ -8,9 +12,11 @@ const Home = (): JSX.Element => {
 					<h1 className="title">
 						Welcome to <span className="accent">ReComments</span>
 					</h1>
-					<Link href="/signin">
-						<a className="action">Sign In</a>
-					</Link>
+					{!signedIn && (
+						<Link href="/signin">
+							<a className="action">Sign In</a>
+						</Link>
+					)}
 				</div>
 				<section className="about">
 					<h2 className="subtitle">About</h2>
