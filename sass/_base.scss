@@ -16,6 +16,7 @@ $accent-color: rgb(61, 166, 255);
 	outline: none;
 	border: none;
 	cursor: pointer;
+	color: inherit;
 }
 
 @mixin flexColCenter {
@@ -60,9 +61,42 @@ $accent-color: rgb(61, 166, 255);
 
 body {
 	background: whitesmoke;
+
+	&.dark {
+		background: rgb(29, 29, 29);
+		color: white;
+	}
 }
 
 a {
 	text-decoration: none;
 	color: inherit;
+}
+
+.toggle {
+	@include buttonReset();
+	position: absolute;
+	top: 5rem;
+	left: 1rem;
+	background: $primary-color;
+	border-radius: 50%;
+	padding: 0.5rem;
+	width: 3rem;
+	height: 3rem;
+
+	&:hover,
+	&:focus {
+		box-shadow: 0 0 5px 5px rgba($color: $primary-color, $alpha: 1);
+	}
+
+	@include mq(768px) {
+		top: 1rem;
+		left: 4rem;
+		background: rgb(29, 29, 29);
+	}
+
+	.icon {
+		font-size: 2rem;
+		color: white;
+	}
 }
