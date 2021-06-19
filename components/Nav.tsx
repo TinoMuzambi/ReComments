@@ -13,6 +13,7 @@ const Nav: React.FC = (): JSX.Element => {
 	const router = useRouter();
 
 	useEffect(() => {
+		// Hide navigation on route change.
 		const handleRouteChange = () => {
 			setNavOpen(false);
 		};
