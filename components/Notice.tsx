@@ -10,7 +10,7 @@ const Notice: React.FC<NoticeProps> = ({
 	secondButtonText,
 	confirmCallback,
 	cancelCallback,
-}) => {
+}): JSX.Element => {
 	const confirm: MouseEventHandler<HTMLButtonElement> = () => {
 		confirmCallback();
 	};
