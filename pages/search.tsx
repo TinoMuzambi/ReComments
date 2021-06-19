@@ -97,6 +97,26 @@ const Search: React.FC = (): JSX.Element => {
 			/>
 
 			<main className="container">
+				<button
+					className="send"
+					onClick={() => {
+						const sendMail: Function = async () => {
+							try {
+								await fetch("/api/email", {
+									method: "POST",
+									body: JSON.stringify({
+										user: "me",
+									}),
+								});
+							} catch (error) {
+								console.error(error);
+							}
+						};
+						sendMail();
+					}}
+				>
+					Send
+				</button>
 				<section className="form-holder">
 					<Form
 						handleSubmit={handleSubmit}
