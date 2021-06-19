@@ -11,6 +11,19 @@ $accent-color: rgb(61, 166, 255);
 	cursor: pointer;
 }
 
+@mixin pseudo {
+	position: absolute;
+	top: 1rem;
+	left: -1rem;
+	background: $primary-color;
+	padding: 0.3rem 0.5rem;
+	border-radius: 1000rem;
+	color: white;
+	transform: translateY(-2rem);
+	opacity: 0;
+	pointer-events: none;
+}
+
 @mixin buttonReset {
 	background: none;
 	outline: none;
