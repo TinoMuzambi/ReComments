@@ -63,18 +63,17 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	}, [noticeVisible]);
 
 	useEffect(() => {
-		const checkOptionsVisible: Function = (e: any) => {
-			if (!e.target.closest(".options")) {
-				setOptionsVisible(false);
+		const checkOptionsVisible: EventListener = (e) => {
+			if (e && e.target) {
+				const target = e.target as HTMLElement;
+				if (!target.closest(".options")) {
+					setOptionsVisible(false);
+				}
 			}
 		};
-		document.addEventListener("click", (e) => checkOptionsVisible(e), false);
+		document.addEventListener("click", checkOptionsVisible, false);
 		return () => {
-			document.removeEventListener(
-				"click",
-				(e) => checkOptionsVisible(e),
-				false
-			);
+			document.removeEventListener("click", checkOptionsVisible, false);
 		};
 	}, []);
 
