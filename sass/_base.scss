@@ -78,8 +78,20 @@ a {
 	position: absolute;
 	top: 5rem;
 	left: 1rem;
+	background: $primary-color;
+	border-radius: 50%;
+	padding: 0.5rem;
+	width: 3rem;
+	height: 3rem;
+
+	@include mq(768px) {
+		top: 1rem;
+		left: 4rem;
+		background: rgb(29, 29, 29);
+	}
 
 	.icon {
 		font-size: 2rem;
+		color: white;
 	}
 }
