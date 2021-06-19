@@ -16,7 +16,7 @@ const instanceOfCommentModel: Function = (
 	);
 };
 
-export const postUpdatedResourceToDb = async (
+export const postUpdatedResourceToDb: Function = async (
 	body: CommentModel | UserModel,
 	commentId?: string
 ): Promise<void> => {
