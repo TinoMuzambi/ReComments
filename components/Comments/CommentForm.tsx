@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
 import { CommentFormProps, CommentModel } from "../../interfaces";
-import { postUpdatedResourceToDb } from "../../utils";
+import { postUpdatedResourceToDb, sendMail } from "../../utils";
 import Spinner from "../Spinner";
 
 const CommentForm: React.FC<CommentFormProps> = ({
@@ -33,9 +33,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 	useEffect(() => {
 		if (isSecondLevelComment) {
-			if (user && user.names) {
-				setCommentInput(`@${user.names[0].givenName as string} `);
-			}
+			if (currComment) setCommentInput(`@${currComment.name} `);
 		}
 	}, [isSecondLevelComment]);
 
@@ -146,33 +144,51 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								setCommentFormToEditVisible(false);
 						}
 					} else if (isSecondLevelComment || commentFormToReplyVisible) {
-						if (currComment && currComment.replies) {
+						if (currComment) {
 							// Reply to comment.
-							if (isSecondLevelComment) {
+							if (
+								isSecondLevelComment &&
+								originalComment &&
+								originalComment.replies
+							) {
 								// Add mention if second level comment.
 								body = {
-									...currComment,
+									...originalComment,
 									replies: [
-										...currComment?.replies,
+										...originalComment?.replies,
 										{
 											...body,
 											comment: commentInput.replace(
-												(("@" + user.names[0].givenName) as string) + " ",
+												"@" + currComment.name + " ",
 												""
 											),
-											mention: `@${user.names[0].givenName as string}`,
+											mention: `@${currComment.name}`,
 										},
 									],
 								};
 							} else {
-								body = {
-									...currComment,
-									replies: [...currComment?.replies, body],
-								};
+								if (currComment.replies)
+									body = {
+										...currComment,
+										replies: [...currComment?.replies, body],
+									};
 							}
 
+							// Notify user by email.
+							sendMail(
+								currComment.email,
+								user.names[0].givenName,
+								commentInput.replace(
+									(("@" + user.names[0].givenName) as string) + " ",
+									""
+								),
+								router.query.url
+							);
+
 							// Post updated comment to DB.
-							await postUpdatedResourceToDb(body, currComment._id);
+							if (isSecondLevelComment && originalComment)
+								await postUpdatedResourceToDb(body, originalComment._id);
+							else await postUpdatedResourceToDb(body, currComment._id);
 
 							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);

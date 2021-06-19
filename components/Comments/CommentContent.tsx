@@ -50,7 +50,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	useEffect(() => {
 		let timer: NodeJS.Timeout;
 		if (noticeNoButtons === 1) {
-			console.log("here");
 			if (noticeVisible) {
 				timer = setTimeout(() => {
 					setNoticeVisible(false);
@@ -385,13 +384,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 							setCommentFormToEditVisible={setCommentFormToEditVisible}
 							setCommentFormToReplyVisible={setCommentFormToReplyVisible}
 							setIsViewMoreExpanded={setIsViewMoreExpanded}
-							currComment={
-								isSecondLevelComment
-									? commentFormToEditVisible
-										? currComment
-										: originalComment
-									: currComment
-							}
+							currComment={currComment}
 							originalComment={originalComment}
 						/>
 					)}

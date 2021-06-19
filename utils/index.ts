@@ -69,3 +69,28 @@ export const shuffle: Function = (array: string[]): string[] => {
 
 	return array;
 };
+
+export const sendMail: Function = async (
+	to: string,
+	fromName: string,
+	commentText: string,
+	url: string
+) => {
+	try {
+		const body = {
+			to: to,
+			fromName: fromName,
+			commentText: commentText,
+			url: "https://youtube.com/watch?v=" + url,
+		};
+		await fetch("/api/email", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(body),
+		});
+	} catch (error) {
+		console.error(error);
+	}
+};
