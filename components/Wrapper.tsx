@@ -34,7 +34,11 @@ const Wrapper: React.FC<WrapperProps> = ({ children }): JSX.Element => {
 		<AppProvider>
 			<Meta />
 			<Nav />
-			<button className="toggle" onClick={toggleDarkMode}>
+			<button
+				data-dark={dark ? "Turn on light mode" : "Turn on dark mode"}
+				className="toggle"
+				onClick={toggleDarkMode}
+			>
 				{dark ? <IoMdSunny className="icon" /> : <IoMdMoon className="icon" />}
 			</button>
 			{children}
