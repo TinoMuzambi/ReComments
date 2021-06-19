@@ -30,7 +30,7 @@
 		cursor: pointer;
 
 		&:hover {
-			background: rgba($color: orangered, $alpha: 0.8);
+			background: rgba($color: $accent-color, $alpha: 0.8);
 		}
 
 		.icon {
