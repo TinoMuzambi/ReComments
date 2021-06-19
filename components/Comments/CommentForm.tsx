@@ -236,7 +236,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					commentFormToReplyVisible) && (
 					<div className="buttons">
 						<button className="cancel" onClick={cancelHandler}>
-							Cancel
+							CANCEL
 						</button>
 						<button
 							type="submit"
@@ -244,10 +244,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							disabled={commentInput.length <= 0}
 						>
 							{commentFormToEditVisible
-								? "Save"
+								? "SAVE"
 								: commentFormToReplyVisible
-								? "Reply"
-								: "Comment"}
+								? "REPLY"
+								: "COMMENT"}
 						</button>
 					</div>
 				)}
