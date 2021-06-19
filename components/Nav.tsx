@@ -1,10 +1,9 @@
-import { MouseEventHandler, useContext, useState } from "react";
+import { MouseEventHandler, useContext, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
 import { handleSignoutClick } from "../utils/gapi";
-import { useEffect } from "react";
 
 const Nav: React.FC = (): JSX.Element => {
 	const [navOpen, setNavOpen] = useState(false);
