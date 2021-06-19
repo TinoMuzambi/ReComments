@@ -9,7 +9,11 @@ import Autolinker from "autolinker";
 import { AppContext } from "../../context/AppContext";
 import CommentForm from "./CommentForm";
 import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
-import { postUpdatedResourceToDb, VOTING_TYPES } from "../../utils";
+import {
+	postUpdatedResourceToDb,
+	VOTING_TYPES,
+	getUpdatedVoteCommentBody,
+} from "../../utils";
 import Spinner from "../Spinner";
 import Notice from "../Notice";
 
@@ -184,21 +188,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		}
 
 		return value;
-	};
-
-	const getUpdatedVoteCommentBody: Function = (
-		voteType: string,
-		comment: CommentModel
-	): CommentModel => {
-		if (voteType === VOTING_TYPES.upvoting)
-			return { ...comment, upvotes: comment.upvotes + 1 };
-		else if (voteType === VOTING_TYPES.downvoting)
-			return { ...comment, downvotes: comment.downvotes + 1 };
-		else if (voteType === VOTING_TYPES.undoUpvoting)
-			return { ...comment, upvotes: comment.upvotes - 1 };
-		else if (voteType === VOTING_TYPES.undoDownvoting)
-			return { ...comment, downvotes: comment.downvotes - 1 };
-		return comment;
 	};
 
 	const getUpdatedUserVoteIdsBody: Function = (

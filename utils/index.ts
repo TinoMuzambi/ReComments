@@ -94,3 +94,18 @@ export const sendMail: Function = async (
 		console.error(error);
 	}
 };
+
+export const getUpdatedVoteCommentBody: Function = (
+	voteType: string,
+	comment: CommentModel
+): CommentModel => {
+	if (voteType === VOTING_TYPES.upvoting)
+		return { ...comment, upvotes: comment.upvotes + 1 };
+	else if (voteType === VOTING_TYPES.downvoting)
+		return { ...comment, downvotes: comment.downvotes + 1 };
+	else if (voteType === VOTING_TYPES.undoUpvoting)
+		return { ...comment, upvotes: comment.upvotes - 1 };
+	else if (voteType === VOTING_TYPES.undoDownvoting)
+		return { ...comment, downvotes: comment.downvotes - 1 };
+	return comment;
+};
