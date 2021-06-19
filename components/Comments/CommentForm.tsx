@@ -179,6 +179,15 @@ const CommentForm: React.FC<CommentFormProps> = ({
 									...currComment,
 									replies: [...currComment?.replies, body],
 								};
+								sendMail(
+									currComment.email,
+									user.names[0].givenName,
+									commentInput.replace(
+										(("@" + user.names[0].givenName) as string) + " ",
+										""
+									),
+									router.query.url
+								);
 							}
 
 							// Post updated comment to DB.
