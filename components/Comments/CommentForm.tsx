@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
 import { CommentFormProps, CommentModel } from "../../interfaces";
-import { postUpdatedResourceToDb } from "../../utils";
+import { postUpdatedResourceToDb, sendMail } from "../../utils";
 import Spinner from "../Spinner";
 
 const CommentForm: React.FC<CommentFormProps> = ({
@@ -164,6 +164,16 @@ const CommentForm: React.FC<CommentFormProps> = ({
 										},
 									],
 								};
+
+								sendMail(
+									currComment.email,
+									user.names[0].givenName,
+									commentInput.replace(
+										(("@" + user.names[0].givenName) as string) + " ",
+										""
+									),
+									router.asPath
+								);
 							} else {
 								body = {
 									...currComment,
