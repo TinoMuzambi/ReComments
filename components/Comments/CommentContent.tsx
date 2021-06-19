@@ -349,6 +349,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					<div className="actions">
 						<div className="upvotes">
 							<button
+								data-upvoted={currCommentUpvoted() ? "Unlike" : "Like"}
 								className={`upvote ${currCommentUpvoted() && "active"}`}
 								onClick={upvoteHandler}
 							>
@@ -360,6 +361,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						</div>
 						<button
 							className={`downvote ${currCommentDownvoted() && "active"}`}
+							data-downvoted={currCommentDownvoted() ? "Unlike" : "Like"}
 							onClick={downVoteHandler}
 						>
 							<span>
