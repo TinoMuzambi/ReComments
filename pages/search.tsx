@@ -108,14 +108,18 @@ const Search: React.FC = (): JSX.Element => {
 						onClick={() => {
 							const sendMail: Function = async () => {
 								try {
+									const body = {
+										to: "t56muzambi@gmail.com",
+										fromName: "Tino",
+										commentText: "Here is one for ya' boi.",
+										url: "https://www.youtube.com/watch?v=qagP8gTp5QE&t=3s",
+									};
 									await fetch("/api/email", {
 										method: "POST",
-										body: JSON.stringify({
-											to: "t56muzambi@gmail.com",
-											fromName: "Tino",
-											commentText: "Here is one for ya' boi.",
-											url: "https://www.youtube.com/watch?v=qagP8gTp5QE&t=3s",
-										}),
+										headers: {
+											"Content-Type": "application/json",
+										},
+										body: JSON.stringify(body),
 									});
 								} catch (error) {
 									console.error(error);
