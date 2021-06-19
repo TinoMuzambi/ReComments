@@ -36,7 +36,7 @@ const SignIn: React.FC = (): JSX.Element => {
 						updateSignInStatus(getSignedIn(), updateContext);
 					});
 
-					updateSignInStatus(getSignedIn(), updateContext, cancelLoading);
+					updateSignInStatus(getSignedIn(), updateContext, setLoading(false));
 				})
 				.catch((error) => console.error(error));
 		});
@@ -87,10 +87,6 @@ const SignIn: React.FC = (): JSX.Element => {
 			if (setUser) setUser(res);
 		}
 		router.push("/search");
-		setLoading(false);
-	};
-
-	const cancelLoading: Function = () => {
 		setLoading(false);
 	};
 
