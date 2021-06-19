@@ -12,9 +12,11 @@ import { VideoProps } from "../../interfaces";
 
 const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
+
 	const router = useRouter();
 
 	useEffect(() => {
+		// Get video data given the url.
 		const getRes: Function = async (): Promise<void> => {
 			const url = router.query.url as string;
 
