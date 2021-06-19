@@ -3,6 +3,7 @@ import { CommentModel, UserModel } from "../interfaces";
 const instanceOfCommentModel: Function = (
 	object: any
 ): object is CommentModel => {
+	// Check if object is of type CommentModel.
 	return (
 		"_id" in object &&
 		"videoId" in object &&
@@ -19,6 +20,7 @@ export const postUpdatedResourceToDb = async (
 	body: CommentModel | UserModel,
 	commentId?: string
 ): Promise<void> => {
+	// Post resource to db.
 	if (instanceOfCommentModel(body)) {
 		await fetch(`/api/comments/${commentId}`, {
 			method: "PUT",
@@ -46,10 +48,12 @@ export const VOTING_TYPES = {
 };
 
 export const numberWithCommas: Function = (x: number): string => {
+	// Format number to have commas to make it more readable.
 	return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 };
 
 export const shuffle: Function = (array: string[]): string[] => {
+	// Shuffle array "randomly".
 	// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 	let currentIndex = array.length,
 		randomIndex;
@@ -76,6 +80,7 @@ export const sendMail: Function = async (
 	commentText: string,
 	url: string
 ) => {
+	// Send email to recipient.
 	try {
 		const body = {
 			to: to,
@@ -99,6 +104,7 @@ export const getUpdatedVoteCommentBody: Function = (
 	voteType: string,
 	comment: CommentModel
 ): CommentModel => {
+	// Get correct body for upvoting/downvoting.
 	if (voteType === VOTING_TYPES.upvoting)
 		return { ...comment, upvotes: comment.upvotes + 1 };
 	else if (voteType === VOTING_TYPES.downvoting)
