@@ -1,4 +1,5 @@
 import { MouseEventHandler } from "react";
+
 import { NoticeProps } from "../interfaces";
 
 const Notice: React.FC<NoticeProps> = ({
