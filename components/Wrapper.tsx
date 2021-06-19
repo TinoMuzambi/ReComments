@@ -1,4 +1,5 @@
 import { MouseEventHandler, useEffect, useState } from "react";
+import { IoMdMoon, IoMdSunny } from "react-icons/io";
 
 import { WrapperProps } from "../interfaces";
 import { AppProvider } from "../context/AppContext";
@@ -24,7 +25,7 @@ const Wrapper: React.FC<WrapperProps> = ({ children }): JSX.Element => {
 			<Meta />
 			<Nav />
 			<button className="toggle" onClick={toggleDarkMode}>
-				Dark
+				{dark ? <IoMdSunny /> : <IoMdMoon />}
 			</button>
 			{children}
 		</AppProvider>
