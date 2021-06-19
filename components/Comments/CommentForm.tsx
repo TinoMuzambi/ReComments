@@ -164,31 +164,23 @@ const CommentForm: React.FC<CommentFormProps> = ({
 										},
 									],
 								};
-
-								sendMail(
-									currComment.email,
-									user.names[0].givenName,
-									commentInput.replace(
-										(("@" + user.names[0].givenName) as string) + " ",
-										""
-									),
-									router.query.url
-								);
 							} else {
 								body = {
 									...currComment,
 									replies: [...currComment?.replies, body],
 								};
-								sendMail(
-									currComment.email,
-									user.names[0].givenName,
-									commentInput.replace(
-										(("@" + user.names[0].givenName) as string) + " ",
-										""
-									),
-									router.query.url
-								);
 							}
+
+							// Notify user by email.
+							sendMail(
+								currComment.email,
+								user.names[0].givenName,
+								commentInput.replace(
+									(("@" + user.names[0].givenName) as string) + " ",
+									""
+								),
+								router.query.url
+							);
 
 							// Post updated comment to DB.
 							await postUpdatedResourceToDb(body, currComment._id);
