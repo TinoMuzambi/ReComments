@@ -19,15 +19,14 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	isSecondLevelComment,
 	setIsViewMoreExpanded,
 }): JSX.Element => {
-	// Is the comment for visible with the intent to reply to the comment?
 	const [commentFormToReplyVisible, setCommentFormToReplyVisible] =
 		useState(false);
-	// Is the comment for visible with the intent to edit to the comment?
 	const [commentFormToEditVisible, setCommentFormToEditVisible] =
 		useState(false);
-	// Is the orange options box with the edit and delete buttons visible?
+
 	const [optionsVisible, setOptionsVisible] = useState(false);
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
+
 	const [noticeVisible, setNoticeVisible] = useState<boolean>(false);
 	const [noticeNoButtons, setNoticeNoButtons] = useState<1 | 2>(1);
 	const [noticeTitle, setNoticeTitle] = useState("");
