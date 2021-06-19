@@ -13,7 +13,7 @@ $accent-color: rgb(61, 166, 255);
 
 @mixin pseudo {
 	position: absolute;
-	top: 1rem;
+	top: 1.5rem;
 	left: -1rem;
 	background: $primary-color;
 	padding: 0.3rem 0.5rem;
