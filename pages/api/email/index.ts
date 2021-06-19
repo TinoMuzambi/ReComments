@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
-import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const { to, fromName, commentText, url } = req.body;
