@@ -60,9 +60,11 @@ const Nav: React.FC = (): JSX.Element => {
 						<Link href="/">
 							<a className="link">Home</a>
 						</Link>
-						<Link href="/search">
-							<a className="link">Search</a>
-						</Link>
+						{signedIn && (
+							<Link href="/search">
+								<a className="link">Search</a>
+							</Link>
+						)}
 						{signedIn && (
 							<li className="link" onClick={handleSignOut}>
 								Sign Out
