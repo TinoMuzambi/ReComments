@@ -1,8 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const { to, fromName, commentText, url } = req.body;
+	console.log(to, fromName, commentText, url);
 	let transporter = nodemailer.createTransport({
 		service: "gmail",
 		auth: {
@@ -35,11 +37,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			</style>
 			`,
 	};
+	let error: Error,
+		inf: SMTPTransport.SentMessageInfo | {} = {};
 
-	transporter.sendMail(options, (err, info) => {
-		if (err) {
-			return res.status(400).json({ success: false, error: err });
-		}
-		res.status(200).json({ success: true, data: info });
-	});
+	try {
+		transporter.sendMail(options, (err, info) => {
+			if (err) {
+				error = err;
+			} else {
+				inf = info;
+			}
+		});
+	} catch (error) {
+		return res.status(400).json({ success: false, error: error });
+	}
+	return res.status(200).json({ success: true, data: inf });
 };
