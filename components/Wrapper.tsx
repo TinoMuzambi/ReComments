@@ -9,21 +9,10 @@ import Nav from "./Nav";
 const Wrapper: React.FC<WrapperProps> = ({ children }): JSX.Element => {
 	const [dark, setDark] = useState(false);
 
-	// useEffect(() => {
-	// 	if (dark) {
-	// 		document.body.classList.add("dark");
-	// 		localStorage.setItem("recomments-dark", JSON.stringify(true));
-	// 	} else {
-	// 		document.body.classList.remove("dark");
-	// 		localStorage.setItem("recomments-dark", JSON.stringify(false));
-	// 	}
-	// }, [dark]);
-
 	useEffect(() => {
 		const darkLocalStorage = JSON.parse(
 			localStorage.getItem("recomments-dark") as string
 		);
-		console.log(darkLocalStorage);
 		if (darkLocalStorage === true || darkLocalStorage === false) {
 			setDark(darkLocalStorage);
 			if (darkLocalStorage) document.body.classList.add("dark");
