@@ -361,7 +361,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						</div>
 						<button
 							className={`downvote ${currCommentDownvoted() && "active"}`}
-							data-downvoted={currCommentDownvoted() ? "Unlike" : "Like"}
+							data-downvoted={currCommentDownvoted() ? "Undislike" : "Dislike"}
 							onClick={downVoteHandler}
 						>
 							<span>
