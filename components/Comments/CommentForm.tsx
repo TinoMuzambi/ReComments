@@ -144,7 +144,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								setCommentFormToEditVisible(false);
 						}
 					} else if (isSecondLevelComment || commentFormToReplyVisible) {
-						console.log("here");
 						if (currComment) {
 							// Reply to comment.
 							if (
@@ -152,7 +151,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								originalComment &&
 								originalComment.replies
 							) {
-								console.log("second");
 								// Add mention if second level comment.
 								body = {
 									...originalComment,
@@ -169,7 +167,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 									],
 								};
 							} else {
-								console.log("first");
 								if (currComment.replies)
 									body = {
 										...currComment,
