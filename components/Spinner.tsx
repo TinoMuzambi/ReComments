@@ -1,4 +1,4 @@
-const Spinner = () => {
+const Spinner: React.FC = (): JSX.Element => {
 	return (
 		<div className="spinner">
 			<div className="inner">
