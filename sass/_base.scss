@@ -104,6 +104,10 @@ a {
 		top: 0;
 		left: 3.5rem;
 		width: 9rem;
+
+		@include mq(768px) {
+			content: none;
+		}
 	}
 
 	&:hover {
@@ -116,6 +120,10 @@ a {
 	&:hover,
 	&:focus {
 		box-shadow: 0 0 5px 5px rgba($color: $primary-color, $alpha: 1);
+
+		@include mq(768px) {
+			box-shadow: 0 0 5px 5px rgba($color: white, $alpha: 1);
+		}
 	}
 
 	@include mq(768px) {
