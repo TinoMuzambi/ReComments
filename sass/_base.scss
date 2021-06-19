@@ -84,6 +84,11 @@ a {
 	width: 3rem;
 	height: 3rem;
 
+	&:hover,
+	&:focus {
+		box-shadow: 0 0 5px 5px rgba($color: $primary-color, $alpha: 1);
+	}
+
 	@include mq(768px) {
 		top: 1rem;
 		left: 4rem;
