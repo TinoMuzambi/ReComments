@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		from: "tinomuzambi@gmail.com",
 		to: to,
 		subject: "New reply to your comment",
-		text: `${fromName} replied to your comment on ReComments. Paste this url ${url} in the search box on ReComments to view the reply.`,
+		text: `${fromName} replied to your comment on ReComments. They said: "${commentText}". Paste this url ${url} in the search box on ReComments to continue the conversation.`,
 		html: `
 			<header>
 				<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
@@ -24,7 +24,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				<h1>New reply to your comment</h1>
 				<br><br>
 				<p>${fromName} replied to your comment on ReComments.</p>
-				<p>Paste this url <a href=${url} target="_blank">${url}</a> in the search box on ReComments to view the reply.</p>
+				<p>They said:</p>
+				<blockquote>${commentText}</blockquote>
+				<p>Paste this url <a href=${url} target="_blank">${url}</a> in the search box on ReComments to continue the conversation.</p>
 			</main>`,
 	};
 
