@@ -10,6 +10,7 @@ import {
 } from "../utils/gapi";
 import { UserModel } from "../interfaces";
 import Meta from "../components/Meta";
+import { postUserToDb } from "../utils";
 
 const SignIn: React.FC = (): JSX.Element => {
 	const [loading, setLoading] = useState(false);
@@ -72,13 +73,7 @@ const SignIn: React.FC = (): JSX.Element => {
 				};
 
 				try {
-					await fetch("/api/users", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(body),
-					});
+					await postUserToDb();
 				} catch (error) {}
 			}
 		}

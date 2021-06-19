@@ -40,6 +40,18 @@ export const postUpdatedResourceToDb = async (
 	}
 };
 
+export const postUserToDb: Function = async (
+	body: UserModel
+): Promise<void> => {
+	await fetch("/api/users", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(body),
+	});
+};
+
 export const VOTING_TYPES = {
 	upvoting: "upvoting",
 	downvoting: "downvoting",
