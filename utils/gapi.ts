@@ -1,6 +1,18 @@
 import { shuffle } from ".";
 
+export const loadClient: Function = () => {
+	// Load gapi YouTube client and set api key.
+	gapi.client.setApiKey(process.env.GAPP_API_KEY || "");
+	return gapi.client
+		.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest", "")
+		.then(
+			function () {},
+			function () {}
+		);
+};
+
 export const getSignedIn: Function = (): boolean => {
+	// Get current signed in status.
 	return gapi.auth2.getAuthInstance().isSignedIn.get();
 };
 
@@ -9,36 +21,30 @@ export const updateSignInStatus: Function = (
 	callback: Function,
 	cancelLoading?: Function
 ) => {
+	// Call People API to get user data.
 	if (isSignedIn) makeApiCall(callback);
 	else if (cancelLoading) cancelLoading();
 };
 
 export const handleAuthClick: Function = () => {
+	// Sign in with YouTube readonly scope.
 	return gapi.auth2
 		.getAuthInstance()
 		.signIn({ scope: "https://www.googleapis.com/auth/youtube.readonly" });
 };
 
 export const handleSignoutClick: Function = () => {
+	// Sign out.
 	gapi.auth2.getAuthInstance().signOut();
 };
 
 const makeApiCall: Function = async (callback: Function) => {
+	// Call People API to get user data.
 	const resp = await gapi.client.people.people.get({
 		resourceName: "people/me",
 		personFields: "names,emailAddresses,photos",
 	});
 	callback(resp.result);
-};
-
-export const loadClient: Function = () => {
-	gapi.client.setApiKey(process.env.GAPP_API_KEY || "");
-	return gapi.client
-		.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest", "")
-		.then(
-			function () {},
-			function () {}
-		);
 };
 
 export const execute: Function = async (
@@ -49,6 +55,7 @@ export const execute: Function = async (
 	setFetching?: Function,
 	setNoResults?: Function
 ) => {
+	// Call YouTube API to get video data.
 	let path: string = "";
 	let start = query.indexOf("v=") + 2;
 	if (start === 1) {
