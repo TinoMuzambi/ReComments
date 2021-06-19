@@ -28,7 +28,7 @@ const Search: React.FC = (): JSX.Element => {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (!signedIn) router.push("/");
+		if (!signedIn) router.push("/signin");
 	}, [signedIn]);
 
 	useEffect(() => {

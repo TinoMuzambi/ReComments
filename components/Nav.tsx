@@ -13,7 +13,7 @@ const Nav: React.FC = (): JSX.Element => {
 
 	const handleSignOut: MouseEventHandler<HTMLLIElement> = () => {
 		if (setSignedIn) {
-			router.push("/");
+			router.push("/signin");
 			setSignedIn(false);
 			if (setUser) setUser(null);
 			if (setDbUser) setDbUser(null);
