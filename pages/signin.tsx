@@ -73,7 +73,7 @@ const SignIn: React.FC = (): JSX.Element => {
 				};
 
 				try {
-					await postUserToDb();
+					await postUserToDb(body);
 				} catch (error) {}
 			}
 		}
