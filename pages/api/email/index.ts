@@ -34,6 +34,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				* {
 					font-family: sans-serif;
 				}
+
+				header img {
+					height: 100px;
+				}
 			</style>
 			`,
 	};
