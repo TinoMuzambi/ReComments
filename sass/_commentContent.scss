@@ -99,7 +99,6 @@
 					position: relative;
 
 					&::after {
-						content: "Like";
 						position: absolute;
 						top: 1rem;
 						left: -1rem;
@@ -110,10 +109,6 @@
 						transform: translateY(-2rem);
 						opacity: 0;
 						pointer-events: none;
-
-						@include mq(768px) {
-							content: none;
-						}
 					}
 
 					&:hover {
@@ -130,9 +125,19 @@
 					}
 				}
 
+				.upvote {
+					&::after {
+						content: attr(data-upvoted);
+
+						@include mq(768px) {
+							content: none;
+						}
+					}
+				}
+
 				.downvote {
 					&::after {
-						content: "Dislike";
+						content: attr(data-downvoted);
 
 						@include mq(768px) {
 							content: none;
