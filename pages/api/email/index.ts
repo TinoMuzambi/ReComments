@@ -19,9 +19,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 	transporter.sendMail(options, (err, info) => {
 		if (err) {
-			console.error(err);
-			return;
+			return res.status(400).json({ success: false, error: err });
 		}
-		console.log(info);
+		res.status(200).json({ success: true, data: info });
 	});
 };
