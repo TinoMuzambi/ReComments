@@ -103,33 +103,6 @@ const Search: React.FC = (): JSX.Element => {
 						searchTerm={searchInput}
 						setSearchTerm={setSearchInput}
 					/>
-					<button
-						className="send"
-						onClick={() => {
-							const sendMail: Function = async () => {
-								try {
-									const body = {
-										to: "t56muzambi@gmail.com",
-										fromName: "Tino",
-										commentText: "Here is one for ya' boi.",
-										url: "https://www.youtube.com/watch?v=qagP8gTp5QE&t=3s",
-									};
-									await fetch("/api/email", {
-										method: "POST",
-										headers: {
-											"Content-Type": "application/json",
-										},
-										body: JSON.stringify(body),
-									});
-								} catch (error) {
-									console.error(error);
-								}
-							};
-							sendMail();
-						}}
-					>
-						Send
-					</button>
 				</section>
 				{isFetchingData && <Loader />}
 				{noResultsFound && !isFetchingData && (
