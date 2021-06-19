@@ -90,7 +90,7 @@ a {
 	@include buttonReset();
 	position: absolute;
 	top: 5rem;
-	left: 1rem;
+	right: 1rem;
 	background: rgba($color: $primary-color, $alpha: 0.7);
 	border-radius: 50%;
 	padding: 0.5rem;
@@ -102,7 +102,8 @@ a {
 		@include pseudo;
 		content: attr(data-dark);
 		top: 0;
-		left: 3.5rem;
+		left: unset;
+		right: 3.5rem;
 		width: 9rem;
 
 		@include mq(768px) {
