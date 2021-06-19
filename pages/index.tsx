@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const index = () => {
+const Home = (): JSX.Element => {
 	return (
 		<main className="main index">
 			<div className="topbar">
@@ -49,4 +49,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Home;
