@@ -14,8 +14,8 @@ import Loader from "../components/Loader";
 import Result from "../components/Result";
 import Form from "../components/Form";
 import AppState from "../components/AppState";
-import { loadClient, execute } from "../utils/gapi";
 import Spinner from "../components/Spinner";
+import { loadClient, execute } from "../utils/gapi";
 
 const Search: React.FC = (): JSX.Element => {
 	const [searchInput, setSearchInput] = useState("");
@@ -32,6 +32,7 @@ const Search: React.FC = (): JSX.Element => {
 	}, [signedIn]);
 
 	useEffect(() => {
+		// Show spinner when transitioning between pages.
 		const handleRouteChange = () => {
 			setSpinnerVisible(true);
 		};
@@ -50,6 +51,7 @@ const Search: React.FC = (): JSX.Element => {
 	}, []);
 
 	useEffect(() => {
+		// Make call for preview videos.
 		if (!searchInput) {
 			try {
 				setUseBlockFormat(true);
@@ -71,6 +73,7 @@ const Search: React.FC = (): JSX.Element => {
 	}, []);
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
+		// Search for given url.
 		e.preventDefault();
 		setIsFetchingData(true);
 		setUseBlockFormat(false);
