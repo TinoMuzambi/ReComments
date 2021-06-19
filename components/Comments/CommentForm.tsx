@@ -149,9 +149,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							if (isSecondLevelComment) {
 								// Add mention if second level comment.
 								body = {
-									...currComment,
+									...originalComment,
 									replies: [
-										...currComment?.replies,
+										...originalComment?.replies,
 										{
 											...body,
 											comment: commentInput.replace(
