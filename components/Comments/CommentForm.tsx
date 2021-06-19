@@ -144,14 +144,15 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								setCommentFormToEditVisible(false);
 						}
 					} else if (isSecondLevelComment || commentFormToReplyVisible) {
-						if (
-							currComment &&
-							originalComment &&
-							originalComment.replies &&
-							currComment.replies
-						) {
+						console.log("here");
+						if (currComment && currComment.replies) {
 							// Reply to comment.
-							if (isSecondLevelComment) {
+							if (
+								isSecondLevelComment &&
+								originalComment &&
+								originalComment.replies
+							) {
+								console.log("second");
 								// Add mention if second level comment.
 								body = {
 									...originalComment,
@@ -168,6 +169,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 									],
 								};
 							} else {
+								console.log("first");
 								body = {
 									...currComment,
 									replies: [...currComment?.replies, body],
@@ -186,7 +188,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							);
 
 							// Post updated comment to DB.
-							if (isSecondLevelComment)
+							if (isSecondLevelComment && originalComment)
 								await postUpdatedResourceToDb(body, originalComment._id);
 							else await postUpdatedResourceToDb(body, currComment._id);
 
