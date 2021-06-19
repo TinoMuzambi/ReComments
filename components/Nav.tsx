@@ -4,12 +4,26 @@ import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
 import { handleSignoutClick } from "../utils/gapi";
+import { useEffect } from "react";
 
 const Nav: React.FC = (): JSX.Element => {
 	const [navOpen, setNavOpen] = useState(false);
+
 	const { setSignedIn, setUser, user, signedIn, setDbUser } =
 		useContext(AppContext);
 	const router = useRouter();
+
+	useEffect(() => {
+		const handleRouteChange = () => {
+			setNavOpen(false);
+		};
+
+		router.events.on("routeChangeStart", handleRouteChange);
+
+		return () => {
+			router.events.off("routeChangeStart", handleRouteChange);
+		};
+	}, []);
 
 	const handleSignOut: MouseEventHandler<HTMLLIElement> = () => {
 		if (setSignedIn) {
@@ -45,6 +59,9 @@ const Nav: React.FC = (): JSX.Element => {
 					<div className={`links-holder ${navOpen && "open"}`}>
 						<Link href="/">
 							<a className="link">Home</a>
+						</Link>
+						<Link href="/search">
+							<a className="link">Search</a>
 						</Link>
 						{signedIn && (
 							<li className="link" onClick={handleSignOut}>
