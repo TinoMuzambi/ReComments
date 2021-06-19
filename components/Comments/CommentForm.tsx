@@ -34,7 +34,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	useEffect(() => {
 		if (isSecondLevelComment) {
 			if (user && user.names) {
-				setCommentInput(`@${user.names[0].givenName as string} `);
+				if (currComment) setCommentInput(`@${currComment.name} `);
 			}
 		}
 	}, [isSecondLevelComment]);
@@ -157,10 +157,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
 										{
 											...body,
 											comment: commentInput.replace(
-												(("@" + user.names[0].givenName) as string) + " ",
+												"@" + currComment.name + " ",
 												""
 											),
-											mention: `@${user.names[0].givenName as string}`,
+											mention: `@${currComment.name}`,
 										},
 									],
 								};
