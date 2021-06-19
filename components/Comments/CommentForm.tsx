@@ -145,7 +145,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 						}
 					} else if (isSecondLevelComment || commentFormToReplyVisible) {
 						console.log("here");
-						if (currComment && currComment.replies) {
+						if (currComment) {
 							// Reply to comment.
 							if (
 								isSecondLevelComment &&
@@ -170,10 +170,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								};
 							} else {
 								console.log("first");
-								body = {
-									...currComment,
-									replies: [...currComment?.replies, body],
-								};
+								if (currComment.replies)
+									body = {
+										...currComment,
+										replies: [...currComment?.replies, body],
+									};
 							}
 
 							// Notify user by email.
