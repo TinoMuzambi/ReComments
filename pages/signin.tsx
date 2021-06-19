@@ -113,7 +113,7 @@ const SignIn: React.FC = (): JSX.Element => {
 			/>
 			<main className="main">
 				<h1 className="title">ReComments</h1>
-				<button className="sign-in" onClick={handleAuthClick()}>
+				<button className="sign-in" onClick={() => handleAuthClick}>
 					<FcGoogle className="icon" />
 					&nbsp;Sign In with Google
 				</button>
