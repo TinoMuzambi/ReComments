@@ -50,7 +50,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	useEffect(() => {
 		let timer: NodeJS.Timeout;
 		if (noticeNoButtons === 1) {
-			console.log("here");
 			if (noticeVisible) {
 				timer = setTimeout(() => {
 					setNoticeVisible(false);
