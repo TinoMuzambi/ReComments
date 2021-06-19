@@ -12,6 +12,7 @@
 			background: rgba($color: $primary-color, $alpha: 0.7);
 			padding: 1rem 2rem;
 			border-radius: 1rem;
+			color: white;
 
 			&:hover {
 				transform: scale(0.9);
@@ -23,4 +24,8 @@
 		border-bottom: 1px solid $primary-color;
 		padding-bottom: 1rem;
 	}
+}
+
+.accent {
+	color: $primary-color;
 }
