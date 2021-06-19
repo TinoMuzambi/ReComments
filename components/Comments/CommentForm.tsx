@@ -33,9 +33,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 	useEffect(() => {
 		if (isSecondLevelComment) {
-			if (user && user.names) {
-				if (currComment) setCommentInput(`@${currComment.name} `);
-			}
+			if (currComment) setCommentInput(`@${currComment.name} `);
 		}
 	}, [isSecondLevelComment]);
 
