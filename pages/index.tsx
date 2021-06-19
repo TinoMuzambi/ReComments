@@ -6,10 +6,10 @@ const index = () => {
 			<div className="topbar">
 				<h1 className="title">Welcome to ReComments</h1>
 				<Link href="/signin">
-					<a>Sign In</a>
+					<a className="action">Sign In</a>
 				</Link>
 			</div>
-			<div className="about">
+			<section className="about">
 				<h2 className="subtitle">About</h2>
 				<p className="text">
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
@@ -19,9 +19,10 @@ const index = () => {
 					incidunt! Officiis repudiandae dolorum architecto vitae veniam quis
 					dignissimos doloribus quam. Ullam ipsa excepturi nobis deserunt?
 				</p>
-			</div>
-			<div className="method">
+			</section>
+			<section className="method">
 				<h2 className="subtitle">How it works</h2>
+				<h5 className="tag">The technical stuff</h5>
 				<p className="text">
 					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id
 					dignissimos eaque consequatur velit voluptatibus qui beatae tempora
@@ -30,7 +31,7 @@ const index = () => {
 					tempore deserunt quos voluptatum ex voluptas facilis officia quia unde
 					error omnis minus iusto!
 				</p>
-			</div>
+			</section>
 		</main>
 	);
 };
