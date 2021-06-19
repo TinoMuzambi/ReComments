@@ -34,6 +34,11 @@
 	border-radius: 1rem;
 	color: white;
 
+	@include mq(768px) {
+		width: 100%;
+		text-align: center;
+	}
+
 	&:hover {
 		transform: scale(0.9);
 	}
@@ -49,5 +54,10 @@ footer {
 	.links {
 		display: flex;
 		gap: 2rem;
+
+		@include mq(768px) {
+			flex-direction: column;
+			gap: 0.5rem;
+		}
 	}
 }
