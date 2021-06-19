@@ -6,7 +6,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		service: "gmail",
 		auth: {
 			user: "tinomuzambi@gmail.com",
-			pass: "tzhvgqlczemdysab",
+			pass: process.env.GMAIL_PASS,
 		},
 	});
 
