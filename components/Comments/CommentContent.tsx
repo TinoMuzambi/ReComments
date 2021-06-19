@@ -7,13 +7,13 @@ import parse from "html-react-parser";
 import Autolinker from "autolinker";
 
 import { AppContext } from "../../context/AppContext";
-import CommentForm from "./CommentForm";
 import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
 import {
 	postUpdatedResourceToDb,
 	VOTING_TYPES,
 	getUpdatedVoteCommentBody,
 } from "../../utils";
+import CommentForm from "./CommentForm";
 import Spinner from "../Spinner";
 import Notice from "../Notice";
 
