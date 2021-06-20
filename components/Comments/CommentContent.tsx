@@ -89,7 +89,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const getDbUser: Function = async (): Promise<void> => {
 		if (user && user.emailAddresses) {
 			const res = await fetch(
-				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
+				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
 			);
 			const data = await res.json();
 

@@ -55,7 +55,12 @@ const SignIn: React.FC = (): JSX.Element => {
 	const checkUserDb: Function = async () => {
 		if (user && user?.emailAddresses && user.names && user.photos) {
 			const res = await fetch(
-				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`
+				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
 			);
 			const userRes = await res.json();
 

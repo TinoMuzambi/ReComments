@@ -63,7 +63,11 @@ Video.getInitialProps = async (req) => {
 			: "http://localhost:3000";
 	let res: any;
 	if (req && req.query)
-		res = await fetch(`${BASE_URL}/api/comments/video/${req.query.url}`);
+		res = await fetch(`${BASE_URL}/api/comments/video/${req.query.url}`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
 	let comments = await res.json();
 
 	if (!comments.success) comments = [];
