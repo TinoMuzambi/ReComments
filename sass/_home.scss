@@ -34,6 +34,10 @@
 	border-radius: 1rem;
 	color: white;
 
+	&.opaque {
+		background: $primary-color;
+	}
+
 	@include mq(768px) {
 		width: 100%;
 		text-align: center;
