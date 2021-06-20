@@ -1,7 +1,8 @@
 import { shuffle } from ".";
 
-export const loadClient: Function = () => {
+export const loadClient: Function = (): Promise<void> => {
 	// Load gapi YouTube client and set api key.
+
 	gapi.client.setApiKey(process.env.GAPP_API_KEY || "");
 	return gapi.client
 		.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest", "")

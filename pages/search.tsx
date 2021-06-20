@@ -57,15 +57,17 @@ const Search: React.FC = (): JSX.Element => {
 				setUseBlockFormat(true);
 				const makeCall = async () => {
 					setIsFetchingData(true);
-					await loadClient();
-					execute(
-						true,
-						searchInput,
-						true,
-						setSearchResults,
-						setIsFetchingData,
-						setNoResultsFound
-					);
+					if (gapi.client) {
+						await loadClient();
+						execute(
+							true,
+							searchInput,
+							true,
+							setSearchResults,
+							setIsFetchingData,
+							setNoResultsFound
+						);
+					}
 				};
 				if (!searchResults) makeCall();
 			} catch (error) {}
