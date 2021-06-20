@@ -20,29 +20,27 @@ const SignIn: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		setLoading(true);
-		if (gapi) {
-			gapi.load("client:auth2", () => {
-				gapi.client
-					.init({
-						apiKey: process.env.GAPP_API_KEY,
-						discoveryDocs: [
-							"https://people.googleapis.com/$discovery/rest?version=v1",
-							"https://youtube.googleapis.com/$discovery/rest?version=v3",
-						],
-						clientId: process.env.GAPP_CLIENT_ID,
-						scope: "profile",
-					})
-					.then(() => {
-						gapi.auth2.getAuthInstance().isSignedIn.listen(() => {
-							updateSignInStatus(getSignedIn(), updateContext);
-						});
+		gapi.load("client:auth2", () => {
+			gapi.client
+				.init({
+					apiKey: process.env.GAPP_API_KEY,
+					discoveryDocs: [
+						"https://people.googleapis.com/$discovery/rest?version=v1",
+						"https://youtube.googleapis.com/$discovery/rest?version=v3",
+					],
+					clientId: process.env.GAPP_CLIENT_ID,
+					scope: "profile",
+				})
+				.then(() => {
+					gapi.auth2.getAuthInstance().isSignedIn.listen(() => {
+						updateSignInStatus(getSignedIn(), updateContext);
+					});
 
-						updateSignInStatus(getSignedIn(), updateContext, cancelLoading);
-					})
-					.catch((error) => console.error(error));
-			});
-		}
-	}, [gapi]);
+					updateSignInStatus(getSignedIn(), updateContext, cancelLoading);
+				})
+				.catch((error) => console.error(error));
+		});
+	}, []);
 
 	useEffect(() => {
 		if (signedIn) {
