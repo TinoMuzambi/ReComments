@@ -96,7 +96,7 @@ const Search: React.FC = (): JSX.Element => {
 	return (
 		<>
 			<Meta
-				title=" Search | ReComments"
+				title="Search | ReComments"
 				description="Search for a YouTube video and get to chatting in the comments!"
 				url="https://recomments.tinomuzambi.com/search"
 			/>
