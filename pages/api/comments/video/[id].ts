@@ -19,7 +19,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 				if (!comment || comment.length === 0) {
 					return res
-						.status(404)
+						.status(200)
 						.json({ success: false, data: { message: "Comment not found" } });
 				}
 
