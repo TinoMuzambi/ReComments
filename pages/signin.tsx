@@ -120,7 +120,7 @@ const SignIn: React.FC = (): JSX.Element => {
 	return (
 		<>
 			<Meta
-				title=" Sign In | ReComments"
+				title="Sign In | ReComments"
 				description="Sign into ReComments with your Google account to start commenting!"
 				url="https://recomments.tinomuzambi.com/signin"
 			/>
