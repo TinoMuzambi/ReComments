@@ -20,9 +20,45 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				);
 
 				if (!user) {
-					return res
-						.status(400)
-						.json({ success: false, data: { message: "User not found" } });
+					return res.status(400).send(`
+					<head>
+						<title>Error | ReComments</title>
+					</head>
+					<header>
+						<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
+					</header>
+					<main>
+						<h1>Something went wrong...</h1>
+
+						<p>Please try again or contact the <a href="mailto:tino@tinomuzambi.com">developer</a></p>
+						<div class="bar"/>
+					</main>
+					<style>
+						@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
+						* {
+							font-family: "Poppins", sans-serif;
+						}
+		
+						header img {
+							height: 100px;
+						}
+	
+						body {
+							padding: 2rem;
+						}
+
+						a {
+							color: rgb(61, 166, 255);
+						}
+		
+						.bar {
+							margin: 1rem 0;
+							background: #ffa500;
+							height: 2rem;
+							width: 100%
+						}
+					</style>
+					`);
 				}
 				if (!JSON.parse(subscribe as string))
 					res.status(200).send(`
@@ -52,6 +88,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 					body {
 						padding: 2rem;
+					}
+
+					a {
+						color: rgb(61, 166, 255);
 					}
 	
 					.bar {
@@ -84,6 +124,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					body {
 						padding: 2rem;
 					}
+
+					a {
+						color: rgb(61, 166, 255);
+					}
 	
 					header img {
 						height: 100px;
@@ -98,10 +142,86 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				</style>
 				`);
 			} catch (error) {
-				return res.status(400).json({ success: false, data: error });
+				return res.status(400).send(`
+				<head>
+					<title>Error | ReComments</title>
+				</head>
+				<header>
+					<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
+				</header>
+				<main>
+					<h1>Something went wrong...</h1>
+
+					<p>Please try again or contact the <a href="mailto:tino@tinomuzambi.com">developer</a></p>
+					<div class="bar"/>
+				</main>
+				<style>
+					@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
+					* {
+						font-family: "Poppins", sans-serif;
+					}
+	
+					header img {
+						height: 100px;
+					}
+
+					body {
+						padding: 2rem;
+					}
+
+					a {
+						color: rgb(61, 166, 255);
+					}
+	
+					.bar {
+						margin: 1rem 0;
+						background: #ffa500;
+						height: 2rem;
+						width: 100%
+					}
+				</style>
+				`);
 			}
 			break;
 		default:
-			return res.status(400).json({ success: false });
+			return res.status(400).send(`
+			<head>
+				<title>Error | ReComments</title>
+			</head>
+			<header>
+				<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
+			</header>
+			<main>
+				<h1>Something went wrong...</h1>
+
+				<p>Please try again or contact the <a href="mailto:tino@tinomuzambi.com">developer</a></p>
+				<div class="bar"/>
+			</main>
+			<style>
+				@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
+				* {
+					font-family: "Poppins", sans-serif;
+				}
+
+				header img {
+					height: 100px;
+				}
+
+				body {
+					padding: 2rem;
+				}
+
+				a {
+					color: rgb(61, 166, 255);
+				}
+
+				.bar {
+					margin: 1rem 0;
+					background: #ffa500;
+					height: 2rem;
+					width: 100%
+				}
+			</style>
+			`);
 	}
 };

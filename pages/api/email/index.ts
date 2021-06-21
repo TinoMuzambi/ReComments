@@ -30,7 +30,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				
 				<div class="unsub">
 					<a href="https://recomments.tinomuzambi.com/api/users/emails?subscribe=false&email=${to}">Unsubscribe from these emails</a>
-					<a></a>
 				</div>
 
 				<div class="bar"/>
@@ -43,6 +42,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 				header img {
 					height: 100px;
+				}
+
+				a {
+					color: rgb(61, 166, 255);
 				}
 
 				b {
