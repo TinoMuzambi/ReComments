@@ -192,7 +192,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 										(("@" + user.names[0].givenName) as string) + " ",
 										""
 									),
-									router.query.url
+									router.query.url,
+									document.title
 								);
 							}
 

@@ -90,7 +90,8 @@ export const sendMail: Function = async (
 	to: string,
 	fromName: string,
 	commentText: string,
-	url: string
+	url: string,
+	title: string
 ) => {
 	// Send email to recipient.
 	try {
@@ -99,6 +100,7 @@ export const sendMail: Function = async (
 			fromName: fromName,
 			commentText: commentText,
 			url: "https://youtube.com/watch?v=" + url,
+			title: title.substring(0, title.indexOf("| ReComments") - 1),
 		};
 		await fetch("/api/email", {
 			method: "POST",
