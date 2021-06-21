@@ -75,6 +75,7 @@ const SignIn: React.FC = (): JSX.Element => {
 					downvotedIds: [],
 					createdAt: new Date(),
 					updatedAt: new Date(),
+					emails: true,
 				};
 
 				try {
