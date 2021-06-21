@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
 import { CommentFormProps, CommentModel } from "../../interfaces";
-import { postUpdatedResourceToDb, sendMail } from "../../utils";
+import { getDbUser, postUpdatedResourceToDb, sendMail } from "../../utils";
 import Spinner from "../Spinner";
 
 const CommentForm: React.FC<CommentFormProps> = ({
@@ -28,7 +28,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const [commentInput, setCommentInput] = useState("");
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
-	const { user, dbUser } = useContext(AppContext);
+	const { user, dbUser, setDbUser } = useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -180,6 +180,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							else await postUpdatedResourceToDb(body, currComment._id);
 
 							// Notify user by email.
+							await getDbUser(user, setDbUser);
 							if (dbUser?.emails) {
 								sendMail(
 									currComment.email,
