@@ -181,7 +181,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 							// Notify user by email.
 							const author = await fetch(`/api/users/${currComment.authorId}`);
-							const commentAuthor: UserModel = await author.json();
+							const authorJson = await author.json();
+							const commentAuthor: UserModel = authorJson.data;
+
 							if (commentAuthor?.emails) {
 								sendMail(
 									currComment.email,
