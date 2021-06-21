@@ -46,9 +46,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					header img {
 						height: 100px;
 					}
+
+					body {
+						padding: 2rem;
+					}
 	
 					.bar {
-						margin: 0 0.5rem;
+						margin: 1rem 0;
 						background: #ffa500;
 						height: 2rem;
 						width: 100%
@@ -71,7 +75,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 						font-family: "Poppins", sans-serif;
 					}
 
-					main {
+					body {
 						padding: 2rem;
 					}
 	
@@ -80,7 +84,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					}
 	
 					.bar {
-						margin: 0 0.5rem;
+						margin: 1rem 0;
 						background: #ffa500;
 						height: 2rem;
 						width: 100%
