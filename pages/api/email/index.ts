@@ -7,13 +7,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let transporter = nodemailer.createTransport({
 		service: "gmail",
 		auth: {
-			user: "tinomuzambi@gmail.com",
+			user: "recommentsweb@gmail.com",
 			pass: process.env.GMAIL_PASS,
 		},
 	});
 
 	const options = {
-		from: "tinomuzambi@gmail.com",
+		from: "recommentsweb@gmail.com",
 		to: to,
 		subject: "ReComments | New reply to your comment",
 		text: `${fromName} replied to your comment on ReComments. They said: "${commentText}". Paste this url ${url} in the search box on ReComments to continue the conversation.`,
