@@ -12,7 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	} = req;
 
 	switch (method) {
-		case "PUT":
+		case "GET":
 			try {
 				const user: mongoose.UpdateQuery<any> = await User.updateOne(
 					{ email: email },
