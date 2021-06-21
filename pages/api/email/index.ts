@@ -29,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				<p>Paste this url <a href=${url} target="_blank">${url}</a> in the search box on <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a> to continue the conversation.</p>
 				
 				<div class="unsub">
-					<a href="https://recomments.tinomuzambi.com/api/emails&subscribe=false&email=${to}">Unsubscribe from these emails</a>
+					<a href="https://recomments.tinomuzambi.com/api/emails?subscribe=false&email=${to}">Unsubscribe from these emails</a>
 					<a></a>
 				</div>
 
