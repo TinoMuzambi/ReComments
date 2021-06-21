@@ -28,7 +28,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const [commentInput, setCommentInput] = useState("");
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
-	const { user, dbUser } = useContext(AppContext);
+	const { user } = useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
