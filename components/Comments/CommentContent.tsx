@@ -12,6 +12,7 @@ import {
 	postUpdatedResourceToDb,
 	VOTING_TYPES,
 	getUpdatedVoteCommentBody,
+	getDbUser,
 } from "../../utils";
 import CommentForm from "./CommentForm";
 import Spinner from "../Spinner";
@@ -84,22 +85,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		const height = window.scrollY;
 		await router.replace(router.asPath);
 		window.scrollTo(0, height);
-	};
-
-	const getDbUser: Function = async (): Promise<void> => {
-		if (user && user.emailAddresses) {
-			const res = await fetch(
-				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`,
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
-			const data = await res.json();
-
-			if (setDbUser) setDbUser(data.data);
-		}
 	};
 
 	const editHandler: MouseEventHandler<HTMLButtonElement> =
