@@ -24,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 						.status(400)
 						.json({ success: false, data: { message: "User not found" } });
 				}
-				if (email)
+				if (!JSON.parse(subscribe as string))
 					res.status(200).send(`
 				<header>
 					<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
@@ -34,7 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					<p>You will no longer receive email notifications from <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a>.</p>
 					<h1>Made a mistake?</h1>
 
-					<a href="http://localhost:3000/api/emails&subscribe=true&email=${email}">Click here to resubscribe</a>
+					<a href="http://localhost:3000/api/users/emails?subscribe=true&email=${email}">Click here to resubscribe</a>
 					<div class="bar"/>
 				</main>
 				<style>
@@ -65,7 +65,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
 				</header>
 				<main>
-					<h1>You are now resubscribed!.</h1>
+					<h1>You are now resubscribed!</h1>
 					<p>You will receive email notifications from <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a>.</p>
 					<div class="bar"/>
 				</main>
