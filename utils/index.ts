@@ -153,6 +153,8 @@ export const getHtml: Function = (title: string, html: string): string => {
 	return `
 		<head>
 			<title>${title} | ReComments</title>
+			<meta charset="utf-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
 		</head>
 		<header>
 			<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
