@@ -129,3 +129,22 @@ export const getUpdatedVoteCommentBody: Function = (
 		return { ...comment, downvotes: comment.downvotes - 1 };
 	return comment;
 };
+
+export const getDbUser: Function = async (
+	user: gapi.client.people.Person,
+	setDbUser: Function
+): Promise<void> => {
+	if (user && user.emailAddresses) {
+		const res = await fetch(
+			`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`,
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
+		const data = await res.json();
+
+		if (setDbUser) setDbUser(data.data);
+	}
+};

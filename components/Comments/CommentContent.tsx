@@ -12,6 +12,7 @@ import {
 	postUpdatedResourceToDb,
 	VOTING_TYPES,
 	getUpdatedVoteCommentBody,
+	getDbUser,
 } from "../../utils";
 import CommentForm from "./CommentForm";
 import Spinner from "../Spinner";
@@ -42,7 +43,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const { dbUser, user, setDbUser } = useContext(AppContext);
 
 	useEffect(() => {
-		getDbUser();
+		getDbUser(user, setDbUser);
 	}, []);
 
 	useEffect(() => {
@@ -84,22 +85,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		const height = window.scrollY;
 		await router.replace(router.asPath);
 		window.scrollTo(0, height);
-	};
-
-	const getDbUser: Function = async (): Promise<void> => {
-		if (user && user.emailAddresses) {
-			const res = await fetch(
-				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`,
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
-			const data = await res.json();
-
-			if (setDbUser) setDbUser(data.data);
-		}
 	};
 
 	const editHandler: MouseEventHandler<HTMLButtonElement> =
@@ -229,7 +214,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const voteHandler: Function = async (voteType: string): Promise<void> => {
 		if (dbUser) {
 			setSpinnerVisible(true);
-			getDbUser();
+			getDbUser(user, setDbUser);
 			let userBody: UserModel = dbUser;
 
 			if (userBody && userBody.upvotedIds && userBody.downvotedIds) {
@@ -273,7 +258,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						// Add comment id to user's upvoted ids.
 						userBody = getUpdatedUserVoteIdsBody(voteType, userBody);
 						await postUpdatedResourceToDb(userBody);
-						getDbUser();
+						getDbUser(user, setDbUser);
 					} catch (error) {
 						console.error(error);
 					}
