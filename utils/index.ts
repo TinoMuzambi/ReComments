@@ -148,3 +148,44 @@ export const getDbUser: Function = async (
 		if (setDbUser) setDbUser(data.data);
 	}
 };
+
+export const getHtml: Function = (title: string, html: string): string => {
+	return `
+		<head>
+			<title>${title} | ReComments</title>
+		</head>
+		<header>
+			<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
+		</header>
+		<main>
+			${html}
+
+			<div class="bar" />
+		</main>
+		<style>
+			@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
+			* {
+				font-family: "Poppins", sans-serif;
+			}
+
+			header img {
+				height: 100px;
+			}
+
+			body {
+				padding: 2rem;
+			}
+
+			a {
+				color: rgb(61, 166, 255);
+			}
+
+			.bar {
+				margin: 1rem 0;
+				background: #ffa500;
+				height: 2rem;
+				width: 100%
+			}
+		</style>
+	`;
+};
