@@ -18,6 +18,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		subject: "ReComments | New reply to your comment",
 		text: `${fromName} replied to your comment on ReComments. They said: "${commentText}". Paste this url ${url} in the search box on ReComments to continue the conversation.`,
 		html: `
+			<head>
+				<title>Unsubscribe | ReComments</title>
+			</head>
 			<header>
 				<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
 			</header>
