@@ -299,8 +299,8 @@ const Terms: React.FC = (): JSX.Element => {
 				</p>
 				<ul>
 					<li>
-						By email:{" "}
-						<a href="mailto:tino@tinomuzambi.com">tino@tinomuzambi.com</a>
+						By email:
+						<a href="mailto:tino@tinomuzambi.com"> tino@tinomuzambi.com</a>
 					</li>
 				</ul>
 			</main>
