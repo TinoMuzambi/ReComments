@@ -26,9 +26,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				}
 				if (!JSON.parse(subscribe as string))
 					res.status(200).send(`
-					<head>
-				<title>Unsubscribe | ReComments</title>
-			</head>
+				<head>
+					<title>Unsubscribe | ReComments</title>
+				</head>
 				<header>
 					<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
 				</header>
@@ -64,9 +64,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				`);
 				else
 					res.status(200).send(`
-					<head>
-				<title>Resubscribe | ReComments</title>
-			</head>
+				<head>
+					<title>Resubscribe | ReComments</title>
+				</head>
 				<header>
 					<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
 				</header>
