@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
-import { CommentFormProps, CommentModel } from "../../interfaces";
+import { CommentFormProps, CommentModel, UserModel } from "../../interfaces";
 import { postUpdatedResourceToDb, sendMail } from "../../utils";
 import Spinner from "../Spinner";
 
@@ -180,7 +180,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							else await postUpdatedResourceToDb(body, currComment._id);
 
 							// Notify user by email.
-							if (dbUser?.emails) {
+							const author = await fetch(`/api/users/${currComment.authorId}`);
+							const commentAuthor: UserModel = await author.json();
+							if (commentAuthor?.emails) {
 								sendMail(
 									currComment.email,
 									user.names[0].givenName,
