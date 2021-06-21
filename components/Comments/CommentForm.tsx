@@ -28,7 +28,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const [commentInput, setCommentInput] = useState("");
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
-	const { user } = useContext(AppContext);
+	const { user, dbUser } = useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -180,15 +180,17 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							else await postUpdatedResourceToDb(body, currComment._id);
 
 							// Notify user by email.
-							sendMail(
-								currComment.email,
-								user.names[0].givenName,
-								commentInput.replace(
-									(("@" + user.names[0].givenName) as string) + " ",
-									""
-								),
-								router.query.url
-							);
+							if (dbUser?.emails) {
+								sendMail(
+									currComment.email,
+									user.names[0].givenName,
+									commentInput.replace(
+										(("@" + user.names[0].givenName) as string) + " ",
+										""
+									),
+									router.query.url
+								);
+							}
 
 							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
