@@ -174,6 +174,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 									};
 							}
 
+							// Post updated comment to DB.
+							if (isSecondLevelComment && originalComment)
+								await postUpdatedResourceToDb(body, originalComment._id);
+							else await postUpdatedResourceToDb(body, currComment._id);
+
 							// Notify user by email.
 							sendMail(
 								currComment.email,
@@ -184,11 +189,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 								),
 								router.query.url
 							);
-
-							// Post updated comment to DB.
-							if (isSecondLevelComment && originalComment)
-								await postUpdatedResourceToDb(body, originalComment._id);
-							else await postUpdatedResourceToDb(body, currComment._id);
 
 							// Hide forms and expand view more.
 							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
