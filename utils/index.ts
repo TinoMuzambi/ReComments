@@ -164,6 +164,7 @@ export const getHtml: Function = (title: string, html: string): string => {
 		</main>
 		<style>
 			@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
+
 			* {
 				font-family: "Poppins", sans-serif;
 			}
@@ -178,6 +179,27 @@ export const getHtml: Function = (title: string, html: string): string => {
 
 			a {
 				color: rgb(61, 166, 255);
+			}
+
+			b {
+				color:  #ffa500;
+			}
+
+			blockquote {
+				background: #f9f9f9;
+				border-left: 10px solid #ccc;
+				margin: 1.5em 10px;
+				padding: 0.5em 10px;
+				white-space: pre-wrap;
+			}
+
+			blockquote:before {
+				color: #ccc;
+				content: open-quote;
+				font-size: 4em;
+				line-height: .1em;
+				margin-right: .25em;
+				vertical-align: -.4em;
 			}
 
 			.bar {

@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 
+import { getHtml } from "../../../utils";
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const { to, fromName, commentText, url, title } = req.body;
 
@@ -17,11 +19,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		to: to,
 		subject: "ReComments | New reply to your comment",
 		text: `${fromName} replied to your comment on ReComments. They said: "${commentText}". Paste this url ${url} in the search box on ReComments to continue the conversation.`,
-		html: `
-			<header>
-				<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
-			</header>
-			<main>
+		html: getHtml(
+			"New Comment",
+			`
 				<h1>New reply to your comment on <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a></h1>
 				<p><b>${fromName}</b> replied to your comment on <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a> on "${title}".</p>
 				<p>They said:</p>
@@ -31,52 +31,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				<div class="unsub">
 					<a href="https://recomments.tinomuzambi.com/api/users/emails?subscribe=false&email=${to}">Unsubscribe from these emails</a>
 				</div>
-
-				<div class="bar"/>
-			</main>
-			<style>
-				@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
-				* {
-					font-family: "Poppins", sans-serif;
-				}
-
-				header img {
-					height: 100px;
-				}
-
-				a {
-					color: rgb(61, 166, 255);
-				}
-
-				b {
-					color:  #ffa500;
-				}
-
-				blockquote {
-					background: #f9f9f9;
-					border-left: 10px solid #ccc;
-					margin: 1.5em 10px;
-					padding: 0.5em 10px;
-					white-space: pre-wrap;
-				}
-
-				blockquote:before {
-					color: #ccc;
-					content: open-quote;
-					font-size: 4em;
-					line-height: .1em;
-					margin-right: .25em;
-					vertical-align: -.4em;
-				}
-
-				.bar {
-					margin: 1rem 0.5rem;
-					background: #ffa500;
-					height: 2rem;
-					width: 100%
-				}
-			</style>
-			`,
+			`
+		),
 	};
 
 	try {
