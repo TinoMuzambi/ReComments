@@ -29,16 +29,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
 				</header>
 				<main>
-					<h1>New reply to your comment on ReComments</h1>
-					<p><b>${"fromName"}</b> replied to your comment on ReComments.</p>
-					<p>They said:</p>
-					<blockquote>${"commentText"}</blockquote>
-					<p>Paste this url <a href=${"url"} target="_blank">${"url"}</a> in the search box on <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a> to continue the conversation.</p>
-					<div class="bar"/>
-					<div class="unsub">
-						<a href="https://recomments.tinomuzambi.com/api/emails&subscribe=false&email=${"to"}">Unsubscribe from these emails</a>
-						<a></a>
-					</div>
+					<h1>We're sorry to see you go.</h1>
+					<p>You will no longer receive email notifications from <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a>.</p>
+					<h1>Made a mistake?</h1>
+
+					<a href="http://localhost:3000/api/emails&subscribe=true&email=${email}">Click here to resubscribe</a>
+					<a></a>
 				</main>
 				<style>
 					@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
