@@ -24,7 +24,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 						.status(400)
 						.json({ success: false, data: { message: "User not found" } });
 				}
-				res.status(200).send(`
+				if (email)
+					res.status(200).send(`
 				<header>
 					<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
 				</header>
@@ -34,7 +35,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					<h1>Made a mistake?</h1>
 
 					<a href="http://localhost:3000/api/emails&subscribe=true&email=${email}">Click here to resubscribe</a>
-					<a></a>
+					<div class="bar"/>
 				</main>
 				<style>
 					@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
@@ -46,25 +47,36 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 						height: 100px;
 					}
 	
-					b {
-						color:  #ffa500;
+					.bar {
+						margin: 0 0.5rem;
+						background: #ffa500;
+						height: 2rem;
+						width: 100%
+					}
+				</style>
+				`);
+				else
+					res.status(200).send(`
+				<header>
+					<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
+				</header>
+				<main>
+					<h1>You are now resubscribed!.</h1>
+					<p>You will receive email notifications from <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a>.</p>
+					<div class="bar"/>
+				</main>
+				<style>
+					@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");
+					* {
+						font-family: "Poppins", sans-serif;
+					}
+
+					main {
+						padding: 2rem;
 					}
 	
-					blockquote {
-						background: #f9f9f9;
-						border-left: 10px solid #ccc;
-						margin: 1.5em 10px;
-						padding: 0.5em 10px;
-						white-space: pre-wrap;
-					}
-	
-					blockquote:before {
-						color: #ccc;
-						content: open-quote;
-						font-size: 4em;
-						line-height: .1em;
-						margin-right: .25em;
-						vertical-align: -.4em;
+					header img {
+						height: 100px;
 					}
 	
 					.bar {
