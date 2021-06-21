@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	const { to, fromName, commentText, url } = req.body;
+	const { to, fromName, commentText, url, title } = req.body;
 
 	let transporter = nodemailer.createTransport({
 		service: "gmail",
@@ -18,15 +18,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		subject: "ReComments | New reply to your comment",
 		text: `${fromName} replied to your comment on ReComments. They said: "${commentText}". Paste this url ${url} in the search box on ReComments to continue the conversation.`,
 		html: `
-			<head>
-				<title>Unsubscribe | ReComments</title>
-			</head>
 			<header>
 				<img src="https://a.storyblok.com/f/114267/1080x1080/b66aa450e5/recomments.png" alt="logo"/>
 			</header>
 			<main>
-				<h1>New reply to your comment on ReComments</h1>
-				<p><b>${fromName}</b> replied to your comment on ReComments.</p>
+				<h1>New reply to your comment on <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a></h1>
+				<p><b>${fromName}</b> replied to your comment on <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a> on "${title}".</p>
 				<p>They said:</p>
 				<blockquote>${commentText}</blockquote>
 				<p>Paste this url <a href=${url} target="_blank">${url}</a> in the search box on <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a> to continue the conversation.</p>
