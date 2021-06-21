@@ -28,6 +28,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				<blockquote>${commentText}</blockquote>
 				<p>Paste this url <a href=${url} target="_blank">${url}</a> in the search box on <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a> to continue the conversation.</p>
 				<div class="bar"/>
+				<div class="unsub">
+					<a href="https://localhost:3000/api/emails&subscribe=false&email=${to}">Unsubscribe from these emails</a>
+					<a></a>
+				</div>
 			</main>
 			<style>
 				@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700;900&display=swap");

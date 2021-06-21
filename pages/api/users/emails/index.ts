@@ -7,7 +7,7 @@ import dbConnect from "../../../../utils/dbConnect";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	dbConnect();
 	const {
-		query: { id },
+		query: { email, subscribe },
 		method,
 	} = req;
 
@@ -15,8 +15,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		case "PUT":
 			try {
 				const user: mongoose.UpdateQuery<any> = await User.updateOne(
-					{ _id: id },
-					{ emails: req.query.subscribe }
+					{ email: email },
+					{ emails: subscribe }
 				);
 
 				if (!user) {
