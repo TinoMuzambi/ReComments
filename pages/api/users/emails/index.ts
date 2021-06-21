@@ -35,7 +35,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				<main>
 					<h1>We're sorry to see you go.</h1>
 					<p>You will no longer receive email notifications from <a href="https://recomments.tinomuzambi.com" target="_blank">ReComments</a>.</p>
-					<h1>Made a mistake?</h1>
+					<h2>Made a mistake?</h2>
 
 					<a href="https://recomments.tinomuzambi.com/api/users/emails?subscribe=true&email=${email}">Click here to resubscribe</a>
 					<div class="bar"/>
