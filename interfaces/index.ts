@@ -108,6 +108,7 @@ export interface UserModel {
 	updatedAt: Date;
 	upvotedIds?: string[];
 	downvotedIds?: string[];
+	emails: boolean;
 }
 
 export interface HomeModel {
