@@ -19,7 +19,7 @@ if (!cached) {
 	cached = { conn: null, promise: null };
 }
 
-async function dbConnect() {
+const dbConnect: Function = async (): Promise<void> => {
 	if (cached.conn) {
 		return cached.conn;
 	}
@@ -42,6 +42,6 @@ async function dbConnect() {
 	}
 	cached.conn = await cached.promise;
 	return cached.conn;
-}
+};
 
 export default dbConnect;
