@@ -1,6 +1,6 @@
 {
 	"name": "recomments",
-	"version": "1.5.0",
+	"version": "1.8.0",
 	"author": {
 		"name": "Tino Muzambi",
 		"email": "tino@tinomuzambi.com",
@@ -9,7 +9,7 @@
 	"repository": "https://github.com/TinoMuzambi/ReComments",
 	"private": true,
 	"engines": {
-		"node": ">=14.17.1"
+		"node": ">=14.16.1"
 	},
 	"engineStrict": true,
 	"scripts": {
