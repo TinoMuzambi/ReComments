@@ -16,7 +16,7 @@
 	}
 
 	section {
-		border-bottom: 1px solid $primary-color;
+		border-bottom: 1px solid $primary-colour;
 		padding-bottom: 1rem;
 
 		.subtitle {
@@ -24,24 +24,24 @@
 		}
 	}
 	.accent {
-		color: $primary-color;
+		color: $primary-colour;
 	}
 }
 
 .action {
-	background: rgba($color: $primary-color, $alpha: 0.7);
+	background: rgba($color: $primary-colour, $alpha: 0.7);
 	padding: 1rem 2rem;
 	border-radius: 1rem;
 	color: white;
 
 	&.opaque {
-		background: $primary-color;
+		background: $primary-colour;
 	}
 
 	@include mq(768px) {
 		width: 100%;
 		text-align: center;
-		background: $primary-color;
+		background: $primary-colour;
 	}
 
 	&:hover {

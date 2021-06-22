@@ -84,7 +84,7 @@
 				}
 
 				.mention {
-					color: $accent-color;
+					color: $accent-colour;
 				}
 			}
 
@@ -111,7 +111,7 @@
 
 					&.active {
 						span .icon {
-							color: $accent-color;
+							color: $accent-colour;
 						}
 					}
 				}
@@ -146,7 +146,7 @@
 					font-size: 1.3em;
 
 					&:hover {
-						color: $primary-color;
+						color: $primary-colour;
 					}
 				}
 			}
@@ -169,7 +169,7 @@
 				font-size: 1.2rem;
 
 				&:hover {
-					color: $primary-color;
+					color: $primary-colour;
 				}
 			}
 		}
@@ -178,7 +178,7 @@
 			position: absolute;
 			top: 0rem;
 			padding: 0.5rem;
-			background: $primary-color;
+			background: $primary-colour;
 			color: white;
 			border-radius: 0.2rem;
 			right: 2rem;

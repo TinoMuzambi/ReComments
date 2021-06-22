@@ -9,7 +9,7 @@
 	}
 
 	.nav {
-		background: $primary-color;
+		background: $primary-colour;
 		padding: 1rem;
 		transition: max-height 0.2s ease !important;
 
@@ -44,6 +44,11 @@
 				.logo-holder {
 					.logo {
 						font-weight: 900;
+
+						&:hover,
+						&:focus {
+							color: $accent-colour;
+						}
 
 						@include mq(500px) {
 							font-size: 2rem;

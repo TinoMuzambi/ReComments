@@ -12,7 +12,7 @@
 		}
 
 		a {
-			color: $accent-color;
+			color: $accent-colour;
 		}
 	}
 
@@ -27,14 +27,14 @@
 	.sign-in {
 		@include flexAllRow;
 		font-family: inherit;
-		background: $primary-color;
+		background: $primary-colour;
 		border: none;
 		padding: 1rem 3rem;
 		color: white;
 		cursor: pointer;
 
 		&:hover {
-			background: rgba($color: $accent-color, $alpha: 0.8);
+			background: rgba($color: $accent-colour, $alpha: 0.8);
 		}
 
 		.icon {
