@@ -22,6 +22,7 @@ $accent-colour: rgb(61, 166, 255);
 	transform: translateY(-2rem);
 	opacity: 0;
 	pointer-events: none;
+	z-index: 3;
 }
 
 @mixin buttonReset {
