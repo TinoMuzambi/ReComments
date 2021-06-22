@@ -6,7 +6,7 @@ import dbConnect from "../../../../utils/dbConnect";
 import { getHtml } from "../../../../utils";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	dbConnect();
+	await dbConnect();
 	const {
 		query: { email, subscribe },
 		method,
