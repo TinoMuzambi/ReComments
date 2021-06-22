@@ -45,9 +45,8 @@
 					.logo {
 						font-weight: 900;
 
-						&:hover,
-						&:focus {
-							color: $accent-colour;
+						&:hover {
+							color: rgb(29, 29, 29);
 						}
 
 						@include mq(500px) {
