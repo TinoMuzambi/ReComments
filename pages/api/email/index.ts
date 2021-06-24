@@ -38,9 +38,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		const send: Function = async () => {
 			await transporter.sendMail(options);
-			return res.status(200).json({ success: true });
 		};
-		send();
+		await send();
+		return res.status(200).json({ success: true });
 	} catch (error) {
 		return res.status(400).json({ success: false, error: error });
 	}
