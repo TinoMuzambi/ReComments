@@ -50,22 +50,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				return res.status(400).json({ success: false, data: error });
 			}
 			break;
-		case "DELETE":
-			try {
-				const deletedUser = await User.deleteOne({ _id: id });
+		// case "DELETE":
+		// 	try {
+		// 		const deletedUser = await User.deleteOne({ _id: id });
 
-				if (!deletedUser) {
-					return res
-						.status(400)
-						.json({ success: false, data: { message: "User not found" } });
-				}
-				res
-					.status(200)
-					.json({ success: true, data: { message: "User deleted" } });
-			} catch (error) {
-				return res.status(400).json({ success: false, data: error });
-			}
-			break;
+		// 		if (!deletedUser) {
+		// 			return res
+		// 				.status(400)
+		// 				.json({ success: false, data: { message: "User not found" } });
+		// 		}
+		// 		res
+		// 			.status(200)
+		// 			.json({ success: true, data: { message: "User deleted" } });
+		// 	} catch (error) {
+		// 		return res.status(400).json({ success: false, data: error });
+		// 	}
+		// 	break;
 		default:
 			return res.status(400).json({ success: false });
 	}
