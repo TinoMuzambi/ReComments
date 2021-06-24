@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 import User from "../../../models/User";
 import dbConnect from "../../../utils/dbConnect";
+import { UserModel } from "../../../interfaces";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	await dbConnect();
@@ -14,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (method) {
 		case "GET":
 			try {
-				const user: typeof User = await User.findOne({ userId: id });
+				const user: UserModel = await User.findOne({ userId: id });
 
 				if (!user) {
 					return res
@@ -22,7 +23,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 						.json({ success: false, data: { message: "User not found" } });
 				}
 
-				res.status(200).json({ success: true, data: user });
+				res.status(200).json({
+					success: true,
+					data: {
+						emails: user.emails,
+					},
+				});
 			} catch (error) {
 				return res.status(400).json({ success: false, data: error });
 			}
