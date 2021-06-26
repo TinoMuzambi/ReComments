@@ -5,6 +5,7 @@ import { AppContext } from "../context/AppContext";
 import { useState } from "react";
 import { UserModel } from "../interfaces";
 import { postUpdatedResourceToDb } from "../utils";
+import { handleSignoutClick } from "../utils/gapi";
 
 const Profile: React.FC = (): JSX.Element => {
 	const { dbUser, signedIn } = useContext(AppContext);
@@ -44,8 +45,15 @@ const Profile: React.FC = (): JSX.Element => {
 		}
 	};
 
-	const deleteHandler: FormEventHandler<HTMLFormElement> = (e) => {
+	const deleteHandler: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
+
+		try {
+			await fetch(`/api/users/${dbUser?.userId}`, {
+				method: "DELETE",
+			});
+			handleSignoutClick();
+		} catch (error) {}
 	};
 
 	return (

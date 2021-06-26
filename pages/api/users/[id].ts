@@ -50,7 +50,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "DELETE":
 			try {
-				const deletedUser = await User.deleteOne({ _id: id });
+				const deletedUser = await User.deleteOne({ userId: id });
 
 				if (!deletedUser) {
 					return res
