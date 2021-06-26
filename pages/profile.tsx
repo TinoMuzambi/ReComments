@@ -203,14 +203,16 @@ const Profile: React.FC = (): JSX.Element => {
 			<section className="history">
 				<h1 className="title">Watch History</h1>
 
-				{dbUser?.watchhistory.map((item) => (
-					<div className="item">
-						<img src={item.thumbnail} alt={item.title} />
-						<h3 className="name">{item.title}</h3>
-						<h5 className="uploader">{item.uploader}</h5>
-						<h6 className="date">{item.date.toLocaleDateString()}</h6>
-					</div>
-				))}
+				<div className="results">
+					{dbUser?.watchhistory.map((item) => (
+						<div className="item">
+							<img src={item.thumbnail} alt={item.title} />
+							<h3 className="name">{item.title}</h3>
+							<h5 className="uploader">{item.uploader}</h5>
+							<h6 className="date">{item.date.toLocaleDateString()}</h6>
+						</div>
+					))}
+				</div>
 			</section>
 		</main>
 	);
