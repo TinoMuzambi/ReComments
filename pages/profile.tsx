@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const Profile: React.FC = (): JSX.Element => {
 	const { dbUser, signedIn } = useContext(AppContext);
+	const [photoUrl, setPhotoUrl] = useState(dbUser?.photoUrl);
 	const [name, setName] = useState(dbUser?.shortName);
 	const [email, setEmail] = useState(dbUser?.email);
 	const [emails, setEmails] = useState<boolean | undefined>(dbUser?.emails);
