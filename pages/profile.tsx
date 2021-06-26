@@ -69,8 +69,10 @@ const Profile: React.FC = (): JSX.Element => {
 		e.preventDefault();
 
 		setDeleteOrSubmit("submit");
-		setNoticeTitle("Submit comment");
-		setNoticeSubtitle("Are you sure you want to delete this comment?");
+		setNoticeTitle("Save changes");
+		setNoticeSubtitle(
+			"Are you sure you want to save these changes to your profile?"
+		);
 		setNoticeNoButtons(2);
 		setNoticeFirstButtonText("Yes");
 		setNoticeSecondButtonText("Cancel");
@@ -80,8 +82,10 @@ const Profile: React.FC = (): JSX.Element => {
 		e.preventDefault();
 
 		setDeleteOrSubmit("delete");
-		setNoticeTitle("Delete comment");
-		setNoticeSubtitle("Are you sure you want to delete this comment?");
+		setNoticeTitle("Delete your account");
+		setNoticeSubtitle(
+			"Are you sure you want to permanently delete your account?"
+		);
 		setNoticeNoButtons(2);
 		setNoticeFirstButtonText("Yes");
 		setNoticeSecondButtonText("Cancel");
