@@ -1,11 +1,11 @@
-import { FormEventHandler, useContext, useEffect } from "react";
+import { FormEventHandler, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
-import { useState } from "react";
 import { UserModel } from "../interfaces";
 import { postUpdatedResourceToDb } from "../utils";
 import { handleSignoutClick } from "../utils/gapi";
+import Notice from "../components/Notice";
 
 const Profile: React.FC = (): JSX.Element => {
 	const { dbUser, signedIn, setSignedIn, setDbUser, setUser } =
@@ -14,8 +14,33 @@ const Profile: React.FC = (): JSX.Element => {
 	const [name, setName] = useState(dbUser?.shortName);
 	const [email, setEmail] = useState(dbUser?.email);
 	const [emails, setEmails] = useState<boolean | undefined>(dbUser?.emails);
+	const [deleteOrSubmit, setDeleteOrSubmit] = useState<"delete" | "submit">(
+		"submit"
+	);
+
+	const [noticeVisible, setNoticeVisible] = useState<boolean>(false);
+	const [noticeNoButtons, setNoticeNoButtons] = useState<1 | 2>(1);
+	const [noticeTitle, setNoticeTitle] = useState("");
+	const [noticeSubtitle, setNoticeSubtitle] = useState("");
+	const [noticeFirstButtonText, setNoticeFirstButtonText] = useState("");
+	const [noticeSecondButtonText, setNoticeSecondButtonText] = useState("");
 
 	const router = useRouter();
+
+	useEffect(() => {
+		let timer: NodeJS.Timeout;
+		if (noticeNoButtons === 1) {
+			if (noticeVisible) {
+				timer = setTimeout(() => {
+					setNoticeVisible(false);
+					setNoticeTitle("");
+				}, 4000);
+			}
+		}
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [noticeVisible]);
 
 	useEffect(() => {
 		if (!signedIn) router.push("/signin");
@@ -27,8 +52,35 @@ const Profile: React.FC = (): JSX.Element => {
 		}
 	}, []);
 
+	const hideNotice: Function = () => {
+		setNoticeVisible(false);
+		setNoticeTitle("");
+		setNoticeSubtitle("");
+		setNoticeFirstButtonText("");
+		setNoticeSecondButtonText("");
+	};
+
 	const submitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
+
+		setNoticeTitle("Delete comment");
+		setNoticeSubtitle("Are you sure you want to delete this comment?");
+		setNoticeNoButtons(2);
+		setNoticeFirstButtonText("Yes");
+		setNoticeSecondButtonText("Cancel");
+	};
+
+	const deleteHandler: FormEventHandler<HTMLFormElement> = async (e) => {
+		e.preventDefault();
+
+		setNoticeTitle("Delete comment");
+		setNoticeSubtitle("Are you sure you want to delete this comment?");
+		setNoticeNoButtons(2);
+		setNoticeFirstButtonText("Yes");
+		setNoticeSecondButtonText("Cancel");
+	};
+
+	const submitCallback: Function = async () => {
 		if (dbUser) {
 			const body: UserModel = {
 				...dbUser,
@@ -46,9 +98,7 @@ const Profile: React.FC = (): JSX.Element => {
 		}
 	};
 
-	const deleteHandler: FormEventHandler<HTMLFormElement> = async (e) => {
-		e.preventDefault();
-
+	const deleteCallback: Function = async () => {
 		try {
 			await fetch(`/api/users/${dbUser?.userId}`, {
 				method: "DELETE",
@@ -63,6 +113,16 @@ const Profile: React.FC = (): JSX.Element => {
 
 	return (
 		<main className="main">
+			<Notice
+				visible={noticeVisible}
+				title={noticeTitle}
+				subtitle={noticeSubtitle}
+				noButtons={noticeNoButtons}
+				firstButtonText={noticeFirstButtonText}
+				secondButtonText={noticeSecondButtonText}
+				confirmCallback={deleteCallback}
+				cancelCallback={hideNotice}
+			/>
 			<div className="head">
 				<input
 					type="file"
