@@ -9,11 +9,18 @@ const Profile: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		if (!signedIn) router.push("/signin");
+		if (dbUser?.photoUrl) {
+			let root = document.documentElement;
+
+			if (root)
+				root.style.setProperty("--url", "url(" + dbUser?.photoUrl + ")");
+		}
 	}, []);
 	return (
 		<main className="main">
 			<div className="head">
-				<img src={dbUser?.photoUrl} alt={dbUser?.name} className="profile" />
+				{/* <img src={dbUser?.photoUrl} alt={dbUser?.name} className="profile" /> */}
+				<input type="file" />
 				<h1 className="name">{dbUser?.name}</h1>
 			</div>
 			<form className="form">

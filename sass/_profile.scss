@@ -5,6 +5,22 @@
 		.profile {
 			border-radius: 50%;
 		}
+
+		input {
+			&::-webkit-file-upload-button {
+				visibility: hidden;
+			}
+
+			&::before {
+				content: var(--url);
+			}
+			&:hover::before {
+				border-color: black;
+			}
+			&:active::before {
+				background: linear-gradient(#e3e3e3, #f9f9f9);
+			}
+		}
 	}
 
 	.form {
