@@ -1,5 +1,6 @@
 import { FormEventHandler, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import moment from "moment";
 
 import { AppContext } from "../context/AppContext";
@@ -206,12 +207,16 @@ const Profile: React.FC = (): JSX.Element => {
 
 				<div className="results">
 					{dbUser?.watchhistory.map((item) => (
-						<div className="item">
-							<img src={item.thumbnail} alt={item.title} />
-							<h3 className="name">{item.title}</h3>
-							<h5 className="uploader">{item.uploader}</h5>
-							<h6 className="date">{moment(item.date).fromNow()}</h6>
-						</div>
+						<Link href={`/video/${item.id}`}>
+							<a>
+								<div className="item">
+									<img src={item.thumbnail} alt={item.title} />
+									<h3 className="name">{item.title}</h3>
+									<h5 className="uploader">{item.uploader}</h5>
+									<h6 className="date">{moment(item.date).fromNow()}</h6>
+								</div>
+							</a>
+						</Link>
 					))}
 				</div>
 			</section>
