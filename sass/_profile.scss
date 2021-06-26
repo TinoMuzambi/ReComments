@@ -70,7 +70,11 @@
 	}
 
 	.history {
-		width: 100%;
+		width: 70%;
+
+		@include mq(768px) {
+			width: 100%;
+		}
 
 		.results {
 			display: flex;
