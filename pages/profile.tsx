@@ -27,6 +27,10 @@ const Profile: React.FC = (): JSX.Element => {
 		e.preventDefault();
 	};
 
+	const deleteHandler: FormEventHandler<HTMLFormElement> = (e) => {
+		e.preventDefault();
+	};
+
 	return (
 		<main className="main">
 			<div className="head">
@@ -37,7 +41,7 @@ const Profile: React.FC = (): JSX.Element => {
 				/>
 				<h1 className="name">{dbUser?.name}</h1>
 			</div>
-			<form className="form" onSubmit={submitHandler}>
+			<form className="form" onSubmit={submitHandler} onReset={deleteHandler}>
 				<div className="input-group">
 					<label htmlFor="name">Name</label>
 					<input
