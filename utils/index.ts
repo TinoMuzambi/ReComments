@@ -146,6 +146,7 @@ export const getDbUser: Function = async (
 		const data = await res.json();
 
 		if (setDbUser) setDbUser(data.data);
+		return data;
 	}
 };
 
