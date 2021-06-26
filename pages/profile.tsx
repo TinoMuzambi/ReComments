@@ -154,8 +154,18 @@ const Profile: React.FC = (): JSX.Element => {
 		setNoticeSecondButtonText("Cancel");
 	};
 
-	const clearWatchHistory: Function = () => {
-		console.log("object");
+	const clearWatchHistory: Function = async () => {
+		if (dbUser) {
+			const newBody: UserModel = {
+				...dbUser,
+				watchhistory: [],
+			};
+
+			try {
+				await postUpdatedResourceToDb(newBody);
+				if (setDbUser) setDbUser(newBody);
+			} catch (error) {}
+		}
 	};
 
 	return (
