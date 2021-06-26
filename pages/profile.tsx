@@ -1,4 +1,10 @@
-import { FormEventHandler, useContext, useEffect, useState } from "react";
+import {
+	FormEventHandler,
+	MouseEventHandler,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import moment from "moment";
@@ -16,9 +22,9 @@ const Profile: React.FC = (): JSX.Element => {
 	const [name, setName] = useState(dbUser?.shortName);
 	const [email, setEmail] = useState(dbUser?.email);
 	const [emails, setEmails] = useState<boolean | undefined>(dbUser?.emails);
-	const [deleteOrSubmit, setDeleteOrSubmit] = useState<"delete" | "submit">(
-		"submit"
-	);
+	const [deleteOrSubmitOrClear, setDeleteOrSubmitOrClear] = useState<
+		"delete" | "submit" | "clear"
+	>("submit");
 
 	const [noticeVisible, setNoticeVisible] = useState<boolean>(false);
 	const [noticeNoButtons, setNoticeNoButtons] = useState<1 | 2>(1);
@@ -65,7 +71,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const submitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 
-		setDeleteOrSubmit("submit");
+		setDeleteOrSubmitOrClear("submit");
 		setNoticeTitle("Save changes");
 		setNoticeSubtitle(
 			"Are you sure you want to save these changes to your profile?"
@@ -78,7 +84,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const deleteHandler: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 
-		setDeleteOrSubmit("delete");
+		setDeleteOrSubmitOrClear("delete");
 		setNoticeTitle("Delete your account");
 		setNoticeSubtitle(
 			"Are you sure you want to permanently delete your account?"
@@ -139,6 +145,19 @@ const Profile: React.FC = (): JSX.Element => {
 		}
 	};
 
+	const clearWatchHistoryHandler: MouseEventHandler<HTMLButtonElement> = () => {
+		setDeleteOrSubmitOrClear("clear");
+		setNoticeTitle("Clear watch history");
+		setNoticeSubtitle("Are you sure you want to clear your watch history?");
+		setNoticeNoButtons(2);
+		setNoticeFirstButtonText("Yes");
+		setNoticeSecondButtonText("Cancel");
+	};
+
+	const clearWatchHistory: Function = () => {
+		console.log("object");
+	};
+
 	return (
 		<main className="main">
 			<Notice
@@ -149,7 +168,11 @@ const Profile: React.FC = (): JSX.Element => {
 				firstButtonText={noticeFirstButtonText}
 				secondButtonText={noticeSecondButtonText}
 				confirmCallback={
-					deleteOrSubmit === "delete" ? deleteCallback : submitCallback
+					deleteOrSubmitOrClear === "delete"
+						? deleteCallback
+						: deleteOrSubmitOrClear === "clear"
+						? clearWatchHistory
+						: submitCallback
 				}
 				cancelCallback={hideNotice}
 			/>
@@ -219,6 +242,10 @@ const Profile: React.FC = (): JSX.Element => {
 						</Link>
 					))}
 				</div>
+
+				<button className="clear" onClick={clearWatchHistoryHandler}>
+					Clear Watch History
+				</button>
 			</section>
 		</main>
 	);
