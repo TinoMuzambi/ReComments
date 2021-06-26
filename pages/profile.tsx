@@ -8,7 +8,8 @@ import { postUpdatedResourceToDb } from "../utils";
 import { handleSignoutClick } from "../utils/gapi";
 
 const Profile: React.FC = (): JSX.Element => {
-	const { dbUser, signedIn } = useContext(AppContext);
+	const { dbUser, signedIn, setSignedIn, setDbUser, setUser } =
+		useContext(AppContext);
 	const [photoUrl, setPhotoUrl] = useState(dbUser?.photoUrl);
 	const [name, setName] = useState(dbUser?.shortName);
 	const [email, setEmail] = useState(dbUser?.email);
@@ -53,6 +54,10 @@ const Profile: React.FC = (): JSX.Element => {
 				method: "DELETE",
 			});
 			handleSignoutClick();
+			if (setSignedIn) setSignedIn(false);
+			if (setDbUser) setDbUser(null);
+			if (setUser) setUser(null);
+			router.push("/signin");
 		} catch (error) {}
 	};
 
