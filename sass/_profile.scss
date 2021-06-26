@@ -43,6 +43,10 @@
 			align-items: center;
 			margin: 1rem 0;
 
+			&:last-child {
+				gap: 1rem;
+			}
+
 			input:not([type="checkbox"]) {
 				background: transparent;
 				border: none;
@@ -71,6 +75,10 @@
 		gap: 5rem;
 		flex-wrap: wrap;
 		margin: 2rem 0;
+
+		@include mq(768px) {
+			gap: 1rem;
+		}
 	}
 
 	.clear {
