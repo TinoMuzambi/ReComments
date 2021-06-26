@@ -2,9 +2,14 @@ import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
+import { useState } from "react";
 
 const Profile: React.FC = (): JSX.Element => {
 	const { dbUser, signedIn } = useContext(AppContext);
+	const [name, setName] = useState(dbUser?.shortName);
+	const [email, setEmail] = useState(dbUser?.email);
+	const [emails, setEmails] = useState<boolean | undefined>(dbUser?.emails);
+
 	const router = useRouter();
 
 	useEffect(() => {
@@ -19,24 +24,45 @@ const Profile: React.FC = (): JSX.Element => {
 	return (
 		<main className="main">
 			<div className="head">
-				{/* <img src={dbUser?.photoUrl} alt={dbUser?.name} className="profile" /> */}
-				<input type="file" />
+				<input
+					type="file"
+					accept="image/*"
+					onChange={(e) => console.log(e.target.files)}
+				/>
 				<h1 className="name">{dbUser?.name}</h1>
 			</div>
 			<form className="form">
 				<div className="input-group">
 					<label htmlFor="name">Name</label>
-					<input type="text" id="name" required />
+					<input
+						type="text"
+						id="name"
+						required
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+					/>
 				</div>
 				<div className="input-group">
 					<label htmlFor="email">Email</label>
-					<input type="email" id="email" required />
+					<input
+						type="email"
+						id="email"
+						required
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+					/>
 				</div>
 				<div className="input-group">
 					<label htmlFor="emailPref">
 						Want to receive email notifications?
 					</label>
-					<input type="checkbox" id="emailPref" required />
+					<input
+						type="checkbox"
+						id="emailPref"
+						required
+						checked={emails}
+						onChange={(e) => setEmails(e.target.checked)}
+					/>
 				</div>
 				<div className="input-group">
 					<button type="submit">Save</button>
