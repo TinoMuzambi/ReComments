@@ -164,7 +164,18 @@ const Profile: React.FC = (): JSX.Element => {
 			try {
 				await postUpdatedResourceToDb(newBody);
 				if (setDbUser) setDbUser(newBody);
-			} catch (error) {}
+				setNoticeTitle("Watch history cleared");
+				setNoticeSubtitle("Your watch history has been cleared.");
+				setNoticeNoButtons(1);
+				setNoticeFirstButtonText("Ok");
+			} catch (error) {
+				setNoticeTitle("Watch history not cleared");
+				setNoticeSubtitle(
+					"Something went wrong. Please contact the developer."
+				);
+				setNoticeNoButtons(1);
+				setNoticeFirstButtonText("Ok");
+			}
 		}
 	};
 
