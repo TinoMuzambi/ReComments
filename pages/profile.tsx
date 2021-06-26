@@ -103,9 +103,17 @@ const Profile: React.FC = (): JSX.Element => {
 
 			try {
 				await postUpdatedResourceToDb(body);
-				console.log("done");
+				setNoticeTitle("Account successfully updated");
+				setNoticeSubtitle("Your changes were succesfully saved.");
+				setNoticeNoButtons(1);
+				setNoticeFirstButtonText("Ok");
 			} catch (error) {
-				console.error(error);
+				setNoticeTitle("Account not updated");
+				setNoticeSubtitle(
+					"Something went wrong. Please contact the developer."
+				);
+				setNoticeNoButtons(1);
+				setNoticeFirstButtonText("Ok");
 			}
 		}
 	};
@@ -115,12 +123,23 @@ const Profile: React.FC = (): JSX.Element => {
 			await fetch(`/api/users/${dbUser?.userId}`, {
 				method: "DELETE",
 			});
+			setNoticeTitle("Account successfully deleted");
+			setNoticeSubtitle(
+				"Your account and all account data were succesfully deleted."
+			);
+			setNoticeNoButtons(1);
+			setNoticeFirstButtonText("Ok");
 			handleSignoutClick();
 			if (setSignedIn) setSignedIn(false);
 			if (setDbUser) setDbUser(null);
 			if (setUser) setUser(null);
 			router.push("/signin");
-		} catch (error) {}
+		} catch (error) {
+			setNoticeTitle("Account not deleted");
+			setNoticeSubtitle("Something went wrong. Please contact the developer.");
+			setNoticeNoButtons(1);
+			setNoticeFirstButtonText("Ok");
+		}
 	};
 
 	return (
