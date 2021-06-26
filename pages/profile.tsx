@@ -28,6 +28,11 @@ const Profile: React.FC = (): JSX.Element => {
 	const router = useRouter();
 
 	useEffect(() => {
+		if (noticeTitle !== "") setNoticeVisible(true);
+		else setNoticeVisible(false);
+	}, [noticeTitle]);
+
+	useEffect(() => {
 		let timer: NodeJS.Timeout;
 		if (noticeNoButtons === 1) {
 			if (noticeVisible) {
@@ -64,7 +69,7 @@ const Profile: React.FC = (): JSX.Element => {
 		e.preventDefault();
 
 		setDeleteOrSubmit("submit");
-		setNoticeTitle("Delete comment");
+		setNoticeTitle("Submit comment");
 		setNoticeSubtitle("Are you sure you want to delete this comment?");
 		setNoticeNoButtons(2);
 		setNoticeFirstButtonText("Yes");
@@ -84,6 +89,7 @@ const Profile: React.FC = (): JSX.Element => {
 
 	const submitCallback: Function = async () => {
 		if (dbUser) {
+			setNoticeTitle("");
 			const body: UserModel = {
 				...dbUser,
 				shortName: name as string,
