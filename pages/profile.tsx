@@ -13,10 +13,10 @@ const Profile: React.FC = (): JSX.Element => {
 	return (
 		<main className="main">
 			<div className="head">
-				<img src={dbUser?.photoUrl} alt={dbUser?.name} />
+				<img src={dbUser?.photoUrl} alt={dbUser?.name} className="profile" />
 				<h1 className="name">{dbUser?.name}</h1>
 			</div>
-			<form>
+			<form className="form">
 				<div className="input-group">
 					<label htmlFor="name">Name</label>
 					<input type="text" id="name" required />
@@ -31,8 +31,10 @@ const Profile: React.FC = (): JSX.Element => {
 					</label>
 					<input type="checkbox" id="emailPref" required />
 				</div>
-				<button type="submit">Save</button>
-				<button type="reset">Delete your account</button>
+				<div className="input-group">
+					<button type="submit">Save</button>
+					<button type="reset">Delete your account</button>
+				</div>
 			</form>
 		</main>
 	);

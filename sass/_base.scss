@@ -3,6 +3,10 @@
 $primary-colour: orange;
 $accent-colour: rgb(61, 166, 255);
 
+:root {
+	--white: rgb(29, 29, 29);
+}
+
 %flex {
 	display: flex;
 }
@@ -78,6 +82,8 @@ body {
 	&.dark {
 		background: rgb(29, 29, 29);
 		color: white;
+
+		--white: white;
 	}
 }
 

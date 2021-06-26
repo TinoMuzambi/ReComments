@@ -1,0 +1,37 @@
+.main {
+	text-align: center;
+
+	.head {
+		.profile {
+			border-radius: 50%;
+		}
+	}
+
+	.form {
+		.input-group {
+			display: flex;
+			flex-direction: column;
+			gap: 0.4rem;
+			align-items: center;
+			margin: 1rem 0;
+
+			input:not([type="checkbox"]) {
+				background: transparent;
+				border: none;
+				outline: none;
+				color: inherit;
+				border-bottom: 1px solid var(--white);
+				width: 100%;
+			}
+
+			button {
+				@include buttonReset;
+				background: $primary-colour;
+				color: white;
+				padding: 1rem 2rem;
+				border-radius: 1000000rem;
+				width: 100%;
+			}
+		}
+	}
+}
