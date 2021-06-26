@@ -114,6 +114,7 @@ export interface UserModel {
 
 export interface HistoryItem {
 	id: string;
+	title: string;
 	thumbnail: string;
 	uploader: string;
 	date: Date;
