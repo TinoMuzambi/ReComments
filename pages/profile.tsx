@@ -50,12 +50,6 @@ const Profile: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		if (!signedIn) router.push("/signin");
-		if (dbUser?.photoUrl) {
-			let root = document.documentElement;
-
-			if (root)
-				root.style.setProperty("--url", "url(" + dbUser?.photoUrl + ")");
-		}
 	}, []);
 
 	const hideNotice: Function = () => {
