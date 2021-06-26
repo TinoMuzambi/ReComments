@@ -63,6 +63,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const submitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 
+		setDeleteOrSubmit("submit");
 		setNoticeTitle("Delete comment");
 		setNoticeSubtitle("Are you sure you want to delete this comment?");
 		setNoticeNoButtons(2);
@@ -73,6 +74,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const deleteHandler: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 
+		setDeleteOrSubmit("delete");
 		setNoticeTitle("Delete comment");
 		setNoticeSubtitle("Are you sure you want to delete this comment?");
 		setNoticeNoButtons(2);
