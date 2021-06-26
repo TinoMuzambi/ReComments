@@ -2,6 +2,7 @@
 	@include flexAllCol;
 	gap: 1rem;
 	min-height: calc(100vh - 4.2rem);
+	padding: 2rem;
 
 	&.padding {
 		padding: 2rem;

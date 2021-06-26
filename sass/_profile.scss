@@ -1,5 +1,7 @@
-.main.center {
-	text-align: center;
+.main {
+	&.center {
+		text-align: center;
+	}
 
 	.head {
 		.profile {
