@@ -11,9 +11,30 @@ const Profile: React.FC = (): JSX.Element => {
 		if (!signedIn) router.push("/signin");
 	}, []);
 	return (
-		<div>
-			<h1>profile for {dbUser?.shortName}</h1>
-		</div>
+		<main className="main">
+			<div className="head">
+				<img src={dbUser?.photoUrl} alt={dbUser?.name} />
+				<h1 className="name">{dbUser?.name}</h1>
+			</div>
+			<form>
+				<div className="input-group">
+					<label htmlFor="name">Name</label>
+					<input type="text" id="name" required />
+				</div>
+				<div className="input-group">
+					<label htmlFor="email">Email</label>
+					<input type="email" id="email" required />
+				</div>
+				<div className="input-group">
+					<label htmlFor="emailPref">
+						Want to receive email notifications?
+					</label>
+					<input type="checkbox" id="emailPref" required />
+				</div>
+				<button type="submit">Save</button>
+				<button type="reset">Delete your account</button>
+			</form>
+		</main>
 	);
 };
 
