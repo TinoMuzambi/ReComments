@@ -109,6 +109,14 @@ export interface UserModel {
 	upvotedIds?: string[];
 	downvotedIds?: string[];
 	emails: boolean;
+	watchhistory: HistoryItem[];
+}
+
+export interface HistoryItem {
+	id: string;
+	thumbnail: string;
+	uploader: string;
+	date: Date;
 }
 
 export interface HomeModel {
