@@ -32,33 +32,15 @@ const Profile: React.FC = (): JSX.Element => {
 		if (noticeTitle !== "") {
 			setNoticeVisible(true);
 			if (noticeNoButtons === 1) {
-				if (noticeVisible) {
-					timer = setTimeout(() => {
-						setNoticeVisible(false);
-						setNoticeTitle("");
-					}, 4000);
-				}
+				timer = setTimeout(() => {
+					setNoticeVisible(false);
+				}, 4000);
 			}
 		} else setNoticeVisible(false);
 		return () => {
 			clearTimeout(timer);
 		};
 	}, [noticeTitle]);
-
-	// useEffect(() => {
-	// 	let timer: NodeJS.Timeout;
-	// 	if (noticeNoButtons === 1) {
-	// 		if (noticeVisible) {
-	// 			timer = setTimeout(() => {
-	// 				setNoticeVisible(false);
-	// 				setNoticeTitle("");
-	// 			}, 4000);
-	// 		}
-	// 	}
-	// 	return () => {
-	// 		clearTimeout(timer);
-	// 	};
-	// }, [noticeVisible, noticeTitle]);
 
 	useEffect(() => {
 		if (!signedIn) router.push("/signin");
