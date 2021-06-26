@@ -250,7 +250,7 @@ const Profile: React.FC = (): JSX.Element => {
 
 				<div className="results">
 					{dbUser?.watchhistory.map((item) => (
-						<HistoryResult item={item} />
+						<HistoryResult item={item} key={item.id} />
 					))}
 				</div>
 
