@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { FormEventHandler, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
@@ -22,6 +22,11 @@ const Profile: React.FC = (): JSX.Element => {
 				root.style.setProperty("--url", "url(" + dbUser?.photoUrl + ")");
 		}
 	}, []);
+
+	const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
+		e.preventDefault();
+	};
+
 	return (
 		<main className="main">
 			<div className="head">
@@ -32,7 +37,7 @@ const Profile: React.FC = (): JSX.Element => {
 				/>
 				<h1 className="name">{dbUser?.name}</h1>
 			</div>
-			<form className="form">
+			<form className="form" onSubmit={submitHandler}>
 				<div className="input-group">
 					<label htmlFor="name">Name</label>
 					<input
@@ -60,7 +65,6 @@ const Profile: React.FC = (): JSX.Element => {
 					<input
 						type="checkbox"
 						id="emailPref"
-						required
 						checked={emails}
 						onChange={(e) => setEmails(e.target.checked)}
 					/>
