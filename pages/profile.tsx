@@ -28,24 +28,37 @@ const Profile: React.FC = (): JSX.Element => {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (noticeTitle !== "") setNoticeVisible(true);
-		else setNoticeVisible(false);
-	}, [noticeTitle]);
-
-	useEffect(() => {
 		let timer: NodeJS.Timeout;
-		if (noticeNoButtons === 1) {
-			if (noticeVisible) {
-				timer = setTimeout(() => {
-					setNoticeVisible(false);
-					setNoticeTitle("");
-				}, 4000);
+		if (noticeTitle !== "") {
+			setNoticeVisible(true);
+			if (noticeNoButtons === 1) {
+				if (noticeVisible) {
+					timer = setTimeout(() => {
+						setNoticeVisible(false);
+						setNoticeTitle("");
+					}, 4000);
+				}
 			}
-		}
+		} else setNoticeVisible(false);
 		return () => {
 			clearTimeout(timer);
 		};
-	}, [noticeVisible]);
+	}, [noticeTitle]);
+
+	// useEffect(() => {
+	// 	let timer: NodeJS.Timeout;
+	// 	if (noticeNoButtons === 1) {
+	// 		if (noticeVisible) {
+	// 			timer = setTimeout(() => {
+	// 				setNoticeVisible(false);
+	// 				setNoticeTitle("");
+	// 			}, 4000);
+	// 		}
+	// 	}
+	// 	return () => {
+	// 		clearTimeout(timer);
+	// 	};
+	// }, [noticeVisible, noticeTitle]);
 
 	useEffect(() => {
 		if (!signedIn) router.push("/signin");
