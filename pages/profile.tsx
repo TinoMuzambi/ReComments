@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
 import { useState } from "react";
+import { UserModel } from "../interfaces";
+import { postUpdatedResourceToDb } from "../utils";
 
 const Profile: React.FC = (): JSX.Element => {
 	const { dbUser, signedIn } = useContext(AppContext);
@@ -23,8 +25,23 @@ const Profile: React.FC = (): JSX.Element => {
 		}
 	}, []);
 
-	const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
+	const submitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
+		if (dbUser) {
+			const body: UserModel = {
+				...dbUser,
+				shortName: name as string,
+				email: email as string,
+				emails: emails as boolean,
+			};
+
+			try {
+				await postUpdatedResourceToDb(body);
+				console.log("done");
+			} catch (error) {
+				console.error(error);
+			}
+		}
 	};
 
 	const deleteHandler: FormEventHandler<HTMLFormElement> = (e) => {
