@@ -1,10 +1,6 @@
 .item {
 	border-left: 5px solid $primary-colour;
-	// padding-left: 1rem;
 	text-align: left;
-	img {
-		object-fit: cover;
-	}
 
 	.name,
 	.uploader,
@@ -23,5 +19,6 @@
 		margin: 1rem;
 		padding: 0.3rem;
 		border-radius: 2rem;
+		color: white;
 	}
 }
