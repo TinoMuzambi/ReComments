@@ -120,7 +120,9 @@ const Profile: React.FC = (): JSX.Element => {
 				noButtons={noticeNoButtons}
 				firstButtonText={noticeFirstButtonText}
 				secondButtonText={noticeSecondButtonText}
-				confirmCallback={deleteCallback}
+				confirmCallback={
+					deleteOrSubmit === "delete" ? deleteCallback : submitCallback
+				}
 				cancelCallback={hideNotice}
 			/>
 			<div className="head">
