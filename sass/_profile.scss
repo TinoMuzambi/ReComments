@@ -7,12 +7,23 @@
 		}
 
 		input {
+			color: transparent;
+			position: relative;
+			margin: 1rem 0;
+			outline: none;
+
 			&::-webkit-file-upload-button {
 				visibility: hidden;
 			}
 
 			&::before {
 				content: var(--url);
+				display: inline-block;
+				cursor: pointer;
+				position: relative;
+				left: 50%;
+				transform: translateX(-50%);
+				border-radius: 50%;
 			}
 			&:hover::before {
 				border-color: black;
