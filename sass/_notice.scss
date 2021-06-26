@@ -8,6 +8,7 @@
 	right: 2rem;
 	z-index: 2;
 	opacity: 0;
+	text-align: start;
 
 	@include mq(768px) {
 		padding: 1rem;
