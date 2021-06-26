@@ -3,91 +3,103 @@
 		text-align: center;
 	}
 
-	.head {
-		.profile {
-			border-radius: 50%;
+	.account {
+		.head {
+			margin-top: 4rem;
+			img {
+				border-radius: 50%;
+				height: 100px;
+				width: 100px;
+			}
+			.profile {
+				border-radius: 50%;
+			}
+
+			// input {
+			// 	color: transparent;
+			// 	position: relative;
+			// 	margin: 1rem 0;
+			// 	outline: none;
+
+			// 	&::-webkit-file-upload-button {
+			// 		visibility: hidden;
+			// 	}
+
+			// 	&::before {
+			// 		content: var(--url);
+			// 		display: inline-block;
+			// 		cursor: pointer;
+			// 		position: relative;
+			// 		left: 50%;
+			// 		transform: translateX(-50%);
+			// 	}
+			// 	&:hover::before {
+			// 		border-color: black;
+			// 	}
+			// 	&:active::before {
+			// 		background: linear-gradient(#e3e3e3, #f9f9f9);
+			// 	}
+			// }
 		}
 
-		input {
-			color: transparent;
-			position: relative;
-			margin: 1rem 0;
-			outline: none;
+		.form {
+			width: 100%;
 
-			&::-webkit-file-upload-button {
-				visibility: hidden;
-			}
+			.input-group {
+				display: flex;
+				flex-direction: column;
+				gap: 0.4rem;
+				align-items: center;
+				margin: 1rem 0;
 
-			&::before {
-				content: var(--url);
-				display: inline-block;
-				cursor: pointer;
-				position: relative;
-				left: 50%;
-				transform: translateX(-50%);
-			}
-			&:hover::before {
-				border-color: black;
-			}
-			&:active::before {
-				background: linear-gradient(#e3e3e3, #f9f9f9);
+				&:last-child {
+					gap: 1rem;
+				}
+
+				input:not([type="checkbox"]) {
+					background: transparent;
+					border: none;
+					outline: none;
+					color: inherit;
+					border-bottom: 1px solid var(--white);
+					width: 100%;
+					text-align: center;
+					padding: 0.2rem 0;
+				}
+
+				button {
+					@include buttonReset;
+					background: $primary-colour;
+					color: white;
+					padding: 1rem 2rem;
+					border-radius: 1000000rem;
+					width: 100%;
+				}
 			}
 		}
 	}
 
-	.form {
-		.input-group {
+	.history {
+		.results {
 			display: flex;
-			flex-direction: column;
-			gap: 0.4rem;
-			align-items: center;
-			margin: 1rem 0;
+			justify-content: center;
+			gap: 5rem;
+			flex-wrap: wrap;
+			margin: 2rem 0;
 
-			&:last-child {
+			@include mq(768px) {
 				gap: 1rem;
 			}
-
-			input:not([type="checkbox"]) {
-				background: transparent;
-				border: none;
-				outline: none;
-				color: inherit;
-				border-bottom: 1px solid var(--white);
-				width: 100%;
-				text-align: center;
-				padding: 0.2rem 0;
-			}
-
-			button {
-				@include buttonReset;
-				background: $primary-colour;
-				color: white;
-				padding: 1rem 2rem;
-				border-radius: 1000000rem;
-				width: 100%;
-			}
 		}
-	}
 
-	.results {
-		display: flex;
-		justify-content: center;
-		gap: 5rem;
-		flex-wrap: wrap;
-		margin: 2rem 0;
-
-		@include mq(768px) {
-			gap: 1rem;
+		.clear {
+			@include buttonReset;
+			margin: 2rem 0;
+			background: $primary-colour;
+			color: white;
+			padding: 1rem 2rem;
+			border-radius: 1000000rem;
+			width: 100%;
 		}
-	}
-
-	.clear {
-		@include buttonReset;
-		margin: 2rem 0;
-		background: $primary-colour;
-		color: white;
-		padding: 1rem 2rem;
-		border-radius: 1000000rem;
-		width: 100%;
 	}
 }

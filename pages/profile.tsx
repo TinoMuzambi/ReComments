@@ -17,7 +17,6 @@ import HistoryResult from "../components/HistoryResult";
 const Profile: React.FC = (): JSX.Element => {
 	const { dbUser, signedIn, setSignedIn, setDbUser, setUser } =
 		useContext(AppContext);
-	const [photoUrl, setPhotoUrl] = useState(dbUser?.photoUrl);
 	const [name, setName] = useState(dbUser?.shortName);
 	const [email, setEmail] = useState(dbUser?.email);
 	const [emails, setEmails] = useState<boolean | undefined>(dbUser?.emails);
@@ -199,11 +198,7 @@ const Profile: React.FC = (): JSX.Element => {
 			<section className="account">
 				<h1 className="title">Account</h1>
 				<div className="head">
-					<input
-						type="file"
-						accept="image/*"
-						onChange={(e) => console.log(e.target.files)}
-					/>
+					<img src={dbUser?.photoUrl} alt={dbUser?.name} />
 					<h1 className="name">{dbUser?.name}</h1>
 				</div>
 				<form className="form" onSubmit={submitHandler} onReset={deleteHandler}>
