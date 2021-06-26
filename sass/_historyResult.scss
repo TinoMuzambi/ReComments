@@ -1,31 +1,24 @@
-.results {
-	display: flex;
-	gap: 5rem;
-	flex-wrap: wrap;
-	margin: 2rem 0;
+.item {
+	img {
+		object-fit: cover;
+	}
 
-	.item {
-		img {
-			object-fit: cover;
-		}
+	.name,
+	.uploader,
+	.date {
+		margin-top: 1rem;
+	}
 
-		.name,
-		.uploader,
-		.date {
-			margin-top: 1rem;
-		}
+	.name {
+		color: $primary-colour;
+	}
 
-		.name {
-			color: $primary-colour;
-		}
-
-		.date {
-			font-weight: normal;
-			background: $primary-colour;
-			width: fit-content;
-			margin: 1rem auto;
-			padding: 0.3rem;
-			border-radius: 2rem;
-		}
+	.date {
+		font-weight: normal;
+		background: $primary-colour;
+		width: fit-content;
+		margin: 1rem auto;
+		padding: 0.3rem;
+		border-radius: 2rem;
 	}
 }

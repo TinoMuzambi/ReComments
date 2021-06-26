@@ -179,7 +179,7 @@ const Profile: React.FC = (): JSX.Element => {
 	};
 
 	return (
-		<main className="main">
+		<main className="main center">
 			<Notice
 				visible={noticeVisible}
 				title={noticeTitle}

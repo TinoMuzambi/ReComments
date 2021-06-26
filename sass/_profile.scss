@@ -1,4 +1,4 @@
-.main {
+.main.center {
 	text-align: center;
 
 	.head {
@@ -61,5 +61,22 @@
 				width: 100%;
 			}
 		}
+	}
+
+	.results {
+		display: flex;
+		gap: 5rem;
+		flex-wrap: wrap;
+		margin: 2rem 0;
+	}
+
+	.clear {
+		@include buttonReset;
+		margin: 2rem 0;
+		background: $primary-colour;
+		color: white;
+		padding: 1rem 2rem;
+		border-radius: 1000000rem;
+		width: 100%;
 	}
 }
