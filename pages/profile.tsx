@@ -151,51 +151,58 @@ const Profile: React.FC = (): JSX.Element => {
 				}
 				cancelCallback={hideNotice}
 			/>
-			<div className="head">
-				<input
-					type="file"
-					accept="image/*"
-					onChange={(e) => console.log(e.target.files)}
-				/>
-				<h1 className="name">{dbUser?.name}</h1>
-			</div>
-			<form className="form" onSubmit={submitHandler} onReset={deleteHandler}>
-				<div className="input-group">
-					<label htmlFor="name">Name</label>
+			<section className="account">
+				<h1 className="title">Account</h1>
+				<div className="head">
 					<input
-						type="text"
-						id="name"
-						required
-						value={name}
-						onChange={(e) => setName(e.target.value)}
+						type="file"
+						accept="image/*"
+						onChange={(e) => console.log(e.target.files)}
 					/>
+					<h1 className="name">{dbUser?.name}</h1>
 				</div>
-				<div className="input-group">
-					<label htmlFor="email">Email</label>
-					<input
-						type="email"
-						id="email"
-						required
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-				</div>
-				<div className="input-group">
-					<label htmlFor="emailPref">
-						Want to receive email notifications?
-					</label>
-					<input
-						type="checkbox"
-						id="emailPref"
-						checked={emails}
-						onChange={(e) => setEmails(e.target.checked)}
-					/>
-				</div>
-				<div className="input-group">
-					<button type="submit">Save</button>
-					<button type="reset">Delete your account</button>
-				</div>
-			</form>
+				<form className="form" onSubmit={submitHandler} onReset={deleteHandler}>
+					<div className="input-group">
+						<label htmlFor="name">Name</label>
+						<input
+							type="text"
+							id="name"
+							required
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						/>
+					</div>
+					<div className="input-group">
+						<label htmlFor="email">Email</label>
+						<input
+							type="email"
+							id="email"
+							required
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+					</div>
+					<div className="input-group">
+						<label htmlFor="emailPref">
+							Want to receive email notifications?
+						</label>
+						<input
+							type="checkbox"
+							id="emailPref"
+							checked={emails}
+							onChange={(e) => setEmails(e.target.checked)}
+						/>
+					</div>
+					<div className="input-group">
+						<button type="submit">Save</button>
+						<button type="reset">Delete your account</button>
+					</div>
+				</form>
+			</section>
+
+			<section className="history">
+				<h1 className="title">Watch History</h1>
+			</section>
 		</main>
 	);
 };
