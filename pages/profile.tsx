@@ -234,19 +234,20 @@ const Profile: React.FC = (): JSX.Element => {
 				</form>
 			</section>
 
-			<section className="history">
-				<h1 className="title">Watch History</h1>
+			{dbUser?.watchhistory.length !== 0 && (
+				<section className="history">
+					<h1 className="title">Watch History</h1>
+					<div className="results">
+						{dbUser?.watchhistory.map((item) => (
+							<HistoryResult item={item} key={item.id} />
+						))}
+					</div>
 
-				<div className="results">
-					{dbUser?.watchhistory.map((item) => (
-						<HistoryResult item={item} key={item.id} />
-					))}
-				</div>
-
-				<button className="clear" onClick={clearWatchHistoryHandler}>
-					Clear Watch History
-				</button>
-			</section>
+					<button className="clear" onClick={clearWatchHistoryHandler}>
+						Clear Watch History
+					</button>
+				</section>
+			)}
 		</main>
 	);
 };
