@@ -4,6 +4,8 @@
 	}
 
 	.account {
+		width: 100%;
+
 		.head {
 			margin-top: 4rem;
 			img {
@@ -17,17 +19,23 @@
 		}
 
 		.form {
-			width: 100%;
+			width: 70%;
+			margin: 0 auto;
+
+			@include mq(768px) {
+				width: 100%;
+			}
 
 			.input-group {
 				display: flex;
 				flex-direction: column;
-				gap: 0.4rem;
+				gap: 1rem;
 				align-items: center;
 				margin: 1rem 0;
 
 				&:last-child {
 					gap: 1rem;
+					margin-top: 2rem;
 				}
 
 				input:not([type="checkbox"]) {
@@ -48,12 +56,18 @@
 					padding: 1rem 2rem;
 					border-radius: 1000000rem;
 					width: 100%;
+
+					&:hover {
+						transform: scale(0.99);
+					}
 				}
 			}
 		}
 	}
 
 	.history {
+		width: 100%;
+
 		.results {
 			display: flex;
 			justify-content: center;
@@ -74,6 +88,10 @@
 			padding: 1rem 2rem;
 			border-radius: 1000000rem;
 			width: 100%;
+
+			&:hover {
+				transform: scale(0.99);
+			}
 		}
 	}
 }
