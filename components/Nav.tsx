@@ -57,14 +57,14 @@ const Nav: React.FC = (): JSX.Element => {
 						</div>
 					</div>
 					<div className={`links-holder ${navOpen && "open"}`}>
-						<Link href="/">
-							<a className="link">Home</a>
-						</Link>
 						{signedIn && (
 							<Link href="/search">
-								<a className="link">Search</a>
+								<a className="link">Home</a>
 							</Link>
 						)}
+						<Link href="/">
+							<a className="link">About</a>
+						</Link>
 						{signedIn && (
 							<li className="link" onClick={handleSignOut}>
 								Sign Out
