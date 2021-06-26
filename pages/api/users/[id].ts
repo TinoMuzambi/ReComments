@@ -25,9 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 				res.status(200).json({
 					success: true,
-					data: {
-						emails: user.emails,
-					},
+					data: user,
 				});
 			} catch (error) {
 				return res.status(400).json({ success: false, data: error });
