@@ -27,24 +27,43 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 				await loadClient();
 				execute(false, url, false, (res: gapi.client.youtube.Video[]) => {
 					setResult(res[0]);
-					if (
-						res[0] &&
-						res[0].snippet?.thumbnails &&
-						dbUser &&
-						checkHistory(dbUser.watchhistory, res[0].id)
-					) {
-						const newItem: HistoryItem = {
-							id: res[0].id as string,
-							title: res[0].snippet?.title as string,
-							thumbnail: res[0].snippet?.thumbnails.high?.url as string,
-							uploader: res[0].snippet?.channelTitle as string,
+					if (res[0] && res[0].snippet?.thumbnails && dbUser) {
+						let newItem: HistoryItem = {
+							id: "",
+							title: "",
+							thumbnail: "",
+							uploader: "",
 							date: new Date(),
 						};
-
-						const newBody: UserModel = {
-							...dbUser,
-							watchhistory: [newItem, ...dbUser.watchhistory],
-						};
+						const historyCheck = checkHistory(dbUser.watchhistory, res[0].id);
+						if (historyCheck) {
+							newItem = {
+								id: res[0].id as string,
+								title: res[0].snippet?.title as string,
+								thumbnail: res[0].snippet?.thumbnails.high?.url as string,
+								uploader: res[0].snippet?.channelTitle as string,
+								date: new Date(),
+							};
+						} else {
+							newItem = dbUser.watchhistory.find(
+								(item) => item.id === res[0].id
+							) as HistoryItem;
+							newItem = { ...newItem, date: new Date() };
+						}
+						const newBody: UserModel = historyCheck
+							? {
+									...dbUser,
+									watchhistory: [newItem, ...dbUser.watchhistory],
+							  }
+							: {
+									...dbUser,
+									watchhistory: [
+										newItem,
+										...dbUser.watchhistory.filter(
+											(item) => item.id !== res[0].id
+										),
+									],
+							  };
 
 						const post: Function = async () => {
 							try {
