@@ -1,6 +1,6 @@
 import Link from "next/link";
 import moment from "moment";
-import { MdClose } from "react-icons/md";
+import { IoCloseCircle } from "react-icons/io5";
 import { MouseEventHandler } from "react";
 
 import { HistoryItem } from "../interfaces";
@@ -22,9 +22,8 @@ const HistoryResult: React.FC<{
 						<h3 className="name">{item.title}</h3>
 					</a>
 				</Link>
-				<button onClick={() => clearVideo(item.id)}>
-					<MdClose className="icon" />
-				</button>
+
+				<IoCloseCircle className="icon" onClick={() => clearVideo(item.id)} />
 			</div>
 			<Link href={`/video/${item.id}`}>
 				<a>

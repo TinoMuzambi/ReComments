@@ -26,14 +26,11 @@
 			color: $primary-colour;
 		}
 
-		button {
-			@include buttonReset;
-			background: $primary-colour;
-			color: white;
-			padding: 0.5rem;
-			border-radius: 50%;
-			height: 2rem;
-			width: 2rem;
+		.icon {
+			fill: $primary-colour;
+			cursor: pointer;
+			height: 3rem;
+			width: 3rem;
 
 			&:hover {
 				transform: scale(0.9);
