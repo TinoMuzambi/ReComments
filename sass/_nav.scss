@@ -29,11 +29,6 @@
 
 			@include mq(500px) {
 				flex-direction: column;
-				pointer-events: none;
-
-				&.open {
-					pointer-events: all;
-				}
 			}
 
 			.row {
