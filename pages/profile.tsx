@@ -13,6 +13,7 @@ import { postUpdatedResourceToDb } from "../utils";
 import { handleSignoutClick } from "../utils/gapi";
 import Notice from "../components/Notice";
 import HistoryResult from "../components/HistoryResult";
+import Spinner from "../components/Spinner";
 
 const Profile: React.FC = (): JSX.Element => {
 	const { dbUser, signedIn, setSignedIn, setDbUser, setUser } =
@@ -23,6 +24,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const [deleteOrSubmitOrClear, setDeleteOrSubmitOrClear] = useState<
 		"delete" | "submit" | "clear"
 	>("submit");
+	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
 	const [noticeVisible, setNoticeVisible] = useState<boolean>(false);
 	const [noticeNoButtons, setNoticeNoButtons] = useState<1 | 2>(1);
@@ -87,6 +89,7 @@ const Profile: React.FC = (): JSX.Element => {
 	};
 
 	const submitCallback: Function = async () => {
+		setSpinnerVisible(true);
 		if (dbUser) {
 			setNoticeTitle("");
 			const body: UserModel = {
@@ -111,9 +114,11 @@ const Profile: React.FC = (): JSX.Element => {
 				setNoticeFirstButtonText("Ok");
 			}
 		}
+		setSpinnerVisible(false);
 	};
 
 	const deleteCallback: Function = async () => {
+		setSpinnerVisible(true);
 		try {
 			await fetch(`/api/users/${dbUser?.userId}`, {
 				method: "DELETE",
@@ -135,6 +140,7 @@ const Profile: React.FC = (): JSX.Element => {
 			setNoticeNoButtons(1);
 			setNoticeFirstButtonText("Ok");
 		}
+		setSpinnerVisible(false);
 	};
 
 	const clearWatchHistoryHandler: MouseEventHandler<HTMLButtonElement> = () => {
@@ -147,6 +153,7 @@ const Profile: React.FC = (): JSX.Element => {
 	};
 
 	const clearWatchHistory: Function = async () => {
+		setSpinnerVisible(true);
 		if (dbUser) {
 			const newBody: UserModel = {
 				...dbUser,
@@ -169,10 +176,12 @@ const Profile: React.FC = (): JSX.Element => {
 				setNoticeFirstButtonText("Ok");
 			}
 		}
+		setSpinnerVisible(false);
 	};
 
 	const clearVideoFromWatchHistory: MouseEventHandler<HTMLButtonElement> | any =
 		async (id: string) => {
+			setSpinnerVisible(true);
 			if (dbUser) {
 				const newBody: UserModel = {
 					...dbUser,
@@ -196,6 +205,7 @@ const Profile: React.FC = (): JSX.Element => {
 					setNoticeFirstButtonText("Ok");
 				}
 			}
+			setSpinnerVisible(false);
 		};
 
 	return (
@@ -279,6 +289,7 @@ const Profile: React.FC = (): JSX.Element => {
 					</button>
 				</section>
 			)}
+			{spinnerVisible && <Spinner />}
 		</main>
 	);
 };
