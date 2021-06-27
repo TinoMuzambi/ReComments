@@ -34,7 +34,10 @@ const HistoryResult: React.FC<{
 			<Link href={`/video/${item.id}`}>
 				<a>
 					<h5 className="uploader">{item.uploader}</h5>
-					<h6 className="date" title={item.date.toLocaleString() as string}>
+					<h6
+						className="date"
+						title={moment(item.date).format("MMMM Do YYYY, h:mm:ss a")}
+					>
 						You watched this {moment(item.date).fromNow()}
 					</h6>
 				</a>
