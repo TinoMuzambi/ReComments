@@ -306,6 +306,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		<div className="content">
 			<Notice
 				visible={noticeVisible}
+				setVisible={setNoticeVisible}
 				title={noticeTitle}
 				subtitle={noticeSubtitle}
 				noButtons={noticeNoButtons}

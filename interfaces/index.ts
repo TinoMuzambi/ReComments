@@ -71,6 +71,7 @@ export interface FormProps {
 
 export interface NoticeProps {
 	visible: boolean;
+	setVisible: Dispatch<SetStateAction<boolean>>;
 	title: string;
 	subtitle: string;
 	noButtons: 1 | 2;
