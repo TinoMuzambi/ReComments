@@ -41,6 +41,10 @@ const UserSchema: Schema = new mongoose.Schema(
 			type: Boolean,
 			default: true,
 		},
+		watchhistory: {
+			type: Object,
+			default: {},
+		},
 	},
 	{
 		timestamps: true,

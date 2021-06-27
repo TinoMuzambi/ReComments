@@ -10,12 +10,13 @@ import {
 } from "../utils/gapi";
 import { UserModel } from "../interfaces";
 import Meta from "../components/Meta";
-import { postUserToDb } from "../utils";
+import { getDbUser, postUserToDb } from "../utils";
 
 const SignIn: React.FC = (): JSX.Element => {
 	const [loading, setLoading] = useState(false);
 
-	const { setSignedIn, signedIn, setUser, user } = useContext(AppContext);
+	const { setSignedIn, signedIn, setUser, user, setDbUser } =
+		useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -54,15 +55,7 @@ const SignIn: React.FC = (): JSX.Element => {
 
 	const checkUserDb: Function = async () => {
 		if (user && user?.emailAddresses && user.names && user.photos) {
-			const res = await fetch(
-				`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`,
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
-			const userRes = await res.json();
+			const userRes = await getDbUser(user, setDbUser);
 
 			if (!userRes.success) {
 				const body: UserModel = {
@@ -76,10 +69,12 @@ const SignIn: React.FC = (): JSX.Element => {
 					createdAt: new Date(),
 					updatedAt: new Date(),
 					emails: true,
+					watchhistory: [],
 				};
 
 				try {
 					await postUserToDb(body);
+					if (setDbUser) setDbUser(body);
 				} catch (error) {}
 			}
 		}

@@ -1,0 +1,48 @@
+.item {
+	border-left: 5px solid $primary-colour;
+	text-align: left;
+
+	img {
+		width: 100%;
+	}
+
+	.name,
+	.uploader,
+	.date {
+		margin: 1rem;
+	}
+
+	.flex {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.name {
+			color: $primary-colour;
+		}
+
+		button {
+			@include buttonReset;
+			background: $primary-colour;
+			color: white;
+			padding: 0.5rem;
+			border-radius: 50%;
+			height: 2rem;
+			width: 2rem;
+
+			&:hover {
+				transform: scale(0.9);
+			}
+		}
+	}
+
+	.date {
+		font-weight: normal;
+		background: $primary-colour;
+		width: fit-content;
+		margin: 1rem;
+		padding: 0.3rem;
+		border-radius: 2rem;
+		color: white;
+	}
+}

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { NextPage } from "next";
 
 import Meta from "../../components/Meta";
@@ -8,12 +8,15 @@ import AppState from "../../components/AppState";
 import Stats from "../../components/Stats";
 import Comments from "../../components/Comments/Comments";
 import { loadClient, execute } from "../../utils/gapi";
-import { VideoProps } from "../../interfaces";
+import { HistoryItem, UserModel, VideoProps } from "../../interfaces";
+import { AppContext } from "../../context/AppContext";
+import { postUpdatedResourceToDb } from "../../utils";
 
 const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
 
 	const router = useRouter();
+	const { dbUser, setDbUser } = useContext(AppContext);
 
 	useEffect(() => {
 		// Get video data given the url.
@@ -24,6 +27,33 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 				await loadClient();
 				execute(false, url, false, (res: gapi.client.youtube.Video[]) => {
 					setResult(res[0]);
+					if (
+						res[0] &&
+						res[0].snippet?.thumbnails &&
+						dbUser &&
+						checkHistory(dbUser.watchhistory, res[0].id)
+					) {
+						const newItem: HistoryItem = {
+							id: res[0].id as string,
+							title: res[0].snippet?.title as string,
+							thumbnail: res[0].snippet?.thumbnails.high?.url as string,
+							uploader: res[0].snippet?.channelTitle as string,
+							date: new Date(),
+						};
+
+						const newBody: UserModel = {
+							...dbUser,
+							watchhistory: [newItem, ...dbUser.watchhistory],
+						};
+
+						const post: Function = async () => {
+							try {
+								await postUpdatedResourceToDb(newBody);
+								if (setDbUser) setDbUser(newBody);
+							} catch (error) {}
+						};
+						post();
+					}
 				});
 			} catch (error) {
 				router.push("/search");
@@ -31,6 +61,17 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 		};
 		getRes();
 	}, []);
+
+	const checkHistory: Function = (
+		watchhistory: HistoryItem[],
+		id: string
+	): boolean => {
+		let res = true;
+		watchhistory.forEach((item: HistoryItem) => {
+			if (item.id === id) res = false;
+		});
+		return res;
+	};
 
 	if (!result) return <AppState message="Loading..." />;
 
