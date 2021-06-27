@@ -36,20 +36,20 @@ const Profile: React.FC = (): JSX.Element => {
 	const router = useRouter();
 
 	useEffect(() => {
+		if (noticeTitle !== "") setNoticeVisible(true);
+	}, [noticeTitle]);
+
+	useEffect(() => {
 		let timer: NodeJS.Timeout;
-		if (noticeTitle !== "") {
-			setNoticeVisible(true);
-			if (noticeNoButtons === 1) {
-				timer = setTimeout(() => {
-					setNoticeVisible(false);
-					setNoticeTitle("");
-				}, 4000);
-			}
-		} else setNoticeVisible(false);
+		if (noticeNoButtons === 1) {
+			timer = setTimeout(() => {
+				hideNotice();
+			}, 4000);
+		}
 		return () => {
 			clearTimeout(timer);
 		};
-	}, [noticeTitle]);
+	}, [noticeVisible]);
 
 	useEffect(() => {
 		if (!signedIn) router.push("/signin");
@@ -71,7 +71,6 @@ const Profile: React.FC = (): JSX.Element => {
 			email === dbUser?.email &&
 			emails === dbUser?.emails
 		) {
-			setNoticeTitle("");
 			setNoticeTitle("No changes made");
 			setNoticeSubtitle("Make some changes in order to save.");
 			setNoticeNoButtons(1);
@@ -117,13 +116,13 @@ const Profile: React.FC = (): JSX.Element => {
 			try {
 				await postUpdatedResourceToDb(newBody);
 				if (setDbUser) setDbUser(newBody);
-				setNoticeTitle("");
+				hideNotice();
 				setNoticeTitle("Account successfully updated");
 				setNoticeSubtitle("Your changes were succesfully saved.");
 				setNoticeNoButtons(1);
 				setNoticeFirstButtonText("Ok");
 			} catch (error) {
-				setNoticeTitle("");
+				hideNotice();
 				setNoticeTitle("Account not updated");
 				setNoticeSubtitle(
 					"Something went wrong. Please contact the developer."
@@ -141,7 +140,7 @@ const Profile: React.FC = (): JSX.Element => {
 			await fetch(`/api/users/${dbUser?.userId}`, {
 				method: "DELETE",
 			});
-			setNoticeTitle("");
+			hideNotice();
 			setNoticeTitle("Account successfully deleted");
 			setNoticeSubtitle(
 				"Your account and all account data were succesfully deleted."
@@ -154,7 +153,7 @@ const Profile: React.FC = (): JSX.Element => {
 			if (setUser) setUser(null);
 			router.push("/signin");
 		} catch (error) {
-			setNoticeTitle("");
+			hideNotice();
 			setNoticeTitle("Account not deleted");
 			setNoticeSubtitle("Something went wrong. Please contact the developer.");
 			setNoticeNoButtons(1);
@@ -165,7 +164,7 @@ const Profile: React.FC = (): JSX.Element => {
 
 	const clearWatchHistoryHandler: MouseEventHandler<HTMLButtonElement> = () => {
 		setDeleteOrSubmitOrClear("clear");
-		setNoticeTitle("");
+		hideNotice();
 		setNoticeTitle("Clear watch history");
 		setNoticeSubtitle("Are you sure you want to clear your watch history?");
 		setNoticeNoButtons(2);
@@ -184,13 +183,13 @@ const Profile: React.FC = (): JSX.Element => {
 			try {
 				await postUpdatedResourceToDb(newBody);
 				if (setDbUser) setDbUser(newBody);
-				setNoticeTitle("");
+				hideNotice();
 				setNoticeTitle("Watch history cleared");
 				setNoticeSubtitle("Your watch history has been cleared.");
 				setNoticeNoButtons(1);
 				setNoticeFirstButtonText("Ok");
 			} catch (error) {
-				setNoticeTitle("");
+				hideNotice();
 				setNoticeTitle("Watch history not cleared");
 				setNoticeSubtitle(
 					"Something went wrong. Please contact the developer."
@@ -214,13 +213,13 @@ const Profile: React.FC = (): JSX.Element => {
 					await postUpdatedResourceToDb(newBody);
 					if (setDbUser) setDbUser(newBody);
 
-					setNoticeTitle("");
+					hideNotice();
 					setNoticeTitle("Video deleted");
 					setNoticeSubtitle("The video has been deleted from your history");
 					setNoticeNoButtons(1);
 					setNoticeFirstButtonText("Ok");
 				} catch (error) {
-					setNoticeTitle("");
+					hideNotice();
 					setNoticeTitle("Video not deleted");
 					setNoticeSubtitle(
 						"Something went wrong. Please contact the developer."
