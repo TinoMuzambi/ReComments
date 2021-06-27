@@ -4,6 +4,7 @@ import { NoticeProps } from "../interfaces";
 
 const Notice: React.FC<NoticeProps> = ({
 	visible,
+	setVisible,
 	title,
 	subtitle,
 	noButtons,

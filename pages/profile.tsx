@@ -235,6 +235,7 @@ const Profile: React.FC = (): JSX.Element => {
 		<main className="main center">
 			<Notice
 				visible={noticeVisible}
+				setVisible={setNoticeVisible}
 				title={noticeTitle}
 				subtitle={noticeSubtitle}
 				noButtons={noticeNoButtons}
