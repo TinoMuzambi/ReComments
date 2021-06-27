@@ -19,7 +19,7 @@ const HistoryResult: React.FC<{ item: HistoryItem }> = ({ item }) => {
 					</a>
 				</Link>
 				<button>
-					<MdClose />
+					<MdClose className="icon" />
 				</button>
 			</div>
 			<Link href={`/video/${item.id}`}>

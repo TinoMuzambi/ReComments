@@ -171,6 +171,32 @@ const Profile: React.FC = (): JSX.Element => {
 		}
 	};
 
+	const clearVideoFromWatchHistory: MouseEventHandler<HTMLButtonElement> =
+		async (id: string) => {
+			if (dbUser) {
+				const newBody: UserModel = {
+					...dbUser,
+					watchhistory: dbUser.watchhistory.filter((item) => item.id !== id),
+				};
+				try {
+					await postUpdatedResourceToDb(newBody);
+					if (setDbUser) setDbUser(newBody);
+
+					setNoticeTitle("Video deleted");
+					setNoticeSubtitle("The video has been deleted from your history");
+					setNoticeNoButtons(1);
+					setNoticeFirstButtonText("Ok");
+				} catch (error) {
+					setNoticeTitle("Video not deleted");
+					setNoticeSubtitle(
+						"Something went wrong. Please contact the developer."
+					);
+					setNoticeNoButtons(1);
+					setNoticeFirstButtonText("Ok");
+				}
+			}
+		};
+
 	return (
 		<main className="main center">
 			<Notice
