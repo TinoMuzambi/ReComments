@@ -31,7 +31,17 @@
 
 			&::after {
 				@include pseudo;
+				top: unset;
+				bottom: 0;
+				left: 3rem;
+				padding: 0.5rem;
+				width: 8rem;
+				font-size: 0.7rem;
 				content: "Remove video from watch history";
+
+				@include mq(768px) {
+					content: none;
+				}
 			}
 			&:hover {
 				&::after {
