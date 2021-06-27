@@ -306,7 +306,7 @@ const Profile: React.FC = (): JSX.Element => {
 							<HistoryResult
 								clearVideo={clearVideoFromWatchHistory}
 								item={item}
-								key={Number.parseInt(item.date.toISOString())}
+								key={item.id + item.title}
 							/>
 						))}
 					</div>
