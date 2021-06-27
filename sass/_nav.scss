@@ -41,7 +41,7 @@
 						font-weight: 900;
 
 						&:hover {
-							color: rgb(29, 29, 29);
+							transform: scale(0.9);
 						}
 
 						@include mq(500px) {
