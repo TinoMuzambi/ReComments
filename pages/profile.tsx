@@ -182,6 +182,7 @@ const Profile: React.FC = (): JSX.Element => {
 					await postUpdatedResourceToDb(newBody);
 					if (setDbUser) setDbUser(newBody);
 
+					setNoticeTitle("");
 					setNoticeTitle("Video deleted");
 					setNoticeSubtitle("The video has been deleted from your history");
 					setNoticeNoButtons(1);
