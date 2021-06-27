@@ -26,14 +26,28 @@
 			color: $primary-colour;
 		}
 
-		.icon {
-			fill: $primary-colour;
-			cursor: pointer;
-			height: 3rem;
-			width: 3rem;
+		.wrapper {
+			position: relative;
 
+			&::after {
+				@include pseudo;
+				content: "Remove video from watch history";
+			}
 			&:hover {
-				transform: scale(0.9);
+				&::after {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			.icon {
+				fill: $primary-colour;
+				cursor: pointer;
+				height: 3rem;
+				width: 3rem;
+
+				&:hover {
+					transform: scale(0.9);
+				}
 			}
 		}
 	}

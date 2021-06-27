@@ -23,11 +23,13 @@ const HistoryResult: React.FC<{
 					</a>
 				</Link>
 
-				<IoCloseCircle
-					className="icon"
-					onClick={() => clearVideo(item.id)}
-					role="button"
-				/>
+				<div className="wrapper">
+					<IoCloseCircle
+						className="icon"
+						onClick={() => clearVideo(item.id)}
+						role="button"
+					/>
+				</div>
 			</div>
 			<Link href={`/video/${item.id}`}>
 				<a>
