@@ -171,7 +171,7 @@ const Profile: React.FC = (): JSX.Element => {
 		}
 	};
 
-	const clearVideoFromWatchHistory: MouseEventHandler<HTMLButtonElement> =
+	const clearVideoFromWatchHistory: MouseEventHandler<HTMLButtonElement> | any =
 		async (id: string) => {
 			if (dbUser) {
 				const newBody: UserModel = {
@@ -265,7 +265,11 @@ const Profile: React.FC = (): JSX.Element => {
 					<h1 className="title">Watch History</h1>
 					<div className="results">
 						{dbUser?.watchhistory.map((item) => (
-							<HistoryResult item={item} key={item.id} />
+							<HistoryResult
+								clearVideo={clearVideoFromWatchHistory}
+								item={item}
+								key={item.id}
+							/>
 						))}
 					</div>
 

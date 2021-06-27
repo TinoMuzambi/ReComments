@@ -1,10 +1,14 @@
 import Link from "next/link";
 import moment from "moment";
 import { MdClose } from "react-icons/md";
+import { MouseEventHandler } from "react";
 
 import { HistoryItem } from "../interfaces";
 
-const HistoryResult: React.FC<{ item: HistoryItem }> = ({ item }) => {
+const HistoryResult: React.FC<{
+	item: HistoryItem;
+	clearVideo: MouseEventHandler<HTMLButtonElement>;
+}> = ({ item, clearVideo }) => {
 	return (
 		<div className="item">
 			<Link href={`/video/${item.id}`}>
@@ -18,7 +22,7 @@ const HistoryResult: React.FC<{ item: HistoryItem }> = ({ item }) => {
 						<h3 className="name">{item.title}</h3>
 					</a>
 				</Link>
-				<button>
+				<button onClick={clearVideo}>
 					<MdClose className="icon" />
 				</button>
 			</div>
