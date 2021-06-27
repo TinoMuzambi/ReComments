@@ -34,7 +34,7 @@ const HistoryResult: React.FC<{
 			<Link href={`/video/${item.id}`}>
 				<a>
 					<h5 className="uploader">{item.uploader}</h5>
-					<h6 className="date">
+					<h6 className="date" title={item.date.toLocaleString() as string}>
 						You watched this {moment(item.date).fromNow()}
 					</h6>
 				</a>
