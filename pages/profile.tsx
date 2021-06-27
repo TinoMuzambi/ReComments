@@ -37,6 +37,7 @@ const Profile: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		if (noticeTitle !== "") setNoticeVisible(true);
+		else hideNotice();
 	}, [noticeTitle]);
 
 	useEffect(() => {
@@ -59,6 +60,7 @@ const Profile: React.FC = (): JSX.Element => {
 		setNoticeVisible(false);
 		setNoticeTitle("");
 		setNoticeSubtitle("");
+		setNoticeNoButtons(1);
 		setNoticeFirstButtonText("");
 		setNoticeSecondButtonText("");
 	};
@@ -71,13 +73,14 @@ const Profile: React.FC = (): JSX.Element => {
 			email === dbUser?.email &&
 			emails === dbUser?.emails
 		) {
+			hideNotice();
 			setNoticeTitle("No changes made");
 			setNoticeSubtitle("Make some changes in order to save.");
 			setNoticeNoButtons(1);
 			setNoticeFirstButtonText("Ok");
 		} else {
+			hideNotice();
 			setDeleteOrSubmitOrClear("submit");
-			setNoticeTitle("");
 			setNoticeTitle("Save changes");
 			setNoticeSubtitle(
 				"Are you sure you want to save these changes to your profile?"
@@ -91,7 +94,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const deleteHandler: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 
-		setNoticeTitle("");
+		hideNotice();
 		setDeleteOrSubmitOrClear("delete");
 		setNoticeTitle("Delete your account");
 		setNoticeSubtitle(
@@ -105,7 +108,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const submitCallback: Function = async () => {
 		setSpinnerVisible(true);
 		if (dbUser) {
-			setNoticeTitle("");
+			hideNotice();
 			const newBody: UserModel = {
 				...dbUser,
 				shortName: name as string,
