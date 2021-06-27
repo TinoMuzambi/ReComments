@@ -7,7 +7,7 @@ import { HistoryItem } from "../interfaces";
 
 const HistoryResult: React.FC<{
 	item: HistoryItem;
-	clearVideo: MouseEventHandler<HTMLButtonElement>;
+	clearVideo: MouseEventHandler<HTMLButtonElement> | any;
 }> = ({ item, clearVideo }) => {
 	return (
 		<div className="item">
@@ -22,7 +22,7 @@ const HistoryResult: React.FC<{
 						<h3 className="name">{item.title}</h3>
 					</a>
 				</Link>
-				<button onClick={clearVideo}>
+				<button onClick={() => clearVideo(item.id)}>
 					<MdClose className="icon" />
 				</button>
 			</div>
