@@ -1,6 +1,11 @@
 .item {
 	border-left: 5px solid $primary-colour;
 	text-align: left;
+	width: 40%;
+
+	@include mq(768px) {
+		width: 100%;
+	}
 
 	img {
 		width: 100%;
