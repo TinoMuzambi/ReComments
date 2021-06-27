@@ -9,6 +9,7 @@
 	z-index: 2;
 	opacity: 0;
 	text-align: start;
+	pointer-events: none;
 
 	@include mq(768px) {
 		padding: 1rem;
@@ -19,6 +20,7 @@
 
 	&.visible {
 		opacity: 1;
+		pointer-events: all;
 	}
 
 	.title {
