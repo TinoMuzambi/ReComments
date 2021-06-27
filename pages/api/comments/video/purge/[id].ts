@@ -20,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				}
 				res
 					.status(200)
-					.json({ success: true, data: { message: "Comment deleted" } });
+					.json({ success: true, data: { message: "Comments deleted" } });
 			} catch (error) {
 				return res.status(400).json({ success: false, data: error });
 			}
