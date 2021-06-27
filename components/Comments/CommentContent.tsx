@@ -324,7 +324,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 				<div className="details">
 					<div className="top">
 						<h5 className="name">{currComment.name}</h5>
-						<p className="datetime">
+						<p
+							className="datetime"
+							title={moment(currComment.createdAt).format(
+								"MMMM Do YYYY, h:mm:ss a"
+							)}
+						>
 							{moment(currComment.createdAt).fromNow()}{" "}
 							{currComment?.edited && "(edited)"}
 						</p>
