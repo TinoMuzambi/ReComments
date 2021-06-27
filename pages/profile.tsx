@@ -143,6 +143,7 @@ const Profile: React.FC = (): JSX.Element => {
 			await fetch(`/api/users/${dbUser?.userId}`, {
 				method: "DELETE",
 			});
+			// TODO Delete user comments.
 			hideNotice();
 			setNoticeTitle("Account successfully deleted");
 			setNoticeSubtitle(
