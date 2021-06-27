@@ -65,14 +65,25 @@ const Profile: React.FC = (): JSX.Element => {
 	const submitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 
-		setDeleteOrSubmitOrClear("submit");
-		setNoticeTitle("Save changes");
-		setNoticeSubtitle(
-			"Are you sure you want to save these changes to your profile?"
-		);
-		setNoticeNoButtons(2);
-		setNoticeFirstButtonText("Yes");
-		setNoticeSecondButtonText("Cancel");
+		if (
+			name === dbUser?.shortName &&
+			email === dbUser?.email &&
+			emails === dbUser?.emails
+		) {
+			setNoticeTitle("No changes made");
+			setNoticeSubtitle("Make some changes in order to save.");
+			setNoticeNoButtons(1);
+			setNoticeFirstButtonText("Ok");
+		} else {
+			setDeleteOrSubmitOrClear("submit");
+			setNoticeTitle("Save changes");
+			setNoticeSubtitle(
+				"Are you sure you want to save these changes to your profile?"
+			);
+			setNoticeNoButtons(2);
+			setNoticeFirstButtonText("Yes");
+			setNoticeSecondButtonText("Cancel");
+		}
 	};
 
 	const deleteHandler: FormEventHandler<HTMLFormElement> = async (e) => {
