@@ -75,7 +75,7 @@ const Profile: React.FC = (): JSX.Element => {
 		) {
 			hideNotice();
 			setNoticeTitle("No changes made");
-			setNoticeSubtitle("Make some changes in order to save.");
+			setNoticeSubtitle("Make some changes in order to save");
 			setNoticeNoButtons(1);
 			setNoticeFirstButtonText("Ok");
 		} else {
@@ -121,7 +121,7 @@ const Profile: React.FC = (): JSX.Element => {
 				if (setDbUser) setDbUser(newBody);
 				hideNotice();
 				setNoticeTitle("Account successfully updated");
-				setNoticeSubtitle("Your changes were succesfully saved.");
+				setNoticeSubtitle("Your changes were succesfully saved");
 				setNoticeNoButtons(1);
 				setNoticeFirstButtonText("Ok");
 			} catch (error) {
@@ -146,7 +146,7 @@ const Profile: React.FC = (): JSX.Element => {
 			hideNotice();
 			setNoticeTitle("Account successfully deleted");
 			setNoticeSubtitle(
-				"Your account and all account data were succesfully deleted."
+				"Your account and all account data were succesfully deleted"
 			);
 			setNoticeNoButtons(1);
 			setNoticeFirstButtonText("Ok");
@@ -188,7 +188,7 @@ const Profile: React.FC = (): JSX.Element => {
 				if (setDbUser) setDbUser(newBody);
 				hideNotice();
 				setNoticeTitle("Watch history cleared");
-				setNoticeSubtitle("Your watch history has been cleared.");
+				setNoticeSubtitle("Your watch history has been cleared");
 				setNoticeNoButtons(1);
 				setNoticeFirstButtonText("Ok");
 			} catch (error) {
