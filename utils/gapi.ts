@@ -55,7 +55,6 @@ export const execute: Function = async (
 	setNoResults?: Function
 ) => {
 	// Call YouTube API to get video data.
-
 	try {
 		let response: gapi.client.Response<gapi.client.youtube.VideoListResponse>;
 		const part = ["snippet,statistics,player,status"];
