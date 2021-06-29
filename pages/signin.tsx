@@ -39,7 +39,14 @@ const SignIn: React.FC = (): JSX.Element => {
 
 					updateSignInStatus(getSignedIn(), updateContext, cancelLoading);
 				})
-				.catch((error) => console.error(error));
+				.catch((error) => {
+					if (error.details.indexOf("Cookies") === 0) {
+						alert("Please enable cookies");
+						router.push("/");
+						setLoading(false);
+					}
+					console.error(error);
+				});
 		});
 	}, []);
 
