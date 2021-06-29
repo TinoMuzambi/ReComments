@@ -83,7 +83,6 @@ const Search: React.FC = (): JSX.Element => {
 			execute(
 				false,
 				searchInput,
-				true,
 				setSearchResults,
 				setIsFetchingData,
 				setNoResultsFound
