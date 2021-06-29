@@ -2,7 +2,6 @@ import { shuffle } from ".";
 
 export const loadClient: Function = (): Promise<void> => {
 	// Load gapi YouTube client and set api key.
-
 	gapi.client.setApiKey(process.env.GAPP_API_KEY || "");
 	return gapi.client
 		.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest", "")
@@ -41,45 +40,46 @@ export const handleSignoutClick: Function = () => {
 
 const makeApiCall: Function = async (callback: Function) => {
 	// Call People API to get user data.
-	const resp = await gapi.client.people.people.get({
+	const res = await gapi.client.people.people.get({
 		resourceName: "people/me",
 		personFields: "names,emailAddresses,photos",
 	});
-	callback(resp.result);
+	callback(res.result);
 };
 
 export const execute: Function = async (
-	popular: boolean,
+	homeVideos: boolean,
 	query: string,
-	fullPath: boolean,
 	setResults?: Function,
 	setFetching?: Function,
 	setNoResults?: Function
 ) => {
 	// Call YouTube API to get video data.
-	let path: string = "";
-	let start = query.indexOf("v=") + 2;
-	if (start === 1) {
-		start = query.length - 11;
-	}
-	path = fullPath ? query.substring(start, start + 11) : query;
 
 	try {
 		let response: gapi.client.Response<gapi.client.youtube.VideoListResponse>;
+		const part = ["snippet,statistics,player,status"];
 
-		if (popular) {
+		if (homeVideos) {
+			// Get videos from db to display on home page.
 			const res = await fetch("/api/home");
 			const data = await res.json();
 
-			const resp = data.data[0].videos;
+			const ids: string[] = data.data[0].videos;
 			response = await gapi.client.youtube.videos.list({
-				part: ["snippet,statistics,player,status"],
-				id: [resp.join(",")],
+				part,
+				id: [ids.join(",")],
 			});
 		} else {
+			// Get video from search.
+			let start = query.indexOf("v=") + 2;
+			if (start === 1) {
+				start = query.length - 11;
+			}
+			const id = query.substring(start, start + 11);
 			response = await gapi.client.youtube.videos.list({
-				part: ["snippet,statistics,player,status"],
-				id: path,
+				part,
+				id,
 			});
 		}
 
@@ -95,7 +95,6 @@ export const execute: Function = async (
 			}
 		}
 	} catch (err) {
-		console.error(err);
 		if (setResults) setResults(err);
 	}
 };
