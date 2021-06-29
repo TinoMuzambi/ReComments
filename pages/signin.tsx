@@ -45,7 +45,6 @@ const SignIn: React.FC = (): JSX.Element => {
 						router.push("/");
 						setLoading(false);
 					}
-					console.error(error);
 				});
 		});
 	}, []);
