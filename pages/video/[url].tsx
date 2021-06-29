@@ -25,7 +25,7 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 
 			try {
 				await loadClient();
-				execute(false, url, false, (res: gapi.client.youtube.Video[]) => {
+				execute(false, url, (res: gapi.client.youtube.Video[]) => {
 					setResult(res[0]);
 					if (res[0] && res[0].snippet?.thumbnails && dbUser) {
 						let newItem: HistoryItem = {
