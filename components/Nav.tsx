@@ -77,7 +77,7 @@ const Nav: React.FC = (): JSX.Element => {
 										<img
 											className="photo"
 											src={dbUser.photoUrl}
-											alt="Profile"
+											alt={dbUser.shortName}
 										/>
 										<p className="name">{dbUser.shortName}</p>
 									</div>
