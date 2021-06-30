@@ -1,14 +1,9 @@
 import Link from "next/link";
 import moment from "moment";
 import { IoCloseCircle } from "react-icons/io5";
-import { MouseEventHandler } from "react";
+import { HistoryResultProps } from "../interfaces";
 
-import { HistoryItem } from "../interfaces";
-
-const HistoryResult: React.FC<{
-	item: HistoryItem;
-	clearVideo: MouseEventHandler<HTMLButtonElement> | any;
-}> = ({ item, clearVideo }) => {
+const HistoryResult: React.FC<HistoryResultProps> = ({ item, clearVideo }) => {
 	return (
 		<div className="item">
 			<Link href={`/video/${item.id}`}>
