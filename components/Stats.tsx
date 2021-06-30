@@ -26,22 +26,26 @@ const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 		</div>
 	);
 
+	const stats = [
+		{
+			icon: <BiLike />,
+			stat: result.statistics ? result.statistics.likeCount : 0,
+		},
+		{
+			icon: <BiDislike />,
+			stat: result.statistics ? result.statistics.dislikeCount : 0,
+		},
+		{
+			icon: <MdDateRange />,
+			stat: null,
+			date: result.snippet?.publishedAt && result.snippet.publishedAt,
+		},
+	];
+
 	return (
 		<>
 			<div className="stats">
-				{getStat(
-					<BiLike />,
-					result.statistics ? result.statistics.likeCount : 0
-				)}
-				{getStat(
-					<BiDislike />,
-					result.statistics ? result.statistics.dislikeCount : 0
-				)}
-				{getStat(
-					<MdDateRange />,
-					null,
-					result.snippet?.publishedAt && result.snippet.publishedAt
-				)}
+				{stats.map((item) => getStat(item.icon, item.stat, item?.date))}
 			</div>
 			<h3 className="uploader">
 				{result.snippet ? result.snippet.channelTitle : "Title"}
