@@ -213,7 +213,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				let body: CommentModel = generateNewCommentBody();
 				await postNewCommentToDb(body);
 			}
-
 			// Refresh then scroll to same place on the page.
 			await scrollToSamePosition();
 		} catch (error) {}
