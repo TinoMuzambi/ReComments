@@ -54,6 +54,7 @@
 			.reply {
 				@include buttonReset;
 				color: inherit;
+				z-index: 1;
 
 				&:hover {
 					transform: scale(0.9);
