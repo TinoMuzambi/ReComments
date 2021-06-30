@@ -55,6 +55,7 @@ const Search: React.FC = (): JSX.Element => {
 		if (!searchInput && !searchResults) {
 			handleSubmit(true);
 		}
+		if (searchResults) if (searchResults.length > 1) setUseBlockFormat(true);
 	}, [searchInput]);
 
 	const handleSubmit: Function = async (
