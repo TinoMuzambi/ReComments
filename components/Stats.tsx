@@ -14,11 +14,12 @@ const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 	const [descVisible, setDescVisible] = useState(false);
 
 	const getStat: Function = (
+		i: number,
 		icon: IconType,
 		num: Number,
 		date?: Date
 	): JSX.Element => (
-		<div className="stat">
+		<div className="stat" key={i}>
 			<span className="icon">{icon}</span>
 			<p className="text">
 				{date ? moment(date).format("MMMM Do YYYY") : numberWithCommas(num)}
@@ -49,7 +50,7 @@ const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 	return (
 		<>
 			<div className="stats">
-				{stats.map((item) => getStat(item.icon, item.stat, item?.date))}
+				{stats.map((item, i) => getStat(i, item.icon, item.stat, item?.date))}
 			</div>
 			<h3 className="uploader">
 				{result.snippet ? result.snippet.channelTitle : "Title"}
