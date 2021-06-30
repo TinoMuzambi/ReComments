@@ -146,7 +146,9 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		} catch (error) {
 			hideNoticeWrapper();
 			setNoticeTitle("Comment not deleted");
-			setNoticeSubtitle("Something went wrong. Please contact the developer.");
+			setNoticeSubtitle(
+				"Something went wrong. Please try again or contact the developer."
+			);
 			setNoticeNoButtons(1);
 			setNoticeFirstButtonText("Ok");
 		}
@@ -163,7 +165,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					setNoticeFirstButtonText("Yes");
 					setNoticeSecondButtonText("Cancel");
 				} else {
-					setNoticeTitle("Only delete own comments");
+					setNoticeTitle("Only delete your own comments");
 					setNoticeSubtitle("You can only delete comments that you made");
 					setNoticeNoButtons(1);
 					setNoticeFirstButtonText("Ok");
@@ -255,14 +257,28 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						} else {
 							await postUpdatedResourceToDb(commentBody, currComment._id);
 						}
-					} catch (error) {}
+					} catch (error) {
+						setNoticeTitle("Change not made");
+						setNoticeSubtitle(
+							"Something went wrong. Please try again or contact the developer."
+						);
+						setNoticeNoButtons(1);
+						setNoticeFirstButtonText("Ok");
+					}
 
 					try {
 						// Add comment id to user's upvoted ids.
 						userBody = getUpdatedUserVoteIdsBody(voteType, userBody);
 						await postUpdatedResourceToDb(userBody);
 						getDbUser(user, setDbUser);
-					} catch (error) {}
+					} catch (error) {
+						setNoticeTitle("Change not made");
+						setNoticeSubtitle(
+							"Something went wrong. Please try again or contact the developer."
+						);
+						setNoticeNoButtons(1);
+						setNoticeFirstButtonText("Ok");
+					}
 				}
 			}
 
