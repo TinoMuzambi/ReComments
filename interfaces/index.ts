@@ -92,7 +92,7 @@ export interface HistoryResultProps {
 }
 
 export interface CommentModel {
-	_id?: string;
+	id?: string;
 	videoId: string;
 	authorId: string;
 	createdAt?: Date;
@@ -109,7 +109,7 @@ export interface CommentModel {
 }
 
 export interface UserModel {
-	_id?: string;
+	id?: string;
 	userId: string;
 	email: string;
 	shortName: string;

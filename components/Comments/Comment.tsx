@@ -41,7 +41,7 @@ const Comment: React.FC<CommentProps> = ({ comment }): JSX.Element => {
 					{comment.replies.map((reply: CommentModel, i) => (
 						<div
 							className={`wrapper ${isViewMoreExpanded && "visible"}`}
-							key={reply._id + i.toString()}
+							key={reply.id + i.toString()}
 						>
 							<CommentContent
 								currComment={reply}

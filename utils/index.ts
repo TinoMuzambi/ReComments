@@ -6,7 +6,7 @@ const instanceOfCommentModel: Function = (
 ): object is CommentModel => {
 	// Check if object is of type CommentModel.
 	return (
-		"_id" in object &&
+		"id" in object &&
 		"videoId" in object &&
 		"authorId" in object &&
 		"name" in object &&
@@ -31,7 +31,7 @@ export const postUpdatedResourceToDb: Function = async (
 			body: JSON.stringify(body),
 		});
 	} else {
-		await fetch(`/api/users/${body._id}`, {
+		await fetch(`/api/users/${body.id}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",

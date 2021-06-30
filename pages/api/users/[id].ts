@@ -34,7 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		case "PUT":
 			try {
 				const user: mongoose.UpdateQuery<any> = await User.updateOne(
-					{ _id: id },
+					{ id: id },
 					{ ...req.body }
 				);
 

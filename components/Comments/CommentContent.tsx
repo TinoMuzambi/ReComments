@@ -127,14 +127,14 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					const deletedComment = {
 						...originalComment,
 						replies: originalComment.replies.filter(
-							(reply) => reply._id !== currComment._id
+							(reply) => reply.id !== currComment.id
 						),
 					};
-					postUpdatedResourceToDb(deletedComment, originalComment._id);
+					postUpdatedResourceToDb(deletedComment, originalComment.id);
 				}
 			} else {
 				// Deleting a top level comment.
-				await fetch(`/api/comments/${currComment._id}`, {
+				await fetch(`/api/comments/${currComment.id}`, {
 					method: "DELETE",
 					headers: {
 						"Content-Type": "application/json",
@@ -180,15 +180,15 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	): Boolean => {
 		const value = false;
 
-		if (body.upvotedIds && body.downvotedIds && currComment._id) {
+		if (body.upvotedIds && body.downvotedIds && currComment.id) {
 			if (voteType === VOTING_TYPES.upvoting)
-				return !body.upvotedIds.includes(currComment._id);
+				return !body.upvotedIds.includes(currComment.id);
 			else if (voteType === VOTING_TYPES.downvoting)
-				return !body.downvotedIds.includes(currComment._id);
+				return !body.downvotedIds.includes(currComment.id);
 			else if (voteType === VOTING_TYPES.undoUpvoting)
-				return body.upvotedIds.includes(currComment._id);
+				return body.upvotedIds.includes(currComment.id);
 			else if (voteType === VOTING_TYPES.undoDownvoting)
-				return body.downvotedIds.includes(currComment._id);
+				return body.downvotedIds.includes(currComment.id);
 		}
 
 		return value;
@@ -198,28 +198,26 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		voteType: string,
 		user: UserModel
 	): UserModel => {
-		if (user.upvotedIds && user.downvotedIds && currComment._id) {
+		if (user.upvotedIds && user.downvotedIds && currComment.id) {
 			if (voteType === VOTING_TYPES.upvoting)
 				return {
 					...user,
-					upvotedIds: [...user.upvotedIds, currComment._id],
+					upvotedIds: [...user.upvotedIds, currComment.id],
 				};
 			else if (voteType === VOTING_TYPES.downvoting)
 				return {
 					...user,
-					downvotedIds: [...user.downvotedIds, currComment._id],
+					downvotedIds: [...user.downvotedIds, currComment.id],
 				};
 			else if (voteType === VOTING_TYPES.undoUpvoting)
 				return {
 					...user,
-					upvotedIds: user.upvotedIds.filter((id) => currComment._id !== id),
+					upvotedIds: user.upvotedIds.filter((id) => currComment.id !== id),
 				};
 			else if (voteType === VOTING_TYPES.undoDownvoting)
 				return {
 					...user,
-					downvotedIds: user.downvotedIds.filter(
-						(id) => currComment._id !== id
-					),
+					downvotedIds: user.downvotedIds.filter((id) => currComment.id !== id),
 				};
 		}
 		return user;
@@ -246,16 +244,16 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 							if (updatedComment.replies) {
 								for (let i = 0; i < updatedComment.replies.length; i++) {
-									if (updatedComment.replies[i]._id === currComment._id) {
+									if (updatedComment.replies[i].id === currComment.id) {
 										updatedComment.replies[i] = commentBody;
 									}
 								}
 							}
 
 							commentBody = updatedComment;
-							await postUpdatedResourceToDb(commentBody, originalComment._id);
+							await postUpdatedResourceToDb(commentBody, originalComment.id);
 						} else {
-							await postUpdatedResourceToDb(commentBody, currComment._id);
+							await postUpdatedResourceToDb(commentBody, currComment.id);
 						}
 					} catch (error) {
 						setNoticeTitle("Change not made");
@@ -291,30 +289,30 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	};
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
-			if (currComment._id && dbUser?.upvotedIds?.includes(currComment._id))
+			if (currComment.id && dbUser?.upvotedIds?.includes(currComment.id))
 				voteHandler(VOTING_TYPES.undoUpvoting);
 			else voteHandler(VOTING_TYPES.upvoting);
 		};
 
 	const downVoteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
-			if (currComment._id && dbUser?.downvotedIds?.includes(currComment._id))
+			if (currComment.id && dbUser?.downvotedIds?.includes(currComment.id))
 				voteHandler(VOTING_TYPES.undoDownvoting);
 			else voteHandler(VOTING_TYPES.downvoting);
 		};
 
 	const currCommentUpvoted: Function = (): Boolean => {
 		let value = false;
-		if (dbUser && dbUser.upvotedIds && currComment._id) {
-			value = dbUser.upvotedIds.includes(currComment._id);
+		if (dbUser && dbUser.upvotedIds && currComment.id) {
+			value = dbUser.upvotedIds.includes(currComment.id);
 		}
 		return value;
 	};
 
 	const currCommentDownvoted: Function = (): Boolean => {
 		let value = false;
-		if (dbUser && dbUser.downvotedIds && currComment._id) {
-			value = dbUser.downvotedIds.includes(currComment._id);
+		if (dbUser && dbUser.downvotedIds && currComment.id) {
+			value = dbUser.downvotedIds.includes(currComment.id);
 		}
 		return value;
 	};

@@ -58,7 +58,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	};
 
 	const generateNewCommentBody: Function = (): CommentModel => ({
-		_id: uuidv4(),
+		id: uuidv4(),
 		videoId: router.query.url as string,
 		authorId: dbUser?.userId as string,
 		email: dbUser?.email as string,
@@ -104,7 +104,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				if (body && body.replies) {
 					for (let i = 0; i < body.replies.length; i++) {
 						if (
-							body.replies[i]._id === currComment._id &&
+							body.replies[i].id === currComment.id &&
 							originalComment.replies
 						) {
 							let newReplies = originalComment.replies;
@@ -119,7 +119,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					}
 
 					// Post update to DB.
-					await postUpdatedResourceToDb(body, originalComment._id);
+					await postUpdatedResourceToDb(body, originalComment.id);
 				}
 			} else {
 				// Editing top level comment.
@@ -131,7 +131,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				};
 
 				// Post update to DB.
-				await postUpdatedResourceToDb(body, currComment._id);
+				await postUpdatedResourceToDb(body, currComment.id);
 			}
 
 			// Refresh then scroll to same place on the page.
@@ -166,7 +166,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					],
 				};
 
-				await postUpdatedResourceToDb(body, originalComment._id);
+				await postUpdatedResourceToDb(body, originalComment.id);
 			} else {
 				// Don't add mention
 				if (currComment.replies) {
@@ -179,7 +179,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 						...body,
 						replies: [...currComment?.replies, newBody],
 					};
-					await postUpdatedResourceToDb(body, currComment._id);
+					await postUpdatedResourceToDb(body, currComment.id);
 				}
 			}
 

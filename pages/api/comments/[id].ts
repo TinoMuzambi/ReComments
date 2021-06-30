@@ -14,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (method) {
 		case "GET":
 			try {
-				const comment: Comment = await Comment.findOne({ _id: id });
+				const comment: Comment = await Comment.findOne({ id: id });
 
 				if (!comment) {
 					return res
@@ -30,7 +30,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		case "PUT":
 			try {
 				const comment: mongoose.UpdateQuery<any> = await Comment.updateOne(
-					{ _id: id },
+					{ id: id },
 					{ ...req.body }
 				);
 
@@ -46,7 +46,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "DELETE":
 			try {
-				const deletedComment = await Comment.deleteOne({ _id: id });
+				const deletedComment = await Comment.deleteOne({ id: id });
 
 				if (!deletedComment) {
 					return res.status(400).json({ success: false });

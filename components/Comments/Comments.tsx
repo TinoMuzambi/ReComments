@@ -13,7 +13,7 @@ const Comments: React.FC<CommentsProps> = ({ comments }): JSX.Element => {
 			</div>
 			<CommentForm isSecondLevelComment={false} />
 			{comments?.map((comment: CommentModel) => (
-				<div key={comment._id + new Date().toLocaleString()}>
+				<div key={comment.id + new Date().toLocaleString()}>
 					<Comment comment={comment} />
 				</div>
 			))}
