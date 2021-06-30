@@ -8,54 +8,40 @@ import moment from "moment";
 
 import { StatsProps } from "../interfaces";
 import { numberWithCommas } from "../utils";
+import { IconType } from "react-icons/lib";
 
 const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 	const [descVisible, setDescVisible] = useState(false);
 
+	const getStat: Function = (
+		icon: IconType,
+		num: Number,
+		date?: Date
+	): JSX.Element => (
+		<div className="stat">
+			<span className="icon">{icon}</span>
+			<p className="text">
+				{date ? moment(date).format("MMMM Do YYYY") : numberWithCommas(num)}
+			</p>
+		</div>
+	);
+
 	return (
 		<>
 			<div className="stats">
-				<div className="stat">
-					<span className="icon">
-						<VscEye />
-					</span>
-					<p className="text">
-						{result.statistics
-							? numberWithCommas(result.statistics.viewCount)
-							: 0}
-					</p>
-				</div>
-				<div className="stat">
-					<span className="icon">
-						<BiLike />
-					</span>
-					<p className="text">
-						{result.statistics
-							? numberWithCommas(result.statistics.likeCount)
-							: 0}
-					</p>
-				</div>
-				<div className="stat">
-					<span className="icon">
-						<BiDislike />
-					</span>{" "}
-					<p className="text">
-						{result.statistics
-							? numberWithCommas(result.statistics.dislikeCount)
-							: 0}
-					</p>
-				</div>
-				<div className="stat">
-					<span className="icon">
-						<MdDateRange />
-					</span>{" "}
-					<p className="text">
-						{result.snippet?.publishedAt &&
-							moment(new Date(result.snippet.publishedAt)).format(
-								"MMMM Do YYYY"
-							)}
-					</p>
-				</div>
+				{getStat(
+					<BiLike />,
+					result.statistics ? result.statistics.likeCount : 0
+				)}
+				{getStat(
+					<BiDislike />,
+					result.statistics ? result.statistics.dislikeCount : 0
+				)}
+				{getStat(
+					<MdDateRange />,
+					null,
+					result.snippet?.publishedAt && result.snippet.publishedAt
+				)}
 			</div>
 			<h3 className="uploader">
 				{result.snippet ? result.snippet.channelTitle : "Title"}
