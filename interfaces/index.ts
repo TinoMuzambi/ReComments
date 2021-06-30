@@ -63,7 +63,7 @@ export interface CommentFormProps {
 	commentFormToReplyVisible?: boolean;
 }
 
-export interface FormProps {
+export interface SearchFormProps {
 	handleSubmit: FormEventHandler<HTMLFormElement>;
 	searchTerm: string;
 	setSearchTerm: Function;

@@ -1,8 +1,8 @@
 import { MdSearch } from "react-icons/md";
 
-import { FormProps } from "../interfaces";
+import { SearchFormProps } from "../interfaces";
 
-const Form: React.FC<FormProps> = ({
+const Form: React.FC<SearchFormProps> = ({
 	handleSubmit,
 	searchTerm,
 	setSearchTerm,
