@@ -28,7 +28,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const [commentInput, setCommentInput] = useState("");
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
-	const { user } = useContext(AppContext);
+	const { dbUser, user } = useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -74,15 +74,15 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 		const submitComment: Function = async (): Promise<void> => {
 			setSpinnerVisible(true);
-			if (user && user.emailAddresses && user.names && user.photos) {
+			if (user && user.emailAddresses) {
 				let body: CommentModel = {
 					_id: uuidv4(),
 					videoId: router.query.url as string,
 					authorId: user?.emailAddresses[0].metadata?.source?.id as string,
-					email: user?.emailAddresses[0].value as string,
-					name: user.names[0].givenName as string,
+					email: dbUser?.email as string,
+					name: dbUser?.shortName as string,
 					comment: commentInput,
-					image: user.photos[0].url as string,
+					image: dbUser?.photoUrl as string,
 					upvotes: 0,
 					downvotes: 0,
 					createdAt: new Date(),
@@ -187,9 +187,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							if (commentAuthor?.emails) {
 								sendMail(
 									currComment.email,
-									user.names[0].givenName,
+									dbUser?.shortName,
 									commentInput.replace(
-										(("@" + user.names[0].givenName) as string) + " ",
+										(("@" + dbUser?.shortName) as string) + " ",
 										""
 									),
 									router.query.url,
@@ -220,13 +220,12 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 	return (
 		<article className={`comment-form-holder ${isSecondLevelComment && "sm"}`}>
-			{user && user.photos && user.names && (
-				<img
-					src={user?.photos[0].url}
-					alt={user?.names[0].givenName}
-					className={`profile ${isSecondLevelComment && "sm"}`}
-				/>
-			)}
+			<img
+				src={dbUser?.photoUrl}
+				alt={dbUser?.shortName}
+				className={`profile ${isSecondLevelComment && "sm"}`}
+			/>
+
 			<form className="comment-form" onSubmit={submitHandler}>
 				<textarea
 					className={`text ${isSecondLevelComment && "sm"}`}
