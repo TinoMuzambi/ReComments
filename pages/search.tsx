@@ -55,7 +55,7 @@ const Search: React.FC = (): JSX.Element => {
 		if (!searchInput) {
 			handleSubmit(true);
 		}
-	}, []);
+	}, [searchInput]);
 
 	const handleSubmit: Function = async (
 		isHomeVideos: boolean
