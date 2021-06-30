@@ -63,14 +63,16 @@ const Search: React.FC = (): JSX.Element => {
 		setIsFetchingData(true);
 		setUseBlockFormat(isHomeVideos);
 
-		await loadClient();
-		execute(
-			isHomeVideos,
-			searchInput,
-			setSearchResults,
-			setIsFetchingData,
-			setNoResultsFound
-		);
+		if (gapi.client) {
+			await loadClient();
+			execute(
+				isHomeVideos,
+				searchInput,
+				setSearchResults,
+				setIsFetchingData,
+				setNoResultsFound
+			);
+		}
 	};
 
 	const handleSubmitHandler: FormEventHandler<HTMLFormElement> = (
