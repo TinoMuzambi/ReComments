@@ -27,52 +27,7 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 				await loadClient();
 				execute(false, url, (res: gapi.client.youtube.Video[]) => {
 					setResult(res[0]);
-					if (res[0] && res[0].snippet?.thumbnails && dbUser) {
-						let newItem: HistoryItem = {
-							id: "",
-							title: "",
-							thumbnail: "",
-							uploader: "",
-							date: new Date(),
-						};
-						const historyCheck = checkHistory(dbUser.watchhistory, res[0].id);
-						if (historyCheck) {
-							newItem = {
-								id: res[0].id as string,
-								title: res[0].snippet?.title as string,
-								thumbnail: res[0].snippet?.thumbnails.high?.url as string,
-								uploader: res[0].snippet?.channelTitle as string,
-								date: new Date(),
-							};
-						} else {
-							newItem = dbUser.watchhistory.find(
-								(item) => item.id === res[0].id
-							) as HistoryItem;
-							newItem = { ...newItem, date: new Date() };
-						}
-						const newBody: UserModel = historyCheck
-							? {
-									...dbUser,
-									watchhistory: [newItem, ...dbUser.watchhistory],
-							  }
-							: {
-									...dbUser,
-									watchhistory: [
-										newItem,
-										...dbUser.watchhistory.filter(
-											(item) => item.id !== res[0].id
-										),
-									],
-							  };
-
-						const post: Function = async () => {
-							try {
-								await postUpdatedResourceToDb(newBody);
-								if (setDbUser) setDbUser(newBody);
-							} catch (error) {}
-						};
-						post();
-					}
+					updateUserHistory(res[0]);
 				});
 			} catch (error) {
 				router.push("/search");
@@ -80,6 +35,52 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 		};
 		getRes();
 	}, []);
+
+	const updateUserHistory: Function = async (
+		video: gapi.client.youtube.Video
+	): Promise<void> => {
+		if (video && video.snippet?.thumbnails && dbUser) {
+			let newItem: HistoryItem = {
+				id: "",
+				title: "",
+				thumbnail: "",
+				uploader: "",
+				date: new Date(),
+			};
+			const historyCheck = checkHistory(dbUser.watchhistory, video.id);
+			if (historyCheck) {
+				newItem = {
+					id: video.id as string,
+					title: video.snippet?.title as string,
+					thumbnail: video.snippet?.thumbnails.high?.url as string,
+					uploader: video.snippet?.channelTitle as string,
+					date: new Date(),
+				};
+			} else {
+				newItem = dbUser.watchhistory.find(
+					(item) => item.id === video.id
+				) as HistoryItem;
+				newItem = { ...newItem, date: new Date() };
+			}
+			const newBody: UserModel = historyCheck
+				? {
+						...dbUser,
+						watchhistory: [newItem, ...dbUser.watchhistory],
+				  }
+				: {
+						...dbUser,
+						watchhistory: [
+							newItem,
+							...dbUser.watchhistory.filter((item) => item.id !== video.id),
+						],
+				  };
+
+			try {
+				await postUpdatedResourceToDb(newBody);
+				if (setDbUser) setDbUser(newBody);
+			} catch (error) {}
+		}
+	};
 
 	const checkHistory: Function = (
 		watchhistory: HistoryItem[],
