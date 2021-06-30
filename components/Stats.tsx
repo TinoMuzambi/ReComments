@@ -28,6 +28,10 @@ const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 
 	const stats = [
 		{
+			icon: <VscEye />,
+			stat: result.statistics ? result.statistics.viewCount : 0,
+		},
+		{
 			icon: <BiLike />,
 			stat: result.statistics ? result.statistics.likeCount : 0,
 		},
