@@ -92,6 +92,102 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		}
 	};
 
+	const handleEditingComments: Function = async (): Promise<void> => {
+		// Edit comment.
+		if (currComment) {
+			if (isSecondLevelComment && originalComment) {
+				// Editing a reply.
+				let body: CommentModel = {
+					...originalComment,
+				};
+
+				if (body && body.replies) {
+					for (let i = 0; i < body.replies.length; i++) {
+						if (
+							body.replies[i]._id === currComment._id &&
+							originalComment.replies
+						) {
+							let newReplies = originalComment.replies;
+							newReplies[i] = {
+								...newReplies[i],
+								comment: commentInput,
+								edited: true,
+							};
+							body = { ...originalComment, replies: newReplies };
+							break;
+						}
+					}
+
+					// Post update to DB.
+					await postUpdatedResourceToDb(body, originalComment._id);
+				}
+			} else {
+				// Editing top level comment.
+				let body: CommentModel = {
+					...currComment,
+					edited: true,
+					comment: commentInput,
+					updatedAt: new Date(),
+				};
+
+				// Post update to DB.
+				await postUpdatedResourceToDb(body, currComment._id);
+			}
+
+			// Hide forms and expand view more.
+			if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
+			if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
+		}
+	};
+
+	const handleReplyingToComment: Function = async (): Promise<void> => {
+		if (currComment) {
+			// Reply to comment.
+			if (isSecondLevelComment && originalComment && originalComment.replies) {
+				// Add mention if second level comment.
+				let body: CommentModel = {
+					...originalComment,
+				};
+
+				const newBody: CommentModel = generateNewCommentBody();
+				body = {
+					...body,
+					replies: [
+						...originalComment?.replies,
+						{
+							...newBody,
+							comment: commentInput.replace("@" + currComment.name + " ", ""),
+							mention: `@${currComment.name}`,
+						},
+					],
+				};
+
+				await postUpdatedResourceToDb(body, originalComment._id);
+			} else {
+				// Don't add mention
+				if (currComment.replies) {
+					let body: CommentModel = {
+						...currComment,
+					};
+					const newBody: CommentModel = generateNewCommentBody();
+
+					body = {
+						...body,
+						replies: [...currComment?.replies, newBody],
+					};
+					await postUpdatedResourceToDb(body, currComment._id);
+				}
+			}
+
+			await notifyCommentAuthorByEmail();
+
+			// Hide forms and expand view more.
+			if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
+		}
+	};
+
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e): void => {
 		e.preventDefault();
 
@@ -109,104 +205,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 		try {
 			if (commentFormToEditVisible) {
-				// Edit comment.
-				if (currComment) {
-					if (isSecondLevelComment && originalComment) {
-						// Editing a reply.
-						let body: CommentModel = {
-							...originalComment,
-						};
-
-						if (body && body.replies) {
-							for (let i = 0; i < body.replies.length; i++) {
-								if (
-									body.replies[i]._id === currComment._id &&
-									originalComment.replies
-								) {
-									let newReplies = originalComment.replies;
-									newReplies[i] = {
-										...newReplies[i],
-										comment: commentInput,
-										edited: true,
-									};
-									body = { ...originalComment, replies: newReplies };
-									break;
-								}
-							}
-
-							// Post update to DB.
-							await postUpdatedResourceToDb(body, originalComment._id);
-						}
-					} else {
-						// Editing top level comment.
-						let body: CommentModel = {
-							...currComment,
-							edited: true,
-							comment: commentInput,
-							updatedAt: new Date(),
-						};
-
-						// Post update to DB.
-						await postUpdatedResourceToDb(body, currComment._id);
-					}
-
-					// Hide forms and expand view more.
-					if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
-					if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
-					if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
-				}
+				await handleEditingComments();
 			} else if (isSecondLevelComment || commentFormToReplyVisible) {
-				if (currComment) {
-					// Reply to comment.
-					if (
-						isSecondLevelComment &&
-						originalComment &&
-						originalComment.replies
-					) {
-						// Add mention if second level comment.
-						let body: CommentModel = {
-							...originalComment,
-						};
-
-						const newBody: CommentModel = generateNewCommentBody();
-						body = {
-							...body,
-							replies: [
-								...originalComment?.replies,
-								{
-									...newBody,
-									comment: commentInput.replace(
-										"@" + currComment.name + " ",
-										""
-									),
-									mention: `@${currComment.name}`,
-								},
-							],
-						};
-
-						await postUpdatedResourceToDb(body, originalComment._id);
-					} else {
-						// Don't add mention
-						if (currComment.replies) {
-							let body: CommentModel = {
-								...currComment,
-							};
-							const newBody: CommentModel = generateNewCommentBody();
-
-							body = {
-								...body,
-								replies: [...currComment?.replies, newBody],
-							};
-							await postUpdatedResourceToDb(body, currComment._id);
-						}
-					}
-
-					await notifyCommentAuthorByEmail();
-
-					// Hide forms and expand view more.
-					if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
-					if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
-				}
+				await handleReplyingToComment();
 			} else {
 				// Post new comment to DB.
 				let body: CommentModel = generateNewCommentBody();
