@@ -58,6 +58,14 @@ const Search: React.FC = (): JSX.Element => {
 		if (searchResults) if (searchResults.length > 1) setUseBlockFormat(true);
 	}, [searchInput]);
 
+	useEffect(() => {
+		// Make call for preview videos.
+		if (searchResults === null) {
+			handleSubmit(true);
+		}
+		if (searchResults) if (searchResults.length > 1) setUseBlockFormat(true);
+	}, []);
+
 	const handleSubmit: Function = async (
 		isHomeVideos: boolean
 	): Promise<void> => {
