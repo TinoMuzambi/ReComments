@@ -10,6 +10,7 @@ import {
 } from "../utils/gapi";
 import { UserModel } from "../interfaces";
 import Meta from "../components/Meta";
+import AppState from "../components/AppState";
 import { getDbUser, postNewUserToDb } from "../utils";
 
 const SignIn: React.FC = (): JSX.Element => {
@@ -105,19 +106,7 @@ const SignIn: React.FC = (): JSX.Element => {
 		handleAuthClick();
 	};
 
-	if (loading)
-		return (
-			<main className="main">
-				<div className="error-holder">
-					<img
-						src="https://a.storyblok.com/f/114267/1222x923/8898eb61f4/error.png"
-						alt="error"
-						className="error-image"
-					/>
-					<h1 className="error">Loading...</h1>
-				</div>
-			</main>
-		);
+	if (loading) return <AppState message="Loading..." />;
 
 	return (
 		<>
