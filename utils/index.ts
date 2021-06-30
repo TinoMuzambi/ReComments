@@ -123,9 +123,7 @@ export const sendMail: Function = async (
 			},
 			body: JSON.stringify(body),
 		});
-	} catch (error) {
-		console.error(error);
-	}
+	} catch (error) {}
 };
 
 export const getUpdatedVoteCommentBody: Function = (
