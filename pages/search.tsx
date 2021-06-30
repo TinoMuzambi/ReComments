@@ -52,7 +52,7 @@ const Search: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		// Make call for preview videos.
-		if (!searchInput) {
+		if (!searchInput && !searchResults) {
 			handleSubmit(true);
 		}
 	}, [searchInput]);
