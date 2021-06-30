@@ -38,10 +38,10 @@ const Comment: React.FC<CommentProps> = ({ comment }): JSX.Element => {
 							</span>
 						)}
 					</button>
-					{comment.replies.map((reply: CommentModel) => (
+					{comment.replies.map((reply: CommentModel, i) => (
 						<div
 							className={`wrapper ${isViewMoreExpanded && "visible"}`}
-							key={reply._id}
+							key={reply._id + i.toString()}
 						>
 							<CommentContent
 								currComment={reply}
