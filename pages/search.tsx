@@ -12,7 +12,7 @@ import { AppContext } from "../context/AppContext";
 import Meta from "../components/Meta";
 import Loader from "../components/Loader";
 import Result from "../components/Result";
-import Form from "../components/Form";
+import SearchForm from "../components/SearchForm";
 import AppState from "../components/AppState";
 import Spinner from "../components/Spinner";
 import { loadClient, execute } from "../utils/gapi";
@@ -101,7 +101,7 @@ const Search: React.FC = (): JSX.Element => {
 
 			<main className="container">
 				<section className="form-holder">
-					<Form
+					<SearchForm
 						handleSubmit={handleSubmit}
 						searchTerm={searchInput}
 						setSearchTerm={setSearchInput}
