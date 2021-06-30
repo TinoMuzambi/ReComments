@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
 import { UserModel } from "../interfaces";
-import { postUpdatedResourceToDb } from "../utils";
+import { postUpdatedResourceToDb, hideNotice } from "../utils";
 import { handleSignoutClick } from "../utils/gapi";
 import Notice from "../components/Notice";
 import HistoryResult from "../components/HistoryResult";
@@ -37,14 +37,14 @@ const Profile: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		if (noticeTitle !== "") setNoticeVisible(true);
-		else hideNotice();
+		else hideNoticeWrapper();
 	}, [noticeTitle]);
 
 	useEffect(() => {
 		let timer: NodeJS.Timeout;
 		if (noticeNoButtons === 1) {
 			timer = setTimeout(() => {
-				hideNotice();
+				hideNoticeWrapper();
 			}, 4000);
 		}
 		return () => {
@@ -56,13 +56,15 @@ const Profile: React.FC = (): JSX.Element => {
 		if (!signedIn) router.push("/signin");
 	}, []);
 
-	const hideNotice: Function = () => {
-		setNoticeVisible(false);
-		setNoticeTitle("");
-		setNoticeSubtitle("");
-		setNoticeNoButtons(1);
-		setNoticeFirstButtonText("");
-		setNoticeSecondButtonText("");
+	const hideNoticeWrapper: Function = () => {
+		hideNotice(
+			setNoticeVisible,
+			setNoticeTitle,
+			setNoticeSubtitle,
+			setNoticeNoButtons,
+			setNoticeFirstButtonText,
+			setNoticeSecondButtonText
+		);
 	};
 
 	const submitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -73,13 +75,13 @@ const Profile: React.FC = (): JSX.Element => {
 			email === dbUser?.email &&
 			emails === dbUser?.emails
 		) {
-			hideNotice();
+			hideNoticeWrapper();
 			setNoticeTitle("No changes made");
 			setNoticeSubtitle("Make some changes in order to save");
 			setNoticeNoButtons(1);
 			setNoticeFirstButtonText("Ok");
 		} else {
-			hideNotice();
+			hideNoticeWrapper();
 			setDeleteOrSubmitOrClear("submit");
 			setNoticeTitle("Save changes");
 			setNoticeSubtitle(
@@ -94,7 +96,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const deleteHandler: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 
-		hideNotice();
+		hideNoticeWrapper();
 		setDeleteOrSubmitOrClear("delete");
 		setNoticeTitle("Delete your account");
 		setNoticeSubtitle(
@@ -108,7 +110,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const submitCallback: Function = async () => {
 		setSpinnerVisible(true);
 		if (dbUser) {
-			hideNotice();
+			hideNoticeWrapper();
 			const newBody: UserModel = {
 				...dbUser,
 				shortName: name as string,
@@ -119,13 +121,13 @@ const Profile: React.FC = (): JSX.Element => {
 			try {
 				await postUpdatedResourceToDb(newBody);
 				if (setDbUser) setDbUser(newBody);
-				hideNotice();
+				hideNoticeWrapper();
 				setNoticeTitle("Account successfully updated");
 				setNoticeSubtitle("Your changes were succesfully saved");
 				setNoticeNoButtons(1);
 				setNoticeFirstButtonText("Ok");
 			} catch (error) {
-				hideNotice();
+				hideNoticeWrapper();
 				setNoticeTitle("Account not updated");
 				setNoticeSubtitle(
 					"Something went wrong. Please contact the developer."
@@ -147,7 +149,7 @@ const Profile: React.FC = (): JSX.Element => {
 			await fetch(`/api/comments/video/purge/${dbUser?.userId}`, {
 				method: "DELETE",
 			});
-			hideNotice();
+			hideNoticeWrapper();
 			setNoticeTitle("Account successfully deleted");
 			setNoticeSubtitle(
 				"Your account and all account data were succesfully deleted"
@@ -160,7 +162,7 @@ const Profile: React.FC = (): JSX.Element => {
 			if (setUser) setUser(null);
 			router.push("/signin");
 		} catch (error) {
-			hideNotice();
+			hideNoticeWrapper();
 			setNoticeTitle("Account not deleted");
 			setNoticeSubtitle("Something went wrong. Please contact the developer.");
 			setNoticeNoButtons(1);
@@ -171,7 +173,7 @@ const Profile: React.FC = (): JSX.Element => {
 
 	const clearWatchHistoryHandler: MouseEventHandler<HTMLButtonElement> = () => {
 		setDeleteOrSubmitOrClear("clear");
-		hideNotice();
+		hideNoticeWrapper();
 		setNoticeTitle("Clear watch history");
 		setNoticeSubtitle("Are you sure you want to clear your watch history?");
 		setNoticeNoButtons(2);
@@ -190,13 +192,13 @@ const Profile: React.FC = (): JSX.Element => {
 			try {
 				await postUpdatedResourceToDb(newBody);
 				if (setDbUser) setDbUser(newBody);
-				hideNotice();
+				hideNoticeWrapper();
 				setNoticeTitle("Watch history cleared");
 				setNoticeSubtitle("Your watch history has been cleared");
 				setNoticeNoButtons(1);
 				setNoticeFirstButtonText("Ok");
 			} catch (error) {
-				hideNotice();
+				hideNoticeWrapper();
 				setNoticeTitle("Watch history not cleared");
 				setNoticeSubtitle(
 					"Something went wrong. Please contact the developer."
@@ -220,13 +222,13 @@ const Profile: React.FC = (): JSX.Element => {
 					await postUpdatedResourceToDb(newBody);
 					if (setDbUser) setDbUser(newBody);
 
-					hideNotice();
+					hideNoticeWrapper();
 					setNoticeTitle("Video deleted");
 					setNoticeSubtitle("The video has been deleted from your history");
 					setNoticeNoButtons(1);
 					setNoticeFirstButtonText("Ok");
 				} catch (error) {
-					hideNotice();
+					hideNoticeWrapper();
 					setNoticeTitle("Video not deleted");
 					setNoticeSubtitle(
 						"Something went wrong. Please contact the developer."
@@ -255,7 +257,7 @@ const Profile: React.FC = (): JSX.Element => {
 						? clearWatchHistory
 						: submitCallback
 				}
-				cancelCallback={hideNotice}
+				cancelCallback={hideNoticeWrapper}
 			/>
 			<section className="account">
 				<h1 className="title">Account</h1>

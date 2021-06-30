@@ -13,6 +13,7 @@ import {
 	VOTING_TYPES,
 	getUpdatedVoteCommentBody,
 	getDbUser,
+	hideNotice,
 } from "../../utils";
 import CommentForm from "./CommentForm";
 import Spinner from "../Spinner";
@@ -43,15 +44,18 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const { dbUser, user, setDbUser } = useContext(AppContext);
 
 	useEffect(() => {
+		// Refresh db user to get latest updates.
 		getDbUser(user, setDbUser);
 	}, []);
 
 	useEffect(() => {
+		// Handle visibility of notice component.
 		if (noticeTitle !== "") setNoticeVisible(true);
 		else setNoticeVisible(false);
 	}, [noticeTitle]);
 
 	useEffect(() => {
+		// Handle making timer disappear after 4 seconds if one button notice.
 		let timer: NodeJS.Timeout;
 		if (noticeNoButtons === 1) {
 			if (noticeVisible) {
@@ -67,6 +71,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	}, [noticeVisible]);
 
 	useEffect(() => {
+		// Handle making options box disappear on outside click.
 		const checkOptionsVisible: EventListener = (e) => {
 			if (e && e.target) {
 				const target = e.target as HTMLElement;
@@ -81,6 +86,17 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		};
 	}, []);
 
+	const hideNoticeWrapper: Function = () => {
+		hideNotice(
+			setNoticeVisible,
+			setNoticeTitle,
+			setNoticeSubtitle,
+			setNoticeNoButtons,
+			setNoticeFirstButtonText,
+			setNoticeSecondButtonText
+		);
+	};
+
 	const scrollToSamePosition: Function = async (): Promise<void> => {
 		const height = window.scrollY;
 		await router.replace(router.asPath);
@@ -89,18 +105,16 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const editHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
-			if (dbUser) {
-				if (dbUser.userId === currComment.authorId) {
-					setCommentFormToEditVisible(true);
-					setCommentFormToReplyVisible(false);
-					setOptionsVisible(false);
-				} else {
-					setNoticeTitle("Only edit own comments");
-					setNoticeSubtitle("You can only edit comments that you made");
-					setNoticeNoButtons(1);
-					setNoticeFirstButtonText("Ok");
-					setOptionsVisible(false);
-				}
+			if (dbUser && dbUser.userId === currComment.authorId) {
+				setCommentFormToEditVisible(true);
+				setCommentFormToReplyVisible(false);
+				setOptionsVisible(false);
+			} else {
+				setNoticeTitle("Only edit your own comments");
+				setNoticeSubtitle("You can only edit comments that you made");
+				setNoticeNoButtons(1);
+				setNoticeFirstButtonText("Ok");
+				setOptionsVisible(false);
 			}
 		};
 
@@ -108,6 +122,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		setSpinnerVisible(true);
 		try {
 			if (isSecondLevelComment) {
+				// Deleting a reply.
 				if (originalComment && originalComment.replies) {
 					const deletedComment = {
 						...originalComment,
@@ -118,6 +133,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					postUpdatedResourceToDb(deletedComment, originalComment._id);
 				}
 			} else {
+				// Deleting a top level comment.
 				await fetch(`/api/comments/${currComment._id}`, {
 					method: "DELETE",
 					headers: {
@@ -128,17 +144,13 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 			await scrollToSamePosition();
 		} catch (error) {
-			console.error(error);
+			hideNoticeWrapper();
+			setNoticeTitle("Comment not deleted");
+			setNoticeSubtitle("Something went wrong. Please contact the developer.");
+			setNoticeNoButtons(1);
+			setNoticeFirstButtonText("Ok");
 		}
 		setSpinnerVisible(false);
-	};
-
-	const hideNotice: Function = () => {
-		setNoticeVisible(false);
-		setNoticeTitle("");
-		setNoticeSubtitle("");
-		setNoticeFirstButtonText("");
-		setNoticeSecondButtonText("");
 	};
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> =
@@ -302,7 +314,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 				firstButtonText={noticeFirstButtonText}
 				secondButtonText={noticeSecondButtonText}
 				confirmCallback={deleteCallback}
-				cancelCallback={hideNotice}
+				cancelCallback={hideNoticeWrapper}
 			/>
 			<div className="body">
 				<img

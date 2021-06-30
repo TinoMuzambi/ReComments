@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { CommentModel, UserModel } from "../interfaces";
 
 const instanceOfCommentModel: Function = (
@@ -228,4 +229,20 @@ export const getHtml: Function = (title: string, html: string): string => {
 			}
 		</style>
 	`;
+};
+
+export const hideNotice: Function = (
+	setNoticeVisible: Dispatch<SetStateAction<boolean>>,
+	setNoticeTitle: Dispatch<SetStateAction<string>>,
+	setNoticeSubtitle: Dispatch<SetStateAction<string>>,
+	setNoticeNoButtons: Dispatch<SetStateAction<1 | 2>>,
+	setNoticeFirstButtonText: Dispatch<SetStateAction<string>>,
+	setNoticeSecondButtonText: Dispatch<SetStateAction<string>>
+) => {
+	setNoticeVisible(false);
+	setNoticeTitle("");
+	setNoticeSubtitle("");
+	setNoticeNoButtons(1);
+	setNoticeFirstButtonText("");
+	setNoticeSecondButtonText("");
 };
