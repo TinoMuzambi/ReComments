@@ -53,42 +53,32 @@ const Search: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		// Make call for preview videos.
 		if (!searchInput) {
-			try {
-				setUseBlockFormat(true);
-				const makeCall = async () => {
-					setIsFetchingData(true);
-					if (gapi.client) {
-						await loadClient();
-						execute(
-							true,
-							searchInput,
-							setSearchResults,
-							setIsFetchingData,
-							setNoResultsFound
-						);
-					}
-				};
-				if (!searchResults) makeCall();
-			} catch (error) {}
+			handleSubmit(true);
 		}
 	}, []);
 
-	const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
+	const handleSubmit: Function = async (
+		isHomeVideos: boolean
+	): Promise<void> => {
+		setIsFetchingData(true);
+		setUseBlockFormat(isHomeVideos);
+
+		await loadClient();
+		execute(
+			isHomeVideos,
+			searchInput,
+			setSearchResults,
+			setIsFetchingData,
+			setNoResultsFound
+		);
+	};
+
+	const handleSubmitHandler: FormEventHandler<HTMLFormElement> = (
+		e: FormEvent
+	) => {
 		// Search for given url.
 		e.preventDefault();
-		setIsFetchingData(true);
-		setUseBlockFormat(false);
-		const makeCall = async () => {
-			await loadClient();
-			execute(
-				false,
-				searchInput,
-				setSearchResults,
-				setIsFetchingData,
-				setNoResultsFound
-			);
-		};
-		makeCall();
+		handleSubmit(false);
 	};
 
 	return (
@@ -102,7 +92,7 @@ const Search: React.FC = (): JSX.Element => {
 			<main className="container">
 				<section className="form-holder">
 					<SearchForm
-						handleSubmit={handleSubmit}
+						handleSubmit={handleSubmitHandler}
 						searchTerm={searchInput}
 						setSearchTerm={setSearchInput}
 					/>
