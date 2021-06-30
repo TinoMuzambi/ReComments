@@ -20,7 +20,7 @@ export const postUpdatedResourceToDb: Function = async (
 	body: CommentModel | UserModel,
 	commentId?: string
 ): Promise<void> => {
-	// Post resource to db.
+	// Determine whether resource is comment or user and post resource to db with PUT.
 	if (instanceOfCommentModel(body)) {
 		await fetch(`/api/comments/${commentId}`, {
 			method: "PUT",
@@ -40,9 +40,10 @@ export const postUpdatedResourceToDb: Function = async (
 	}
 };
 
-export const postUserToDb: Function = async (
+export const postNewUserToDb: Function = async (
 	body: UserModel
 ): Promise<void> => {
+	// Post new user to db.
 	await fetch("/api/users", {
 		method: "POST",
 		headers: {
@@ -53,15 +54,16 @@ export const postUserToDb: Function = async (
 };
 
 export const VOTING_TYPES = {
+	// Different types of liking/unliking.
 	upvoting: "upvoting",
 	downvoting: "downvoting",
 	undoUpvoting: "undoUpvoting",
 	undoDownvoting: "undoDownvoting",
 };
 
-export const numberWithCommas: Function = (x: number): string => {
+export const numberWithCommas: Function = (num: number): string => {
 	// Format number to have commas to make it more readable.
-	return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	return num.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 };
 
 export const shuffle: Function = (array: string[]): string[] => {
@@ -96,9 +98,9 @@ export const sendMail: Function = async (
 	// Send email to recipient.
 	try {
 		const body = {
-			to: to,
-			fromName: fromName,
-			commentText: commentText,
+			to,
+			fromName,
+			commentText,
 			url: "https://youtube.com/watch?v=" + url,
 			title: title.substring(0, title.indexOf("| ReComments") - 1),
 		};
@@ -134,6 +136,7 @@ export const getDbUser: Function = async (
 	user: gapi.client.people.Person,
 	setDbUser: Function
 ): Promise<void> => {
+	// Get the current user from the db.
 	if (user && user.emailAddresses) {
 		const res = await fetch(
 			`/api/users/${user?.emailAddresses[0].metadata?.source?.id}`,
@@ -151,6 +154,7 @@ export const getDbUser: Function = async (
 };
 
 export const getHtml: Function = (title: string, html: string): string => {
+	// Get html for sending email.
 	return `
 		<head>
 			<title>${title} | ReComments</title>

@@ -10,7 +10,7 @@ import {
 } from "../utils/gapi";
 import { UserModel } from "../interfaces";
 import Meta from "../components/Meta";
-import { getDbUser, postUserToDb } from "../utils";
+import { getDbUser, postNewUserToDb } from "../utils";
 
 const SignIn: React.FC = (): JSX.Element => {
 	const [loading, setLoading] = useState(false);
@@ -79,7 +79,7 @@ const SignIn: React.FC = (): JSX.Element => {
 				};
 
 				try {
-					await postUserToDb(body);
+					await postNewUserToDb(body);
 					if (setDbUser) setDbUser(body);
 				} catch (error) {}
 			}
