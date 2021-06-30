@@ -32,7 +32,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const [commentInput, setCommentInput] = useState("");
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
-	const { dbUser, user } = useContext(AppContext);
+	const { dbUser } = useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -65,16 +65,132 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
 	};
 
-	const submitHandler: FormEventHandler<HTMLFormElement> = (e): void => {
+	const submitHandler: FormEventHandler<HTMLFormElement> = async (
+		e
+	): Promise<void> => {
 		e.preventDefault();
 
-		const submitComment: Function = async (): Promise<void> => {
-			setSpinnerVisible(true);
-			if (user && user.emailAddresses) {
+		setSpinnerVisible(true);
+
+		try {
+			if (commentFormToEditVisible) {
+				// Edit comment.
+				if (currComment) {
+					if (isSecondLevelComment) {
+						let body: CommentModel;
+						if (originalComment) {
+							body = {
+								...originalComment,
+							};
+
+							// Editing replies.
+							if (body && body.replies && originalComment) {
+								for (let i = 0; i < body.replies.length; i++) {
+									if (
+										body.replies[i]._id === currComment._id &&
+										originalComment.replies
+									) {
+										let newReplies = originalComment.replies;
+										newReplies[i] = {
+											...newReplies[i],
+											comment: commentInput,
+											edited: true,
+										};
+										body = { ...originalComment, replies: newReplies };
+										break;
+									}
+								}
+							}
+
+							// Post update to DB.
+							await postUpdatedResourceToDb(body, originalComment._id);
+						}
+					} else {
+						// Editing top level comment.
+						let body: CommentModel = {
+							...currComment,
+							edited: true,
+							comment: commentInput,
+							updatedAt: new Date(),
+						};
+
+						// Post update to DB.
+						await postUpdatedResourceToDb(body, currComment._id);
+					}
+
+					// Hide forms and expand view more.
+					if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+					if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
+					if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
+				}
+			} else if (isSecondLevelComment || commentFormToReplyVisible) {
+				if (currComment) {
+					// Reply to comment.
+					if (
+						isSecondLevelComment &&
+						originalComment &&
+						originalComment.replies
+					) {
+						// Add mention if second level comment.
+						let body: CommentModel = {
+							...originalComment,
+						};
+						body = {
+							...body,
+							replies: [
+								...originalComment?.replies,
+								{
+									...body,
+									comment: commentInput.replace(
+										"@" + currComment.name + " ",
+										""
+									),
+									mention: `@${currComment.name}`,
+								},
+							],
+						};
+
+						await postUpdatedResourceToDb(body, originalComment._id);
+					} else {
+						// Don't add mention
+						if (currComment.replies) {
+							let body: CommentModel = {
+								...currComment,
+							};
+
+							body = { ...body, replies: [...currComment?.replies, body] };
+							await postUpdatedResourceToDb(body, currComment._id);
+						}
+					}
+
+					// Notify user by email.
+					const author = await fetch(`/api/users/${currComment.authorId}`);
+					const authorJson = await author.json();
+					const commentAuthor: UserModel = authorJson.data;
+
+					if (commentAuthor?.emails) {
+						sendMail(
+							currComment.email,
+							dbUser?.shortName,
+							commentInput.replace(
+								(("@" + dbUser?.shortName) as string) + " ",
+								""
+							),
+							router.query.url,
+							document.title
+						);
+					}
+
+					// Hide forms and expand view more.
+					if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+					if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
+				}
+			} else {
+				// Post new comment to DB.
 				let body: CommentModel = {
 					_id: uuidv4(),
 					videoId: router.query.url as string,
-					authorId: user?.emailAddresses[0].metadata?.source?.id as string,
+					authorId: dbUser?.userId as string,
 					email: dbUser?.email as string,
 					name: dbUser?.shortName as string,
 					comment: commentInput,
@@ -86,132 +202,13 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					mention: null,
 					edited: false,
 				};
-
-				try {
-					if (commentFormToEditVisible) {
-						// Edit comment.
-						if (currComment) {
-							if (isSecondLevelComment) {
-								if (originalComment)
-									body = {
-										...originalComment,
-									};
-								// Editing replies.
-								if (body && body.replies && originalComment) {
-									for (let i = 0; i < body.replies.length; i++) {
-										if (
-											body.replies[i]._id === currComment._id &&
-											originalComment.replies
-										) {
-											let newReplies = originalComment.replies;
-											newReplies[i] = {
-												...newReplies[i],
-												comment: commentInput,
-												edited: true,
-												updatedAt: new Date(),
-											};
-											body = { ...originalComment, replies: newReplies };
-											break;
-										}
-									}
-								}
-
-								// Post update to DB.
-								if (originalComment)
-									await postUpdatedResourceToDb(body, originalComment._id);
-							} else {
-								// Editing top level comment.
-								body = {
-									...currComment,
-									edited: true,
-									comment: commentInput,
-									updatedAt: new Date(),
-								};
-							}
-
-							// Post update to DB.
-							await postUpdatedResourceToDb(body, currComment._id);
-
-							// Hide forms and expand view more.
-							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
-							if (setCommentFormToReplyVisible)
-								setCommentFormToReplyVisible(false);
-							if (setCommentFormToEditVisible)
-								setCommentFormToEditVisible(false);
-						}
-					} else if (isSecondLevelComment || commentFormToReplyVisible) {
-						if (currComment) {
-							// Reply to comment.
-							if (
-								isSecondLevelComment &&
-								originalComment &&
-								originalComment.replies
-							) {
-								// Add mention if second level comment.
-								body = {
-									...originalComment,
-									replies: [
-										...originalComment?.replies,
-										{
-											...body,
-											comment: commentInput.replace(
-												"@" + currComment.name + " ",
-												""
-											),
-											mention: `@${currComment.name}`,
-										},
-									],
-								};
-							} else {
-								if (currComment.replies)
-									body = {
-										...currComment,
-										replies: [...currComment?.replies, body],
-									};
-							}
-
-							// Post updated comment to DB.
-							if (isSecondLevelComment && originalComment)
-								await postUpdatedResourceToDb(body, originalComment._id);
-							else await postUpdatedResourceToDb(body, currComment._id);
-
-							// Notify user by email.
-							const author = await fetch(`/api/users/${currComment.authorId}`);
-							const authorJson = await author.json();
-							const commentAuthor: UserModel = authorJson.data;
-
-							if (commentAuthor?.emails) {
-								sendMail(
-									currComment.email,
-									dbUser?.shortName,
-									commentInput.replace(
-										(("@" + dbUser?.shortName) as string) + " ",
-										""
-									),
-									router.query.url,
-									document.title
-								);
-							}
-
-							// Hide forms and expand view more.
-							if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
-							if (setCommentFormToReplyVisible)
-								setCommentFormToReplyVisible(false);
-						}
-					} else {
-						// Post new comment to DB.
-						await postNewCommentToDb(body);
-					}
-
-					// Refresh then scroll to same place on the page.
-					await scrollToSamePosition();
-				} catch (error) {
-					console.error(error);
-				}
+				await postNewCommentToDb(body);
 			}
-			setSpinnerVisible(false);
-		};
-		submitComment();
+
+			// Refresh then scroll to same place on the page.
+			await scrollToSamePosition();
+		} catch (error) {}
+		setSpinnerVisible(false);
 	};
 
 	return (
