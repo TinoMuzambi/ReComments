@@ -134,6 +134,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				await postUpdatedResourceToDb(body, currComment._id);
 			}
 
+			// Refresh then scroll to same place on the page.
+			await scrollToSamePosition();
+
 			// Hide forms and expand view more.
 			if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
 			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
@@ -182,6 +185,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 			await notifyCommentAuthorByEmail();
 
+			// Refresh then scroll to same place on the page.
+			await scrollToSamePosition();
+
 			// Hide forms and expand view more.
 			if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
 			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
@@ -213,8 +219,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				let body: CommentModel = generateNewCommentBody();
 				await postNewCommentToDb(body);
 			}
-			// Refresh then scroll to same place on the page.
-			await scrollToSamePosition();
 		} catch (error) {}
 		setSpinnerVisible(false);
 	};
