@@ -27,8 +27,7 @@
 		}
 	}
 
-	.submit,
-	.clear {
+	.submit {
 		@include buttonReset;
 		@include flexAllCol;
 		background: $primary-colour;
