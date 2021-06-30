@@ -10,7 +10,11 @@ import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
 import { CommentFormProps, CommentModel, UserModel } from "../../interfaces";
-import { postUpdatedResourceToDb, sendMail } from "../../utils";
+import {
+	postUpdatedResourceToDb,
+	postNewCommentToDb,
+	sendMail,
+} from "../../utils";
 import Spinner from "../Spinner";
 
 const CommentForm: React.FC<CommentFormProps> = ({
@@ -33,12 +37,14 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 	useEffect(() => {
 		if (isSecondLevelComment) {
+			// Prepend @ symbol if comment is a reply.
 			if (currComment) setCommentInput(`@${currComment.name} `);
 		}
 	}, [isSecondLevelComment]);
 
 	useEffect(() => {
 		if (commentFormToEditVisible) {
+			// If editing set comment input to comment text.
 			if (currComment) setCommentInput(currComment.comment);
 		}
 	}, [commentFormToEditVisible]);
@@ -51,20 +57,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		window.scrollTo(0, height);
 	};
 
-	const postNewCommentToDb = async (body: CommentModel): Promise<void> => {
-		await fetch("/api/comments", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(body),
-		});
-	};
-
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e): void => {
 		e.preventDefault();
+
 		setCancelCommentButtonsVisible(false);
-		if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
 		if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
 		if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
 	};

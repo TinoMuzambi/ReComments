@@ -53,6 +53,17 @@ export const postNewUserToDb: Function = async (
 	});
 };
 
+export const postNewCommentToDb = async (body: CommentModel): Promise<void> => {
+	// Post new comment to db.
+	await fetch("/api/comments", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(body),
+	});
+};
+
 export const VOTING_TYPES = {
 	// Different types of liking/unliking.
 	upvoting: "upvoting",
