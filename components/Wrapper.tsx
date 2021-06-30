@@ -10,9 +10,11 @@ const Wrapper: React.FC<WrapperProps> = ({ children }): JSX.Element => {
 	const [dark, setDark] = useState(false);
 
 	useEffect(() => {
+		// Get dark mode stat from local storage.
 		const darkLocalStorage = JSON.parse(
 			localStorage.getItem("recomments-dark") as string
 		);
+		// If present set it.
 		if (darkLocalStorage === true || darkLocalStorage === false) {
 			setDark(darkLocalStorage);
 			if (darkLocalStorage) document.body.classList.add("dark");
