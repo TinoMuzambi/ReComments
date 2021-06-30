@@ -86,6 +86,7 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 		watchhistory: HistoryItem[],
 		id: string
 	): boolean => {
+		// Check if video is already in watch history.
 		let res = true;
 		watchhistory.forEach((item: HistoryItem) => {
 			if (item.id === id) res = false;
