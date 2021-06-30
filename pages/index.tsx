@@ -2,6 +2,7 @@ import { useContext } from "react";
 import Link from "next/link";
 
 import { AppContext } from "../context/AppContext";
+
 const Home = (): JSX.Element => {
 	const { signedIn } = useContext(AppContext);
 
