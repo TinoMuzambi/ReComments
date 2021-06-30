@@ -8,7 +8,7 @@ import { handleSignoutClick } from "../utils/gapi";
 const Nav: React.FC = (): JSX.Element => {
 	const [navOpen, setNavOpen] = useState(false);
 
-	const { setSignedIn, setUser, user, signedIn, setDbUser } =
+	const { setSignedIn, setUser, dbUser, signedIn, setDbUser } =
 		useContext(AppContext);
 	const router = useRouter();
 
@@ -70,16 +70,16 @@ const Nav: React.FC = (): JSX.Element => {
 								Sign Out
 							</li>
 						)}
-						{user && user.photos && user.names && (
+						{dbUser && (
 							<Link href="/profile">
 								<a className="link">
 									<div className="profile">
 										<img
 											className="photo"
-											src={user.photos[0].url}
+											src={dbUser.photoUrl}
 											alt="Profile"
 										/>
-										<p className="name">{user.names[0].givenName}</p>
+										<p className="name">{dbUser.shortName}</p>
 									</div>
 								</a>
 							</Link>
