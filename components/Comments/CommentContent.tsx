@@ -166,7 +166,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	): Boolean => {
 		const value = false;
 
-		if (body.upvotedIds && body.downvotedIds) {
+		if (body.upvotedIds && body.downvotedIds && currComment._id) {
 			if (voteType === VOTING_TYPES.upvoting)
 				return !body.upvotedIds.includes(currComment._id);
 			else if (voteType === VOTING_TYPES.downvoting)
@@ -184,7 +184,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		voteType: string,
 		user: UserModel
 	): UserModel => {
-		if (user.upvotedIds && user.downvotedIds) {
+		if (user.upvotedIds && user.downvotedIds && currComment._id) {
 			if (voteType === VOTING_TYPES.upvoting)
 				return {
 					...user,
@@ -274,21 +274,21 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	};
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
-			if (dbUser?.upvotedIds?.includes(currComment._id))
+			if (currComment._id && dbUser?.upvotedIds?.includes(currComment._id))
 				voteHandler(VOTING_TYPES.undoUpvoting);
 			else voteHandler(VOTING_TYPES.upvoting);
 		};
 
 	const downVoteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
-			if (dbUser?.downvotedIds?.includes(currComment._id))
+			if (currComment._id && dbUser?.downvotedIds?.includes(currComment._id))
 				voteHandler(VOTING_TYPES.undoDownvoting);
 			else voteHandler(VOTING_TYPES.downvoting);
 		};
 
 	const currCommentUpvoted: Function = (): Boolean => {
 		let value = false;
-		if (dbUser && dbUser.upvotedIds) {
+		if (dbUser && dbUser.upvotedIds && currComment._id) {
 			value = dbUser.upvotedIds.includes(currComment._id);
 		}
 		return value;
@@ -296,7 +296,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const currCommentDownvoted: Function = (): Boolean => {
 		let value = false;
-		if (dbUser && dbUser.downvotedIds) {
+		if (dbUser && dbUser.downvotedIds && currComment._id) {
 			value = dbUser.downvotedIds.includes(currComment._id);
 		}
 		return value;
