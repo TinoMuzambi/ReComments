@@ -225,43 +225,32 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 						commentBody = getUpdatedVoteCommentBody(voteType, commentBody);
 
-						if (isSecondLevelComment) {
-							if (originalComment) {
-								const updatedComment = {
-									...originalComment,
-								};
+						if (isSecondLevelComment && originalComment) {
+							let updatedComment: CommentModel = {
+								...originalComment,
+							};
 
-								if (updatedComment.replies) {
-									for (let i = 0; i < updatedComment.replies.length; i++) {
-										if (updatedComment.replies[i]._id === currComment._id) {
-											updatedComment.replies[i] = commentBody;
-										}
+							if (updatedComment.replies) {
+								for (let i = 0; i < updatedComment.replies.length; i++) {
+									if (updatedComment.replies[i]._id === currComment._id) {
+										updatedComment.replies[i] = commentBody;
 									}
 								}
-
-								commentBody = updatedComment;
 							}
-						}
 
-						if (isSecondLevelComment) {
-							if (originalComment) {
-								await postUpdatedResourceToDb(commentBody, originalComment._id);
-							}
+							commentBody = updatedComment;
+							await postUpdatedResourceToDb(commentBody, originalComment._id);
 						} else {
 							await postUpdatedResourceToDb(commentBody, currComment._id);
 						}
-					} catch (error) {
-						console.error(error);
-					}
+					} catch (error) {}
 
 					try {
 						// Add comment id to user's upvoted ids.
 						userBody = getUpdatedUserVoteIdsBody(voteType, userBody);
 						await postUpdatedResourceToDb(userBody);
 						getDbUser(user, setDbUser);
-					} catch (error) {
-						console.error(error);
-					}
+					} catch (error) {}
 				}
 			}
 

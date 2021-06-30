@@ -57,6 +57,22 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		window.scrollTo(0, height);
 	};
 
+	const generateNewCommentBody: Function = (): CommentModel => ({
+		_id: uuidv4(),
+		videoId: router.query.url as string,
+		authorId: dbUser?.userId as string,
+		email: dbUser?.email as string,
+		name: dbUser?.shortName as string,
+		comment: commentInput,
+		image: dbUser?.photoUrl as string,
+		upvotes: 0,
+		downvotes: 0,
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		mention: null,
+		edited: false,
+	});
+
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e): void => {
 		e.preventDefault();
 
@@ -76,35 +92,34 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			if (commentFormToEditVisible) {
 				// Edit comment.
 				if (currComment) {
-					if (isSecondLevelComment) {
+					if (isSecondLevelComment && originalComment) {
+						// Editing a reply.
 						let body: CommentModel;
-						if (originalComment) {
-							body = {
-								...originalComment,
-							};
+						body = {
+							...originalComment,
+						};
 
-							// Editing replies.
-							if (body && body.replies && originalComment) {
-								for (let i = 0; i < body.replies.length; i++) {
-									if (
-										body.replies[i]._id === currComment._id &&
-										originalComment.replies
-									) {
-										let newReplies = originalComment.replies;
-										newReplies[i] = {
-											...newReplies[i],
-											comment: commentInput,
-											edited: true,
-										};
-										body = { ...originalComment, replies: newReplies };
-										break;
-									}
+						// Editing replies.
+						if (body && body.replies) {
+							for (let i = 0; i < body.replies.length; i++) {
+								if (
+									body.replies[i]._id === currComment._id &&
+									originalComment.replies
+								) {
+									let newReplies = originalComment.replies;
+									newReplies[i] = {
+										...newReplies[i],
+										comment: commentInput,
+										edited: true,
+									};
+									body = { ...originalComment, replies: newReplies };
+									break;
 								}
 							}
-
-							// Post update to DB.
-							await postUpdatedResourceToDb(body, originalComment._id);
 						}
+
+						// Post update to DB.
+						await postUpdatedResourceToDb(body, originalComment._id);
 					} else {
 						// Editing top level comment.
 						let body: CommentModel = {
@@ -135,12 +150,14 @@ const CommentForm: React.FC<CommentFormProps> = ({
 						let body: CommentModel = {
 							...originalComment,
 						};
+
+						const newBody: CommentModel = generateNewCommentBody();
 						body = {
 							...body,
 							replies: [
 								...originalComment?.replies,
 								{
-									...body,
+									...newBody,
 									comment: commentInput.replace(
 										"@" + currComment.name + " ",
 										""
@@ -157,8 +174,12 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							let body: CommentModel = {
 								...currComment,
 							};
+							const newBody: CommentModel = generateNewCommentBody();
 
-							body = { ...body, replies: [...currComment?.replies, body] };
+							body = {
+								...body,
+								replies: [...currComment?.replies, newBody],
+							};
 							await postUpdatedResourceToDb(body, currComment._id);
 						}
 					}
@@ -187,21 +208,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				}
 			} else {
 				// Post new comment to DB.
-				let body: CommentModel = {
-					_id: uuidv4(),
-					videoId: router.query.url as string,
-					authorId: dbUser?.userId as string,
-					email: dbUser?.email as string,
-					name: dbUser?.shortName as string,
-					comment: commentInput,
-					image: dbUser?.photoUrl as string,
-					upvotes: 0,
-					downvotes: 0,
-					createdAt: new Date(),
-					updatedAt: new Date(),
-					mention: null,
-					edited: false,
-				};
+				let body: CommentModel = generateNewCommentBody();
 				await postNewCommentToDb(body);
 			}
 
