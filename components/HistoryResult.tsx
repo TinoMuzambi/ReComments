@@ -1,6 +1,7 @@
 import Link from "next/link";
 import moment from "moment";
 import { IoCloseCircle } from "react-icons/io5";
+
 import { HistoryResultProps } from "../interfaces";
 
 const HistoryResult: React.FC<HistoryResultProps> = ({ item, clearVideo }) => {
