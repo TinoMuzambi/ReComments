@@ -52,7 +52,7 @@ const Search: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		// Make call for preview videos.
-		if (!searchInput && !searchResults) {
+		if (searchResults && searchResults.length === 1) {
 			handleSubmit(true);
 		}
 		if (searchResults) if (searchResults.length > 1) setUseBlockFormat(true);
