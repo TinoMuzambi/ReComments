@@ -73,6 +73,25 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		edited: false,
 	});
 
+	const notifyCommentAuthorByEmail: Function = async (): Promise<void> => {
+		// Notify user of new comment by email.
+		if (currComment) {
+			const author = await fetch(`/api/users/${currComment.authorId}`);
+			const authorJson = await author.json();
+			const commentAuthor: UserModel = authorJson.data;
+
+			if (commentAuthor?.emails) {
+				sendMail(
+					currComment.email,
+					dbUser?.shortName,
+					commentInput.replace((("@" + dbUser?.shortName) as string) + " ", ""),
+					router.query.url,
+					document.title
+				);
+			}
+		}
+	};
+
 	const cancelHandler: MouseEventHandler<HTMLButtonElement> = (e): void => {
 		e.preventDefault();
 
@@ -94,12 +113,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				if (currComment) {
 					if (isSecondLevelComment && originalComment) {
 						// Editing a reply.
-						let body: CommentModel;
-						body = {
+						let body: CommentModel = {
 							...originalComment,
 						};
 
-						// Editing replies.
 						if (body && body.replies) {
 							for (let i = 0; i < body.replies.length; i++) {
 								if (
@@ -116,10 +133,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
 									break;
 								}
 							}
-						}
 
-						// Post update to DB.
-						await postUpdatedResourceToDb(body, originalComment._id);
+							// Post update to DB.
+							await postUpdatedResourceToDb(body, originalComment._id);
+						}
 					} else {
 						// Editing top level comment.
 						let body: CommentModel = {
@@ -184,23 +201,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 						}
 					}
 
-					// Notify user by email.
-					const author = await fetch(`/api/users/${currComment.authorId}`);
-					const authorJson = await author.json();
-					const commentAuthor: UserModel = authorJson.data;
-
-					if (commentAuthor?.emails) {
-						sendMail(
-							currComment.email,
-							dbUser?.shortName,
-							commentInput.replace(
-								(("@" + dbUser?.shortName) as string) + " ",
-								""
-							),
-							router.query.url,
-							document.title
-						);
-					}
+					await notifyCommentAuthorByEmail();
 
 					// Hide forms and expand view more.
 					if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
