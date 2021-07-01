@@ -154,7 +154,9 @@ export const getDbComments: Function = async (url: string): Promise<any> => {
 			"Content-Type": "application/json",
 		},
 	});
-	let comments = await res.json();
+	const comments = await res.json();
+
+	return comments;
 };
 
 export const getDbUser: Function = async (

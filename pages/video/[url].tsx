@@ -121,7 +121,7 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 Video.getInitialProps = async (req) => {
 	let comments;
 
-	if (req && req.query) comments = await getDbComments(req);
+	if (req && req.query) comments = await getDbComments(req.query.url);
 
 	if (!comments.success) comments = [];
 
