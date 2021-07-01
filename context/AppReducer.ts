@@ -25,6 +25,12 @@ const Reducer = (state: State, action: Actions): State => {
 				searchResults: action.searchResults,
 			};
 		}
+		case "SET_VIDEO_COMMENTS": {
+			return {
+				...state,
+				videoComments: action.videoComments,
+			};
+		}
 		default:
 			return state;
 	}
