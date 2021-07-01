@@ -145,14 +145,22 @@ export interface ContextProps {
 	setDbUser?: Function;
 	searchResults: gapi.client.youtube.Video[] | null;
 	setSearchResults?: Function;
+	videoComments: CommentModel[] | null;
+	setVideoComments?: Function;
 }
 
 export type Actions = {
-	type: "UPDATE_SIGNED_IN" | "SET_USER" | "SET_DB_USER" | "SET_SEARCH_RESULTS";
+	type:
+		| "UPDATE_SIGNED_IN"
+		| "SET_USER"
+		| "SET_DB_USER"
+		| "SET_SEARCH_RESULTS"
+		| "SET_VIDEO_COMMENTS";
 	auth: boolean;
 	user: User;
 	dbUser: UserModel | null;
 	searchResults: gapi.client.youtube.Video[] | null;
+	videoComments: CommentModel | null;
 };
 
 export type State = {
@@ -160,4 +168,5 @@ export type State = {
 	user: User;
 	dbUser: UserModel | null;
 	searchResults: gapi.client.youtube.Video[] | null;
+	videoComments: CommentModel[] | null;
 };
