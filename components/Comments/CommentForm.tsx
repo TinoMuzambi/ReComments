@@ -214,6 +214,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				// Post new comment to DB.
 				let body: CommentModel = generateNewCommentBody();
 				await postNewCommentToDb(body);
+				await scrollToSamePosition();
 			}
 		} catch (error) {}
 		setSpinnerVisible(false);
