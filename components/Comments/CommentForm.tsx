@@ -32,7 +32,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const [commentInput, setCommentInput] = useState("");
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
-	const { dbUser } = useContext(AppContext);
+	const { dbUser, setVideoComments } = useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -125,6 +125,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 					// Post update to DB.
 					await postUpdatedResourceToDb(body, originalComment.id);
+					if (setVideoComments) setVideoComments(body);
 				}
 			} else {
 				// Editing top level comment.
@@ -137,6 +138,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 				// Post update to DB.
 				await postUpdatedResourceToDb(body, currComment.id);
+				if (setVideoComments) setVideoComments(body);
 			}
 
 			// Refresh then scroll to same place on the page.
@@ -167,6 +169,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				};
 
 				await postUpdatedResourceToDb(body, originalComment.id);
+				if (setVideoComments) setVideoComments(body);
 			} else {
 				// Don't add mention
 				if (currComment.replies) {
@@ -180,6 +183,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 						replies: [...currComment?.replies, newBody],
 					};
 					await postUpdatedResourceToDb(body, currComment.id);
+					if (setVideoComments) setVideoComments(body);
 				}
 			}
 
@@ -214,6 +218,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				// Post new comment to DB.
 				let body: CommentModel = generateNewCommentBody();
 				await postNewCommentToDb(body);
+				if (setVideoComments) setVideoComments(body);
 				await scrollToSamePosition();
 			}
 		} catch (error) {}
