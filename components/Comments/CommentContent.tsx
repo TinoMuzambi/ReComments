@@ -44,11 +44,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const { dbUser, user, setDbUser } = useContext(AppContext);
 
 	useEffect(() => {
-		// Refresh db user to get latest updates.
-		getDbUser(user, setDbUser);
-	}, []);
-
-	useEffect(() => {
 		// Handle visibility of notice component.
 		if (noticeTitle !== "") setNoticeVisible(true);
 		else setNoticeVisible(false);
