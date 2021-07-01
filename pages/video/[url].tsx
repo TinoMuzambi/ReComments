@@ -16,7 +16,8 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
 
 	const router = useRouter();
-	const { dbUser, setDbUser } = useContext(AppContext);
+	const { dbUser, setDbUser, videoComments, setVideoComments } =
+		useContext(AppContext);
 
 	useEffect(() => {
 		// Get video data given the url.
@@ -29,6 +30,9 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 					setResult(res[0]);
 					updateUserHistory(res[0]);
 				});
+				if (setVideoComments) {
+					setVideoComments(dbComments);
+				}
 			} catch (error) {
 				router.push("/search");
 			}
@@ -111,7 +115,7 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 
 					<Stats result={result} />
 
-					<Comments comments={dbComments} />
+					<Comments comments={videoComments || []} />
 				</main>
 			</>
 		);

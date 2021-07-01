@@ -70,7 +70,7 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
 
 	const setVideoComments: Function = (value: CommentModel[] | null) => {
 		dispatch({
-			type: "SET_SEARCH_RESULTS",
+			type: "SET_VIDEO_COMMENTS",
 			auth: state.signedIn,
 			user: state.user,
 			dbUser: state.dbUser,
