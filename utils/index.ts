@@ -142,6 +142,21 @@ export const getUpdatedVoteCommentBody: Function = (
 	return comment;
 };
 
+export const getDbComments: Function = async (url: string): Promise<any> => {
+	const BASE_URL =
+		process.env.NODE_ENV === "production"
+			? "https://recomments.tinomuzambi.com"
+			: "http://localhost:3000";
+	let res: any;
+
+	res = await fetch(`${BASE_URL}/api/comments/video/${url}`, {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+	let comments = await res.json();
+};
+
 export const getDbUser: Function = async (
 	user: gapi.client.people.Person,
 	setDbUser: Function

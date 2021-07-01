@@ -282,6 +282,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 			setSpinnerVisible(false);
 		}
 	};
+
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
 			if (currComment.id && dbUser?.upvotedIds?.includes(currComment.id))

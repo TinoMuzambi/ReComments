@@ -10,7 +10,7 @@ import Comments from "../../components/Comments/Comments";
 import { loadClient, execute } from "../../utils/gapi";
 import { HistoryItem, UserModel, VideoProps } from "../../interfaces";
 import { AppContext } from "../../context/AppContext";
-import { postUpdatedResourceToDb } from "../../utils";
+import { getDbComments, postUpdatedResourceToDb } from "../../utils";
 
 const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 	const [result, setResult] = useState<gapi.client.youtube.Video>();
@@ -119,18 +119,9 @@ const Video: NextPage<VideoProps> = ({ dbComments }): JSX.Element => {
 };
 
 Video.getInitialProps = async (req) => {
-	const BASE_URL =
-		process.env.NODE_ENV === "production"
-			? "https://recomments.tinomuzambi.com"
-			: "http://localhost:3000";
-	let res: any;
-	if (req && req.query)
-		res = await fetch(`${BASE_URL}/api/comments/video/${req.query.url}`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-	let comments = await res.json();
+	let comments;
+
+	if (req && req.query) comments = await getDbComments(req);
 
 	if (!comments.success) comments = [];
 
