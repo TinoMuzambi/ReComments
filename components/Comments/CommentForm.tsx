@@ -55,6 +55,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		setCommentInput("");
 		setCancelCommentButtonsVisible(false);
 		window.scrollTo(0, height);
+
+		// Hide forms and expand view more.
+		if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+		if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
+		if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
 	};
 
 	const generateNewCommentBody: Function = (): CommentModel => ({
@@ -136,11 +141,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 			// Refresh then scroll to same place on the page.
 			await scrollToSamePosition();
-
-			// Hide forms and expand view more.
-			if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
-			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
-			if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
 		}
 	};
 
@@ -187,10 +187,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 			// Refresh then scroll to same place on the page.
 			await scrollToSamePosition();
-
-			// Hide forms and expand view more.
-			if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
-			if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
 		}
 	};
 

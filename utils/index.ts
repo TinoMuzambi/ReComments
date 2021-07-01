@@ -21,7 +21,7 @@ export const postUpdatedResourceToDb: Function = async (
 	body: CommentModel & UserModel,
 	commentId?: string
 ): Promise<void> => {
-	// Determine whether resource is comment or user and post resource to db with PUT.
+	// Determine whether resource is comment or user and post resource to db.
 	if (instanceOfCommentModel(body)) {
 		await fetch(`/api/comments/${commentId}`, {
 			method: "PUT",
