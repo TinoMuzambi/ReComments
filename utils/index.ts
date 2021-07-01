@@ -31,7 +31,7 @@ export const postUpdatedResourceToDb: Function = async (
 			body: JSON.stringify(body),
 		});
 	} else {
-		await fetch(`/api/users/${body.id}`, {
+		await fetch(`/api/users/${body.userId}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
