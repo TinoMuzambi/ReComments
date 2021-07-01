@@ -227,7 +227,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		if (dbUser) {
 			setSpinnerVisible(true);
 			getDbUser(user, setDbUser);
-			let userBody: UserModel = dbUser;
+			let userBody: UserModel = { ...dbUser };
 
 			if (userBody && userBody.upvotedIds && userBody.downvotedIds) {
 				if (shouldDoVoteUpdate(voteType, userBody)) {
