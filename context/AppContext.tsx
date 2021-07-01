@@ -1,13 +1,20 @@
 import { createContext, useReducer } from "react";
 
 import AppReducer from "./AppReducer";
-import { AppProviderProps, ContextProps, UserModel, User } from "../interfaces";
+import {
+	AppProviderProps,
+	ContextProps,
+	UserModel,
+	User,
+	CommentModel,
+} from "../interfaces";
 
 const initialState: ContextProps = {
 	signedIn: false,
 	user: null,
 	dbUser: null,
 	searchResults: null,
+	videoComments: null,
 };
 
 export const AppContext = createContext<ContextProps>(initialState);
@@ -22,6 +29,7 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
 			user: state.user,
 			dbUser: state.dbUser,
 			searchResults: state.searchResults,
+			videoComments: state.videoComments,
 		});
 	};
 
@@ -32,6 +40,7 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
 			user: value,
 			dbUser: state.dbUser,
 			searchResults: state.searchResults,
+			videoComments: state.videoComments,
 		});
 	};
 
@@ -42,6 +51,7 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
 			user: state.user,
 			dbUser: value,
 			searchResults: state.searchResults,
+			videoComments: state.videoComments,
 		});
 	};
 
@@ -54,6 +64,18 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
 			user: state.user,
 			dbUser: state.dbUser,
 			searchResults: value,
+			videoComments: state.videoComments,
+		});
+	};
+
+	const setVideoComments: Function = (value: CommentModel[] | null) => {
+		dispatch({
+			type: "SET_SEARCH_RESULTS",
+			auth: state.signedIn,
+			user: state.user,
+			dbUser: state.dbUser,
+			searchResults: state.searchResults,
+			videoComments: value,
 		});
 	};
 
@@ -68,6 +90,8 @@ export const AppProvider = ({ children }: AppProviderProps): JSX.Element => {
 				setDbUser,
 				searchResults: state.searchResults,
 				setSearchResults,
+				videoComments: state.videoComments,
+				setVideoComments,
 			}}
 		>
 			{children}

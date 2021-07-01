@@ -160,7 +160,7 @@ export type Actions = {
 	user: User;
 	dbUser: UserModel | null;
 	searchResults: gapi.client.youtube.Video[] | null;
-	videoComments: CommentModel | null;
+	videoComments: CommentModel[] | null;
 };
 
 export type State = {
