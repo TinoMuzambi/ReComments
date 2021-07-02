@@ -255,8 +255,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 									getNewVideoCommentsBody(commentBody, videoComments, false)
 								);
 							}
-
-							setIsViewMoreExpanded(true);
 						} else {
 							await postUpdatedResourceToDb(commentBody, currComment.id);
 							if (setVideoComments) {
@@ -300,8 +298,8 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
 			if (currComment.id && dbUser?.upvotedIds?.includes(currComment.id))
-				voteHandler(VOTING_TYPES.undoUpvoting);
-			else voteHandler(VOTING_TYPES.upvoting);
+				await voteHandler(VOTING_TYPES.undoUpvoting);
+			else await voteHandler(VOTING_TYPES.upvoting);
 		};
 
 	const downVoteHandler: MouseEventHandler<HTMLButtonElement> =
