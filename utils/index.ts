@@ -261,3 +261,18 @@ export const hideNotice: Function = (
 	setNoticeFirstButtonText("");
 	setNoticeSecondButtonText("");
 };
+
+export const getNewVideoCommentsBody: Function = (
+	body: CommentModel,
+	videoComments: CommentModel[]
+): CommentModel[] => {
+	let currVideoComments = videoComments ? videoComments : [];
+
+	for (let i = 0; i < currVideoComments.length; i++) {
+		if (currVideoComments[i].id === body.id) {
+			currVideoComments[i] = body;
+		}
+	}
+
+	return currVideoComments;
+};

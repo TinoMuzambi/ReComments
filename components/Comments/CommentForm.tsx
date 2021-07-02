@@ -14,6 +14,7 @@ import {
 	postUpdatedResourceToDb,
 	postNewCommentToDb,
 	sendMail,
+	getNewVideoCommentsBody,
 } from "../../utils";
 import Spinner from "../Spinner";
 
@@ -93,20 +94,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				);
 			}
 		}
-	};
-
-	const getNewVideoCommentsBody: Function = (
-		body: CommentModel
-	): CommentModel[] => {
-		let currVideoComments = videoComments ? videoComments : [];
-
-		for (let i = 0; i < currVideoComments.length; i++) {
-			if (currVideoComments[i].id === body.id) {
-				currVideoComments[i] = body;
-			}
-		}
-
-		return currVideoComments;
 	};
 
 	const handleEditingComments: Function = async (): Promise<void> => {
