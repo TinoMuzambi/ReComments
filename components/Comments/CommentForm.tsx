@@ -49,7 +49,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		}
 	}, [commentFormToEditVisible]);
 
-	const scrollToSamePosition: Function = async (
+	const postSubmitCleanUp: Function = async (
 		viewMoreExpanded: boolean
 	): Promise<void> => {
 		setCommentInput("");
@@ -142,7 +142,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			}
 
 			// Refresh then scroll to same place on the page.
-			await scrollToSamePosition(isSecondLevelComment);
+			await postSubmitCleanUp(isSecondLevelComment);
 		}
 	};
 
@@ -190,7 +190,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			await notifyCommentAuthorByEmail();
 
 			// Refresh then scroll to same place on the page.
-			await scrollToSamePosition(true);
+			await postSubmitCleanUp(true);
 		}
 	};
 
@@ -220,7 +220,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				await postNewCommentToDb(body);
 				const newComments = videoComments ? [body, ...videoComments] : [body];
 				if (setVideoComments) setVideoComments(newComments);
-				await scrollToSamePosition(false);
+				await postSubmitCleanUp(false);
 			}
 		} catch (error) {}
 		setSpinnerVisible(false);
