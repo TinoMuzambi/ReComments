@@ -125,7 +125,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					// Post update to DB.
 					await postUpdatedResourceToDb(body, originalComment.id);
 					if (setVideoComments) {
-						setVideoComments(getNewVideoCommentsBody(body, videoComments));
+						setVideoComments(
+							getNewVideoCommentsBody(body, videoComments, false)
+						);
 					}
 				}
 			} else {
@@ -140,7 +142,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				// Post update to DB.
 				await postUpdatedResourceToDb(body, currComment.id);
 				if (setVideoComments) {
-					setVideoComments(getNewVideoCommentsBody(body, videoComments));
+					setVideoComments(getNewVideoCommentsBody(body, videoComments, false));
 				}
 			}
 
@@ -173,7 +175,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 				await postUpdatedResourceToDb(body, originalComment.id);
 				if (setVideoComments) {
-					setVideoComments(getNewVideoCommentsBody(body, videoComments));
+					setVideoComments(getNewVideoCommentsBody(body, videoComments, false));
 				}
 			} else {
 				// Don't add mention
@@ -189,7 +191,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					};
 					await postUpdatedResourceToDb(body, currComment.id);
 					if (setVideoComments) {
-						setVideoComments(getNewVideoCommentsBody(body, videoComments));
+						setVideoComments(
+							getNewVideoCommentsBody(body, videoComments, false)
+						);
 					}
 				}
 			}

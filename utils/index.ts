@@ -264,7 +264,8 @@ export const hideNotice: Function = (
 
 export const getNewVideoCommentsBody: Function = (
 	body: CommentModel,
-	videoComments: CommentModel[]
+	videoComments: CommentModel[],
+	doDelete: boolean
 ): CommentModel[] => {
 	let currVideoComments = videoComments ? videoComments : [];
 

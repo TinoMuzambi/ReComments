@@ -122,7 +122,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					postUpdatedResourceToDb(deletedComment, originalComment.id);
 					if (setVideoComments) {
 						setVideoComments(
-							getNewVideoCommentsBody(deletedComment, videoComments)
+							getNewVideoCommentsBody(deletedComment, videoComments, false)
 						);
 					}
 				}
@@ -135,7 +135,9 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					},
 				});
 				if (setVideoComments) {
-					setVideoComments(getNewVideoCommentsBody(currComment, videoComments));
+					setVideoComments(
+						getNewVideoCommentsBody(currComment, videoComments, true)
+					);
 				}
 			}
 		} catch (error) {
@@ -247,16 +249,19 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 							commentBody = updatedComment;
 							await postUpdatedResourceToDb(commentBody, originalComment.id);
+
 							if (setVideoComments) {
 								setVideoComments(
-									getNewVideoCommentsBody(commentBody, videoComments)
+									getNewVideoCommentsBody(commentBody, videoComments, false)
 								);
 							}
+
+							setIsViewMoreExpanded(true);
 						} else {
 							await postUpdatedResourceToDb(commentBody, currComment.id);
 							if (setVideoComments) {
 								setVideoComments(
-									getNewVideoCommentsBody(commentBody, videoComments)
+									getNewVideoCommentsBody(commentBody, videoComments, false)
 								);
 							}
 						}
