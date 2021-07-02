@@ -32,7 +32,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const [commentInput, setCommentInput] = useState("");
 	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
-	const { dbUser, setVideoComments } = useContext(AppContext);
+	const { dbUser, videoComments, setVideoComments } = useContext(AppContext);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -218,7 +218,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				// Post new comment to DB.
 				let body: CommentModel = generateNewCommentBody();
 				await postNewCommentToDb(body);
-				if (setVideoComments) setVideoComments(body);
+				const newComments = videoComments ? [body, ...videoComments] : [body];
+				if (setVideoComments) setVideoComments(newComments);
 				await scrollToSamePosition();
 			}
 		} catch (error) {}
