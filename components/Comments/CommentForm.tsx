@@ -49,9 +49,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		}
 	}, [commentFormToEditVisible]);
 
-	const postSubmitCleanUp: Function = async (
-		viewMoreExpanded: boolean
-	): Promise<void> => {
+	const postSubmitCleanUp: Function = (viewMoreExpanded: boolean): void => {
 		setCommentInput("");
 		setCancelCommentButtonsVisible(false);
 
@@ -142,7 +140,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			}
 
 			// Refresh then scroll to same place on the page.
-			await postSubmitCleanUp(isSecondLevelComment);
+			postSubmitCleanUp(isSecondLevelComment);
 		}
 	};
 
@@ -190,7 +188,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			await notifyCommentAuthorByEmail();
 
 			// Refresh then scroll to same place on the page.
-			await postSubmitCleanUp(true);
+			postSubmitCleanUp(true);
 		}
 	};
 
@@ -220,7 +218,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				await postNewCommentToDb(body);
 				const newComments = videoComments ? [body, ...videoComments] : [body];
 				if (setVideoComments) setVideoComments(newComments);
-				await postSubmitCleanUp(false);
+				postSubmitCleanUp(false);
 			}
 		} catch (error) {}
 		setSpinnerVisible(false);
