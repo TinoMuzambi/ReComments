@@ -137,7 +137,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 					// Post update to DB.
 					await postUpdatedResourceToDb(body, originalComment.id);
-					if (setVideoComments) setVideoComments(body);
+					if (setVideoComments) {
+						setVideoComments(getNewVideoCommentsBody(body));
+					}
 				}
 			} else {
 				// Editing top level comment.
@@ -150,7 +152,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 				// Post update to DB.
 				await postUpdatedResourceToDb(body, currComment.id);
-				if (setVideoComments) setVideoComments(body);
+				if (setVideoComments) {
+					setVideoComments(getNewVideoCommentsBody(body));
+				}
 			}
 
 			// Refresh then scroll to same place on the page.
