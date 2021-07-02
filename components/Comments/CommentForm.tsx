@@ -95,6 +95,20 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		}
 	};
 
+	const getNewVideoCommentsBody: Function = (
+		body: CommentModel
+	): CommentModel[] => {
+		let currVideoComments = videoComments ? videoComments : [];
+
+		for (let i = 0; i < currVideoComments.length; i++) {
+			if (currVideoComments[i].id === body.id) {
+				currVideoComments[i] = body;
+			}
+		}
+
+		return currVideoComments;
+	};
+
 	const handleEditingComments: Function = async (): Promise<void> => {
 		// Edit comment.
 		if (currComment) {
@@ -167,7 +181,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				};
 
 				await postUpdatedResourceToDb(body, originalComment.id);
-				if (setVideoComments) setVideoComments(body);
+				if (setVideoComments) {
+					setVideoComments(getNewVideoCommentsBody(body));
+				}
 			} else {
 				// Don't add mention
 				if (currComment.replies) {
@@ -181,7 +197,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 						replies: [...currComment?.replies, newBody],
 					};
 					await postUpdatedResourceToDb(body, currComment.id);
-					if (setVideoComments) setVideoComments(body);
+					if (setVideoComments) {
+						setVideoComments(getNewVideoCommentsBody(body));
+					}
 				}
 			}
 
