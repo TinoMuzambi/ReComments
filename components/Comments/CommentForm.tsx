@@ -49,15 +49,15 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		}
 	}, [commentFormToEditVisible]);
 
-	const scrollToSamePosition: Function = async (): Promise<void> => {
-		const height = window.scrollY;
-		await router.replace(router.asPath);
+	const scrollToSamePosition: Function = async (
+		viewMoreExpanded: boolean
+	): Promise<void> => {
 		setCommentInput("");
 		setCancelCommentButtonsVisible(false);
-		window.scrollTo(0, height);
 
 		// Hide forms and expand view more.
-		if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+		if (viewMoreExpanded)
+			if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
 		if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
 		if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
 	};
@@ -142,7 +142,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			}
 
 			// Refresh then scroll to same place on the page.
-			await scrollToSamePosition();
+			await scrollToSamePosition(isSecondLevelComment);
 		}
 	};
 
@@ -190,7 +190,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			await notifyCommentAuthorByEmail();
 
 			// Refresh then scroll to same place on the page.
-			await scrollToSamePosition();
+			await scrollToSamePosition(true);
 		}
 	};
 
@@ -220,7 +220,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				await postNewCommentToDb(body);
 				const newComments = videoComments ? [body, ...videoComments] : [body];
 				if (setVideoComments) setVideoComments(newComments);
-				await scrollToSamePosition();
+				await scrollToSamePosition(false);
 			}
 		} catch (error) {}
 		setSpinnerVisible(false);
