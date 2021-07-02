@@ -5,7 +5,7 @@ import CommentContent from "./CommentContent";
 import { CommentProps, CommentModel } from "../../interfaces";
 
 const Comment: React.FC<CommentProps> = ({ comment }): JSX.Element => {
-	const [isViewMoreExpanded, setIsViewMoreExpanded] = useState(false);
+	const [isViewMoreExpanded, setIsViewMoreExpanded] = useState(true);
 
 	return (
 		<article className="comment">
