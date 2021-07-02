@@ -2,7 +2,6 @@ import { MouseEventHandler, useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { MdThumbUp, MdThumbDown, MdEdit, MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useRouter } from "next/router";
 import parse from "html-react-parser";
 import Autolinker from "autolinker";
 
@@ -14,6 +13,7 @@ import {
 	getUpdatedVoteCommentBody,
 	getDbUser,
 	hideNotice,
+	getNewVideoCommentsBody,
 } from "../../utils";
 import CommentForm from "./CommentForm";
 import Spinner from "../Spinner";
@@ -40,8 +40,8 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	const [noticeFirstButtonText, setNoticeFirstButtonText] = useState("");
 	const [noticeSecondButtonText, setNoticeSecondButtonText] = useState("");
 
-	const router = useRouter();
-	const { dbUser, user, setDbUser } = useContext(AppContext);
+	const { dbUser, user, setDbUser, videoComments, setVideoComments } =
+		useContext(AppContext);
 
 	useEffect(() => {
 		// Handle visibility of notice component.
@@ -92,12 +92,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		);
 	};
 
-	const scrollToSamePosition: Function = async (): Promise<void> => {
-		const height = window.scrollY;
-		await router.replace(router.asPath);
-		window.scrollTo(0, height);
-	};
-
 	const editHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
 			if (dbUser && dbUser.userId === currComment.authorId) {
@@ -126,6 +120,11 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						),
 					};
 					postUpdatedResourceToDb(deletedComment, originalComment.id);
+					if (setVideoComments) {
+						setVideoComments(
+							getNewVideoCommentsBody(deletedComment, videoComments)
+						);
+					}
 				}
 			} else {
 				// Deleting a top level comment.
@@ -135,9 +134,10 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						"Content-Type": "application/json",
 					},
 				});
+				if (setVideoComments) {
+					setVideoComments(getNewVideoCommentsBody(currComment, videoComments));
+				}
 			}
-
-			await scrollToSamePosition();
 		} catch (error) {
 			hideNoticeWrapper();
 			setNoticeTitle("Comment not deleted");
@@ -247,8 +247,18 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 							commentBody = updatedComment;
 							await postUpdatedResourceToDb(commentBody, originalComment.id);
+							if (setVideoComments) {
+								setVideoComments(
+									getNewVideoCommentsBody(commentBody, videoComments)
+								);
+							}
 						} else {
 							await postUpdatedResourceToDb(commentBody, currComment.id);
+							if (setVideoComments) {
+								setVideoComments(
+									getNewVideoCommentsBody(commentBody, videoComments)
+								);
+							}
 						}
 					} catch (error) {
 						setNoticeTitle("Change not made");
@@ -278,7 +288,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 			setCommentFormToReplyVisible(false);
 			setCommentFormToEditVisible(false);
 
-			await scrollToSamePosition();
 			setSpinnerVisible(false);
 		}
 	};
