@@ -269,9 +269,13 @@ export const getNewVideoCommentsBody: Function = (
 ): CommentModel[] => {
 	let currVideoComments = videoComments ? videoComments : [];
 
-	for (let i = 0; i < currVideoComments.length; i++) {
-		if (currVideoComments[i].id === body.id) {
-			currVideoComments[i] = body;
+	if (doDelete) {
+		currVideoComments = currVideoComments.filter((item) => item.id !== body.id);
+	} else {
+		for (let i = 0; i < currVideoComments.length; i++) {
+			if (currVideoComments[i].id === body.id) {
+				currVideoComments[i] = body;
+			}
 		}
 	}
 
