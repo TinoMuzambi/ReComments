@@ -50,6 +50,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	}, [commentFormToEditVisible]);
 
 	const postSubmitCleanUp: Function = (): void => {
+		// Clear input and hide buttons.
 		setCommentInput("");
 		setCancelCommentButtonsVisible(false);
 
@@ -121,6 +122,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 					// Post update to DB.
 					await postUpdatedResourceToDb(body, originalComment.id);
+
+					// Set context to updated comments update UI.
 					if (setVideoComments) {
 						setVideoComments(
 							getNewVideoCommentsBody(body, videoComments, false)
@@ -138,13 +141,14 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 				// Post update to DB.
 				await postUpdatedResourceToDb(body, currComment.id);
+
+				// Set context to updated comments update UI.
 				if (setVideoComments) {
 					setVideoComments(getNewVideoCommentsBody(body, videoComments, false));
 				}
 			}
 
-			// Refresh then scroll to same place on the page.
-			postSubmitCleanUp(isSecondLevelComment);
+			postSubmitCleanUp();
 		}
 	};
 
@@ -170,7 +174,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					],
 				};
 
+				// Post update to DB.
 				await postUpdatedResourceToDb(body, originalComment.id);
+
+				// Set context to updated comments update UI.
 				if (setVideoComments) {
 					setVideoComments(getNewVideoCommentsBody(body, videoComments, false));
 				}
@@ -186,7 +193,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 						...body,
 						replies: [...currComment?.replies, newBody],
 					};
+
+					// Post update to DB.
 					await postUpdatedResourceToDb(body, currComment.id);
+
+					// Set context to updated comments update UI.
 					if (setVideoComments) {
 						setVideoComments(
 							getNewVideoCommentsBody(body, videoComments, false)
@@ -197,7 +208,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 			await notifyCommentAuthorByEmail();
 
-			// Refresh then scroll to same place on the page.
 			postSubmitCleanUp(true);
 		}
 	};
@@ -226,9 +236,12 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				// Post new comment to DB.
 				let body: CommentModel = generateNewCommentBody();
 				await postNewCommentToDb(body);
+
+				// Set context to updated comments update UI.
 				const newComments = videoComments ? [body, ...videoComments] : [body];
 				if (setVideoComments) setVideoComments(newComments);
-				postSubmitCleanUp(false);
+
+				postSubmitCleanUp();
 			}
 		} catch (error) {}
 		setSpinnerVisible(false);
