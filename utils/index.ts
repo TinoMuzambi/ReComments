@@ -143,6 +143,7 @@ export const getUpdatedVoteCommentBody: Function = (
 };
 
 export const getDbComments: Function = async (url: string): Promise<any> => {
+	// Get the comments for the current video from the database.
 	const BASE_URL =
 		process.env.NODE_ENV === "production"
 			? "https://recomments.tinomuzambi.com"
@@ -254,6 +255,7 @@ export const hideNotice: Function = (
 	setNoticeFirstButtonText: Dispatch<SetStateAction<string>>,
 	setNoticeSecondButtonText: Dispatch<SetStateAction<string>>
 ) => {
+	// Hide notice and reset notice fields.
 	setNoticeVisible(false);
 	setNoticeTitle("");
 	setNoticeSubtitle("");
@@ -267,6 +269,7 @@ export const getNewVideoCommentsBody: Function = (
 	videoComments: CommentModel[],
 	doDelete: boolean
 ): CommentModel[] => {
+	// Get new body for the current video's comments when an update occurs.
 	let currVideoComments = videoComments ? videoComments : [];
 
 	if (doDelete) {
