@@ -24,7 +24,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	setCommentFormToEditVisible,
 	isSecondLevelComment,
 	setCommentFormToReplyVisible,
-	setIsViewMoreExpanded,
 	currComment,
 	originalComment,
 }): JSX.Element => {
@@ -50,13 +49,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		}
 	}, [commentFormToEditVisible]);
 
-	const postSubmitCleanUp: Function = (viewMoreExpanded: boolean): void => {
+	const postSubmitCleanUp: Function = (): void => {
 		setCommentInput("");
 		setCancelCommentButtonsVisible(false);
 
-		// Hide forms and expand view more.
-		if (viewMoreExpanded)
-			if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
+		// Hide forms.
 		if (setCommentFormToReplyVisible) setCommentFormToReplyVisible(false);
 		if (setCommentFormToEditVisible) setCommentFormToEditVisible(false);
 	};
