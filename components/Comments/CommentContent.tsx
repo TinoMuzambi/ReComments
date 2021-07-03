@@ -82,6 +82,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	}, []);
 
 	const hideNoticeWrapper: Function = () => {
+		// Hide notice and reset notice fields.
 		hideNotice(
 			setNoticeVisible,
 			setNoticeTitle,
@@ -94,7 +95,8 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const editHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
-			if (dbUser && dbUser.userId === currComment.authorId) {
+			// Handle editing comments. First check if user owns the comment.
+			if (dbUser?.userId === currComment.authorId) {
 				setCommentFormToEditVisible(true);
 				setCommentFormToReplyVisible(false);
 				setOptionsVisible(false);
@@ -109,6 +111,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const deleteCallback: Function = async () => {
 		setSpinnerVisible(true);
+
 		try {
 			if (isSecondLevelComment) {
 				// Deleting a reply.
@@ -119,7 +122,11 @@ const CommentContent: React.FC<CommentContentProps> = ({
 							(reply) => reply.id !== currComment.id
 						),
 					};
+
+					// Post update to DB.
 					postUpdatedResourceToDb(deletedComment, originalComment.id);
+
+					// Set context to updated comments update UI.
 					if (setVideoComments) {
 						setVideoComments(
 							getNewVideoCommentsBody(deletedComment, videoComments, false)
@@ -134,6 +141,8 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						"Content-Type": "application/json",
 					},
 				});
+
+				// Set context to updated comments update UI.
 				if (setVideoComments) {
 					setVideoComments(
 						getNewVideoCommentsBody(currComment, videoComments, true)
@@ -154,20 +163,19 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
-			if (dbUser) {
-				if (dbUser.userId === currComment.authorId) {
-					setNoticeTitle("Delete comment");
-					setNoticeSubtitle("Are you sure you want to delete this comment?");
-					setNoticeNoButtons(2);
-					setNoticeFirstButtonText("Yes");
-					setNoticeSecondButtonText("Cancel");
-				} else {
-					setNoticeTitle("Only delete your own comments");
-					setNoticeSubtitle("You can only delete comments that you made");
-					setNoticeNoButtons(1);
-					setNoticeFirstButtonText("Ok");
-				}
+			if (dbUser?.userId === currComment.authorId) {
+				setNoticeTitle("Delete comment");
+				setNoticeSubtitle("Are you sure you want to delete this comment?");
+				setNoticeNoButtons(2);
+				setNoticeFirstButtonText("Yes");
+				setNoticeSecondButtonText("Cancel");
+			} else {
+				setNoticeTitle("Only delete your own comments");
+				setNoticeSubtitle("You can only delete comments that you made");
+				setNoticeNoButtons(1);
+				setNoticeFirstButtonText("Ok");
 			}
+
 			setOptionsVisible(false);
 		};
 
@@ -175,6 +183,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		voteType: string,
 		body: UserModel
 	): Boolean => {
+		// Check if user can like/dislike.
 		const value = false;
 
 		if (body.upvotedIds && body.downvotedIds && currComment.id) {
@@ -195,6 +204,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 		voteType: string,
 		user: UserModel
 	): UserModel => {
+		// Get updated body for user with their upvotedIds/downvotedIds updated.
 		if (user.upvotedIds && user.downvotedIds && currComment.id) {
 			if (voteType === VOTING_TYPES.upvoting)
 				return {
@@ -221,82 +231,84 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	};
 
 	const voteHandler: Function = async (voteType: string): Promise<void> => {
-		if (dbUser) {
-			setSpinnerVisible(true);
-			getDbUser(user, setDbUser);
-			let userBody: UserModel = { ...dbUser };
+		// Handle liking/disliking.
+		setSpinnerVisible(true);
+		getDbUser(user, setDbUser);
+		let userBody: UserModel = { ...(dbUser as UserModel) };
 
-			if (userBody && userBody.upvotedIds && userBody.downvotedIds) {
-				if (shouldDoVoteUpdate(voteType, userBody)) {
-					try {
-						// Post incremented upvotes to db.
-						let commentBody: CommentModel = { ...currComment };
+		if (userBody && userBody.upvotedIds && userBody.downvotedIds) {
+			if (shouldDoVoteUpdate(voteType, userBody)) {
+				try {
+					// Post incremented upvotes to db.
+					let commentBody: CommentModel = { ...currComment };
 
-						commentBody = getUpdatedVoteCommentBody(voteType, commentBody);
+					commentBody = getUpdatedVoteCommentBody(voteType, commentBody);
 
-						if (isSecondLevelComment && originalComment) {
-							let updatedComment: CommentModel = {
-								...originalComment,
-							};
-
-							if (updatedComment.replies) {
-								for (let i = 0; i < updatedComment.replies.length; i++) {
-									if (updatedComment.replies[i].id === currComment.id) {
-										updatedComment.replies[i] = commentBody;
-									}
+					if (isSecondLevelComment && originalComment) {
+						if (commentBody.replies) {
+							for (let i = 0; i < commentBody.replies.length; i++) {
+								if (commentBody.replies[i].id === currComment.id) {
+									commentBody.replies[i] = commentBody;
 								}
 							}
-
-							commentBody = updatedComment;
-							await postUpdatedResourceToDb(commentBody, originalComment.id);
-
-							if (setVideoComments) {
-								setVideoComments(
-									getNewVideoCommentsBody(commentBody, videoComments, false)
-								);
-							}
-						} else {
-							await postUpdatedResourceToDb(commentBody, currComment.id);
-							if (setVideoComments) {
-								setVideoComments(
-									getNewVideoCommentsBody(commentBody, videoComments, false)
-								);
-							}
 						}
-					} catch (error) {
-						setNoticeTitle("Change not made");
-						setNoticeSubtitle(
-							"Something went wrong. Please try again or contact the developer."
-						);
-						setNoticeNoButtons(1);
-						setNoticeFirstButtonText("Ok");
-					}
 
-					try {
-						// Add comment id to user's upvoted ids.
-						userBody = getUpdatedUserVoteIdsBody(voteType, userBody);
-						await postUpdatedResourceToDb(userBody);
-						getDbUser(user, setDbUser);
-					} catch (error) {
-						setNoticeTitle("Change not made");
-						setNoticeSubtitle(
-							"Something went wrong. Please try again or contact the developer."
-						);
-						setNoticeNoButtons(1);
-						setNoticeFirstButtonText("Ok");
+						// Post update to DB.
+						await postUpdatedResourceToDb(commentBody, originalComment.id);
+
+						// Set context to updated comments update UI.
+						if (setVideoComments) {
+							setVideoComments(
+								getNewVideoCommentsBody(commentBody, videoComments, false)
+							);
+						}
+					} else {
+						// Post update to DB.
+						await postUpdatedResourceToDb(commentBody, currComment.id);
+
+						// Set context to updated comments update UI.
+						if (setVideoComments) {
+							setVideoComments(
+								getNewVideoCommentsBody(commentBody, videoComments, false)
+							);
+						}
 					}
+				} catch (error) {
+					setNoticeTitle("Change not made");
+					setNoticeSubtitle(
+						"Something went wrong. Please try again or contact the developer."
+					);
+					setNoticeNoButtons(1);
+					setNoticeFirstButtonText("Ok");
+				}
+
+				try {
+					// Add comment id to user's upvoted/downvoted ids.
+					userBody = getUpdatedUserVoteIdsBody(voteType, userBody);
+
+					// Post update to DB.
+					await postUpdatedResourceToDb(userBody);
+					getDbUser(user, setDbUser);
+				} catch (error) {
+					setNoticeTitle("Change not made");
+					setNoticeSubtitle(
+						"Something went wrong. Please try again or contact the developer."
+					);
+					setNoticeNoButtons(1);
+					setNoticeFirstButtonText("Ok");
 				}
 			}
-
-			setCommentFormToReplyVisible(false);
-			setCommentFormToEditVisible(false);
-
-			setSpinnerVisible(false);
 		}
+
+		setCommentFormToReplyVisible(false);
+		setCommentFormToEditVisible(false);
+
+		setSpinnerVisible(false);
 	};
 
 	const upvoteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
+			// Handle upvoting/unupvoting.
 			if (currComment.id && dbUser?.upvotedIds?.includes(currComment.id))
 				await voteHandler(VOTING_TYPES.undoUpvoting);
 			else await voteHandler(VOTING_TYPES.upvoting);
@@ -304,12 +316,14 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const downVoteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
+			// Handle downvoting/undownvoting.
 			if (currComment.id && dbUser?.downvotedIds?.includes(currComment.id))
 				voteHandler(VOTING_TYPES.undoDownvoting);
 			else voteHandler(VOTING_TYPES.downvoting);
 		};
 
 	const currCommentUpvoted: Function = (): Boolean => {
+		// Check if current comment is already upvoted.
 		let value = false;
 		if (dbUser && dbUser.upvotedIds && currComment.id) {
 			value = dbUser.upvotedIds.includes(currComment.id);
@@ -318,6 +332,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	};
 
 	const currCommentDownvoted: Function = (): Boolean => {
+		// Check if current comment is already downvoted.
 		let value = false;
 		if (dbUser && dbUser.downvotedIds && currComment.id) {
 			value = dbUser.downvotedIds.includes(currComment.id);
