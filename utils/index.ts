@@ -278,6 +278,7 @@ export const getNewVideoCommentsBody: Function = (
 		for (let i = 0; i < currVideoComments.length; i++) {
 			if (currVideoComments[i].id === body.id) {
 				currVideoComments[i] = body;
+				break;
 			}
 		}
 	}
