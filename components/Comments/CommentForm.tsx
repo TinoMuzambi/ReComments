@@ -156,6 +156,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		if (currComment) {
 			// Reply to comment.
 			if (isSecondLevelComment && originalComment && originalComment.replies) {
+				console.log("second level");
 				// Add mention if second level comment.
 				let body: CommentModel = {
 					...originalComment,
@@ -183,26 +184,24 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				}
 			} else {
 				// Don't add mention
-				if (currComment.replies) {
-					let body: CommentModel = {
-						...currComment,
-					};
-					const newBody: CommentModel = generateNewCommentBody();
+				console.log("first level");
 
-					body = {
-						...body,
-						replies: [...currComment?.replies, newBody],
-					};
+				let body: CommentModel = {
+					...currComment,
+				};
+				const newBody: CommentModel = generateNewCommentBody();
 
-					// Post update to DB.
-					await postUpdatedResourceToDb(body, currComment.id);
+				body = {
+					...body,
+					replies: [...(currComment?.replies || []), newBody],
+				};
 
-					// Set context to updated comments update UI.
-					if (setVideoComments) {
-						setVideoComments(
-							getNewVideoCommentsBody(body, videoComments, false)
-						);
-					}
+				// Post update to DB.
+				await postUpdatedResourceToDb(body, currComment.id);
+
+				// Set context to updated comments update UI.
+				if (setVideoComments) {
+					setVideoComments(getNewVideoCommentsBody(body, videoComments, false));
 				}
 			}
 
