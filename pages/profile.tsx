@@ -265,7 +265,11 @@ const Profile: React.FC = (): JSX.Element => {
 					<img src={dbUser?.photoUrl} alt={dbUser?.name} />
 					<h1 className="name">{dbUser?.name}</h1>
 				</div>
-				<form className="form" onSubmit={submitHandler} onReset={deleteHandler}>
+				<form
+					className="profile-form"
+					onSubmit={submitHandler}
+					onReset={deleteHandler}
+				>
 					<div className="input-group">
 						<label htmlFor="name">Name</label>
 						<input
