@@ -271,7 +271,7 @@ export const getNewVideoCommentsBody: Function = (
 	doVote: boolean
 ): CommentModel[] => {
 	// Get new body for the current video's comments when an update occurs.
-	let currVideoComments: any = videoComments ? videoComments : [];
+	let currVideoComments: CommentModel[] = videoComments ? videoComments : [];
 
 	if (doDelete) {
 		currVideoComments = currVideoComments.filter(
@@ -279,9 +279,15 @@ export const getNewVideoCommentsBody: Function = (
 		);
 	} else if (doVote) {
 		for (let i = 0; i < currVideoComments.length; i++) {
-			for (let j = 0; j < currVideoComments[i].replies.length; j++) {
-				if (currVideoComments[i].replies[j].id === body.id) {
-					currVideoComments[i].replies[j] = body;
+			for (
+				let j = 0;
+				j < (currVideoComments[i].replies as CommentModel[]).length;
+				j++
+			) {
+				if (
+					(currVideoComments[i].replies as CommentModel[])[j].id === body.id
+				) {
+					(currVideoComments[i].replies as CommentModel[])[j] = body;
 					break;
 				}
 			}
