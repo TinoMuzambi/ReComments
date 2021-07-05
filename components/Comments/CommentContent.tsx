@@ -126,7 +126,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					// Post update to DB.
 					postUpdatedResourceToDb(deletedComment, originalComment.id);
 
-					// Set context to updated comments update UI.
+					// Set context to updated comments to update UI.
 					if (setVideoComments) {
 						setVideoComments(
 							getNewVideoCommentsBody(
@@ -147,7 +147,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					},
 				});
 
-				// Set context to updated comments update UI.
+				// Set context to updated comments to update UI.
 				if (setVideoComments) {
 					setVideoComments(
 						getNewVideoCommentsBody(currComment, videoComments, true, false)
@@ -266,7 +266,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						// Post update to DB.
 						await postUpdatedResourceToDb(commentBody, originalComment.id);
 
-						// Set context to updated comments update UI.
+						// Set context to updated comments to update UI.
 						if (setVideoComments) {
 							setVideoComments(
 								getNewVideoCommentsBody(commentBody, videoComments, false, true)
@@ -276,7 +276,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						// Post update to DB.
 						await postUpdatedResourceToDb(newCommentBody, currComment.id);
 
-						// Set context to updated comments update UI.
+						// Set context to updated comments to update UI.
 						if (setVideoComments) {
 							setVideoComments(
 								getNewVideoCommentsBody(

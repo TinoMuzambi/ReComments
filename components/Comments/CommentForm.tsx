@@ -123,7 +123,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					// Post update to DB.
 					await postUpdatedResourceToDb(body, originalComment.id);
 
-					// Set context to updated comments update UI.
+					// Set context to updated comments to update UI.
 					if (setVideoComments) {
 						setVideoComments(
 							getNewVideoCommentsBody(body, videoComments, false, false)
@@ -142,7 +142,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				// Post update to DB.
 				await postUpdatedResourceToDb(body, currComment.id);
 
-				// Set context to updated comments update UI.
+				// Set context to updated comments to update UI.
 				if (setVideoComments) {
 					setVideoComments(
 						getNewVideoCommentsBody(body, videoComments, false, false)
@@ -179,7 +179,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				// Post update to DB.
 				await postUpdatedResourceToDb(body, originalComment.id);
 
-				// Set context to updated comments update UI.
+				// Set context to updated comments to update UI.
 				if (setVideoComments) {
 					setVideoComments(
 						getNewVideoCommentsBody(body, videoComments, false, false)
@@ -201,7 +201,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				// Post update to DB.
 				await postUpdatedResourceToDb(body, currComment.id);
 
-				// Set context to updated comments update UI.
+				// Set context to updated comments to update UI.
 				if (setVideoComments) {
 					setVideoComments(
 						getNewVideoCommentsBody(body, videoComments, false, false)
@@ -240,7 +240,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				let body: CommentModel = generateNewCommentBody();
 				await postNewCommentToDb(body);
 
-				// Set context to updated comments update UI.
+				// Set context to updated comments to update UI.
 				const newComments = videoComments ? [body, ...videoComments] : [body];
 				if (setVideoComments) setVideoComments(newComments);
 
