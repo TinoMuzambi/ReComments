@@ -231,6 +231,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	};
 
 	const voteHandler: Function = async (voteType: string): Promise<void> => {
+		// TODO fix this.
 		// Handle liking/disliking.
 		setSpinnerVisible(true);
 		getDbUser(user, setDbUser);
@@ -259,7 +260,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						// Set context to updated comments update UI.
 						if (setVideoComments) {
 							setVideoComments(
-								getNewVideoCommentsBody(commentBody, videoComments, false)
+								getNewVideoCommentsBody(commentBody, videoComments, false, true)
 							);
 						}
 					} else {

@@ -267,13 +267,25 @@ export const hideNotice: Function = (
 export const getNewVideoCommentsBody: Function = (
 	body: CommentModel,
 	videoComments: CommentModel[],
-	doDelete: boolean
+	doDelete: boolean,
+	doVote: boolean
 ): CommentModel[] => {
 	// Get new body for the current video's comments when an update occurs.
-	let currVideoComments = videoComments ? videoComments : [];
+	let currVideoComments: any = videoComments ? videoComments : [];
 
 	if (doDelete) {
-		currVideoComments = currVideoComments.filter((item) => item.id !== body.id);
+		currVideoComments = currVideoComments.filter(
+			(item: CommentModel) => item.id !== body.id
+		);
+	} else if (doVote) {
+		for (let i = 0; i < currVideoComments.length; i++) {
+			for (let j = 0; j < currVideoComments[i].replies.length; j++) {
+				if (currVideoComments[i].replies[j].id === body.id) {
+					currVideoComments[i].replies[j] = body;
+					break;
+				}
+			}
+		}
 	} else {
 		for (let i = 0; i < currVideoComments.length; i++) {
 			if (currVideoComments[i].id === body.id) {
