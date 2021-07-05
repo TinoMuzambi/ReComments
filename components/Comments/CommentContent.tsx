@@ -243,13 +243,17 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					// Post incremented upvotes to db.
 					let commentBody: CommentModel = { ...currComment };
 
-					commentBody = getUpdatedVoteCommentBody(voteType, commentBody);
+					let newCommentBody: CommentModel = getUpdatedVoteCommentBody(
+						voteType,
+						commentBody
+					);
 
 					if (isSecondLevelComment && originalComment) {
+						commentBody = { ...originalComment };
 						if (commentBody.replies) {
 							for (let i = 0; i < commentBody.replies.length; i++) {
 								if (commentBody.replies[i].id === currComment.id) {
-									commentBody.replies[i] = commentBody;
+									commentBody.replies[i] = newCommentBody;
 								}
 							}
 						}
@@ -265,12 +269,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						}
 					} else {
 						// Post update to DB.
-						await postUpdatedResourceToDb(commentBody, currComment.id);
+						await postUpdatedResourceToDb(newCommentBody, currComment.id);
 
 						// Set context to updated comments update UI.
 						if (setVideoComments) {
 							setVideoComments(
-								getNewVideoCommentsBody(commentBody, videoComments, false)
+								getNewVideoCommentsBody(newCommentBody, videoComments, false)
 							);
 						}
 					}
