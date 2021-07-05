@@ -129,7 +129,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					// Set context to updated comments update UI.
 					if (setVideoComments) {
 						setVideoComments(
-							getNewVideoCommentsBody(deletedComment, videoComments, false)
+							getNewVideoCommentsBody(
+								deletedComment,
+								videoComments,
+								false,
+								false
+							)
 						);
 					}
 				}
@@ -145,7 +150,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 				// Set context to updated comments update UI.
 				if (setVideoComments) {
 					setVideoComments(
-						getNewVideoCommentsBody(currComment, videoComments, true)
+						getNewVideoCommentsBody(currComment, videoComments, true, false)
 					);
 				}
 			}
@@ -274,7 +279,12 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						// Set context to updated comments update UI.
 						if (setVideoComments) {
 							setVideoComments(
-								getNewVideoCommentsBody(newCommentBody, videoComments, false)
+								getNewVideoCommentsBody(
+									newCommentBody,
+									videoComments,
+									false,
+									false
+								)
 							);
 						}
 					}

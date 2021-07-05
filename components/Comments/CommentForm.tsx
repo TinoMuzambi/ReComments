@@ -126,7 +126,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 					// Set context to updated comments update UI.
 					if (setVideoComments) {
 						setVideoComments(
-							getNewVideoCommentsBody(body, videoComments, false)
+							getNewVideoCommentsBody(body, videoComments, false, false)
 						);
 					}
 				}
@@ -144,7 +144,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 				// Set context to updated comments update UI.
 				if (setVideoComments) {
-					setVideoComments(getNewVideoCommentsBody(body, videoComments, false));
+					setVideoComments(
+						getNewVideoCommentsBody(body, videoComments, false, false)
+					);
 				}
 			}
 
@@ -179,7 +181,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 				// Set context to updated comments update UI.
 				if (setVideoComments) {
-					setVideoComments(getNewVideoCommentsBody(body, videoComments, false));
+					setVideoComments(
+						getNewVideoCommentsBody(body, videoComments, false, false)
+					);
 				}
 			} else {
 				// Don't add mention
@@ -199,7 +203,9 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
 				// Set context to updated comments update UI.
 				if (setVideoComments) {
-					setVideoComments(getNewVideoCommentsBody(body, videoComments, false));
+					setVideoComments(
+						getNewVideoCommentsBody(body, videoComments, false, false)
+					);
 				}
 			}
 
