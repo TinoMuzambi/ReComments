@@ -156,7 +156,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 		if (currComment) {
 			// Reply to comment.
 			if (isSecondLevelComment && originalComment && originalComment.replies) {
-				console.log("second level");
 				// Add mention if second level comment.
 				let body: CommentModel = {
 					...originalComment,
@@ -184,7 +183,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				}
 			} else {
 				// Don't add mention
-				console.log("first level");
 
 				let body: CommentModel = {
 					...currComment,
