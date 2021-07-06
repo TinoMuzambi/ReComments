@@ -11,11 +11,11 @@ $speed: 0.5s;
 
 // Toggle specific styles
 .check-toggle {
-	align-items: center;
-	border-radius: 100px;
 	display: flex;
+	align-items: center;
 	flex-direction: column;
 	gap: 1rem;
+	border-radius: 100px;
 }
 
 .toggle__input {
