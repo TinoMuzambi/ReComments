@@ -76,6 +76,7 @@ const SignIn: React.FC = (): JSX.Element => {
 					createdAt: new Date(),
 					updatedAt: new Date(),
 					emails: true,
+					darkMode: false,
 					watchhistory: [],
 				};
 
