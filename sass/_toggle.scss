@@ -3,7 +3,7 @@ $track-height: $toggle-indicator-size + 6;
 $track-width: $toggle-indicator-size * 2.5;
 $highContrastModeSupport: solid 2px transparent;
 
-$track-border: brown;
+$track-border: black;
 $track-background: whitesmoke;
 $focus-ring: 0px 0px 0px 2px black;
 
@@ -22,7 +22,6 @@ $speed: 0.5s;
 	}
 }
 
-// Since we can't style the checkbox directly, we "hide" it so we can draw the toggle.
 .toggle__input {
 	clip: rect(0 0 0 0);
 	clip-path: inset(50%);
@@ -32,7 +31,6 @@ $speed: 0.5s;
 	white-space: nowrap;
 	width: 1px;
 
-	// This style sets the focus ring. The ":not([disabled])" prevents the focus ring from creating a flash when the element is clicked.
 	&:not([disabled]):active + .toggle-track,
 	&:not([disabled]):focus + .toggle-track {
 		border: 1px solid transparent;
@@ -72,7 +70,6 @@ $speed: 0.5s;
 	width: $toggle-indicator-size;
 }
 
-// The check mark is optional
 .checkMark {
 	fill: #fff;
 	height: $toggle-indicator-size - 4;
