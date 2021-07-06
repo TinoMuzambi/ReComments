@@ -291,19 +291,14 @@ const Profile: React.FC = (): JSX.Element => {
 						/>
 					</div>
 					<div className="input-group">
-						<label htmlFor="emailPref">
-							Want to receive email notifications?
-						</label>
-						<input
-							type="checkbox"
-							id="emailPref"
-							checked={emails}
-							onChange={(e) => setEmails(e.target.checked)}
-						/>
-					</div>
-					<div className="input-group">
-						<label className="check-toggle" htmlFor="uniqueID">
-							<input type="checkbox" className="toggle__input" id="uniqueID" />
+						<label className="check-toggle" htmlFor="emailPref">
+							<input
+								type="checkbox"
+								className="toggle__input"
+								id="emailPref"
+								checked={emails}
+								onChange={(e) => setEmails(e.target.checked)}
+							/>
 							<span className="toggle-track">
 								<span className="toggle-indicator">
 									<span className="checkMark">
@@ -318,7 +313,7 @@ const Profile: React.FC = (): JSX.Element => {
 									</span>
 								</span>
 							</span>
-							Enabled toggle label
+							Want to receive email notifications?
 						</label>
 					</div>
 					<div className="input-group">
