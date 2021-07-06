@@ -299,6 +299,7 @@ const Profile: React.FC = (): JSX.Element => {
 								checked={emails}
 								onChange={(e) => setEmails(e.target.checked)}
 							/>
+							Want to receive email notifications?
 							<span className="toggle-track">
 								<span className="toggle-indicator">
 									<span className="checkMark">
@@ -313,7 +314,6 @@ const Profile: React.FC = (): JSX.Element => {
 									</span>
 								</span>
 							</span>
-							Want to receive email notifications?
 						</label>
 					</div>
 					<div className="input-group">

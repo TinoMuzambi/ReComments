@@ -14,12 +14,8 @@ $speed: 0.5s;
 	align-items: center;
 	border-radius: 100px;
 	display: flex;
-	font-weight: 700;
-	margin-bottom: 16px;
-
-	&:last-of-type {
-		margin: 0;
-	}
+	flex-direction: column;
+	gap: 1rem;
 }
 
 .toggle__input {
