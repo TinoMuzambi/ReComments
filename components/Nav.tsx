@@ -17,32 +17,12 @@ const Nav: React.FC = (): JSX.Element => {
 	const router = useRouter();
 
 	useEffect(() => {
-		// If present set it.
 		if (dbUser?.darkMode) {
 			setDark(dbUser?.darkMode);
 			if (dbUser?.darkMode) document.body.classList.add("dark");
 			else document.body.classList.remove("dark");
 		}
 	}, [dbUser]);
-
-	const toggleDarkMode: MouseEventHandler<HTMLButtonElement> = async () => {
-		console.log(dbUser);
-		let updatedUser: UserModel = { ...(dbUser as UserModel) };
-		if (dark) {
-			// console.log(updatedUser);
-			document.body.classList.remove("dark");
-			updatedUser.darkMode = false;
-			await postUpdatedResourceToDb(updatedUser);
-			// console.log(updatedUser);
-		} else {
-			// console.log(updatedUser);
-			document.body.classList.add("dark");
-			updatedUser.darkMode = true;
-			await postUpdatedResourceToDb(updatedUser);
-			// console.log(updatedUser);
-		}
-		setDark(!dark);
-	};
 
 	useEffect(() => {
 		// Hide navigation on route change.
@@ -57,14 +37,34 @@ const Nav: React.FC = (): JSX.Element => {
 		};
 	}, []);
 
+	const toggleDarkMode: MouseEventHandler<HTMLButtonElement> = async () => {
+		let updatedUser: UserModel = { ...(dbUser as UserModel) };
+		if (dark) {
+			document.body.classList.remove("dark");
+			updatedUser.darkMode = false;
+		} else {
+			document.body.classList.add("dark");
+			updatedUser.darkMode = true;
+		}
+		await postUpdatedResourceToDb(updatedUser);
+		setDark(!dark);
+	};
+
 	const handleSignOut: MouseEventHandler<HTMLLIElement> = () => {
+		// Reset context.
 		if (setSignedIn) {
 			router.push("/signin");
 			setSignedIn(false);
 			if (setUser) setUser(null);
 			if (setDbUser) setDbUser(null);
 		}
+
+		// Gapi sign out.
 		handleSignoutClick();
+
+		// Revert to light mode.
+		setDark(false);
+		document.body.classList.remove("dark");
 	};
 
 	return (
