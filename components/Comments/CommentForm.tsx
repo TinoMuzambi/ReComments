@@ -24,6 +24,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	setCommentFormToEditVisible,
 	isSecondLevelComment,
 	setCommentFormToReplyVisible,
+	setIsViewMoreExpanded,
 	currComment,
 	originalComment,
 }): JSX.Element => {
@@ -129,6 +130,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 							getNewVideoCommentsBody(body, videoComments, false, false)
 						);
 					}
+
+					if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
 				}
 			} else {
 				// Editing top level comment.
@@ -212,6 +215,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			await notifyCommentAuthorByEmail();
 
 			postSubmitCleanUp(true);
+
+			if (setIsViewMoreExpanded) setIsViewMoreExpanded(true);
 		}
 	};
 

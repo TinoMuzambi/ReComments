@@ -1,8 +1,12 @@
+import { useState } from "react";
+
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import { CommentsProps, CommentModel } from "../../interfaces";
 
 const Comments: React.FC<CommentsProps> = ({ comments }): JSX.Element => {
+	const [isViewMoreExpanded, setIsViewMoreExpanded] = useState(false);
+
 	return (
 		<section className="comments">
 			<div className="totals">
@@ -14,7 +18,11 @@ const Comments: React.FC<CommentsProps> = ({ comments }): JSX.Element => {
 			<CommentForm isSecondLevelComment={false} />
 			{comments?.map((comment: CommentModel) => (
 				<div key={comment.id + new Date().toLocaleString()}>
-					<Comment comment={comment} />
+					<Comment
+						comment={comment}
+						isViewMoreExpanded={isViewMoreExpanded}
+						setIsViewMoreExpanded={setIsViewMoreExpanded}
+					/>
 				</div>
 			))}
 		</section>

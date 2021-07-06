@@ -1,15 +1,20 @@
-import { useState } from "react";
 import { MdArrowDropUp, MdArrowDropDown } from "react-icons/md";
 
 import CommentContent from "./CommentContent";
 import { CommentProps, CommentModel } from "../../interfaces";
 
-const Comment: React.FC<CommentProps> = ({ comment }): JSX.Element => {
-	const [isViewMoreExpanded, setIsViewMoreExpanded] = useState(true);
-
+const Comment: React.FC<CommentProps> = ({
+	comment,
+	isViewMoreExpanded,
+	setIsViewMoreExpanded,
+}): JSX.Element => {
 	return (
 		<article className="comment">
-			<CommentContent currComment={comment} isSecondLevelComment={false} />
+			<CommentContent
+				currComment={comment}
+				isSecondLevelComment={false}
+				setIsViewMoreExpanded={setIsViewMoreExpanded}
+			/>
 			{comment.replies && comment.replies.length > 0 && (
 				<div className="expand">
 					<button
@@ -43,6 +48,7 @@ const Comment: React.FC<CommentProps> = ({ comment }): JSX.Element => {
 								currComment={reply}
 								originalComment={comment}
 								isSecondLevelComment={true}
+								setIsViewMoreExpanded={setIsViewMoreExpanded}
 							/>
 						</div>
 					))}
