@@ -9,11 +9,7 @@ const Comment: React.FC<CommentProps> = ({ comment }): JSX.Element => {
 
 	return (
 		<article className="comment">
-			<CommentContent
-				currComment={comment}
-				isSecondLevelComment={false}
-				setIsViewMoreExpanded={setIsViewMoreExpanded}
-			/>
+			<CommentContent currComment={comment} isSecondLevelComment={false} />
 			{comment.replies && comment.replies.length > 0 && (
 				<div className="expand">
 					<button
@@ -47,7 +43,6 @@ const Comment: React.FC<CommentProps> = ({ comment }): JSX.Element => {
 								currComment={reply}
 								originalComment={comment}
 								isSecondLevelComment={true}
-								setIsViewMoreExpanded={setIsViewMoreExpanded}
 							/>
 						</div>
 					))}

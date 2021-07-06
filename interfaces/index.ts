@@ -54,14 +54,12 @@ export interface CommentContentProps {
 	currComment: CommentModel;
 	originalComment?: CommentModel;
 	isSecondLevelComment: boolean;
-	setIsViewMoreExpanded: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface CommentFormProps {
 	isSecondLevelComment: boolean;
 	currComment?: CommentModel;
 	originalComment?: CommentModel;
-	setIsViewMoreExpanded?: Dispatch<SetStateAction<boolean>>;
 	setCommentFormToEditVisible?: Dispatch<SetStateAction<boolean>>;
 	setCommentFormToReplyVisible?: Dispatch<SetStateAction<boolean>>;
 	commentFormToEditVisible?: boolean;

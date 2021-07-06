@@ -23,7 +23,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 	currComment,
 	originalComment,
 	isSecondLevelComment,
-	setIsViewMoreExpanded,
 }): JSX.Element => {
 	const [commentFormToReplyVisible, setCommentFormToReplyVisible] =
 		useState(false);
@@ -437,7 +436,6 @@ const CommentContent: React.FC<CommentContentProps> = ({
 							commentFormToReplyVisible={commentFormToReplyVisible}
 							setCommentFormToEditVisible={setCommentFormToEditVisible}
 							setCommentFormToReplyVisible={setCommentFormToReplyVisible}
-							setIsViewMoreExpanded={setIsViewMoreExpanded}
 							currComment={currComment}
 							originalComment={originalComment}
 						/>
