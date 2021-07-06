@@ -121,6 +121,7 @@ export interface UserModel {
 	upvotedIds?: string[];
 	downvotedIds?: string[];
 	emails: boolean;
+	darkMode: boolean;
 	watchhistory: HistoryItem[];
 }
 

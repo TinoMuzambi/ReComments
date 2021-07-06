@@ -41,6 +41,10 @@ const UserSchema: Schema = new mongoose.Schema(
 			type: Boolean,
 			default: true,
 		},
+		darkMode: {
+			type: Boolean,
+			default: false,
+		},
 		watchhistory: {
 			type: Object,
 			default: {},
