@@ -1,19 +1,17 @@
-import {
-	FormEventHandler,
-	MouseEventHandler,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import { FormEventHandler, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
 import { UserModel } from "../interfaces";
-import { postUpdatedResourceToDb, hideNotice } from "../utils";
+import {
+	postUpdatedResourceToDb,
+	hideNotice,
+	clearWatchHistory,
+} from "../utils";
 import { handleSignoutClick } from "../utils/gapi";
 import Notice from "../components/Notice";
-import HistoryResult from "../components/HistoryResult";
 import Spinner from "../components/Spinner";
+import WatchHistory from "../components/WatchHistory";
 
 const Profile: React.FC = (): JSX.Element => {
 	const { dbUser, signedIn, setSignedIn, setDbUser, setUser } =
@@ -64,6 +62,19 @@ const Profile: React.FC = (): JSX.Element => {
 			setNoticeNoButtons,
 			setNoticeFirstButtonText,
 			setNoticeSecondButtonText
+		);
+	};
+
+	const clearWatchHistoryWrapper: Function = () => {
+		clearWatchHistory(
+			setSpinnerVisible,
+			dbUser,
+			setDbUser,
+			hideNoticeWrapper,
+			setNoticeTitle,
+			setNoticeSubtitle,
+			setNoticeNoButtons,
+			setNoticeFirstButtonText
 		);
 	};
 
@@ -171,75 +182,6 @@ const Profile: React.FC = (): JSX.Element => {
 		setSpinnerVisible(false);
 	};
 
-	const clearWatchHistoryHandler: MouseEventHandler<HTMLButtonElement> = () => {
-		setDeleteOrSubmitOrClear("clear");
-		hideNoticeWrapper();
-		setNoticeTitle("Clear watch history");
-		setNoticeSubtitle("Are you sure you want to clear your watch history?");
-		setNoticeNoButtons(2);
-		setNoticeFirstButtonText("Yes");
-		setNoticeSecondButtonText("Cancel");
-	};
-
-	const clearWatchHistory: Function = async () => {
-		setSpinnerVisible(true);
-		if (dbUser) {
-			const newBody: UserModel = {
-				...dbUser,
-				watchhistory: [],
-			};
-
-			try {
-				await postUpdatedResourceToDb(newBody);
-				if (setDbUser) setDbUser(newBody);
-				hideNoticeWrapper();
-				setNoticeTitle("Watch history cleared");
-				setNoticeSubtitle("Your watch history has been cleared");
-				setNoticeNoButtons(1);
-				setNoticeFirstButtonText("Ok");
-			} catch (error) {
-				hideNoticeWrapper();
-				setNoticeTitle("Watch history not cleared");
-				setNoticeSubtitle(
-					"Something went wrong. Please contact the developer."
-				);
-				setNoticeNoButtons(1);
-				setNoticeFirstButtonText("Ok");
-			}
-		}
-		setSpinnerVisible(false);
-	};
-
-	const clearVideoFromWatchHistory: MouseEventHandler<HTMLButtonElement> | any =
-		async (id: string) => {
-			setSpinnerVisible(true);
-			if (dbUser) {
-				const newBody: UserModel = {
-					...dbUser,
-					watchhistory: dbUser.watchhistory.filter((item) => item.id !== id),
-				};
-				try {
-					await postUpdatedResourceToDb(newBody);
-					if (setDbUser) setDbUser(newBody);
-
-					hideNoticeWrapper();
-					setNoticeTitle("Video deleted");
-					setNoticeSubtitle("The video has been deleted from your history");
-					setNoticeNoButtons(1);
-					setNoticeFirstButtonText("Ok");
-				} catch (error) {
-					hideNoticeWrapper();
-					setNoticeTitle("Video not deleted");
-					setNoticeSubtitle(
-						"Something went wrong. Please contact the developer."
-					);
-					setNoticeNoButtons(1);
-					setNoticeFirstButtonText("Ok");
-				}
-			}
-			setSpinnerVisible(false);
-		};
-
 	return (
 		<main className="main center">
 			<Notice
@@ -254,7 +196,7 @@ const Profile: React.FC = (): JSX.Element => {
 					deleteOrSubmitOrClear === "delete"
 						? deleteCallback
 						: deleteOrSubmitOrClear === "clear"
-						? clearWatchHistory
+						? clearWatchHistoryWrapper
 						: submitCallback
 				}
 				cancelCallback={hideNoticeWrapper}
@@ -324,22 +266,16 @@ const Profile: React.FC = (): JSX.Element => {
 			</section>
 
 			{dbUser?.watchhistory.length !== 0 && (
-				<section className="history">
-					<h1 className="title">Watch History</h1>
-					<div className="results">
-						{dbUser?.watchhistory.map((item) => (
-							<HistoryResult
-								clearVideo={clearVideoFromWatchHistory}
-								item={item}
-								key={item.id + item.title}
-							/>
-						))}
-					</div>
-
-					<button className="clear" onClick={clearWatchHistoryHandler}>
-						Clear Watch History
-					</button>
-				</section>
+				<WatchHistory
+					setDeleteOrSubmitOrClear={setDeleteOrSubmitOrClear}
+					setNoticeTitle={setNoticeTitle}
+					setNoticeSubtitle={setNoticeSubtitle}
+					setNoticeFirstButtonText={setNoticeFirstButtonText}
+					setNoticeSecondButtonText={setNoticeSecondButtonText}
+					setNoticeNoButtons={setNoticeNoButtons}
+					setSpinnerVisible={setSpinnerVisible}
+					hideNoticeWrapper={hideNoticeWrapper}
+				/>
 			)}
 			{spinnerVisible && <Spinner />}
 		</main>
