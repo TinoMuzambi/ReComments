@@ -25,16 +25,20 @@ const Comment: React.FC<CommentProps> = ({
 							<span>
 								<MdArrowDropUp className="icon" />
 								<p>
-									Hide {comment.replies.length}
-									{comment.replies.length === 1 ? " reply" : " replies"}
+									Hide
+									{comment.replies.length === 1
+										? " reply"
+										: comment.replies.length + " replies"}
 								</p>
 							</span>
 						) : (
 							<span>
 								<MdArrowDropDown className="icon" />
 								<p>
-									View {comment.replies.length}
-									{comment.replies.length === 1 ? " reply" : " replies"}
+									View
+									{comment.replies.length === 1
+										? " reply"
+										: comment.replies.length + " replies"}
 								</p>
 							</span>
 						)}
