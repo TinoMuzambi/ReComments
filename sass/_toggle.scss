@@ -1,4 +1,4 @@
-$toggle-indicator-size: 24px; // changing this number will resize the whole toggle
+$toggle-indicator-size: 24px;
 $track-height: $toggle-indicator-size + 6;
 $track-width: $toggle-indicator-size * 2.5;
 $highContrastModeSupport: solid 2px transparent;
@@ -9,13 +9,13 @@ $focus-ring: 0px 0px 0px 2px black;
 
 $speed: 0.5s;
 
-// Toggle specific styles
 .check-toggle {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	gap: 1rem;
 	border-radius: 100px;
+	margin: 1rem;
 }
 
 .toggle__input {
