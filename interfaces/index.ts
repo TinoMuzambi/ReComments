@@ -95,6 +95,9 @@ export interface HistoryResultProps {
 
 export interface WatchHistoryProps {
 	hideNoticeWrapper: Function;
+	setDeleteOrSubmitOrClear: Dispatch<
+		SetStateAction<"delete" | "submit" | "clear">
+	>;
 	setSpinnerVisible: Dispatch<SetStateAction<boolean>>;
 	setNoticeTitle: Dispatch<SetStateAction<string>>;
 	setNoticeSubtitle: Dispatch<SetStateAction<string>>;
