@@ -12,6 +12,7 @@ import { handleSignoutClick } from "../utils/gapi";
 import Notice from "../components/Notice";
 import Spinner from "../components/Spinner";
 import WatchHistory from "../components/WatchHistory";
+import Meta from "../components/Meta";
 
 const Profile: React.FC = (): JSX.Element => {
 	const { dbUser, signedIn, setSignedIn, setDbUser, setUser } =
@@ -183,102 +184,109 @@ const Profile: React.FC = (): JSX.Element => {
 	};
 
 	return (
-		<main className="main center">
-			<Notice
-				visible={noticeVisible}
-				setVisible={setNoticeVisible}
-				title={noticeTitle}
-				subtitle={noticeSubtitle}
-				noButtons={noticeNoButtons}
-				firstButtonText={noticeFirstButtonText}
-				secondButtonText={noticeSecondButtonText}
-				confirmCallback={
-					deleteOrSubmitOrClear === "delete"
-						? deleteCallback
-						: deleteOrSubmitOrClear === "clear"
-						? clearWatchHistoryWrapper
-						: submitCallback
-				}
-				cancelCallback={hideNoticeWrapper}
+		<>
+			<Meta
+				title="Profile | ReComments"
+				description="Check out your ReComments profile to update your preferences. You can also see and manage your watch history from here."
+				url="https://recomments.tinomuzambi.com/profile"
 			/>
-			<section className="account">
-				<h1 className="title">Account</h1>
-				<div className="head">
-					<img src={dbUser?.photoUrl} alt={dbUser?.name} />
-					<h1 className="name">{dbUser?.name}</h1>
-				</div>
-				<form
-					className="profile-form"
-					onSubmit={submitHandler}
-					onReset={deleteHandler}
-				>
-					<div className="input-group">
-						<label htmlFor="name">Name</label>
-						<input
-							type="text"
-							id="name"
-							required
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-						/>
+			<main className="main center">
+				<Notice
+					visible={noticeVisible}
+					setVisible={setNoticeVisible}
+					title={noticeTitle}
+					subtitle={noticeSubtitle}
+					noButtons={noticeNoButtons}
+					firstButtonText={noticeFirstButtonText}
+					secondButtonText={noticeSecondButtonText}
+					confirmCallback={
+						deleteOrSubmitOrClear === "delete"
+							? deleteCallback
+							: deleteOrSubmitOrClear === "clear"
+							? clearWatchHistoryWrapper
+							: submitCallback
+					}
+					cancelCallback={hideNoticeWrapper}
+				/>
+				<section className="account">
+					<h1 className="title">Account</h1>
+					<div className="head">
+						<img src={dbUser?.photoUrl} alt={dbUser?.name} />
+						<h1 className="name">{dbUser?.name}</h1>
 					</div>
-					<div className="input-group">
-						<label htmlFor="email">Email</label>
-						<input
-							type="email"
-							id="email"
-							required
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-					</div>
-					<div className="input-group">
-						<label className="check-toggle" htmlFor="emailPref">
+					<form
+						className="profile-form"
+						onSubmit={submitHandler}
+						onReset={deleteHandler}
+					>
+						<div className="input-group">
+							<label htmlFor="name">Name</label>
 							<input
-								type="checkbox"
-								className="toggle__input"
-								id="emailPref"
-								checked={emails}
-								onChange={(e) => setEmails(e.target.checked)}
+								type="text"
+								id="name"
+								required
+								value={name}
+								onChange={(e) => setName(e.target.value)}
 							/>
-							Want to receive email notifications?
-							<span className="toggle-track">
-								<span className="toggle-indicator">
-									<span className="checkMark">
-										<svg
-											viewBox="0 0 24 24"
-											id="ghq-svg-check"
-											role="presentation"
-											aria-hidden="true"
-										>
-											<path d="M9.86 18a1 1 0 01-.73-.32l-4.86-5.17a1.001 1.001 0 011.46-1.37l4.12 4.39 8.41-9.2a1 1 0 111.48 1.34l-9.14 10a1 1 0 01-.73.33h-.01z"></path>
-										</svg>
+						</div>
+						<div className="input-group">
+							<label htmlFor="email">Email</label>
+							<input
+								type="email"
+								id="email"
+								required
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+						</div>
+						<div className="input-group">
+							<label className="check-toggle" htmlFor="emailPref">
+								<input
+									type="checkbox"
+									className="toggle__input"
+									id="emailPref"
+									checked={emails}
+									onChange={(e) => setEmails(e.target.checked)}
+								/>
+								Want to receive email notifications?
+								<span className="toggle-track">
+									<span className="toggle-indicator">
+										<span className="checkMark">
+											<svg
+												viewBox="0 0 24 24"
+												id="ghq-svg-check"
+												role="presentation"
+												aria-hidden="true"
+											>
+												<path d="M9.86 18a1 1 0 01-.73-.32l-4.86-5.17a1.001 1.001 0 011.46-1.37l4.12 4.39 8.41-9.2a1 1 0 111.48 1.34l-9.14 10a1 1 0 01-.73.33h-.01z"></path>
+											</svg>
+										</span>
 									</span>
 								</span>
-							</span>
-						</label>
-					</div>
-					<div className="input-group">
-						<button type="submit">Save</button>
-						<button type="reset">Delete your account</button>
-					</div>
-				</form>
-			</section>
+							</label>
+						</div>
+						<div className="input-group">
+							<button type="submit">Save</button>
+							<button type="reset">Delete your account</button>
+						</div>
+					</form>
+				</section>
 
-			{dbUser?.watchhistory.length !== 0 && (
-				<WatchHistory
-					setDeleteOrSubmitOrClear={setDeleteOrSubmitOrClear}
-					setNoticeTitle={setNoticeTitle}
-					setNoticeSubtitle={setNoticeSubtitle}
-					setNoticeFirstButtonText={setNoticeFirstButtonText}
-					setNoticeSecondButtonText={setNoticeSecondButtonText}
-					setNoticeNoButtons={setNoticeNoButtons}
-					setSpinnerVisible={setSpinnerVisible}
-					hideNoticeWrapper={hideNoticeWrapper}
-				/>
-			)}
-			{spinnerVisible && <Spinner />}
-		</main>
+				{dbUser?.watchhistory.length !== 0 && (
+					<WatchHistory
+						setDeleteOrSubmitOrClear={setDeleteOrSubmitOrClear}
+						setNoticeTitle={setNoticeTitle}
+						setNoticeSubtitle={setNoticeSubtitle}
+						setNoticeFirstButtonText={setNoticeFirstButtonText}
+						setNoticeSecondButtonText={setNoticeSecondButtonText}
+						setNoticeNoButtons={setNoticeNoButtons}
+						setSpinnerVisible={setSpinnerVisible}
+						hideNoticeWrapper={hideNoticeWrapper}
+					/>
+				)}
+				{spinnerVisible && <Spinner />}
+			</main>
+		</>
 	);
 };
 
