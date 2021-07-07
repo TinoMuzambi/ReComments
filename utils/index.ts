@@ -303,3 +303,39 @@ export const getNewVideoCommentsBody: Function = (
 
 	return currVideoComments;
 };
+
+export const clearWatchHistory: Function = async (
+	setSpinnerVisible: Dispatch<SetStateAction<boolean>>,
+	dbUser: UserModel,
+	setDbUser: Function,
+	hideNoticeWrapper: Function,
+	setNoticeTitle: Dispatch<SetStateAction<string>>,
+	setNoticeSubtitle: Dispatch<SetStateAction<string>>,
+	setNoticeNoButtons: Dispatch<SetStateAction<1 | 2>>,
+	setNoticeFirstButtonText: Dispatch<SetStateAction<string>>
+) => {
+	setSpinnerVisible(true);
+	if (dbUser) {
+		const newBody: UserModel = {
+			...dbUser,
+			watchhistory: [],
+		};
+
+		try {
+			await postUpdatedResourceToDb(newBody);
+			if (setDbUser) setDbUser(newBody);
+			hideNoticeWrapper();
+			setNoticeTitle("Watch history cleared");
+			setNoticeSubtitle("Your watch history has been cleared");
+			setNoticeNoButtons(1);
+			setNoticeFirstButtonText("Ok");
+		} catch (error) {
+			hideNoticeWrapper();
+			setNoticeTitle("Watch history not cleared");
+			setNoticeSubtitle("Something went wrong. Please contact the developer.");
+			setNoticeNoButtons(1);
+			setNoticeFirstButtonText("Ok");
+		}
+	}
+	setSpinnerVisible(false);
+};

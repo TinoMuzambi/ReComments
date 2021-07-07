@@ -93,6 +93,16 @@ export interface HistoryResultProps {
 	clearVideo: MouseEventHandler<HTMLButtonElement> | any;
 }
 
+export interface WatchHistoryProps {
+	hideNoticeWrapper: Function;
+	setSpinnerVisible: Dispatch<SetStateAction<boolean>>;
+	setNoticeTitle: Dispatch<SetStateAction<string>>;
+	setNoticeSubtitle: Dispatch<SetStateAction<string>>;
+	setNoticeNoButtons: Dispatch<SetStateAction<1 | 2>>;
+	setNoticeFirstButtonText: Dispatch<SetStateAction<string>>;
+	setNoticeSecondButtonText: Dispatch<SetStateAction<string>>;
+}
+
 export interface CommentModel {
 	id?: string;
 	videoId: string;
