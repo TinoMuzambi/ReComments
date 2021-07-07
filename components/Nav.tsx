@@ -69,13 +69,19 @@ const Nav: React.FC = (): JSX.Element => {
 
 	return (
 		<>
-			<button
-				data-dark={dark ? "Turn on light mode" : "Turn on dark mode"}
-				className="toggle"
-				onClick={toggleDarkMode}
-			>
-				{dark ? <IoMdSunny className="icon" /> : <IoMdMoon className="icon" />}
-			</button>
+			{signedIn && (
+				<button
+					data-dark={dark ? "Turn on light mode" : "Turn on dark mode"}
+					className="toggle"
+					onClick={toggleDarkMode}
+				>
+					{dark ? (
+						<IoMdSunny className="icon" />
+					) : (
+						<IoMdMoon className="icon" />
+					)}
+				</button>
+			)}
 			<header className="nav-header">
 				<nav className={`nav ${navOpen && "open"}`}>
 					<ul className={`links ${navOpen && "open"}`}>
