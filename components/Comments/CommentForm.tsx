@@ -79,7 +79,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const notifyCommentAuthorByEmail: Function = async (): Promise<void> => {
 		// Notify user of new comment by email.
 		if (currComment) {
-			const author = await fetch(`/api/users/${currComment.authorId}`);
+			const author = await fetch(`/api/users/${currComment.authorId}`, {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 			const authorJson = await author.json();
 			const commentAuthor: UserModel = authorJson.data;
 

@@ -61,7 +61,11 @@ export const execute: Function = async (
 
 		if (homeVideos) {
 			// Get videos from db to display on home page.
-			const res = await fetch("/api/home");
+			const res = await fetch("/api/home", {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 			const data = await res.json();
 
 			const ids: string[] = data.data.videos;
