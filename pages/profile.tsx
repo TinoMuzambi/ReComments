@@ -7,6 +7,7 @@ import {
 	postUpdatedResourceToDb,
 	hideNotice,
 	clearWatchHistory,
+	getDbUser,
 } from "../utils";
 import { handleSignoutClick } from "../utils/gapi";
 import Notice from "../components/Notice";
@@ -15,11 +16,11 @@ import WatchHistory from "../components/WatchHistory";
 import Meta from "../components/Meta";
 
 const Profile: React.FC = (): JSX.Element => {
-	const { dbUser, signedIn, setSignedIn, setDbUser, setUser } =
+	const { user, dbUser, signedIn, setSignedIn, setDbUser, setUser } =
 		useContext(AppContext);
 	const [name, setName] = useState(dbUser?.shortName);
 	const [email, setEmail] = useState(dbUser?.email);
-	const [emails, setEmails] = useState<boolean | undefined>(dbUser?.emails);
+	const [emails, setEmails] = useState<boolean>(dbUser?.emails as boolean);
 	const [deleteOrSubmitOrClear, setDeleteOrSubmitOrClear] = useState<
 		"delete" | "submit" | "clear"
 	>("submit");
@@ -33,6 +34,10 @@ const Profile: React.FC = (): JSX.Element => {
 	const [noticeSecondButtonText, setNoticeSecondButtonText] = useState("");
 
 	const router = useRouter();
+
+	useEffect(() => {
+		getAndSetDbUser();
+	}, []);
 
 	useEffect(() => {
 		if (noticeTitle !== "") setNoticeVisible(true);
@@ -54,6 +59,12 @@ const Profile: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		if (!signedIn) router.push("/signin");
 	}, []);
+
+	const getAndSetDbUser: Function = async (): Promise<void> => {
+		// Refresh user on load.
+		const res = await getDbUser(user, setDbUser);
+		setEmails(res.data.emails as boolean);
+	};
 
 	const hideNoticeWrapper: Function = () => {
 		hideNotice(
