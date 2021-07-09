@@ -17,6 +17,7 @@ const Nav: React.FC = (): JSX.Element => {
 	const router = useRouter();
 
 	useEffect(() => {
+		// Check and set dark mode preference.
 		if (dbUser?.darkMode) {
 			setDark(dbUser?.darkMode);
 			if (dbUser?.darkMode) document.body.classList.add("dark");
