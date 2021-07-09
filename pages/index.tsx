@@ -58,10 +58,10 @@ const Home = (): JSX.Element => {
 				<h2 className="subtitle">The Boring Stuff</h2>
 				<div className="links">
 					<Link href="/privacy">
-						<a className="action opaque">Privacy Policy</a>
+						<a className="action">Privacy Policy</a>
 					</Link>
 					<Link href="/terms">
-						<a className="action opaque">Terms &amp; Conditions</a>
+						<a className="action">Terms &amp; Conditions</a>
 					</Link>
 				</div>
 			</footer>

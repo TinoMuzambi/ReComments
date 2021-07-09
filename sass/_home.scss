@@ -34,10 +34,6 @@
 	color: white;
 	z-index: 1;
 
-	&.opaque {
-		background: $primary-colour;
-	}
-
 	@include mq(768px) {
 		width: 100%;
 		text-align: center;
