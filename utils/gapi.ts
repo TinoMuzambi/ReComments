@@ -64,7 +64,8 @@ export const execute: Function = async (
 			const res = await fetch("/api/home");
 			const data = await res.json();
 
-			const ids: string[] = data.data[0].videos;
+			const ids: string[] = data.data.videos;
+
 			response = await gapi.client.youtube.videos.list({
 				part,
 				id: [ids.join(",")],

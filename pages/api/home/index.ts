@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+import { HomeModel } from "../../../interfaces";
 import Home from "../../../models/HomeVideo";
 import dbConnect from "../../../utils/dbConnect";
 
@@ -9,12 +10,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 	switch (method) {
 		case "GET":
+			let getVideos: HomeModel | null = null;
 			try {
-				const videos: typeof Home[] = await Home.find({});
+				getVideos = await Home.findOne({ _id: "60cbaef5babac8169130faec" });
 
-				res.status(200).json({ success: "true", data: videos });
+				res.status(200).json({ success: "true", data: getVideos });
 			} catch (error) {
-				res.status(400).json({ success: "false", data: error });
+				res.status(400).json({ success: "false", data: { error, getVideos } });
 			}
 			break;
 		case "POST":
