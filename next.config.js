@@ -1,4 +1,11 @@
-module.exports = {
+import withPWA from "next-pwa";
+import runtimeCaching from "next-pwa/cache";
+
+export default withPWA({
+	pwa: {
+		dest: "public",
+		runtimeCaching,
+	},
 	future: {
 		webpack5: true,
 	},
@@ -9,4 +16,4 @@ module.exports = {
 		MONGO_URI: process.env.MONGO_URI,
 		GMAIL_PASS: process.env.GMAIL_PASS,
 	},
-};
+});
