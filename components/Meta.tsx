@@ -41,6 +41,7 @@ const Meta: React.FC<MetaProps> = ({
 		<title>{title}</title>
 
 		<link rel="preconnect" href="https://a.storyblok.com" />
+		<link rel="preconnect" href="https://www.google-analytics.com" />
 	</Head>
 );
 
