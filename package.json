@@ -6,7 +6,10 @@
 		"email": "tino@tinomuzambi.com",
 		"url": "https://tinomuzambi.com"
 	},
-	"repository": "https://github.com/TinoMuzambi/ReComments",
+	"repository": {
+		"type": "github",
+		"url": "https://github.com/TinoMuzambi/ReComments"
+	},
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
