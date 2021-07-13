@@ -195,7 +195,6 @@ const CommentForm: React.FC<CommentFormProps> = ({
 				}
 			} else {
 				// Don't add mention
-
 				let body: CommentModel = {
 					...currComment,
 				};
