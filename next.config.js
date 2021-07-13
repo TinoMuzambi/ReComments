@@ -6,9 +6,7 @@ module.exports = withPWA({
 		dest: "public",
 		runtimeCaching,
 	},
-	future: {
-		webpack5: true,
-	},
+	webpack5: true,
 	env: {
 		GAPP_CLIENT_ID: process.env.GAPP_CLIENT_ID,
 		GAPP_CLIENT_SECRET: process.env.GAPP_CLIENT_SECRET,
