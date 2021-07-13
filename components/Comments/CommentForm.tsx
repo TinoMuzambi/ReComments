@@ -87,6 +87,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 			const authorJson = await author.json();
 			const commentAuthor: UserModel = authorJson.data;
 
+			// If user is opted-in to emails, send email notification.
 			if (commentAuthor?.emails) {
 				sendMail(
 					currComment.email,
