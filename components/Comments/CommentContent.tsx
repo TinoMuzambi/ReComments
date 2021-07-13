@@ -5,8 +5,6 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import parse from "html-react-parser";
 import Autolinker from "autolinker";
 
-import { AppContext } from "../../context/AppContext";
-import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
 import {
 	postUpdatedResourceToDb,
 	VOTING_TYPES,
@@ -15,6 +13,8 @@ import {
 	hideNotice,
 	getNewVideoCommentsBody,
 } from "../../utils";
+import { AppContext } from "../../context/AppContext";
+import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
 import CommentForm from "./CommentForm";
 import Spinner from "../Spinner";
 import Notice from "../Notice";
