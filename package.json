@@ -28,10 +28,10 @@
 		"react": "latest",
 		"react-dom": "latest",
 		"react-icons": "^4.2.0",
-		"sass": "^1.34.0",
 		"uuid": "^8.3.2"
 	},
 	"devDependencies": {
+		"sass": "^1.34.0",
 		"@types/gapi": "^0.0.39",
 		"@types/gapi.auth2": "^0.0.54",
 		"@types/gapi.client.people": "^1.0.3",
