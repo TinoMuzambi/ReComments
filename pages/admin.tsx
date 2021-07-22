@@ -27,7 +27,21 @@ const Admin: React.FC = (): JSX.Element => {
 				description="This is the ReComments Admin Panel. Only for authenticated users."
 				url="https://recomments.tinomuzambi.com/admin"
 			/>
-			<main className="main">Admin</main>
+			<main className="container">
+				<h1 className="title">Admin Panel</h1>
+
+				<section className="users">
+					<h2 className="subtitle">Users</h2>
+				</section>
+
+				<section className="comments">
+					<h2 className="subtitle">Comments</h2>
+				</section>
+
+				<section className="home">
+					<h2 className="subtitle">Home Videos</h2>
+				</section>
+			</main>
 		</>
 	);
 };
