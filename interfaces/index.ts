@@ -5,8 +5,6 @@ import {
 	SetStateAction,
 } from "react";
 
-import { ROLES } from "../utils";
-
 export interface WrapperProps {
 	children: JSX.Element;
 }
@@ -138,7 +136,7 @@ export interface UserModel {
 	emails: boolean;
 	darkMode: boolean;
 	watchhistory: HistoryItem[];
-	role: typeof ROLES;
+	role: string;
 }
 
 export interface HistoryItem {

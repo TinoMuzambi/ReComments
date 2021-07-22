@@ -51,7 +51,7 @@ const UserSchema: Schema = new mongoose.Schema(
 			default: {},
 		},
 		role: {
-			type: ROLES,
+			type: String,
 			default: ROLES.standard,
 			required: [true, "User needs a role."],
 		},
