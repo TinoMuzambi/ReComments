@@ -21,7 +21,6 @@ const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
 
 	if (!dbUser) return defaultView;
 	else if (dbUser.role === ROLES.standard) return defaultView;
-	console.log(users);
 
 	return (
 		<>
@@ -36,7 +35,16 @@ const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
 				<section className="users">
 					<h2 className="subtitle">Users</h2>
 					{users?.map((user: UserModel) => (
-						<p>{user.name}</p>
+						<div className="card" key={user.userId}>
+							<p className="name">{user.name}</p>
+							<img src={user.photoUrl} alt={user.name} />
+							<p className="likes">
+								Has liked {user.upvotedIds?.length} comments
+							</p>
+							<p className="dislikes">
+								Has disliked {user.downvotedIds?.length} comments
+							</p>
+						</div>
 					))}
 				</section>
 
@@ -52,7 +60,7 @@ const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
 	);
 };
 
-Admin.getInitialProps = async (req) => {
+Admin.getInitialProps = async () => {
 	const BASE_URL =
 		process.env.NODE_ENV === "production"
 			? "https://recomments.tinomuzambi.com"
