@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { AppContext } from "../context/AppContext";
 import { ROLES } from "../utils";
 import Meta from "../components/Meta";
-import { AdminProps, User } from "../interfaces";
+import { AdminProps, UserModel } from "../interfaces";
 
 const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
 	const { dbUser } = useContext(AppContext);
@@ -21,6 +21,7 @@ const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
 
 	if (!dbUser) return defaultView;
 	else if (dbUser.role === ROLES.standard) return defaultView;
+	console.log(users);
 
 	return (
 		<>
@@ -34,6 +35,9 @@ const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
 
 				<section className="users">
 					<h2 className="subtitle">Users</h2>
+					{users?.map((user: UserModel) => (
+						<p>{user.name}</p>
+					))}
 				</section>
 
 				<section className="comments">
@@ -64,7 +68,7 @@ Admin.getInitialProps = async (req) => {
 	});
 
 	res = await res.json();
-	const users: User[] = res.data;
+	const users: UserModel[] = res.data;
 
 	return {
 		users,
