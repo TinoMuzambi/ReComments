@@ -10,8 +10,14 @@ const Admin: React.FC = (): JSX.Element => {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (dbUser?.role === ROLES.standard) router.push("/search");
+		if (!dbUser) router.push("/search");
+		else if (dbUser.role === ROLES.standard) router.push("/search");
 	}, [dbUser]);
+
+	const defaultView = <main className="main">Only for admin users.</main>;
+
+	if (!dbUser) return defaultView;
+	else if (dbUser.role === ROLES.standard) return defaultView;
 
 	return <main className="main">Admin</main>;
 };
