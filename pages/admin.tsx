@@ -1,11 +1,13 @@
 import { useEffect, useContext } from "react";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
 import { ROLES } from "../utils";
 import Meta from "../components/Meta";
+import { AdminProps, User } from "../interfaces";
 
-const Admin: React.FC = (): JSX.Element => {
+const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
 	const { dbUser } = useContext(AppContext);
 
 	const router = useRouter();
@@ -44,6 +46,29 @@ const Admin: React.FC = (): JSX.Element => {
 			</main>
 		</>
 	);
+};
+
+Admin.getInitialProps = async (req) => {
+	const BASE_URL =
+		process.env.NODE_ENV === "production"
+			? "https://recomments.tinomuzambi.com"
+			: "http://localhost:3000";
+	const body = {
+		secret: process.env.SECRET,
+	};
+	let res: any = await fetch(`${BASE_URL}/api/users`, {
+		headers: {
+			"Content-Type": "application/json",
+			usersSecret: JSON.stringify(body),
+		},
+	});
+
+	res = await res.json();
+	const users: User[] = res.data;
+
+	return {
+		users,
+	};
 };
 
 export default Admin;

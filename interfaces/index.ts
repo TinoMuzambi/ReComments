@@ -106,6 +106,10 @@ export interface WatchHistoryProps {
 	setNoticeSecondButtonText: Dispatch<SetStateAction<string>>;
 }
 
+export interface AdminProps {
+	users: User[];
+}
+
 export interface CommentModel {
 	id?: string;
 	videoId: string;
