@@ -1,11 +1,11 @@
 const withPWA = require("next-pwa");
 const runtimeCaching = require("next-pwa/cache");
 
-module.exports = withPWA({
-	pwa: {
-		dest: "public",
-		runtimeCaching,
-	},
+module.exports = {
+	// pwa: {
+	// 	dest: "public",
+	// 	runtimeCaching,
+	// },
 	webpack5: true,
 	env: {
 		GAPP_CLIENT_ID: process.env.GAPP_CLIENT_ID,
@@ -14,4 +14,4 @@ module.exports = withPWA({
 		MONGO_URI: process.env.MONGO_URI,
 		GMAIL_PASS: process.env.GMAIL_PASS,
 	},
-});
+};
