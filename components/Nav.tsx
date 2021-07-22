@@ -122,20 +122,29 @@ const Nav: React.FC = (): JSX.Element => {
 								</li>
 							)}
 							{dbUser && (
-								<Link href="/profile">
-									<li>
-										<a className="link">
-											<div className="profile">
-												<img
-													className="photo"
-													src={dbUser.photoUrl}
-													alt={dbUser.shortName}
-												/>
-												<p className="name">{dbUser.shortName}</p>
-											</div>
-										</a>
-									</li>
-								</Link>
+								<>
+									{dbUser.role !== "standard" && (
+										<Link href="/admin">
+											<li>
+												<a className="link">Admin</a>
+											</li>
+										</Link>
+									)}
+									<Link href="/profile">
+										<li>
+											<a className="link">
+												<div className="profile">
+													<img
+														className="photo"
+														src={dbUser.photoUrl}
+														alt={dbUser.shortName}
+													/>
+													<p className="name">{dbUser.shortName}</p>
+												</div>
+											</a>
+										</li>
+									</Link>
+								</>
 							)}
 						</div>
 					</ul>
