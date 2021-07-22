@@ -6,7 +6,7 @@ import { IoMdMoon, IoMdSunny } from "react-icons/io";
 import { AppContext } from "../context/AppContext";
 import { handleSignoutClick } from "../utils/gapi";
 import { UserModel } from "../interfaces";
-import { postUpdatedResourceToDb } from "../utils";
+import { postUpdatedResourceToDb, ROLES } from "../utils";
 
 const Nav: React.FC = (): JSX.Element => {
 	const [navOpen, setNavOpen] = useState(false);
@@ -123,7 +123,7 @@ const Nav: React.FC = (): JSX.Element => {
 							)}
 							{dbUser && (
 								<>
-									{dbUser.role !== "standard" && (
+									{dbUser.role !== ROLES.standard && (
 										<Link href="/admin">
 											<li>
 												<a className="link">Admin</a>
