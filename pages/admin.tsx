@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
 import { ROLES } from "../utils";
+import Meta from "../components/Meta";
 
 const Admin: React.FC = (): JSX.Element => {
 	const { dbUser } = useContext(AppContext);
@@ -19,7 +20,16 @@ const Admin: React.FC = (): JSX.Element => {
 	if (!dbUser) return defaultView;
 	else if (dbUser.role === ROLES.standard) return defaultView;
 
-	return <main className="main">Admin</main>;
+	return (
+		<>
+			<Meta
+				title="Admin | ReComments"
+				description="This is the ReComments Admin Panel. Only for authenticated users."
+				url="https://recomments.tinomuzambi.com/admin"
+			/>
+			<main className="main">Admin</main>
+		</>
+	);
 };
 
 export default Admin;
