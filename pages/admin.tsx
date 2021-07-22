@@ -34,18 +34,21 @@ const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
 
 				<section className="users">
 					<h2 className="subtitle">Users</h2>
-					{users?.map((user: UserModel) => (
-						<div className="card" key={user.userId}>
-							<p className="name">{user.name}</p>
-							<img src={user.photoUrl} alt={user.name} />
-							<p className="likes">
-								Has liked {user.upvotedIds?.length} comments
-							</p>
-							<p className="dislikes">
-								Has disliked {user.downvotedIds?.length} comments
-							</p>
-						</div>
-					))}
+
+					<div className="users-container">
+						{users?.map((user: UserModel) => (
+							<div className="card" key={user.userId}>
+								<p className="name">{user.name}</p>
+								<img src={user.photoUrl} alt={user.name} />
+								<p className="likes">
+									Has liked {user.upvotedIds?.length} comments
+								</p>
+								<p className="dislikes">
+									Has disliked {user.downvotedIds?.length} comments
+								</p>
+							</div>
+						))}
+					</div>
 				</section>
 
 				<section className="comments">

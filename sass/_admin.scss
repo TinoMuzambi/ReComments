@@ -1,0 +1,15 @@
+.container {
+	section {
+		.users-container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 2rem;
+		}
+
+		.card {
+			box-shadow: 0 0 5px 1px rgba($color: white, $alpha: 0.5);
+			border-radius: 1rem;
+			width: fit-content;
+		}
+	}
+}
