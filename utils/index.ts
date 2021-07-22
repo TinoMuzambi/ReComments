@@ -73,6 +73,13 @@ export const VOTING_TYPES = {
 	undoDownvoting: "undoDownvoting",
 };
 
+export const ROLES = {
+	// Different types of user roles.
+	admin: "admin",
+	standard: "standard",
+	moderator: "moderator",
+};
+
 export const numberWithCommas: Function = (num: number): string => {
 	// Format number to have commas to make it more readable.
 	return num.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
