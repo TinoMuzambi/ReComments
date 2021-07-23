@@ -33,7 +33,7 @@ const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
 				<h1 className="title">Admin Panel</h1>
 
 				<section className="users">
-					<h2 className="subtitle">Users</h2>
+					<h2 className="subtitle">Users ({users.length})</h2>
 
 					<div className="users-container">
 						<div className="labels">
