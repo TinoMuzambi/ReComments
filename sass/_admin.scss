@@ -11,68 +11,68 @@
 
 		.wrapper {
 			position: relative;
+		}
 
-			.row,
-			.labels {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				text-align: center;
-				gap: 1rem;
-				border-bottom: 1px solid $primary-colour;
-				width: fit-content;
-				padding: 1rem 2rem;
+		.row,
+		.labels {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			gap: 1rem;
+			border-bottom: 1px solid $primary-colour;
+			width: fit-content;
+			padding: 1rem 2rem;
+			width: 100%;
+
+			> * {
 				width: 100%;
-
-				> * {
-					width: 100%;
-				}
-
-				.profile {
-					height: 2rem;
-					object-fit: contain;
-				}
-
-				.name {
-					margin-bottom: 1rem;
-				}
-
-				&:hover ~ .actions {
-					visibility: visible;
-					opacity: 1;
-				}
 			}
 
-			.actions {
-				position: absolute;
-				right: 5rem;
-				top: 50%;
-				transform: translateY(-50%);
-				@include flexRowCenter;
-				z-index: 2;
-				background: $primary-colour;
-				border-radius: 1000rem;
-				opacity: 0;
-				visibility: hidden;
+			.profile {
+				height: 2rem;
+				object-fit: contain;
+			}
+
+			.name {
+				margin-bottom: 1rem;
+			}
+
+			&:hover ~ .actions {
+				visibility: visible;
+				opacity: 1;
+			}
+		}
+
+		.actions {
+			position: absolute;
+			right: 5rem;
+			top: 50%;
+			transform: translateY(-50%);
+			@include flexRowCenter;
+			z-index: 2;
+			background: $primary-colour;
+			border-radius: 1000rem;
+			opacity: 0;
+			visibility: hidden;
+
+			&:hover {
+				visibility: visible;
+				opacity: 1;
+			}
+
+			button {
+				@include buttonReset;
+				cursor: pointer;
+				border-radius: 100%;
+				padding: 0.5rem 1rem;
 
 				&:hover {
-					visibility: visible;
-					opacity: 1;
+					background: darken($color: $primary-colour, $amount: 10);
 				}
 
-				button {
-					@include buttonReset;
-					cursor: pointer;
-					border-radius: 100%;
-					padding: 0.5rem 1rem;
-
-					&:hover {
-						background: darken($color: $primary-colour, $amount: 10);
-					}
-
-					.icon {
-						font-size: 1.5rem;
-					}
+				.icon {
+					font-size: 1.5rem;
 				}
 			}
 		}
