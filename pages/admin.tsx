@@ -65,7 +65,7 @@ const Admin: NextPage<AdminProps> = ({
 								</div>
 								<div className="actions">
 									<button className="delete">
-										<MdDelete />
+										<MdDelete className="icon" />
 									</button>
 								</div>
 							</div>
@@ -97,7 +97,7 @@ const Admin: NextPage<AdminProps> = ({
 								</div>
 								<div className="actions">
 									<button className="delete">
-										<MdDelete />
+										<MdDelete className="icon" />
 									</button>
 								</div>
 							</div>
@@ -115,10 +115,10 @@ const Admin: NextPage<AdminProps> = ({
 								</div>
 								<div className="actions">
 									<button className="edit">
-										<MdEdit />
+										<MdEdit className="icon" />
 									</button>
 									<button className="delete">
-										<MdDelete />
+										<MdDelete className="icon" />
 									</button>
 								</div>
 							</div>
