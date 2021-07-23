@@ -6,6 +6,7 @@ import { AppContext } from "../context/AppContext";
 import { ROLES } from "../utils";
 import Meta from "../components/Meta";
 import { AdminProps, CommentModel, HomeModel, UserModel } from "../interfaces";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 const Admin: NextPage<AdminProps> = ({
 	users,
@@ -62,6 +63,11 @@ const Admin: NextPage<AdminProps> = ({
 									<p className="dark">{user.darkMode ? "On" : "Off"}</p>
 									<p className="emails">{user.emails ? "On" : "Off"}</p>
 								</div>
+								<div className="actions">
+									<button className="delete">
+										<MdDelete />
+									</button>
+								</div>
 							</div>
 						))}
 					</div>
@@ -89,6 +95,11 @@ const Admin: NextPage<AdminProps> = ({
 									<p className="downvotes">{comment.downvotes}</p>
 									<p className="reples">{comment.replies?.length}</p>
 								</div>
+								<div className="actions">
+									<button className="delete">
+										<MdDelete />
+									</button>
+								</div>
 							</div>
 						))}
 					</div>
@@ -101,6 +112,14 @@ const Admin: NextPage<AdminProps> = ({
 							<div className="wrapper" key={video}>
 								<div className="row">
 									<p>{video}</p>
+								</div>
+								<div className="actions">
+									<button className="edit">
+										<MdEdit />
+									</button>
+									<button className="delete">
+										<MdDelete />
+									</button>
 								</div>
 							</div>
 						))}
