@@ -166,7 +166,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const deleteCallback: Function = async () => {
 		setSpinnerVisible(true);
 		try {
-			deleteUser();
+			await deleteUser(dbUser?.userId);
 			hideNoticeWrapper();
 			setNoticeTitle("Account successfully deleted");
 			setNoticeSubtitle(

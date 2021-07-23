@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
-import { hideNotice, ROLES } from "../utils";
+import { deleteUser, hideNotice, ROLES } from "../utils";
 import Meta from "../components/Meta";
 import { AdminProps, CommentModel, HomeModel, UserModel } from "../interfaces";
 import { MdDelete, MdEdit } from "react-icons/md";
@@ -25,6 +25,7 @@ const Admin: NextPage<AdminProps> = ({
 	const [action, setAction] = useState<
 		"deleteComment" | "deleteUser" | "deleteHomeVideo" | "editHomeVideo" | ""
 	>("");
+	const [id, setId] = useState("");
 
 	const { dbUser } = useContext(AppContext);
 
@@ -129,8 +130,15 @@ const Admin: NextPage<AdminProps> = ({
 	};
 
 	const deleteCommentCallback: Function = async () => {};
-	const deleteUserCallback: Function = async () => {};
+
+	const deleteUserCallback: Function = async () => {
+		console.log("here");
+		await deleteUser(id);
+		users = users.filter((user) => user.userId !== id);
+	};
+
 	const deleteHomeVideoCallback: Function = async () => {};
+
 	const editHomeVideoCallback: Function = async () => {};
 
 	return (
@@ -205,7 +213,13 @@ const Admin: NextPage<AdminProps> = ({
 									</ul>
 								</div>
 								<div className="actions">
-									<button className="delete" onClick={deleteUserHandler}>
+									<button
+										className="delete"
+										onClick={(e) => {
+											deleteUserHandler(e);
+											setId(user.userId);
+										}}
+									>
 										<MdDelete className="icon" />
 									</button>
 								</div>

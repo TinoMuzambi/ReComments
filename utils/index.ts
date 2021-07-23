@@ -346,15 +346,15 @@ export const clearWatchHistory: Function = async (
 	}
 	setSpinnerVisible(false);
 };
-export const deleteUser: Function = async (dbUser: UserModel) => {
-	await fetch(`/api/users/${dbUser?.userId}`, {
+export const deleteUser: Function = async (id: string) => {
+	await fetch(`/api/users/${id}`, {
 		method: "DELETE",
 		headers: {
 			"Content-Type": "application/json",
 		},
 	});
 	// TODO Delete user comments.
-	await fetch(`/api/comments/video/purge/${dbUser?.userId}`, {
+	await fetch(`/api/comments/video/purge/${id}`, {
 		method: "DELETE",
 		headers: {
 			"Content-Type": "application/json",
