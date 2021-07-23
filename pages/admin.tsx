@@ -27,6 +27,10 @@ const Admin: NextPage<AdminProps> = ({
 	>("");
 	const [id, setId] = useState("");
 
+	const [usersState, setUsersState] = useState(users);
+	const [commentsState, setCommentssState] = useState(comments);
+	const [homeVideosState, sethomeVideosState] = useState(homeVideos);
+
 	const { dbUser } = useContext(AppContext);
 
 	const router = useRouter();
