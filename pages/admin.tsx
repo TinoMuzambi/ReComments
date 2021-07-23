@@ -58,7 +58,7 @@ const Admin: NextPage<AdminProps> = ({ users, comments }): JSX.Element => {
 				</section>
 
 				<section className="comments">
-					<h2 className="subtitle">Comments</h2>
+					<h2 className="subtitle">Comments ({comments.length})</h2>
 					<div className="content-container">
 						<div className="labels">
 							<p className="label">Author</p>
