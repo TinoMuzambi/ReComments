@@ -36,16 +36,22 @@ const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
 					<h2 className="subtitle">Users</h2>
 
 					<div className="users-container">
+						<div className="labels">
+							<p className="label">Image</p>
+							<p className="label">Name</p>
+							<p className="label"># Liked Comments</p>
+							<p className="label"># Disliked Comments</p>
+							<p className="label">Dark Mode</p>
+							<p className="label">Emails</p>
+						</div>
 						{users?.map((user: UserModel) => (
 							<div className="card" key={user.userId}>
+								<img src={user.photoUrl} alt={user.name} className="profile" />
 								<p className="name">{user.name}</p>
-								<img src={user.photoUrl} alt={user.name} />
-								<p className="likes">
-									Has liked {user.upvotedIds?.length} comments
-								</p>
-								<p className="dislikes">
-									Has disliked {user.downvotedIds?.length} comments
-								</p>
+								<p className="likes">{user.upvotedIds?.length}</p>
+								<p className="dislikes">{user.downvotedIds?.length}</p>
+								<p className="dark">{user.darkMode ? "On" : "Off"}</p>
+								<p className="emails">{user.emails ? "On" : "Off"}</p>
 							</div>
 						))}
 					</div>

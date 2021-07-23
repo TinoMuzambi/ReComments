@@ -1,15 +1,38 @@
 .container {
 	section {
-		.users-container {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 2rem;
+		.subtitle {
+			margin: 2rem 0;
 		}
 
-		.card {
-			box-shadow: 0 0 5px 1px rgba($color: white, $alpha: 0.5);
-			border-radius: 1rem;
+		.users-container {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.card,
+		.labels {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			gap: 1rem;
+			border-bottom: 1px solid $primary-colour;
 			width: fit-content;
+			padding: 1rem 2rem;
+			width: 100%;
+
+			> * {
+				width: 100%;
+			}
+
+			.profile {
+				height: 2rem;
+				object-fit: contain;
+			}
+
+			.name {
+				margin-bottom: 1rem;
+			}
 		}
 	}
 }
