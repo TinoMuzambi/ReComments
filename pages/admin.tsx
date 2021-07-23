@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import { AppContext } from "../context/AppContext";
 import { ROLES } from "../utils";
 import Meta from "../components/Meta";
-import { AdminProps, UserModel } from "../interfaces";
+import { AdminProps, CommentModel, UserModel } from "../interfaces";
 
-const Admin: NextPage<AdminProps> = ({ users }): JSX.Element => {
+const Admin: NextPage<AdminProps> = ({ users, comments }): JSX.Element => {
 	const { dbUser } = useContext(AppContext);
 
 	const router = useRouter();
@@ -87,8 +87,18 @@ Admin.getInitialProps = async () => {
 	res = await res.json();
 	const users: UserModel[] = res.data;
 
+	res = await fetch(`${BASE_URL}/api/comments`, {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	res = await res.json();
+	const comments: CommentModel[] = res.data;
+
 	return {
 		users,
+		comments,
 	};
 };
 

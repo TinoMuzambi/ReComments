@@ -108,6 +108,7 @@ export interface WatchHistoryProps {
 
 export interface AdminProps {
 	users: UserModel[];
+	comments: CommentModel[];
 }
 
 export interface CommentModel {
