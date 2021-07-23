@@ -38,6 +38,16 @@
 				margin-bottom: 1rem;
 			}
 
+			.history {
+				list-style: none;
+
+				.history-item {
+					border-right: 1px solid $primary-colour;
+					margin-bottom: 0.3rem;
+					padding-right: 0.5rem;
+				}
+			}
+
 			&:hover ~ .actions {
 				visibility: visible;
 				opacity: 1;
