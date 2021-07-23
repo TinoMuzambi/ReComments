@@ -8,6 +8,7 @@ import {
 	hideNotice,
 	clearWatchHistory,
 	getDbUser,
+	deleteUser,
 } from "../utils";
 import { handleSignoutClick } from "../utils/gapi";
 import Notice from "../components/Notice";
@@ -165,19 +166,7 @@ const Profile: React.FC = (): JSX.Element => {
 	const deleteCallback: Function = async () => {
 		setSpinnerVisible(true);
 		try {
-			await fetch(`/api/users/${dbUser?.userId}`, {
-				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			// TODO Delete user comments.
-			await fetch(`/api/comments/video/purge/${dbUser?.userId}`, {
-				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
+			deleteUser();
 			hideNoticeWrapper();
 			setNoticeTitle("Account successfully deleted");
 			setNoticeSubtitle(
