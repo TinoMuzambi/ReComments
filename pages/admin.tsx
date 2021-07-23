@@ -48,6 +48,7 @@ const Admin: NextPage<AdminProps> = ({
 							<p className="label"># Disliked Comments</p>
 							<p className="label">Dark Mode</p>
 							<p className="label">Emails</p>
+							<p className="label">History</p>
 						</div>
 						{users?.map((user: UserModel) => (
 							<div className="wrapper" key={user.userId}>
@@ -62,6 +63,11 @@ const Admin: NextPage<AdminProps> = ({
 									<p className="dislikes">{user.downvotedIds?.length}</p>
 									<p className="dark">{user.darkMode ? "On" : "Off"}</p>
 									<p className="emails">{user.emails ? "On" : "Off"}</p>
+									<ul className="history">
+										{user.watchhistory.map((item) => (
+											<li key={item.title}>{item.title}</li>
+										))}
+									</ul>
 								</div>
 								<div className="actions">
 									<button className="delete">
