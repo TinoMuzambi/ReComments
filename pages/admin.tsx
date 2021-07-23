@@ -35,7 +35,7 @@ const Admin: NextPage<AdminProps> = ({ users, comments }): JSX.Element => {
 				<section className="users">
 					<h2 className="subtitle">Users ({users.length})</h2>
 
-					<div className="users-container">
+					<div className="content-container">
 						<div className="labels">
 							<p className="label">Image</p>
 							<p className="label">Name</p>
@@ -45,7 +45,7 @@ const Admin: NextPage<AdminProps> = ({ users, comments }): JSX.Element => {
 							<p className="label">Emails</p>
 						</div>
 						{users?.map((user: UserModel) => (
-							<div className="card" key={user.userId}>
+							<div className="row" key={user.userId}>
 								<img src={user.photoUrl} alt={user.name} className="profile" />
 								<p className="name">{user.name}</p>
 								<p className="likes">{user.upvotedIds?.length}</p>
@@ -59,6 +59,27 @@ const Admin: NextPage<AdminProps> = ({ users, comments }): JSX.Element => {
 
 				<section className="comments">
 					<h2 className="subtitle">Comments</h2>
+					<div className="content-container">
+						<div className="labels">
+							<p className="label">Author</p>
+							<p className="label">Comment</p>
+							<p className="label">Video</p>
+							<p className="label"># Likes</p>
+							<p className="label"># Dislikes</p>
+							<p className="label"># Replies</p>
+							{/* <p className="label">Emails</p> */}
+						</div>
+						{comments.map((comment: CommentModel) => (
+							<div className="row" key={comment.id}>
+								<p className="author">{comment.name}</p>
+								<p className="comment">{comment.comment}</p>
+								<p className="video">{comment.videoId}</p>
+								<p className="upvotes">{comment.upvotes}</p>
+								<p className="downvotes">{comment.downvotes}</p>
+								<p className="reples">{comment.replies?.length}</p>
+							</div>
+						))}
+					</div>
 				</section>
 
 				<section className="home">
