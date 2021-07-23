@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, FormEventHandler } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
@@ -36,6 +36,11 @@ const Admin: NextPage<AdminProps> = ({
 	}, [dbUser]);
 
 	useEffect(() => {
+		if (noticeTitle !== "") setNoticeVisible(true);
+		else hideNoticeWrapper();
+	}, [noticeTitle]);
+
+	useEffect(() => {
 		let timer: NodeJS.Timeout;
 		if (noticeNoButtons === 1) {
 			timer = setTimeout(() => {
@@ -61,6 +66,21 @@ const Admin: NextPage<AdminProps> = ({
 			setNoticeFirstButtonText,
 			setNoticeSecondButtonText
 		);
+	};
+	const deleteCommentHandler: FormEventHandler<HTMLButtonElement> = async (
+		e
+	) => {
+		e.preventDefault();
+
+		hideNoticeWrapper();
+		setAction("deleteComment");
+		setNoticeTitle("Delete this comment");
+		setNoticeSubtitle(
+			"Are you sure you want to permanently delete this comment"
+		);
+		setNoticeNoButtons(2);
+		setNoticeFirstButtonText("Yes");
+		setNoticeSecondButtonText("Cancel");
 	};
 
 	const deleteCommentCallback: Function = async () => {};
@@ -172,7 +192,7 @@ const Admin: NextPage<AdminProps> = ({
 									<p className="reples">{comment.replies?.length}</p>
 								</div>
 								<div className="actions">
-									<button className="delete">
+									<button className="delete" onClick={deleteCommentHandler}>
 										<MdDelete className="icon" />
 									</button>
 								</div>
