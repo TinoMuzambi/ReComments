@@ -67,6 +67,19 @@ const Admin: NextPage<AdminProps> = ({
 			setNoticeSecondButtonText
 		);
 	};
+
+	const deleteUserHandler: FormEventHandler<HTMLButtonElement> = async (e) => {
+		e.preventDefault();
+
+		hideNoticeWrapper();
+		setAction("deleteUser");
+		setNoticeTitle("Delete this user");
+		setNoticeSubtitle("Are you sure you want to permanently delete this user?");
+		setNoticeNoButtons(2);
+		setNoticeFirstButtonText("Yes");
+		setNoticeSecondButtonText("Cancel");
+	};
+
 	const deleteCommentHandler: FormEventHandler<HTMLButtonElement> = async (
 		e
 	) => {
@@ -76,7 +89,39 @@ const Admin: NextPage<AdminProps> = ({
 		setAction("deleteComment");
 		setNoticeTitle("Delete this comment");
 		setNoticeSubtitle(
-			"Are you sure you want to permanently delete this comment"
+			"Are you sure you want to permanently delete this comment?"
+		);
+		setNoticeNoButtons(2);
+		setNoticeFirstButtonText("Yes");
+		setNoticeSecondButtonText("Cancel");
+	};
+
+	const deleteHomeVideoHandler: FormEventHandler<HTMLButtonElement> = async (
+		e
+	) => {
+		e.preventDefault();
+
+		hideNoticeWrapper();
+		setAction("deleteHomeVideo");
+		setNoticeTitle("Delete this home video");
+		setNoticeSubtitle(
+			"Are you sure you want to permanently delete this home video"
+		);
+		setNoticeNoButtons(2);
+		setNoticeFirstButtonText("Yes");
+		setNoticeSecondButtonText("Cancel");
+	};
+
+	const editHomeVideoHandler: FormEventHandler<HTMLButtonElement> = async (
+		e
+	) => {
+		e.preventDefault();
+
+		hideNoticeWrapper();
+		setAction("deleteComment");
+		setNoticeTitle("Edit this home video");
+		setNoticeSubtitle(
+			"Are you sure you want to permanently edit this home video"
 		);
 		setNoticeNoButtons(2);
 		setNoticeFirstButtonText("Yes");
@@ -160,7 +205,7 @@ const Admin: NextPage<AdminProps> = ({
 									</ul>
 								</div>
 								<div className="actions">
-									<button className="delete">
+									<button className="delete" onClick={deleteUserHandler}>
 										<MdDelete className="icon" />
 									</button>
 								</div>
@@ -179,7 +224,6 @@ const Admin: NextPage<AdminProps> = ({
 							<p className="label"># Likes</p>
 							<p className="label"># Dislikes</p>
 							<p className="label"># Replies</p>
-							{/* <p className="label">Emails</p> */}
 						</div>
 						{comments.map((comment: CommentModel) => (
 							<div className="wrapper" key={comment.id}>
@@ -210,10 +254,10 @@ const Admin: NextPage<AdminProps> = ({
 									<p>{video}</p>
 								</div>
 								<div className="actions">
-									<button className="edit">
+									<button className="edit" onClick={editHomeVideoHandler}>
 										<MdEdit className="icon" />
 									</button>
-									<button className="delete">
+									<button className="delete" onClick={deleteHomeVideoHandler}>
 										<MdDelete className="icon" />
 									</button>
 								</div>
