@@ -89,7 +89,11 @@ const Admin: NextPage<AdminProps> = ({
 				<section className="home">
 					<h2 className="subtitle">Home Videos</h2>
 					<div className="content-container">
-						<p>{JSON.stringify(homeVideos)}</p>
+						{homeVideos.videos.map((video: any) => (
+							<div className="row" key={video}>
+								<p>{video}</p>
+							</div>
+						))}
 					</div>
 				</section>
 			</main>

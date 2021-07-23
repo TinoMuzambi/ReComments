@@ -27,7 +27,7 @@ export interface PlayerProps {
 
 export interface ResultProps {
 	result: gapi.client.youtube.Video;
-	blockFormat: boolean;
+	blockFormat?: boolean;
 }
 
 export interface StatsProps {
@@ -90,7 +90,7 @@ export interface NoticeProps {
 
 export interface HistoryResultProps {
 	item: HistoryItem;
-	clearVideo: MouseEventHandler<HTMLButtonElement> | any;
+	clearVideo?: MouseEventHandler<HTMLButtonElement> | any;
 }
 
 export interface WatchHistoryProps {
