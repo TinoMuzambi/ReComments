@@ -1,20 +1,28 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
-import { ROLES } from "../utils";
+import { hideNotice, ROLES } from "../utils";
 import Meta from "../components/Meta";
 import { AdminProps, CommentModel, HomeModel, UserModel } from "../interfaces";
 import { MdDelete, MdEdit } from "react-icons/md";
 import Link from "next/link";
 import moment from "moment";
+import Notice from "../components/Notice";
 
 const Admin: NextPage<AdminProps> = ({
 	users,
 	comments,
 	homeVideos,
 }): JSX.Element => {
+	const [noticeVisible, setNoticeVisible] = useState<boolean>(false);
+	const [noticeNoButtons, setNoticeNoButtons] = useState<1 | 2>(1);
+	const [noticeTitle, setNoticeTitle] = useState("");
+	const [noticeSubtitle, setNoticeSubtitle] = useState("");
+	const [noticeFirstButtonText, setNoticeFirstButtonText] = useState("");
+	const [noticeSecondButtonText, setNoticeSecondButtonText] = useState("");
+
 	const { dbUser } = useContext(AppContext);
 
 	const router = useRouter();
@@ -24,10 +32,33 @@ const Admin: NextPage<AdminProps> = ({
 		else if (dbUser.role === ROLES.standard) router.push("/search");
 	}, [dbUser]);
 
+	useEffect(() => {
+		let timer: NodeJS.Timeout;
+		if (noticeNoButtons === 1) {
+			timer = setTimeout(() => {
+				hideNoticeWrapper();
+			}, 4000);
+		}
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [noticeVisible]);
+
 	const defaultView = <main className="main">Only for admin users.</main>;
 
 	if (!dbUser) return defaultView;
 	else if (dbUser.role === ROLES.standard) return defaultView;
+
+	const hideNoticeWrapper: Function = () => {
+		hideNotice(
+			setNoticeVisible,
+			setNoticeTitle,
+			setNoticeSubtitle,
+			setNoticeNoButtons,
+			setNoticeFirstButtonText,
+			setNoticeSecondButtonText
+		);
+	};
 
 	return (
 		<>
@@ -37,6 +68,17 @@ const Admin: NextPage<AdminProps> = ({
 				url="https://recomments.tinomuzambi.com/admin"
 			/>
 			<main className="container">
+				<Notice
+					visible={noticeVisible}
+					setVisible={setNoticeVisible}
+					title={noticeTitle}
+					subtitle={noticeSubtitle}
+					noButtons={noticeNoButtons}
+					firstButtonText={noticeFirstButtonText}
+					secondButtonText={noticeSecondButtonText}
+					confirmCallback={null}
+					cancelCallback={hideNoticeWrapper}
+				/>
 				<h1 className="title">Admin Panel</h1>
 
 				<section className="users">
