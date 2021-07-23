@@ -7,6 +7,8 @@ import { ROLES } from "../utils";
 import Meta from "../components/Meta";
 import { AdminProps, CommentModel, HomeModel, UserModel } from "../interfaces";
 import { MdDelete, MdEdit } from "react-icons/md";
+import Link from "next/link";
+import moment from "moment";
 
 const Admin: NextPage<AdminProps> = ({
 	users,
@@ -65,7 +67,17 @@ const Admin: NextPage<AdminProps> = ({
 									<p className="emails">{user.emails ? "On" : "Off"}</p>
 									<ul className="history">
 										{user.watchhistory.map((item) => (
-											<li key={item.title}>{item.title}</li>
+											<li key={item.title}>
+												<Link href={`/video/${item.id}`}>
+													<a
+														title={moment(item.date).format(
+															"dddd, DD MMMM YYYY HH:mm:ss"
+														)}
+													>
+														{item.title}
+													</a>
+												</Link>
+											</li>
 										))}
 									</ul>
 								</div>
