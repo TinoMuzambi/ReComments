@@ -5,9 +5,13 @@ import { useRouter } from "next/router";
 import { AppContext } from "../context/AppContext";
 import { ROLES } from "../utils";
 import Meta from "../components/Meta";
-import { AdminProps, CommentModel, UserModel } from "../interfaces";
+import { AdminProps, CommentModel, HomeModel, UserModel } from "../interfaces";
 
-const Admin: NextPage<AdminProps> = ({ users, comments }): JSX.Element => {
+const Admin: NextPage<AdminProps> = ({
+	users,
+	comments,
+	homeVideos,
+}): JSX.Element => {
 	const { dbUser } = useContext(AppContext);
 
 	const router = useRouter();
@@ -84,6 +88,9 @@ const Admin: NextPage<AdminProps> = ({ users, comments }): JSX.Element => {
 
 				<section className="home">
 					<h2 className="subtitle">Home Videos</h2>
+					<div className="content-container">
+						<p>{JSON.stringify(homeVideos)}</p>
+					</div>
 				</section>
 			</main>
 		</>
@@ -117,9 +124,19 @@ Admin.getInitialProps = async () => {
 	res = await res.json();
 	const comments: CommentModel[] = res.data;
 
+	res = await fetch(`${BASE_URL}/api/home`, {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	res = await res.json();
+	const homeVideos: HomeModel = res.data;
+
 	return {
 		users,
 		comments,
+		homeVideos,
 	};
 };
 
