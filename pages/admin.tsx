@@ -49,13 +49,19 @@ const Admin: NextPage<AdminProps> = ({
 							<p className="label">Emails</p>
 						</div>
 						{users?.map((user: UserModel) => (
-							<div className="row" key={user.userId}>
-								<img src={user.photoUrl} alt={user.name} className="profile" />
-								<p className="name">{user.name}</p>
-								<p className="likes">{user.upvotedIds?.length}</p>
-								<p className="dislikes">{user.downvotedIds?.length}</p>
-								<p className="dark">{user.darkMode ? "On" : "Off"}</p>
-								<p className="emails">{user.emails ? "On" : "Off"}</p>
+							<div className="wrapper" key={user.userId}>
+								<div className="row">
+									<img
+										src={user.photoUrl}
+										alt={user.name}
+										className="profile"
+									/>
+									<p className="name">{user.name}</p>
+									<p className="likes">{user.upvotedIds?.length}</p>
+									<p className="dislikes">{user.downvotedIds?.length}</p>
+									<p className="dark">{user.darkMode ? "On" : "Off"}</p>
+									<p className="emails">{user.emails ? "On" : "Off"}</p>
+								</div>
 							</div>
 						))}
 					</div>
@@ -74,13 +80,15 @@ const Admin: NextPage<AdminProps> = ({
 							{/* <p className="label">Emails</p> */}
 						</div>
 						{comments.map((comment: CommentModel) => (
-							<div className="row" key={comment.id}>
-								<p className="author">{comment.name}</p>
-								<p className="comment">{comment.comment}</p>
-								<p className="video">{comment.videoId}</p>
-								<p className="upvotes">{comment.upvotes}</p>
-								<p className="downvotes">{comment.downvotes}</p>
-								<p className="reples">{comment.replies?.length}</p>
+							<div className="wrapper" key={comment.id}>
+								<div className="row">
+									<p className="author">{comment.name}</p>
+									<p className="comment">{comment.comment}</p>
+									<p className="video">{comment.videoId}</p>
+									<p className="upvotes">{comment.upvotes}</p>
+									<p className="downvotes">{comment.downvotes}</p>
+									<p className="reples">{comment.replies?.length}</p>
+								</div>
 							</div>
 						))}
 					</div>
@@ -90,8 +98,10 @@ const Admin: NextPage<AdminProps> = ({
 					<h2 className="subtitle">Home Videos</h2>
 					<div className="content-container">
 						{homeVideos.videos.map((video: any) => (
-							<div className="row" key={video}>
-								<p>{video}</p>
+							<div className="wrapper" key={video}>
+								<div className="row">
+									<p>{video}</p>
+								</div>
 							</div>
 						))}
 					</div>
