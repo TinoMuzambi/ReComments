@@ -7,82 +7,89 @@
 		.content-container {
 			display: flex;
 			flex-direction: column;
-		}
 
-		.wrapper {
-			position: relative;
-		}
+			.labels {
+				position: sticky;
+				top: 67px;
+				z-index: 2;
+				background: rgb(29, 29, 29);
+			}
 
-		.row,
-		.labels {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			text-align: center;
-			gap: 1rem;
-			border-bottom: 1px solid $primary-colour;
-			width: fit-content;
-			padding: 1rem 2rem;
-			width: 100%;
+			.wrapper {
+				position: relative;
+			}
 
-			> * {
+			.row,
+			.labels {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				gap: 1rem;
+				border-bottom: 1px solid $primary-colour;
+				width: fit-content;
+				padding: 1rem 2rem;
 				width: 100%;
-			}
 
-			.profile {
-				height: 2rem;
-				object-fit: contain;
-			}
+				> * {
+					width: 100%;
+				}
 
-			.name {
-				margin-bottom: 1rem;
-			}
+				.profile {
+					height: 4rem;
+					object-fit: contain;
+				}
 
-			.history {
-				list-style: none;
+				.name {
+					margin-bottom: 1rem;
+				}
 
-				.history-item {
-					border-right: 1px solid $primary-colour;
-					margin-bottom: 0.3rem;
-					padding-right: 0.5rem;
+				.history {
+					list-style: none;
+
+					.history-item {
+						border-right: 1px solid $primary-colour;
+						margin-bottom: 0.3rem;
+						padding-right: 0.5rem;
+					}
+				}
+
+				&:hover ~ .actions {
+					visibility: visible;
+					opacity: 1;
 				}
 			}
 
-			&:hover ~ .actions {
-				visibility: visible;
-				opacity: 1;
-			}
-		}
-
-		.actions {
-			position: absolute;
-			right: 5rem;
-			top: 50%;
-			transform: translateY(-50%);
-			@include flexRowCenter;
-			z-index: 2;
-			background: $primary-colour;
-			border-radius: 1000rem;
-			opacity: 0;
-			visibility: hidden;
-
-			&:hover {
-				visibility: visible;
-				opacity: 1;
-			}
-
-			button {
-				@include buttonReset;
-				cursor: pointer;
-				border-radius: 100%;
-				padding: 0.5rem 1rem;
+			.actions {
+				position: absolute;
+				right: 5rem;
+				top: 50%;
+				transform: translateY(-50%);
+				@include flexRowCenter;
+				z-index: 2;
+				background: $primary-colour;
+				border-radius: 1000rem;
+				opacity: 0;
+				visibility: hidden;
 
 				&:hover {
-					background: darken($color: $primary-colour, $amount: 10);
+					visibility: visible;
+					opacity: 1;
 				}
 
-				.icon {
-					font-size: 1.5rem;
+				button {
+					@include buttonReset;
+					cursor: pointer;
+					border-radius: 100%;
+					padding: 0.5rem 1rem;
+
+					&:hover {
+						background: darken($color: $primary-colour, $amount: 10);
+					}
+
+					.icon {
+						font-size: 1.5rem;
+					}
 				}
 			}
 		}

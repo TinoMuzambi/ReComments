@@ -67,7 +67,7 @@ const Admin: NextPage<AdminProps> = ({
 									<p className="emails">{user.emails ? "On" : "Off"}</p>
 									<ul className="history">
 										{user.watchhistory.map((item) => (
-											<li key={item.title}>
+											<li className="history-item" key={item.title}>
 												<Link href={`/video/${item.id}`}>
 													<a
 														title={moment(item.date).format(
