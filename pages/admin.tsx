@@ -22,6 +22,9 @@ const Admin: NextPage<AdminProps> = ({
 	const [noticeSubtitle, setNoticeSubtitle] = useState("");
 	const [noticeFirstButtonText, setNoticeFirstButtonText] = useState("");
 	const [noticeSecondButtonText, setNoticeSecondButtonText] = useState("");
+	const [action, setAction] = useState<
+		"deleteComment" | "deleteUser" | "deleteHomeVideo" | "editHomeVideo" | ""
+	>("");
 
 	const { dbUser } = useContext(AppContext);
 
@@ -60,6 +63,11 @@ const Admin: NextPage<AdminProps> = ({
 		);
 	};
 
+	const deleteCommentCallback: Function = async () => {};
+	const deleteUserCallback: Function = async () => {};
+	const deleteHomeVideoCallback: Function = async () => {};
+	const editHomeVideoCallback: Function = async () => {};
+
 	return (
 		<>
 			<Meta
@@ -76,7 +84,15 @@ const Admin: NextPage<AdminProps> = ({
 					noButtons={noticeNoButtons}
 					firstButtonText={noticeFirstButtonText}
 					secondButtonText={noticeSecondButtonText}
-					confirmCallback={null}
+					confirmCallback={
+						action === "deleteComment"
+							? deleteCommentCallback
+							: action === "deleteUser"
+							? deleteUserCallback
+							: action === "deleteHomeVideo"
+							? deleteHomeVideoCallback
+							: editHomeVideoCallback
+					}
 					cancelCallback={hideNoticeWrapper}
 				/>
 				<h1 className="title">Admin Panel</h1>
