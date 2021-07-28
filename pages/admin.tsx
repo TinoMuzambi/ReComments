@@ -136,9 +136,9 @@ const Admin: NextPage<AdminProps> = ({
 	const deleteCommentCallback: Function = async () => {};
 
 	const deleteUserCallback: Function = async () => {
-		console.log("here");
 		await deleteUser(id);
-		users = users.filter((user) => user.userId !== id);
+		users.filter((user) => user.userId !== id);
+		hideNoticeWrapper();
 	};
 
 	const deleteHomeVideoCallback: Function = async () => {};
