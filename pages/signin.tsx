@@ -11,7 +11,7 @@ import {
 import { UserModel } from "../interfaces";
 import Meta from "../components/Meta";
 import AppState from "../components/AppState";
-import { getDbUser, postNewUserToDb } from "../utils";
+import { getDbUser, postNewUserToDb, ROLES } from "../utils";
 
 const SignIn: React.FC = (): JSX.Element => {
 	const [loading, setLoading] = useState(false);
@@ -78,6 +78,7 @@ const SignIn: React.FC = (): JSX.Element => {
 					emails: true,
 					darkMode: false,
 					watchhistory: [],
+					role: ROLES.standard,
 				};
 
 				try {

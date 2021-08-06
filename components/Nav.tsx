@@ -6,7 +6,7 @@ import { IoMdMoon, IoMdSunny } from "react-icons/io";
 import { AppContext } from "../context/AppContext";
 import { handleSignoutClick } from "../utils/gapi";
 import { UserModel } from "../interfaces";
-import { postUpdatedResourceToDb } from "../utils";
+import { postUpdatedResourceToDb, ROLES } from "../utils";
 
 const Nav: React.FC = (): JSX.Element => {
 	const [navOpen, setNavOpen] = useState(false);
@@ -87,30 +87,34 @@ const Nav: React.FC = (): JSX.Element => {
 				<nav className={`nav ${navOpen && "open"}`}>
 					<ul className={`links ${navOpen && "open"}`}>
 						<div className="row">
-							<div className="logo-holder">
+							<li className="logo-holder">
 								<Link href="/search">
 									<a className="link">
 										<h1 className="logo">R</h1>
 									</a>
 								</Link>
-							</div>
-							<div
+							</li>
+							<li
 								className={`burger ${navOpen && "open"}`}
 								onClick={() => setNavOpen(!navOpen)}
 							>
 								<div className="top"></div>
 								<div className="middle"></div>
 								<div className="bottom"></div>
-							</div>
+							</li>
 						</div>
 						<div className={`links-holder ${navOpen && "open"}`}>
 							{signedIn && (
 								<Link href="/search">
-									<a className="link">Home</a>
+									<li>
+										<a className="link">Home</a>
+									</li>
 								</Link>
 							)}
 							<Link href="/">
-								<a className="link">About</a>
+								<li>
+									<a className="link">About</a>
+								</li>
 							</Link>
 							{signedIn && (
 								<li className="link" onClick={handleSignOut}>
@@ -118,18 +122,29 @@ const Nav: React.FC = (): JSX.Element => {
 								</li>
 							)}
 							{dbUser && (
-								<Link href="/profile">
-									<a className="link">
-										<div className="profile">
-											<img
-												className="photo"
-												src={dbUser.photoUrl}
-												alt={dbUser.shortName}
-											/>
-											<p className="name">{dbUser.shortName}</p>
-										</div>
-									</a>
-								</Link>
+								<>
+									{dbUser.role !== ROLES.standard && (
+										<Link href="/admin">
+											<li>
+												<a className="link">Admin</a>
+											</li>
+										</Link>
+									)}
+									<Link href="/profile">
+										<li>
+											<a className="link">
+												<div className="profile">
+													<img
+														className="photo"
+														src={dbUser.photoUrl}
+														alt={dbUser.shortName}
+													/>
+													<p className="name">{dbUser.shortName}</p>
+												</div>
+											</a>
+										</li>
+									</Link>
+								</>
 							)}
 						</div>
 					</ul>

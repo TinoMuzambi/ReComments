@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 import { UserModel } from "../interfaces";
+import { ROLES } from "../utils";
 
 const UserSchema: Schema = new mongoose.Schema(
 	{
@@ -48,6 +49,11 @@ const UserSchema: Schema = new mongoose.Schema(
 		watchhistory: {
 			type: Object,
 			default: {},
+		},
+		role: {
+			type: String,
+			default: ROLES.standard,
+			required: [true, "User needs a role."],
 		},
 	},
 	{

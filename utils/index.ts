@@ -73,6 +73,13 @@ export const VOTING_TYPES = {
 	undoDownvoting: "undoDownvoting",
 };
 
+export const ROLES = {
+	// Different types of user roles.
+	admin: "admin",
+	standard: "standard",
+	moderator: "moderator",
+};
+
 export const numberWithCommas: Function = (num: number): string => {
 	// Format number to have commas to make it more readable.
 	return num.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
@@ -338,4 +345,19 @@ export const clearWatchHistory: Function = async (
 		}
 	}
 	setSpinnerVisible(false);
+};
+export const deleteUser: Function = async (id: string) => {
+	await fetch(`/api/users/${id}`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+	// TODO Delete user comments.
+	await fetch(`/api/comments/video/purge/${id}`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
 };

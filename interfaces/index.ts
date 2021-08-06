@@ -27,7 +27,7 @@ export interface PlayerProps {
 
 export interface ResultProps {
 	result: gapi.client.youtube.Video;
-	blockFormat: boolean;
+	blockFormat?: boolean;
 }
 
 export interface StatsProps {
@@ -90,7 +90,7 @@ export interface NoticeProps {
 
 export interface HistoryResultProps {
 	item: HistoryItem;
-	clearVideo: MouseEventHandler<HTMLButtonElement> | any;
+	clearVideo?: MouseEventHandler<HTMLButtonElement> | any;
 }
 
 export interface WatchHistoryProps {
@@ -104,6 +104,12 @@ export interface WatchHistoryProps {
 	setNoticeNoButtons: Dispatch<SetStateAction<1 | 2>>;
 	setNoticeFirstButtonText: Dispatch<SetStateAction<string>>;
 	setNoticeSecondButtonText: Dispatch<SetStateAction<string>>;
+}
+
+export interface AdminProps {
+	users: UserModel[];
+	comments: CommentModel[];
+	homeVideos: HomeModel;
 }
 
 export interface CommentModel {
@@ -136,6 +142,7 @@ export interface UserModel {
 	emails: boolean;
 	darkMode: boolean;
 	watchhistory: HistoryItem[];
+	role: string;
 }
 
 export interface HistoryItem {
