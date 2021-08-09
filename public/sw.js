@@ -11,118 +11,124 @@
  * limitations under the License.
  */
 
+self.__WB_DISABLE_DEV_LOGS = true;
+
 // If the loader is already loaded, just stop.
 if (!self.define) {
-  const singleRequire = name => {
-    if (name !== 'require') {
-      name = name + '.js';
-    }
-    let promise = Promise.resolve();
-    if (!registry[name]) {
-      
-        promise = new Promise(async resolve => {
-          if ("document" in self) {
-            const script = document.createElement("script");
-            script.src = name;
-            document.head.appendChild(script);
-            script.onload = resolve;
-          } else {
-            importScripts(name);
-            resolve();
-          }
-        });
-      
-    }
-    return promise.then(() => {
-      if (!registry[name]) {
-        throw new Error(`Module ${name} didn’t register its module`);
-      }
-      return registry[name];
-    });
-  };
+	const singleRequire = (name) => {
+		if (name !== "require") {
+			name = name + ".js";
+		}
+		let promise = Promise.resolve();
+		if (!registry[name]) {
+			promise = new Promise(async (resolve) => {
+				if ("document" in self) {
+					const script = document.createElement("script");
+					script.src = name;
+					document.head.appendChild(script);
+					script.onload = resolve;
+				} else {
+					importScripts(name);
+					resolve();
+				}
+			});
+		}
+		return promise.then(() => {
+			if (!registry[name]) {
+				throw new Error(`Module ${name} didn’t register its module`);
+			}
+			return registry[name];
+		});
+	};
 
-  const require = (names, resolve) => {
-    Promise.all(names.map(singleRequire))
-      .then(modules => resolve(modules.length === 1 ? modules[0] : modules));
-  };
-  
-  const registry = {
-    require: Promise.resolve(require)
-  };
+	const require = (names, resolve) => {
+		Promise.all(names.map(singleRequire)).then((modules) =>
+			resolve(modules.length === 1 ? modules[0] : modules)
+		);
+	};
 
-  self.define = (moduleName, depsNames, factory) => {
-    if (registry[moduleName]) {
-      // Module is already loading or loaded.
-      return;
-    }
-    registry[moduleName] = Promise.resolve().then(() => {
-      let exports = {};
-      const module = {
-        uri: location.origin + moduleName.slice(1)
-      };
-      return Promise.all(
-        depsNames.map(depName => {
-          switch(depName) {
-            case "exports":
-              return exports;
-            case "module":
-              return module;
-            default:
-              return singleRequire(depName);
-          }
-        })
-      ).then(deps => {
-        const facValue = factory(...deps);
-        if(!exports.default) {
-          exports.default = facValue;
-        }
-        return exports;
-      });
-    });
-  };
+	const registry = {
+		require: Promise.resolve(require),
+	};
+
+	self.define = (moduleName, depsNames, factory) => {
+		if (registry[moduleName]) {
+			// Module is already loading or loaded.
+			return;
+		}
+		registry[moduleName] = Promise.resolve().then(() => {
+			let exports = {};
+			const module = {
+				uri: location.origin + moduleName.slice(1),
+			};
+			return Promise.all(
+				depsNames.map((depName) => {
+					switch (depName) {
+						case "exports":
+							return exports;
+						case "module":
+							return module;
+						default:
+							return singleRequire(depName);
+					}
+				})
+			).then((deps) => {
+				const facValue = factory(...deps);
+				if (!exports.default) {
+					exports.default = facValue;
+				}
+				return exports;
+			});
+		});
+	};
 }
-define("./sw.js",['./workbox-6b19f60b'], function (workbox) { 'use strict';
+define("./sw.js", ["./workbox-6b19f60b"], function (workbox) {
+	"use strict";
 
-  /**
-  * Welcome to your Workbox-powered service worker!
-  *
-  * You'll need to register this file in your web app.
-  * See https://goo.gl/nhQhGp
-  *
-  * The rest of the code is auto-generated. Please don't update this file
-  * directly; instead, make changes to your Workbox build configuration
-  * and re-run your build process.
-  * See https://goo.gl/2aRDsh
-  */
+	/**
+	 * Welcome to your Workbox-powered service worker!
+	 *
+	 * You'll need to register this file in your web app.
+	 * See https://goo.gl/nhQhGp
+	 *
+	 * The rest of the code is auto-generated. Please don't update this file
+	 * directly; instead, make changes to your Workbox build configuration
+	 * and re-run your build process.
+	 * See https://goo.gl/2aRDsh
+	 */
 
-  importScripts();
-  self.skipWaiting();
-  workbox.clientsClaim();
-  workbox.registerRoute("/", new workbox.NetworkFirst({
-    "cacheName": "start-url",
-    plugins: [{
-      cacheWillUpdate: async ({
-        request,
-        response,
-        event,
-        state
-      }) => {
-        if (response && response.type === 'opaqueredirect') {
-          return new Response(response.body, {
-            status: 200,
-            statusText: 'OK',
-            headers: response.headers
-          });
-        }
+	importScripts();
+	self.skipWaiting();
+	workbox.clientsClaim();
+	workbox.registerRoute(
+		"/",
+		new workbox.NetworkFirst({
+			cacheName: "start-url",
+			plugins: [
+				{
+					cacheWillUpdate: async ({ request, response, event, state }) => {
+						if (response && response.type === "opaqueredirect") {
+							return new Response(response.body, {
+								status: 200,
+								statusText: "OK",
+								headers: response.headers,
+							});
+						}
 
-        return response;
-      }
-    }]
-  }), 'GET');
-  workbox.registerRoute(/.*/i, new workbox.NetworkOnly({
-    "cacheName": "dev",
-    plugins: []
-  }), 'GET');
-
+						return response;
+					},
+				},
+			],
+		}),
+		"GET"
+	);
+	workbox.registerRoute(
+		/.*/i,
+		new workbox.NetworkOnly({
+			cacheName: "dev",
+			plugins: [],
+		}),
+		"GET"
+	);
 });
 //# sourceMappingURL=sw.js.map
