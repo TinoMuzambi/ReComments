@@ -27,7 +27,7 @@ const Admin: NextPage<AdminProps> = ({
 	>("");
 	const [id, setId] = useState("");
 
-	// const [usersState, setUsersState] = useState(users);
+	const [usersState, setUsersState] = useState(users);
 	// const [commentsState, setCommentssState] = useState(comments);
 	// const [homeVideosState, sethomeVideosState] = useState(homeVideos);
 
@@ -141,9 +141,8 @@ const Admin: NextPage<AdminProps> = ({
 	};
 
 	const deleteUserCallback: Function = async () => {
-		// TODO
 		await deleteUser(id);
-		users.filter((user) => user.userId !== id);
+		setUsersState(users.filter((user) => user.userId !== id));
 		hideNoticeWrapper();
 	};
 
@@ -192,7 +191,7 @@ const Admin: NextPage<AdminProps> = ({
 				<h1 className="title">Admin Panel</h1>
 
 				<section className="users">
-					<h2 className="subtitle">Users ({users.length})</h2>
+					<h2 className="subtitle">Users ({usersState.length})</h2>
 
 					<div className="content-container">
 						<div className="labels">
@@ -204,7 +203,7 @@ const Admin: NextPage<AdminProps> = ({
 							<p className="label">Emails</p>
 							<p className="label">History</p>
 						</div>
-						{users?.map((user: UserModel) => (
+						{usersState?.map((user: UserModel) => (
 							<div className="wrapper" key={user.userId}>
 								<div className="row">
 									<img
