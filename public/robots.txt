@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: 
+Sitemap: https://recomments.tinomuzambi.com/sitemap.xml
