@@ -36,16 +36,19 @@ const Admin: NextPage<AdminProps> = ({
 	const router = useRouter();
 
 	useEffect(() => {
+		// Push to search page if !user or user is not authed.
 		if (!dbUser) router.push("/search");
 		else if (dbUser.role === ROLES.standard) router.push("/search");
 	}, [dbUser]);
 
 	useEffect(() => {
+		// Show notice if title non-blank.
 		if (noticeTitle !== "") setNoticeVisible(true);
 		else hideNoticeWrapper();
 	}, [noticeTitle]);
 
 	useEffect(() => {
+		// Timer for hiding notice if no interaction with it.
 		let timer: NodeJS.Timeout;
 		if (noticeNoButtons === 1) {
 			timer = setTimeout(() => {
@@ -57,12 +60,8 @@ const Admin: NextPage<AdminProps> = ({
 		};
 	}, [noticeVisible]);
 
-	const defaultView = <main className="main">Only for admin users.</main>;
-
-	if (!dbUser) return defaultView;
-	else if (dbUser.role === ROLES.standard) return defaultView;
-
 	const hideNoticeWrapper: Function = () => {
+		// Wrapper for hiding notice.
 		hideNotice(
 			setNoticeVisible,
 			setNoticeTitle,
@@ -74,6 +73,7 @@ const Admin: NextPage<AdminProps> = ({
 	};
 
 	const deleteUserHandler: FormEventHandler<HTMLButtonElement> = async (e) => {
+		// Handler for deleting a user.
 		e.preventDefault();
 
 		hideNoticeWrapper();
@@ -88,6 +88,7 @@ const Admin: NextPage<AdminProps> = ({
 	const deleteCommentHandler: FormEventHandler<HTMLButtonElement> = async (
 		e
 	) => {
+		// Handler for deleting a comment.
 		e.preventDefault();
 
 		hideNoticeWrapper();
@@ -104,6 +105,7 @@ const Admin: NextPage<AdminProps> = ({
 	const deleteHomeVideoHandler: FormEventHandler<HTMLButtonElement> = async (
 		e
 	) => {
+		// Handler for deleting a home videos.
 		e.preventDefault();
 
 		hideNoticeWrapper();
@@ -120,6 +122,7 @@ const Admin: NextPage<AdminProps> = ({
 	const editHomeVideoHandler: FormEventHandler<HTMLButtonElement> = async (
 		e
 	) => {
+		// Handler for editing a home video.
 		e.preventDefault();
 
 		hideNoticeWrapper();
@@ -138,6 +141,7 @@ const Admin: NextPage<AdminProps> = ({
 	};
 
 	const deleteUserCallback: Function = async () => {
+		// TODO
 		await deleteUser(id);
 		users.filter((user) => user.userId !== id);
 		hideNoticeWrapper();
@@ -150,6 +154,13 @@ const Admin: NextPage<AdminProps> = ({
 	const editHomeVideoCallback: Function = async () => {
 		// TODO
 	};
+
+	// Default view for non-authed users
+	const defaultView = <main className="main">Only for admin users.</main>;
+
+	// Return default view if !user or user is not authed.
+	if (!dbUser) return defaultView;
+	else if (dbUser.role === ROLES.standard) return defaultView;
 
 	return (
 		<>
