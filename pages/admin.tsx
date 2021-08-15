@@ -133,7 +133,9 @@ const Admin: NextPage<AdminProps> = ({
 		setNoticeSecondButtonText("Cancel");
 	};
 
-	const deleteCommentCallback: Function = async () => {};
+	const deleteCommentCallback: Function = async () => {
+		// TODO
+	};
 
 	const deleteUserCallback: Function = async () => {
 		await deleteUser(id);
@@ -141,9 +143,13 @@ const Admin: NextPage<AdminProps> = ({
 		hideNoticeWrapper();
 	};
 
-	const deleteHomeVideoCallback: Function = async () => {};
+	const deleteHomeVideoCallback: Function = async () => {
+		// TODO
+	};
 
-	const editHomeVideoCallback: Function = async () => {};
+	const editHomeVideoCallback: Function = async () => {
+		// TODO
+	};
 
 	return (
 		<>
