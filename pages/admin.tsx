@@ -331,6 +331,7 @@ const Admin: NextPage<AdminProps> = ({
 								</div>
 							</div>
 						))}
+						<button className="add">Add</button>
 					</div>
 				</section>
 			</main>
