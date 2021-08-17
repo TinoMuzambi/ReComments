@@ -1,14 +1,14 @@
 import { useEffect, useContext, useState, FormEventHandler } from "react";
 import { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import moment from "moment";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 import { AppContext } from "../context/AppContext";
 import { deleteUser, hideNotice, ROLES, updateHomeVideos } from "../utils";
 import Meta from "../components/Meta";
 import { AdminProps, CommentModel, HomeModel, UserModel } from "../interfaces";
-import { MdDelete, MdEdit } from "react-icons/md";
-import Link from "next/link";
-import moment from "moment";
 import Notice from "../components/Notice";
 
 const Admin: NextPage<AdminProps> = ({
@@ -111,7 +111,7 @@ const Admin: NextPage<AdminProps> = ({
 	const deleteHomeVideoHandler: FormEventHandler<HTMLButtonElement> = async (
 		e
 	) => {
-		// Handler for deleting a home videos.
+		// Handler for deleting a home video.
 		e.preventDefault();
 
 		hideNoticeWrapper();
@@ -162,12 +162,14 @@ const Admin: NextPage<AdminProps> = ({
 	};
 
 	const deleteUserCallback: Function = async () => {
+		// Callback for deleting a user and their comments.
 		await deleteUser(id);
 		setUsersState(users.filter((user) => user.userId !== id));
 		hideNoticeWrapper();
 	};
 
 	const deleteHomeVideoCallback: Function = async () => {
+		// Callback for deleting a home video.
 		const newVideos: HomeModel = { ...homeVideosState };
 		let newList = newVideos.videos;
 
@@ -182,6 +184,7 @@ const Admin: NextPage<AdminProps> = ({
 	};
 
 	const addHomeVideoCallback: Function = async () => {
+		// Callback for adding a home video.
 		const newVideos: HomeModel = { ...homeVideosState };
 		let newList = newVideos.videos;
 
@@ -198,6 +201,7 @@ const Admin: NextPage<AdminProps> = ({
 	};
 
 	const editHomeVideoCallback: Function = async () => {
+		// Callback for editing a home video.
 		const oldVideo: string = homeVideo;
 		const newVideo: string = prompt("Enter a new video:", homeVideo) as string;
 
