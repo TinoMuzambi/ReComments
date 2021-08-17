@@ -151,7 +151,7 @@ const Admin: NextPage<AdminProps> = ({
 		hideNoticeWrapper();
 		setAction("addHomeVideo");
 		setNoticeTitle("Add a home video");
-		setNoticeSubtitle("Are you sure you want to add this home video");
+		setNoticeSubtitle("Are you sure you want to add a home video");
 		setNoticeNoButtons(2);
 		setNoticeFirstButtonText("Yes");
 		setNoticeSecondButtonText("Cancel");
@@ -369,7 +369,9 @@ const Admin: NextPage<AdminProps> = ({
 								</div>
 							</div>
 						))}
-						<button className="add">Add</button>
+						<button className="add" onClick={addHomeVideoHandler}>
+							Add
+						</button>
 					</div>
 				</section>
 			</main>
