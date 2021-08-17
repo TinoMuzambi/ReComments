@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 import { AppContext } from "../context/AppContext";
-import { deleteUser, hideNotice, ROLES } from "../utils";
+import { deleteUser, hideNotice, ROLES, updateHomeVideos } from "../utils";
 import Meta from "../components/Meta";
 import { AdminProps, CommentModel, HomeModel, UserModel } from "../interfaces";
 import { MdDelete, MdEdit } from "react-icons/md";
@@ -152,7 +152,6 @@ const Admin: NextPage<AdminProps> = ({
 	};
 
 	const editHomeVideoCallback: Function = async () => {
-		// TODO
 		const oldVideo: string = homeVideo;
 		const newVideo: string = prompt("Enter a new video:", homeVideo) as string;
 
@@ -162,13 +161,7 @@ const Admin: NextPage<AdminProps> = ({
 		}
 		sethomeVideosState(newVideos);
 
-		await fetch("/api/home", {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(newVideos),
-		});
+		await updateHomeVideos(newVideos);
 
 		hideNoticeWrapper();
 	};

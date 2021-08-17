@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { CommentModel, UserModel } from "../interfaces";
+import { CommentModel, HomeModel, UserModel } from "../interfaces";
 
 const instanceOfCommentModel: Function = (
 	object: any
@@ -359,5 +359,15 @@ export const deleteUser: Function = async (id: string) => {
 		headers: {
 			"Content-Type": "application/json",
 		},
+	});
+};
+
+export const updateHomeVideos: Function = async (body: HomeModel) => {
+	await fetch("/api/home", {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(body),
 	});
 };
