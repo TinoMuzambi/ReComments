@@ -23,7 +23,12 @@ const Admin: NextPage<AdminProps> = ({
 	const [noticeFirstButtonText, setNoticeFirstButtonText] = useState("");
 	const [noticeSecondButtonText, setNoticeSecondButtonText] = useState("");
 	const [action, setAction] = useState<
-		"deleteComment" | "deleteUser" | "deleteHomeVideo" | "editHomeVideo" | ""
+		| "deleteComment"
+		| "deleteUser"
+		| "deleteHomeVideo"
+		| "editHomeVideo"
+		| "addHomeVideo"
+		| ""
 	>("");
 	const [id, setId] = useState("");
 	const [homeVideo, setHomeVideo] = useState("");
@@ -137,6 +142,21 @@ const Admin: NextPage<AdminProps> = ({
 		setNoticeSecondButtonText("Cancel");
 	};
 
+	const addHomeVideoHandler: FormEventHandler<HTMLButtonElement> = async (
+		e
+	) => {
+		// Handler for adding a home video.
+		e.preventDefault();
+
+		hideNoticeWrapper();
+		setAction("addHomeVideo");
+		setNoticeTitle("Add a home video");
+		setNoticeSubtitle("Are you sure you want to add this home video");
+		setNoticeNoButtons(2);
+		setNoticeFirstButtonText("Yes");
+		setNoticeSecondButtonText("Cancel");
+	};
+
 	const deleteCommentCallback: Function = async () => {
 		// TODO
 	};
@@ -152,6 +172,22 @@ const Admin: NextPage<AdminProps> = ({
 		let newList = newVideos.videos;
 
 		newList = newList.filter((item) => item !== homeVideo);
+		newVideos.videos = newList;
+
+		sethomeVideosState(newVideos);
+
+		await updateHomeVideos(newVideos);
+
+		hideNoticeWrapper();
+	};
+
+	const addHomeVideoCallback: Function = async () => {
+		const newVideos: HomeModel = { ...homeVideosState };
+		let newList = newVideos.videos;
+
+		const newVideo: string = prompt("Enter a new video:") as string;
+
+		newList.push(newVideo);
 		newVideos.videos = newList;
 
 		sethomeVideosState(newVideos);
@@ -206,7 +242,9 @@ const Admin: NextPage<AdminProps> = ({
 							? deleteUserCallback
 							: action === "deleteHomeVideo"
 							? deleteHomeVideoCallback
-							: editHomeVideoCallback
+							: action === "editHomeVideo"
+							? editHomeVideoCallback
+							: addHomeVideoCallback
 					}
 					cancelCallback={hideNoticeWrapper}
 				/>
