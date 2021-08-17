@@ -152,6 +152,13 @@ const Admin: NextPage<AdminProps> = ({
 		let newList = newVideos.videos;
 
 		newList = newList.filter((item) => item !== homeVideo);
+		newVideos.videos = newList;
+
+		sethomeVideosState(newVideos);
+
+		await updateHomeVideos(newVideos);
+
+		hideNoticeWrapper();
 	};
 
 	const editHomeVideoCallback: Function = async () => {
@@ -312,7 +319,13 @@ const Admin: NextPage<AdminProps> = ({
 									>
 										<MdEdit className="icon" />
 									</button>
-									<button className="delete" onClick={deleteHomeVideoHandler}>
+									<button
+										className="delete"
+										onClick={(e) => {
+											deleteHomeVideoHandler(e);
+											setHomeVideo(video);
+										}}
+									>
 										<MdDelete className="icon" />
 									</button>
 								</div>
