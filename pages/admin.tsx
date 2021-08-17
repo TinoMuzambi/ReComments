@@ -26,10 +26,11 @@ const Admin: NextPage<AdminProps> = ({
 		"deleteComment" | "deleteUser" | "deleteHomeVideo" | "editHomeVideo" | ""
 	>("");
 	const [id, setId] = useState("");
+	const [homeVideo, setHomeVideo] = useState("");
 
 	const [usersState, setUsersState] = useState(users);
 	// const [commentsState, setCommentssState] = useState(comments);
-	// const [homeVideosState, sethomeVideosState] = useState(homeVideos);
+	const [homeVideosState, sethomeVideosState] = useState(homeVideos);
 
 	const { dbUser } = useContext(AppContext);
 
@@ -88,7 +89,7 @@ const Admin: NextPage<AdminProps> = ({
 	const deleteCommentHandler: FormEventHandler<HTMLButtonElement> = async (
 		e
 	) => {
-		// Handler for deleting a comment.
+		// Handler for deleting a comment. HARDER THAN I THOUGHT.
 		e.preventDefault();
 
 		hideNoticeWrapper();
@@ -126,7 +127,7 @@ const Admin: NextPage<AdminProps> = ({
 		e.preventDefault();
 
 		hideNoticeWrapper();
-		setAction("deleteComment");
+		setAction("editHomeVideo");
 		setNoticeTitle("Edit this home video");
 		setNoticeSubtitle(
 			"Are you sure you want to permanently edit this home video"
@@ -152,6 +153,24 @@ const Admin: NextPage<AdminProps> = ({
 
 	const editHomeVideoCallback: Function = async () => {
 		// TODO
+		const oldVideo: string = homeVideo;
+		const newVideo: string = prompt("Enter a new video:", homeVideo) as string;
+
+		const newVideos: HomeModel = { ...homeVideosState };
+		for (let i = 0; i < newVideos.videos.length; i++) {
+			if (newVideos.videos[i] === oldVideo) newVideos.videos[i] = newVideo;
+		}
+		sethomeVideosState(newVideos);
+
+		await fetch("/api/home", {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(newVideos),
+		});
+
+		hideNoticeWrapper();
 	};
 
 	// Default view for non-authed users
@@ -282,13 +301,19 @@ const Admin: NextPage<AdminProps> = ({
 				<section className="home">
 					<h2 className="subtitle">Home Videos</h2>
 					<div className="content-container">
-						{homeVideos.videos.map((video: any) => (
+						{homeVideosState.videos.map((video: any) => (
 							<div className="wrapper" key={video}>
 								<div className="row">
 									<p>{video}</p>
 								</div>
 								<div className="actions">
-									<button className="edit" onClick={editHomeVideoHandler}>
+									<button
+										className="edit"
+										onClick={(e) => {
+											editHomeVideoHandler(e);
+											setHomeVideo(video);
+										}}
+									>
 										<MdEdit className="icon" />
 									</button>
 									<button className="delete" onClick={deleteHomeVideoHandler}>
