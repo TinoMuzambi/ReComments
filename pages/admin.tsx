@@ -148,7 +148,10 @@ const Admin: NextPage<AdminProps> = ({
 	};
 
 	const deleteHomeVideoCallback: Function = async () => {
-		// TODO
+		const newVideos: HomeModel = { ...homeVideosState };
+		let newList = newVideos.videos;
+
+		newList = newList.filter((item) => item !== homeVideo);
 	};
 
 	const editHomeVideoCallback: Function = async () => {
