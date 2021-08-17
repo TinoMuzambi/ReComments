@@ -328,7 +328,9 @@ const Admin: NextPage<AdminProps> = ({
 								<div className="row">
 									<p className="author">{comment.name}</p>
 									<p className="comment">{comment.comment}</p>
-									<p className="video">{comment.videoId}</p>
+									<Link href={`/video/${comment.videoId}`}>
+										<a className="video">{comment.videoId}</a>
+									</Link>
 									<p className="upvotes">{comment.upvotes}</p>
 									<p className="downvotes">{comment.downvotes}</p>
 									<p className="reples">{comment.replies?.length}</p>
