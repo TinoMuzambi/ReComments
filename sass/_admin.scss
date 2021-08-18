@@ -95,5 +95,17 @@
 				}
 			}
 		}
+
+		.add {
+			@include buttonReset;
+			background: $primary-colour;
+			margin: 1rem 0;
+			border-radius: 1000rem;
+			padding: 1rem 0;
+
+			&:hover {
+				background: darken($color: $primary-colour, $amount: 10);
+			}
+		}
 	}
 }

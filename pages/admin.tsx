@@ -1,14 +1,14 @@
 import { useEffect, useContext, useState, FormEventHandler } from "react";
 import { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import moment from "moment";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 import { AppContext } from "../context/AppContext";
-import { deleteUser, hideNotice, ROLES } from "../utils";
+import { deleteUser, hideNotice, ROLES, updateHomeVideos } from "../utils";
 import Meta from "../components/Meta";
 import { AdminProps, CommentModel, HomeModel, UserModel } from "../interfaces";
-import { MdDelete, MdEdit } from "react-icons/md";
-import Link from "next/link";
-import moment from "moment";
 import Notice from "../components/Notice";
 
 const Admin: NextPage<AdminProps> = ({
@@ -23,29 +23,38 @@ const Admin: NextPage<AdminProps> = ({
 	const [noticeFirstButtonText, setNoticeFirstButtonText] = useState("");
 	const [noticeSecondButtonText, setNoticeSecondButtonText] = useState("");
 	const [action, setAction] = useState<
-		"deleteComment" | "deleteUser" | "deleteHomeVideo" | "editHomeVideo" | ""
+		| "deleteComment"
+		| "deleteUser"
+		| "deleteHomeVideo"
+		| "editHomeVideo"
+		| "addHomeVideo"
+		| ""
 	>("");
 	const [id, setId] = useState("");
+	const [homeVideo, setHomeVideo] = useState("");
 
-	// const [usersState, setUsersState] = useState(users);
+	const [usersState, setUsersState] = useState(users);
 	// const [commentsState, setCommentssState] = useState(comments);
-	// const [homeVideosState, sethomeVideosState] = useState(homeVideos);
+	const [homeVideosState, sethomeVideosState] = useState(homeVideos);
 
 	const { dbUser } = useContext(AppContext);
 
 	const router = useRouter();
 
 	useEffect(() => {
+		// Push to search page if !user or user is not authed.
 		if (!dbUser) router.push("/search");
 		else if (dbUser.role === ROLES.standard) router.push("/search");
 	}, [dbUser]);
 
 	useEffect(() => {
+		// Show notice if title non-blank.
 		if (noticeTitle !== "") setNoticeVisible(true);
 		else hideNoticeWrapper();
 	}, [noticeTitle]);
 
 	useEffect(() => {
+		// Timer for hiding notice if no interaction with it.
 		let timer: NodeJS.Timeout;
 		if (noticeNoButtons === 1) {
 			timer = setTimeout(() => {
@@ -57,12 +66,8 @@ const Admin: NextPage<AdminProps> = ({
 		};
 	}, [noticeVisible]);
 
-	const defaultView = <main className="main">Only for admin users.</main>;
-
-	if (!dbUser) return defaultView;
-	else if (dbUser.role === ROLES.standard) return defaultView;
-
 	const hideNoticeWrapper: Function = () => {
+		// Wrapper for hiding notice.
 		hideNotice(
 			setNoticeVisible,
 			setNoticeTitle,
@@ -74,6 +79,7 @@ const Admin: NextPage<AdminProps> = ({
 	};
 
 	const deleteUserHandler: FormEventHandler<HTMLButtonElement> = async (e) => {
+		// Handler for deleting a user.
 		e.preventDefault();
 
 		hideNoticeWrapper();
@@ -88,6 +94,7 @@ const Admin: NextPage<AdminProps> = ({
 	const deleteCommentHandler: FormEventHandler<HTMLButtonElement> = async (
 		e
 	) => {
+		// Handler for deleting a comment. HARDER THAN I THOUGHT.
 		e.preventDefault();
 
 		hideNoticeWrapper();
@@ -104,6 +111,7 @@ const Admin: NextPage<AdminProps> = ({
 	const deleteHomeVideoHandler: FormEventHandler<HTMLButtonElement> = async (
 		e
 	) => {
+		// Handler for deleting a home video.
 		e.preventDefault();
 
 		hideNoticeWrapper();
@@ -120,10 +128,11 @@ const Admin: NextPage<AdminProps> = ({
 	const editHomeVideoHandler: FormEventHandler<HTMLButtonElement> = async (
 		e
 	) => {
+		// Handler for editing a home video.
 		e.preventDefault();
 
 		hideNoticeWrapper();
-		setAction("deleteComment");
+		setAction("editHomeVideo");
 		setNoticeTitle("Edit this home video");
 		setNoticeSubtitle(
 			"Are you sure you want to permanently edit this home video"
@@ -133,17 +142,86 @@ const Admin: NextPage<AdminProps> = ({
 		setNoticeSecondButtonText("Cancel");
 	};
 
-	const deleteCommentCallback: Function = async () => {};
+	const addHomeVideoHandler: FormEventHandler<HTMLButtonElement> = async (
+		e
+	) => {
+		// Handler for adding a home video.
+		e.preventDefault();
+
+		hideNoticeWrapper();
+		setAction("addHomeVideo");
+		setNoticeTitle("Add a home video");
+		setNoticeSubtitle("Are you sure you want to add a home video");
+		setNoticeNoButtons(2);
+		setNoticeFirstButtonText("Yes");
+		setNoticeSecondButtonText("Cancel");
+	};
+
+	const deleteCommentCallback: Function = async () => {
+		// TODO
+	};
 
 	const deleteUserCallback: Function = async () => {
+		// Callback for deleting a user and their comments.
 		await deleteUser(id);
-		users.filter((user) => user.userId !== id);
+		setUsersState(users.filter((user) => user.userId !== id));
 		hideNoticeWrapper();
 	};
 
-	const deleteHomeVideoCallback: Function = async () => {};
+	const deleteHomeVideoCallback: Function = async () => {
+		// Callback for deleting a home video.
+		const newVideos: HomeModel = { ...homeVideosState };
+		let newList = newVideos.videos;
 
-	const editHomeVideoCallback: Function = async () => {};
+		newList = newList.filter((item) => item !== homeVideo);
+		newVideos.videos = newList;
+
+		sethomeVideosState(newVideos);
+
+		await updateHomeVideos(newVideos);
+
+		hideNoticeWrapper();
+	};
+
+	const addHomeVideoCallback: Function = async () => {
+		// Callback for adding a home video.
+		const newVideos: HomeModel = { ...homeVideosState };
+		let newList = newVideos.videos;
+
+		const newVideo: string = prompt("Enter a new video:") as string;
+
+		newList.push(newVideo);
+		newVideos.videos = newList;
+
+		sethomeVideosState(newVideos);
+
+		await updateHomeVideos(newVideos);
+
+		hideNoticeWrapper();
+	};
+
+	const editHomeVideoCallback: Function = async () => {
+		// Callback for editing a home video.
+		const oldVideo: string = homeVideo;
+		const newVideo: string = prompt("Enter a new video:", homeVideo) as string;
+
+		const newVideos: HomeModel = { ...homeVideosState };
+		for (let i = 0; i < newVideos.videos.length; i++) {
+			if (newVideos.videos[i] === oldVideo) newVideos.videos[i] = newVideo;
+		}
+		sethomeVideosState(newVideos);
+
+		await updateHomeVideos(newVideos);
+
+		hideNoticeWrapper();
+	};
+
+	// Default view for non-authed users
+	const defaultView = <main className="main">Only for admin users.</main>;
+
+	// Return default view if !user or user is not authed.
+	if (!dbUser) return defaultView;
+	else if (dbUser.role === ROLES.standard) return defaultView;
 
 	return (
 		<>
@@ -168,14 +246,16 @@ const Admin: NextPage<AdminProps> = ({
 							? deleteUserCallback
 							: action === "deleteHomeVideo"
 							? deleteHomeVideoCallback
-							: editHomeVideoCallback
+							: action === "editHomeVideo"
+							? editHomeVideoCallback
+							: addHomeVideoCallback
 					}
 					cancelCallback={hideNoticeWrapper}
 				/>
 				<h1 className="title">Admin Panel</h1>
 
 				<section className="users">
-					<h2 className="subtitle">Users ({users.length})</h2>
+					<h2 className="subtitle">Users ({usersState.length})</h2>
 
 					<div className="content-container">
 						<div className="labels">
@@ -187,7 +267,7 @@ const Admin: NextPage<AdminProps> = ({
 							<p className="label">Emails</p>
 							<p className="label">History</p>
 						</div>
-						{users?.map((user: UserModel) => (
+						{usersState?.map((user: UserModel) => (
 							<div className="wrapper" key={user.userId}>
 								<div className="row">
 									<img
@@ -248,7 +328,9 @@ const Admin: NextPage<AdminProps> = ({
 								<div className="row">
 									<p className="author">{comment.name}</p>
 									<p className="comment">{comment.comment}</p>
-									<p className="video">{comment.videoId}</p>
+									<Link href={`/video/${comment.videoId}`}>
+										<a className="video">{comment.videoId}</a>
+									</Link>
 									<p className="upvotes">{comment.upvotes}</p>
 									<p className="downvotes">{comment.downvotes}</p>
 									<p className="reples">{comment.replies?.length}</p>
@@ -266,21 +348,36 @@ const Admin: NextPage<AdminProps> = ({
 				<section className="home">
 					<h2 className="subtitle">Home Videos</h2>
 					<div className="content-container">
-						{homeVideos.videos.map((video: any) => (
+						{homeVideosState.videos.map((video: any) => (
 							<div className="wrapper" key={video}>
 								<div className="row">
 									<p>{video}</p>
 								</div>
 								<div className="actions">
-									<button className="edit" onClick={editHomeVideoHandler}>
+									<button
+										className="edit"
+										onClick={(e) => {
+											editHomeVideoHandler(e);
+											setHomeVideo(video);
+										}}
+									>
 										<MdEdit className="icon" />
 									</button>
-									<button className="delete" onClick={deleteHomeVideoHandler}>
+									<button
+										className="delete"
+										onClick={(e) => {
+											deleteHomeVideoHandler(e);
+											setHomeVideo(video);
+										}}
+									>
 										<MdDelete className="icon" />
 									</button>
 								</div>
 							</div>
 						))}
+						<button className="add" onClick={addHomeVideoHandler}>
+							Add
+						</button>
 					</div>
 				</section>
 			</main>

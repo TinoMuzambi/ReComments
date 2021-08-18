@@ -19,9 +19,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				res.status(400).json({ success: "false", data: { error, getVideos } });
 			}
 			break;
-		case "POST":
+		case "PUT":
 			try {
-				const videos: typeof Home = await Home.create(req.body);
+				const videos: typeof Home = await Home.findByIdAndUpdate(
+					"60cbaef5babac8169130faec",
+					req.body
+				);
 
 				res.status(201).json({ success: "true", data: videos });
 			} catch (error) {
