@@ -12,6 +12,7 @@ import {
 	getDbUser,
 	hideNotice,
 	getNewVideoCommentsBody,
+	ROLES,
 } from "../../utils";
 import { AppContext } from "../../context/AppContext";
 import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
@@ -168,7 +169,11 @@ const CommentContent: React.FC<CommentContentProps> = ({
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> =
 		async (): Promise<void> => {
-			if (dbUser?.userId === currComment.authorId) {
+			if (
+				dbUser?.userId === currComment.authorId ||
+				dbUser?.role === ROLES.admin ||
+				dbUser?.role === ROLES.moderator
+			) {
 				setNoticeTitle("Delete comment");
 				setNoticeSubtitle("Are you sure you want to delete this comment?");
 				setNoticeNoButtons(2);
