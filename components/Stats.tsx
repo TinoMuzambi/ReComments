@@ -12,6 +12,7 @@ import { IconType } from "react-icons/lib";
 
 const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 	const [descVisible, setDescVisible] = useState(false);
+	console.log(result);
 
 	const getStat: Function = (
 		i: number,
@@ -35,10 +36,6 @@ const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 		{
 			icon: <BiLike />,
 			stat: result.statistics ? result.statistics.likeCount : 0,
-		},
-		{
-			icon: <BiDislike />,
-			stat: result.statistics ? result.statistics.dislikeCount : 0,
 		},
 		{
 			icon: <MdDateRange />,
