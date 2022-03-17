@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		case "GET":
 			try {
 				const { usersSecret } = req.headers;
-				// console.log(req.headers);
+
 				if (usersSecret === process.env.secret) {
 					const users: typeof User[] = await User.find({});
 

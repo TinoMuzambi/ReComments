@@ -12,7 +12,6 @@ import { IconType } from "react-icons/lib";
 
 const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 	const [descVisible, setDescVisible] = useState(false);
-	console.log(result);
 
 	const getStat: Function = (
 		i: number,
