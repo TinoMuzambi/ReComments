@@ -1,7 +1,7 @@
 import { useState } from "react";
 import parse from "html-react-parser";
 import Autolinker from "autolinker";
-import { BiLike, BiDislike } from "react-icons/bi";
+import { BiLike } from "react-icons/bi";
 import { VscEye } from "react-icons/vsc";
 import { MdDateRange } from "react-icons/md";
 import moment from "moment";
