@@ -14,18 +14,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					updatedAt: -1,
 				});
 
-				res.status(200).json({ success: "true", data: comments });
+				res.status(200).json({ success: true, data: comments });
 			} catch (error) {
-				res.status(400).json({ success: "false", data: error });
+				res.status(400).json({ success: false, data: error });
 			}
 			break;
 		case "POST":
 			try {
 				const comment: Comment = await Comment.create(req.body);
 
-				res.status(201).json({ success: "true", data: comment });
+				res.status(201).json({ success: true, data: comment });
 			} catch (error) {
-				res.status(400).json({ success: "false", data: error });
+				res.status(400).json({ success: false, data: error });
 			}
 			break;
 		default:
