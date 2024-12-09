@@ -12,7 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		case "GET":
 			let getVideos: HomeModel | null = null;
 			try {
-				getVideos = await Home.findOne({ _id: "60cbaef5babac8169130faec" });
+				getVideos = await Home.findOne({ _id: "6756cadb665d3d4e3c52b1f1" });
 
 				res.status(200).json({ success: true, data: getVideos });
 			} catch (error) {
@@ -22,9 +22,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		case "PUT":
 			try {
 				const videos: typeof Home = await Home.findByIdAndUpdate(
-					"60cbaef5babac8169130faec",
+					"6756cadb665d3d4e3c52b1f1",
 					req.body
 				);
+
+				res.status(201).json({ success: true, data: videos });
+			} catch (error) {
+				res.status(400).json({ success: false, data: error });
+			}
+			break;
+		case "POST":
+			try {
+				const videos: typeof Home = await Home.insertMany(req.body);
 
 				res.status(201).json({ success: true, data: videos });
 			} catch (error) {
