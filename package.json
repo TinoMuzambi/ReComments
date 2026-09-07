@@ -21,7 +21,7 @@
 		"autolinker": "^3.14.3",
 		"html-react-parser": "^1.2.6",
 		"moment": "^2.29.1",
-		"mongoose": "^5.12.12",
+		"mongoose": "^6.13.10",
 		"next": "latest",
 		"next-pwa": "^5.2.23",
 		"nodemailer": "^6.6.2",
