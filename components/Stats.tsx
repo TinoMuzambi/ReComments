@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { ReactNode } from "react";
 import parse from "html-react-parser";
 import Autolinker from "autolinker";
 import { BiLike } from "react-icons/bi";
@@ -8,14 +9,13 @@ import moment from "moment";
 
 import { StatsProps } from "../interfaces";
 import { numberWithCommas } from "../utils";
-import { IconType } from "react-icons/lib";
 
 const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 	const [descVisible, setDescVisible] = useState(false);
 
 	const getStat: Function = (
 		i: number,
-		icon: IconType,
+		icon: ReactNode,
 		num: Number,
 		date?: Date
 	): JSX.Element => (
@@ -59,6 +59,8 @@ const Stats: React.FC<StatsProps> = ({ result }): JSX.Element => {
 							: "Description",
 						{
 							className: "embed-link",
+							newWindow: true,
+							sanitizeHtml: true,
 						}
 					)
 				)}

@@ -41,3 +41,4 @@ yarn-error.log*
 Backup-codes-recommentsweb.txt
 
 sw.js.map
+*.tsbuildinfo

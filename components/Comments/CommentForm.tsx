@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 
 import { AppContext } from "../../context/AppContext";
-import { CommentFormProps, CommentModel, UserModel } from "../../interfaces";
+import { CommentFormProps, CommentModel } from "../../interfaces";
 import {
 	postUpdatedResourceToDb,
 	postNewCommentToDb,
@@ -79,24 +79,15 @@ const CommentForm: React.FC<CommentFormProps> = ({
 	const notifyCommentAuthorByEmail: Function = async (): Promise<void> => {
 		// Notify user of new comment by email.
 		if (currComment) {
-			const author = await fetch(`/api/users/${currComment.authorId}`, {
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const authorJson = await author.json();
-			const commentAuthor: UserModel = authorJson.data;
-
-			// If user is opted-in to emails, send email notification.
-			if (commentAuthor?.emails) {
-				sendMail(
-					currComment.email,
-					dbUser?.shortName,
-					commentInput.replace((("@" + dbUser?.shortName) as string) + " ", ""),
-					router.query.url,
-					document.title
-				);
-			}
+			// The server resolves the recipient and opt-in preference by user ID;
+			// recipient email addresses are never exposed to the browser.
+			await sendMail(
+				currComment.authorId,
+				dbUser?.shortName,
+				commentInput.replace((("@" + dbUser?.shortName) as string) + " ", ""),
+				router.query.url,
+				document.title
+			);
 		}
 	};
 

@@ -31,7 +31,7 @@ const SignIn: React.FC = (): JSX.Element => {
 						"https://youtube.googleapis.com/$discovery/rest?version=v3",
 					],
 					clientId: process.env.NEXT_PUBLIC_GAPP_CLIENT_ID,
-					scope: "profile",
+					scope: "profile email",
 				})
 				.then(() => {
 					gapi.auth2.getAuthInstance().isSignedIn.listen(() => {

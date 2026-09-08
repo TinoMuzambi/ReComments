@@ -8,6 +8,7 @@ const CommentSchema: Schema = new mongoose.Schema(
 			type: String,
 			required: [true, "Comment needs an ID."],
 			trim: true,
+			unique: true,
 		},
 		videoId: {
 			type: String,

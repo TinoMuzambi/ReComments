@@ -9,6 +9,7 @@ const UserSchema: Schema = new mongoose.Schema(
 			type: String,
 			required: [true, "User needs an id."],
 			trim: true,
+			unique: true,
 		},
 		email: {
 			type: String,

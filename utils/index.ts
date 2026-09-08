@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { CommentModel, HomeModel, UserModel } from "../interfaces";
+import { getAuthorizationHeaders } from "./authHeaders";
 
 const instanceOfCommentModel: Function = (
 	object: any
@@ -10,7 +11,6 @@ const instanceOfCommentModel: Function = (
 		"videoId" in object &&
 		"authorId" in object &&
 		"name" in object &&
-		"email" in object &&
 		"image" in object &&
 		"comment" in object &&
 		"edited" in object
@@ -27,6 +27,7 @@ export const postUpdatedResourceToDb: Function = async (
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
+				...getAuthorizationHeaders(),
 			},
 			body: JSON.stringify(body),
 		});
@@ -35,6 +36,7 @@ export const postUpdatedResourceToDb: Function = async (
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
+				...getAuthorizationHeaders(),
 			},
 			body: JSON.stringify(body),
 		});
@@ -49,6 +51,7 @@ export const postNewUserToDb: Function = async (
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
+			...getAuthorizationHeaders(),
 		},
 		body: JSON.stringify(body),
 	});
@@ -60,6 +63,7 @@ export const postNewCommentToDb = async (body: CommentModel): Promise<void> => {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
+			...getAuthorizationHeaders(),
 		},
 		body: JSON.stringify(body),
 	});
@@ -108,8 +112,8 @@ export const shuffle: Function = (array: string[]): string[] => {
 };
 
 export const sendMail: Function = async (
-	to: string,
-	fromName: string,
+	recipientId: string,
+	_fromName: string,
 	commentText: string,
 	url: string,
 	title: string
@@ -117,8 +121,7 @@ export const sendMail: Function = async (
 	// Send email to recipient.
 	try {
 		const body = {
-			to,
-			fromName,
+			recipientId,
 			commentText,
 			url: "https://youtube.com/watch?v=" + url,
 			title: title.substring(0, title.indexOf("| ReComments") - 1),
@@ -127,6 +130,7 @@ export const sendMail: Function = async (
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
+				...getAuthorizationHeaders(),
 			},
 			body: JSON.stringify(body),
 		});
@@ -178,6 +182,7 @@ export const getDbUser: Function = async (
 			{
 				headers: {
 					"Content-Type": "application/json",
+					...getAuthorizationHeaders(),
 				},
 			}
 		);
@@ -351,6 +356,7 @@ export const deleteUser: Function = async (id: string) => {
 		method: "DELETE",
 		headers: {
 			"Content-Type": "application/json",
+			...getAuthorizationHeaders(),
 		},
 	});
 	// TODO Delete user comments.
@@ -358,6 +364,7 @@ export const deleteUser: Function = async (id: string) => {
 		method: "DELETE",
 		headers: {
 			"Content-Type": "application/json",
+			...getAuthorizationHeaders(),
 		},
 	});
 };
@@ -367,6 +374,7 @@ export const updateHomeVideos: Function = async (body: HomeModel) => {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
+			...getAuthorizationHeaders(),
 		},
 		body: JSON.stringify(body),
 	});

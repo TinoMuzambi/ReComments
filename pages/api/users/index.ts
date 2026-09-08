@@ -2,9 +2,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import User from "../../../models/User";
 import dbConnect from "../../../utils/dbConnect";
+import { requireGoogleIdentity } from "../../../utils/googleAuth";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	dbConnect();
+	await dbConnect();
 	const { method } = req;
 
 	switch (method) {
@@ -15,13 +16,32 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			});
 		case "POST":
 			try {
-				const user: typeof User = await User.create(req.body);
+				const identity = await requireGoogleIdentity(req, res);
+				if (!identity) return;
 
-				res.status(201).json({ success: true, data: user });
+				const existing = await User.findOne({ userId: identity.id });
+				if (existing) {
+					return res.status(200).json({ success: true, data: existing });
+				}
+
+				const user: typeof User = await User.create({
+					userId: identity.id,
+					email: identity.email,
+					shortName: String(req.body.shortName || "User").slice(0, 100),
+					name: String(req.body.name || req.body.shortName || "User").slice(0, 200),
+					photoUrl: String(req.body.photoUrl || "").slice(0, 2000),
+					upvotedIds: [],
+					downvotedIds: [],
+					emails: true,
+					darkMode: false,
+					watchhistory: [],
+					role: "standard",
+				});
+
+				return res.status(201).json({ success: true, data: user });
 			} catch (error) {
-				res.status(400).json({ success: false, data: error });
+				return res.status(400).json({ success: false });
 			}
-			break;
 		default:
 			return res.status(400).json({ success: false });
 	}

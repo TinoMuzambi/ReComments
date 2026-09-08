@@ -20,26 +20,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			}
 			break;
 		case "PUT":
-			try {
-				const videos: typeof Home = await Home.findByIdAndUpdate(
-					"6756cadb665d3d4e3c52b1f1",
-					req.body
-				);
-
-				res.status(201).json({ success: true, data: videos });
-			} catch (error) {
-				res.status(400).json({ success: false, data: error });
-			}
-			break;
 		case "POST":
-			try {
-				const videos: typeof Home = await Home.insertMany(req.body);
-
-				res.status(201).json({ success: true, data: videos });
-			} catch (error) {
-				res.status(400).json({ success: false, data: error });
-			}
-			break;
+			return res.status(403).json({
+				success: false,
+				message: "Home video administration is disabled",
+			});
 		default:
 			return res.status(400).json({ success: false });
 	}
