@@ -14,6 +14,9 @@
 
 # production
 /build
+/public/sw.js
+/public/workbox-*.js
+/public/workbox-*.js.map
 
 # misc
 .DS_Store
@@ -33,6 +36,7 @@ yarn-error.log*
 # vercel
 .vercel
 .env
+!.env.example
 
 Backup-codes-recommentsweb.txt
 

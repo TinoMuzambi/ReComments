@@ -5,17 +5,22 @@ import { getHtml } from "../../../utils";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const { to, fromName, commentText, url, title } = req.body;
+	const gmailUser = process.env.GMAIL_USER;
+	const gmailPassword = process.env.GMAIL_PASS;
+	if (!gmailUser || !gmailPassword) {
+		return res.status(503).json({ success: false, error: "Email is not configured" });
+	}
 
 	let transporter = nodemailer.createTransport({
 		service: "gmail",
 		auth: {
-			user: "recommentsweb@gmail.com",
-			pass: process.env.GMAIL_PASS,
+			user: gmailUser,
+			pass: gmailPassword,
 		},
 	});
 
 	const options = {
-		from: "recommentsweb@gmail.com",
+		from: gmailUser,
 		to: to,
 		subject: "ReComments | New reply to your comment",
 		text: `${fromName} replied to your comment on ReComments. They said: "${commentText}". Paste this url ${url} in the search box on ReComments to continue the conversation.`,
