@@ -25,13 +25,13 @@ const SignIn: React.FC = (): JSX.Element => {
 		gapi.load("client:auth2", () => {
 			gapi.client
 				.init({
-					apiKey: process.env.GAPP_API_KEY,
+					apiKey: process.env.NEXT_PUBLIC_GAPP_API_KEY,
 					discoveryDocs: [
 						"https://people.googleapis.com/$discovery/rest?version=v1",
 						"https://youtube.googleapis.com/$discovery/rest?version=v3",
 					],
-					clientId: process.env.GAPP_CLIENT_ID,
-					scope: "profile",
+					clientId: process.env.NEXT_PUBLIC_GAPP_CLIENT_ID,
+					scope: "profile email",
 				})
 				.then(() => {
 					gapi.auth2.getAuthInstance().isSignedIn.listen(() => {

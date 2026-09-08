@@ -30,3 +30,17 @@ The database of choice for storing all the comments and user data is MongoDB. Re
 ## Back-end
 
 The back-end uses Next.js serverless functions and handles all the interfacing with the database. It also handles sending emails through Nodemailer and getting the preview videos on the search page as well as handling the functionality of users unsubscribing/resubscribing to emails.
+
+## Environment variables
+
+Copy `.env.example` to `.env.local`. Only the `NEXT_PUBLIC_GAPP_*` Google
+identifiers are browser-visible. MongoDB and email credentials are read only by
+server-side API routes and must never be added to `next.config.js`.
+
+`EMAIL_PREFERENCE_SECRET` signs unsubscribe links. Google access tokens are
+verified server-side before any user, comment, or email mutation is accepted;
+API responses do not expose stored email addresses.
+
+The legacy administrator dashboard is intentionally unavailable until it has
+server-verified authentication; the previous implementation returned user data
+before its client-side role check.

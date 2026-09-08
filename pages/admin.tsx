@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState, FormEventHandler } from "react";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import moment from "moment";
@@ -385,47 +385,10 @@ const Admin: NextPage<AdminProps> = ({
 	);
 };
 
-Admin.getInitialProps = async () => {
-	const BASE_URL =
-		process.env.NODE_ENV === "production"
-			? "https://recomments.tinomuzambi.com"
-			: "http://localhost:3000";
-	const body = {
-		secret: process.env.SECRET,
-	};
-	let res: any = await fetch(`${BASE_URL}/api/users`, {
-		headers: {
-			"Content-Type": "application/json",
-			usersSecret: JSON.stringify(body),
-		},
-	});
-
-	res = await res.json();
-	const users: UserModel[] = res.data;
-
-	res = await fetch(`${BASE_URL}/api/comments`, {
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-
-	res = await res.json();
-	const comments: CommentModel[] = res.data;
-
-	res = await fetch(`${BASE_URL}/api/home`, {
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-
-	res = await res.json();
-	const homeVideos: HomeModel = res.data;
-
-	return {
-		users,
-		comments,
-		homeVideos,
-	};
-};
+// The old dashboard loaded all user records before client-side authorization.
+// Keep it unavailable until it has server-verified administrator authentication.
+export const getServerSideProps: GetServerSideProps<AdminProps> = async () => ({
+	notFound: true,
+});
 
 export default Admin;

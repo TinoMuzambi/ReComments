@@ -15,6 +15,7 @@ import {
 	ROLES,
 } from "../../utils";
 import { AppContext } from "../../context/AppContext";
+import { getAuthorizationHeaders } from "../../utils/authHeaders";
 import { CommentContentProps, UserModel, CommentModel } from "../../interfaces";
 import CommentForm from "./CommentForm";
 import Spinner from "../Spinner";
@@ -145,6 +146,7 @@ const CommentContent: React.FC<CommentContentProps> = ({
 					method: "DELETE",
 					headers: {
 						"Content-Type": "application/json",
+						...getAuthorizationHeaders(),
 					},
 				});
 
@@ -400,6 +402,8 @@ const CommentContent: React.FC<CommentContentProps> = ({
 						{parse(
 							Autolinker.link(currComment.comment, {
 								className: "embed-link",
+								newWindow: true,
+								sanitizeHtml: true,
 							})
 						)}
 					</p>

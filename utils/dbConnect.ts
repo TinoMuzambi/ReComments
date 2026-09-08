@@ -1,11 +1,5 @@
 import mongoose from "mongoose";
 
-const MONGO_URI = process.env.MONGO_URI;
-
-if (!MONGO_URI) {
-	throw new Error("An error occured please refresh or contact the developer.");
-}
-
 let cached: {
 	conn: null | typeof mongoose;
 	promise: null | Promise<typeof mongoose>;
@@ -16,22 +10,18 @@ if (!cached) {
 }
 
 const dbConnect: Function = async (): Promise<typeof mongoose> => {
+	const mongoUri = process.env.MONGO_URI;
+	if (!mongoUri) {
+		throw new Error("MONGO_URI is not configured");
+	}
+
 	if (cached.conn) {
 		return cached.conn;
 	}
 
 	if (!cached.promise) {
-		const opts = {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-			bufferCommands: false,
-			bufferMaxEntries: 0,
-			useFindAndModify: false,
-			useCreateIndex: true,
-		};
-
 		cached.promise = mongoose
-			.connect(MONGO_URI as string, opts)
+			.connect(mongoUri, { bufferCommands: false })
 			.then((mongoose) => {
 				return mongoose;
 			});

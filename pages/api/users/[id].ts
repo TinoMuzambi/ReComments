@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 import User from "../../../models/User";
 import dbConnect from "../../../utils/dbConnect";
-import { UserModel } from "../../../interfaces";
+import { requireGoogleIdentity } from "../../../utils/googleAuth";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	await dbConnect();
@@ -11,11 +11,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		query: { id },
 		method,
 	} = req;
+	const userId = Array.isArray(id) ? id[0] : id;
+	const identity = await requireGoogleIdentity(req, res);
+	if (!identity) return;
+	if (!userId || userId !== identity.id) {
+		return res.status(403).json({ success: false, data: { message: "Not authorized" } });
+	}
 
 	switch (method) {
 		case "GET":
 			try {
-				const user: UserModel = await User.findOne({ userId: id });
+				const user = await User.findOne({ userId });
 
 				if (!user) {
 					return res
@@ -33,9 +39,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "PUT":
 			try {
+				const update = {
+					shortName: String(req.body.shortName || "").slice(0, 100),
+					name: String(req.body.name || "").slice(0, 200),
+					photoUrl: String(req.body.photoUrl || "").slice(0, 2000),
+					emails: Boolean(req.body.emails),
+					darkMode: Boolean(req.body.darkMode),
+					watchhistory: Array.isArray(req.body.watchhistory)
+						? req.body.watchhistory.slice(0, 1000)
+						: [],
+				};
 				const user: mongoose.UpdateQuery<any> = await User.updateOne(
-					{ userId: id },
-					{ ...req.body }
+					{ userId },
+					{ $set: update }
 				);
 
 				if (!user) {
@@ -50,7 +66,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break;
 		case "DELETE":
 			try {
-				const deletedUser = await User.deleteOne({ userId: id });
+				const deletedUser = await User.deleteOne({ userId });
 
 				if (!deletedUser) {
 					return res
